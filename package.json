@@ -1,0 +1,45 @@
+{
+  "name": "axios-mock-server",
+  "version": "0.0.1",
+  "description": "RESTful mock server using axios-mock-adapter",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "npm test -- --watch"
+  },
+  "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^24.0.17",
+    "@types/nedb": "^1.8.8",
+    "axios": "^0.19.0",
+    "jest": "^24.8.0",
+    "ts-jest": "^24.0.2",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "axios-mock-adapter": "^1.17.0",
+    "nedb": "^1.8.0"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "~/(.+)": "<rootDir>/$1"
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(ts|js)$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "tsconfig.json"
+      }
+    },
+    "testMatch": [
+      "**/__tests__/*.+(ts|js)"
+    ]
+  }
+}
