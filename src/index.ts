@@ -5,7 +5,7 @@ import AsyncNedb from './AsyncNedb'
 export type MockModels = {
   [key: string]: {
     seeds: () => { [key: string]: any }[]
-    create: (db: any, aa: any) => any
+    create: (db: Datastore<{ [key: string]: any }>, params: { [key: string]: any }) => { [key: string]: any }
   }
 }
 
@@ -17,8 +17,6 @@ function createParams(relativePath: string, url = '', baseURL = ''): MockParams 
   const params: MockParams = {}
   const dirList = relativePath.split('/')
   const parsedRequestUrl = url.replace(baseURL, '').split('/')
-
-  if (parsedRequestUrl[0] === '') parsedRequestUrl.shift()
 
   parsedRequestUrl.forEach((dir, i) => {
     if (dirList[i].startsWith('_')) {
@@ -32,12 +30,12 @@ function createParams(relativePath: string, url = '', baseURL = ''): MockParams 
 const methodsList = ['get', 'post', 'put', 'delete', 'options', 'head', 'patch'] as const
 type Methods = typeof methodsList[number]
 
-class Datastore<T extends { [key: string]: any }> {
-  private db: { [U in keyof T ]: AsyncNedb }
+class Datastore<T extends MockModels> {
+  private db: { [U in keyof T]: AsyncNedb }
   private models: MockModels
 
   constructor(models: T) {
-    const db = {} as { [U in keyof T ]: AsyncNedb }
+    const db = {} as { [U in keyof T]: AsyncNedb }
     Object.keys(models).forEach(key => {
       const collection = new AsyncNedb()
       db[key as keyof T] = collection
@@ -50,9 +48,7 @@ class Datastore<T extends { [key: string]: any }> {
     const collectionNames = Object.keys(this.models)
     for (let i = 0; i < collectionNames.length; i += 1) {
       const seeds = this.models[collectionNames[i]].seeds()
-      for (let n = 0; n < seeds.length; n += 1) {
-        await this.db[collectionNames[i]].asyncInsert(seeds[n])
-      }
+      await this.db[collectionNames[i]].asyncInsert(seeds)
     }
   }
 
@@ -61,14 +57,14 @@ class Datastore<T extends { [key: string]: any }> {
   }
 }
 
-export type MockRouter = ({
+export type MockRouter<V extends MockModels> = ({
   path: string,
   methods: {
-    [T in Methods]?: <V>(db: Datastore<V>, params: ReturnType<typeof createParams>, data: any) => Promise<any>
+    [T in Methods]?: (db: Datastore<V>, params: ReturnType<typeof createParams>, data: any) => Promise<any>
   }
 })[]
 
-export default async (client: AxiosInstance, models: MockModels, router: MockRouter) => {
+export default async (client: AxiosInstance, models: MockModels, router: MockRouter<typeof models>) => {
   const mock = new MockAdapter(client)
   const db = new Datastore(models)
   await db.initSeeds()
