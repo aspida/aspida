@@ -23,25 +23,5 @@
   "dependencies": {
     "axios-mock-adapter": "^1.17.0",
     "nedb": "^1.8.0"
-  },
-  "jest": {
-    "moduleNameMapper": {
-      "~/(.+)": "<rootDir>/$1"
-    },
-    "moduleFileExtensions": [
-      "ts",
-      "js"
-    ],
-    "transform": {
-      "^.+\\.(ts|js)$": "ts-jest"
-    },
-    "globals": {
-      "ts-jest": {
-        "tsConfig": "tsconfig.json"
-      }
-    },
-    "testMatch": [
-      "**/__tests__/*.+(ts|js)"
-    ]
   }
 }
