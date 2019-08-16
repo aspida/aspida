@@ -2,8 +2,9 @@
   "name": "axios-mock-server",
   "version": "0.0.1",
   "description": "RESTful mock server using axios-mock-adapter",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
+    "build": "rimraf dist && tsc --project tsconfig.build.json",
     "test": "jest",
     "test:watch": "npm test -- --watch"
   },
