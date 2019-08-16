@@ -15,7 +15,7 @@ describe('initialize', () => {
 
   test('enabled mock', async () => {
     const models = {}
-    const router = []
+    const router:any[] = []
 
     db = (await mockServer(client, models, router)).db
     await expect(client.get('/')).rejects.toHaveProperty('response.status', 404)
