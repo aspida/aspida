@@ -89,7 +89,7 @@ describe('initialize', () => {
       {
         path: testRegPath,
         methods: {
-          get: (db) => db.getCollection('test').asyncFind({}),
+          get: (db, params) => db.getCollection('test').asyncFind(params),
           post: (db, { name }, { title }) => db.getCollection('test').asyncInsert(
             models.test.create(db, { name, title })
           )
@@ -103,7 +103,7 @@ describe('initialize', () => {
     expect(mockedData.data).toEqual({ ...defaultValue, _id: expect.any(String) })
 
     const mockedData2 = await client.get(testPath)
-    expect(mockedData2.data).toHaveLength(2)
-    expect(mockedData2.data[1]).toEqual({ ...defaultValue, _id: expect.any(String) })
+    expect(mockedData2.data).toHaveLength(1)
+    expect(mockedData2.data[0]).toEqual({ ...defaultValue, _id: expect.any(String) })
   })
 })
