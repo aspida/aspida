@@ -23,6 +23,7 @@
   ],
   "scripts": {
     "build": "rimraf dist && tsc --project tsconfig.build.json",
+    "release": "standard-version --skip.tag",
     "test": "jest",
     "test:watch": "npm test -- --watch"
   },
@@ -32,6 +33,7 @@
     "axios": "^0.19.0",
     "jest": "^24.8.0",
     "rimraf": "^3.0.0",
+    "standard-version": "^7.0.0",
     "ts-jest": "^24.0.2",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.3"
