@@ -1,0 +1,73 @@
+version: 2.1
+
+executors:
+  default:
+    working_directory: ~/project
+    docker:
+      - image: circleci/node:lts
+
+commands:
+  install_packages:
+    parameters:
+      cache_key:
+        default: package-lock.json
+        description: File to use as a Node cache checksum
+        type: string
+      cache_version:
+        default: v1
+        description: Cache version; increment this for a fresh cache
+        type: string
+    steps:
+      - restore_cache:
+          name: Restore dependencies
+          key: dependencies-<< parameters.cache_version >>-{{ checksum "<< parameters.cache_key >>" }}
+      - run:
+          name: Install dependencies
+          command: echo "package-lock=false" >> .npmrc && npm install
+      - save_cache:
+          name: Cache dependencies
+          key: dependencies-<< parameters.cache_version >>-{{ checksum "<< parameters.cache_key >>" }}
+          paths:
+            - node_modules
+
+jobs:
+  test:
+    executor:
+      name: default
+    parameters:
+      cache_key:
+        type: string
+      cache_version:
+        type: string
+    steps:
+      - checkout
+      - install_packages:
+          cache_key: << parameters.cache_key >>
+          cache_version: << parameters.cache_version >>
+      - run:
+          name: Run tests
+          command: npm test
+  audit:
+    executor:
+      name: default
+    steps:
+      - checkout
+      - run:
+          name: Run a security audit
+          command: npm audit
+
+workflows:
+  commit:
+    jobs:
+      - test:
+          cache_key: package-lock.json
+          cache_version: v1
+  weekly:
+    jobs:
+      - audit
+    triggers:
+      - schedule:
+          cron: "0 0 * * 0" # 9:00 AM on Sunday (Asia/Tokyo)
+          filters:
+            branches:
+              only: develop
