@@ -29,6 +29,19 @@ commands:
           key: dependencies-<< parameters.cache_version >>-{{ checksum "<< parameters.cache_key >>" }}
           paths:
             - node_modules
+  publish_npm_package:
+    parameters:
+      npm_dist_tag:
+        default: latest
+        description: Package distribution tags
+        type: string
+    steps:
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
+      - run:
+          name: Publish a package
+          command: npm publish --tag << parameters.npm_dist_tag >>
 
 jobs:
   test:
@@ -47,6 +60,17 @@ jobs:
       - run:
           name: Run tests
           command: npm test
+  publish:
+    executor:
+      name: default
+    parameters:
+      npm_dist_tag:
+        type: enum
+        enum: ["latest"]
+    steps:
+      - checkout
+      - publish_npm_package:
+          npm_dist_tag: << parameters.npm_dist_tag >>
   audit:
     executor:
       name: default
@@ -62,6 +86,18 @@ workflows:
       - test:
           cache_key: package-lock.json
           cache_version: v1
+          filters:
+            tags:
+              only: /^v[0-9]+(\.[0-9]+){2}$/
+      - publish:
+          npm_dist_tag: latest
+          requires:
+            - test
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v[0-9]+(\.[0-9]+){2}$/
   weekly:
     jobs:
       - audit
