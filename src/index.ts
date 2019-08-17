@@ -77,7 +77,9 @@ export default async (client: AxiosInstance, models: MockModels, router: MockRou
 
     methodsList.forEach((method) => {
       if (r.methods[method]) {
-        (mock[`on${method[0].toUpperCase()}${method.slice(1)}`] as typeof mock.onAny)(regPath).reply(async ({ url, baseURL, data = '{}' }) =>
+        type MockMethod = 'onGet'| 'onPost'| 'onPut'| 'onDelete'| 'onOptions'| 'onHead'| 'onPatch'
+        const key =`on${method[0].toUpperCase()}${method.slice(1)}` as Extract<MockMethod, keyof typeof mock>
+        (mock[key])(regPath).reply(async ({ url, baseURL, data = '{}' }) =>
           [200, await r.methods[method]!(db, createParams(r.path, url, baseURL), JSON.parse(data))]
         )
       }

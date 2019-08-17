@@ -17,12 +17,12 @@ export default class extends nedb {
 
   public asyncFind<T>(query: any, projection?: T): Promise<Array<T>> {
     if (projection) {
-      return new Promise((resolve, reject) => super.find(query, projection, (err, documents) => {
+      return new Promise((resolve, reject) => super.find<T>(query, projection, (err, documents) => {
         if (err) reject(err)
         else resolve(documents)
       }))
     } else {
-      return new Promise((resolve, reject) => super.find(query, (err, documents) => {
+      return new Promise((resolve, reject) => super.find<T>(query, (err, documents) => {
         if (err) reject(err)
         else resolve(documents)
       }))
