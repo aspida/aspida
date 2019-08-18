@@ -59,7 +59,10 @@ jobs:
           cache_version: << parameters.cache_version >>
       - run:
           name: Run tests
-          command: npm test
+          command: npm test -- --coverage
+      - run:
+          name: Report coverage results
+          command: npx codecov
   publish:
     executor:
       name: default
