@@ -5,7 +5,7 @@ import AsyncNedb from './AsyncNedb'
 export type MockModels = {
   [key: string]: {
     seeds: () => { [key: string]: any }[]
-    create: (db: any, aa: any) => any
+    create: (db: Datastore, params: { [key: string]: any }) => { [key: string]: any }
   }
 }
 
@@ -17,8 +17,6 @@ function createParams(relativePath: string, url = '', baseURL = ''): MockParams 
   const params: MockParams = {}
   const dirList = relativePath.split('/')
   const parsedRequestUrl = url.replace(baseURL, '').split('/')
-
-  if (parsedRequestUrl[0] === '') parsedRequestUrl.shift()
 
   parsedRequestUrl.forEach((dir, i) => {
     if (dirList[i].startsWith('_')) {
@@ -32,31 +30,33 @@ function createParams(relativePath: string, url = '', baseURL = ''): MockParams 
 const methodsList = ['get', 'post', 'put', 'delete', 'options', 'head', 'patch'] as const
 type Methods = typeof methodsList[number]
 
-class Datastore<T extends { [key: string]: any }> {
-  private db: { [U in keyof T ]: AsyncNedb }
+export class Datastore {
+  private db: { [key: string]: AsyncNedb }
   private models: MockModels
 
-  constructor(models: T) {
-    const db = {} as { [U in keyof T ]: AsyncNedb }
+  constructor(models: MockModels) {
+    const db = {} as { [key: string]: AsyncNedb }
     Object.keys(models).forEach(key => {
       const collection = new AsyncNedb()
-      db[key as keyof T] = collection
+      db[key] = collection
     })
     this.db = db
     this.models = models
   }
 
   async initSeeds() {
-    const collectionNames = Object.keys(this.models)
-    for (let i = 0; i < collectionNames.length; i += 1) {
-      const seeds = this.models[collectionNames[i]].seeds()
-      for (let n = 0; n < seeds.length; n += 1) {
-        await this.db[collectionNames[i]].asyncInsert(seeds[n])
-      }
-    }
+    await Promise.all(Object.keys(this.models).map(key =>
+      this.db[key].asyncInsert(this.models[key].seeds())
+    ))
   }
 
-  getCollection(collectionName: keyof T) {
+  async deleteAll() {
+    await Promise.all(Object.keys(this.models).map(key =>
+      this.db[key].asyncRemove({}, { multi: true })
+    ))
+  }
+
+  getCollection(collectionName: string) {
     return this.db[collectionName]
   }
 }
@@ -64,7 +64,7 @@ class Datastore<T extends { [key: string]: any }> {
 export type MockRouter = ({
   path: string,
   methods: {
-    [T in Methods]?: <V>(db: Datastore<V>, params: ReturnType<typeof createParams>, data: any) => Promise<any>
+    [T in Methods]?: (db: Datastore, params: ReturnType<typeof createParams>, data: any) => Promise<any>
   }
 })[]
 
@@ -77,10 +77,14 @@ export default async (client: AxiosInstance, models: MockModels, router: MockRou
 
     methodsList.forEach((method) => {
       if (r.methods[method]) {
-        (mock[`on${method[0].toUpperCase()}${method.slice(1)}`] as typeof mock.onAny)(regPath).reply(async ({ url, baseURL, data = '{}' }) =>
+        type MockMethod = 'onGet'| 'onPost'| 'onPut'| 'onDelete'| 'onOptions'| 'onHead'| 'onPatch'
+        const key =`on${method[0].toUpperCase()}${method.slice(1)}` as Extract<MockMethod, keyof typeof mock>
+        (mock[key])(regPath).reply(async ({ url, baseURL, data = '{}' }) =>
           [200, await r.methods[method]!(db, createParams(r.path, url, baseURL), JSON.parse(data))]
         )
       }
     })
   })
+
+  return { mock, db }
 }
