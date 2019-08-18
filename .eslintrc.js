@@ -4,7 +4,9 @@ module.exports = {
     node: true
   },
   extends: [
-    'standard'
+    'standard',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:jest/recommended'
   ],
   globals: {
     Atomics: 'readonly',
@@ -14,6 +16,7 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module'
   },
+  root: true,
   rules: {
   }
 }
