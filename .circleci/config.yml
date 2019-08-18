@@ -58,6 +58,9 @@ jobs:
           cache_key: << parameters.cache_key >>
           cache_version: << parameters.cache_version >>
       - run:
+          name: Run lint
+          command: npm run lint
+      - run:
           name: Run tests
           command: npm test -- --coverage
       - run:

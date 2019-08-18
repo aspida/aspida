@@ -32,6 +32,7 @@ type Methods = typeof methodsList[number]
 
 export class Datastore {
   private db: { [key: string]: AsyncNedb }
+
   private models: MockModels
 
   constructor(models: MockModels) {
@@ -45,15 +46,15 @@ export class Datastore {
   }
 
   async initSeeds() {
-    await Promise.all(Object.keys(this.models).map(key =>
-      this.db[key].asyncInsert(this.models[key].seeds())
-    ))
+    await Promise.all(
+      Object.keys(this.models).map(key => this.db[key].asyncInsert(this.models[key].seeds()))
+    )
   }
 
   async deleteAll() {
-    await Promise.all(Object.keys(this.models).map(key =>
-      this.db[key].asyncRemove({}, { multi: true })
-    ))
+    await Promise.all(
+      Object.keys(this.models).map(key => this.db[key].asyncRemove({}, { multi: true }))
+    )
   }
 
   getCollection(collectionName: string) {
@@ -62,9 +63,13 @@ export class Datastore {
 }
 
 export type MockRouter = ({
-  path: string,
+  path: string
   methods: {
-    [T in Methods]?: (db: Datastore, params: ReturnType<typeof createParams>, data: any) => Promise<any>
+    [T in Methods]?: (
+      db: Datastore,
+      params: ReturnType<typeof createParams>,
+      data: any
+    ) => Promise<any>
   }
 })[]
 
@@ -75,13 +80,25 @@ export default async (client: AxiosInstance, models: MockModels, router: MockRou
   router.forEach(r => {
     const regPath = new RegExp(`${r.path.replace(/\/_[^/]+/g, '/[^/]+')}$`)
 
-    methodsList.forEach((method) => {
+    methodsList.forEach(method => {
       if (r.methods[method]) {
-        type MockMethod = 'onGet'| 'onPost'| 'onPut'| 'onDelete'| 'onOptions'| 'onHead'| 'onPatch'
-        const key =`on${method[0].toUpperCase()}${method.slice(1)}` as Extract<MockMethod, keyof typeof mock>
-        (mock[key])(regPath).reply(async ({ url, baseURL, data = '{}' }) =>
-          [200, await r.methods[method]!(db, createParams(r.path, url, baseURL), JSON.parse(data))]
-        )
+        type MockMethod =
+          | 'onGet'
+          | 'onPost'
+          | 'onPut'
+          | 'onDelete'
+          | 'onOptions'
+          | 'onHead'
+          | 'onPatch'
+        const key = `on${method[0].toUpperCase()}${method.slice(1)}` as Extract<
+          MockMethod,
+          keyof typeof mock
+        >
+        mock[key](regPath).reply(async ({ url, baseURL, data = '{}' }) => [
+          200,
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          await r.methods[method]!(db, createParams(r.path, url, baseURL), JSON.parse(data))
+        ])
       }
     })
   })

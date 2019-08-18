@@ -15,7 +15,7 @@ describe('initialize', () => {
 
   test('enabled mock', async () => {
     const models = {}
-    const router:any[] = []
+    const router: any[] = []
 
     db = (await mockServer(client, models, router)).db
     await expect(client.get('/')).rejects.toHaveProperty('response.status', 404)
@@ -35,7 +35,7 @@ describe('initialize', () => {
       {
         path: testPath,
         methods: {
-          get: (db) => db.getCollection('test').asyncFind({})
+          get: db => db.getCollection('test').asyncFind({})
         }
       }
     ]
@@ -90,9 +90,8 @@ describe('initialize', () => {
         path: testRegPath,
         methods: {
           get: (db, params) => db.getCollection('test').asyncFind(params),
-          post: (db, { name }, { title }) => db.getCollection('test').asyncInsert(
-            models.test.create(db, { name, title })
-          )
+          post: (db, { name }, { title }) =>
+            db.getCollection('test').asyncInsert(models.test.create(db, { name, title }))
         }
       }
     ]
