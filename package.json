@@ -30,6 +30,7 @@
     "test:watch": "npm test -- --watch"
   },
   "devDependencies": {
+    "@types/busboy": "^0.2.3",
     "@types/jest": "^24.0.17",
     "@types/nedb": "^1.8.8",
     "@typescript-eslint/eslint-plugin": "^2.0.0",
@@ -56,6 +57,8 @@
   },
   "dependencies": {
     "axios-mock-adapter": "^1.17.0",
+    "busboy": "^0.3.1",
+    "file-type": "^12.2.0",
     "nedb": "^1.8.0"
   }
 }
