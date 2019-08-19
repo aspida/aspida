@@ -1,5 +1,8 @@
 import axios, { AxiosInstance } from 'axios'
+import fs from 'fs'
+import path from 'path'
 import mockServer, { MockModels, MockRouter, Datastore } from '~/src'
+import formToBuffer from '~/testLibs/formToBuffer'
 
 describe('initialize', () => {
   let client: AxiosInstance
@@ -104,5 +107,45 @@ describe('initialize', () => {
     const mockedData2 = await client.get(testPath)
     expect(mockedData2.data).toHaveLength(1)
     expect(mockedData2.data[0]).toEqual({ ...defaultValue, _id: expect.any(String) })
+  })
+
+  test('post with multipart/form-data', async () => {
+    const testPath = '/test'
+    const name = 'sample-name'
+    const imageBinary = fs.readFileSync(path.join(__dirname, './assets/logo.png'))
+    const formData: [string, string | number | Buffer][] = [
+      ['name', name],
+      ['num', 123],
+      ['file', imageBinary]
+    ]
+    const imageDataURI = fs.readFileSync(path.join(__dirname, './assets/logo.b64'), 'utf-8')
+    const models: MockModels = {
+      test: {
+        seeds: () => [],
+        create: (db, { file }) => ({ logo: file })
+      }
+    }
+
+    const router: MockRouter = [
+      {
+        path: testPath,
+        methods: {
+          get: db => db.getCollection('test').asyncFind({}),
+          post: (db, _, { file }) =>
+            db.getCollection('test').asyncInsert(models.test.create(db, { file }))
+        }
+      }
+    ]
+
+    db = (await mockServer(client, models, router)).db
+    const { boundary, buffer } = formToBuffer(formData)
+    const mockedData = await client.post(testPath, buffer, {
+      headers: { 'Content-Type': `multipart/form-data; boundary=${boundary}` }
+    })
+    expect(mockedData.data).toEqual({ logo: imageDataURI, _id: expect.any(String) })
+
+    const mockedData2 = await client.get(testPath)
+    expect(mockedData2.data).toHaveLength(1)
+    expect(mockedData2.data[0]).toEqual({ logo: imageDataURI, _id: expect.any(String) })
   })
 })

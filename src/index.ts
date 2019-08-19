@@ -1,6 +1,7 @@
 import { AxiosInstance } from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import AsyncNedb from './AsyncNedb'
+import formToParams from './formToParams'
 
 export type MockModels = {
   [key: string]: {
@@ -94,10 +95,16 @@ export default async (client: AxiosInstance, models: MockModels, router: MockRou
           MockMethod,
           keyof typeof mock
         >
-        mock[key](regPath).reply(async ({ url, baseURL, data = '{}' }) => [
+        mock[key](regPath).reply(async ({ headers, url, baseURL, data = '{}' }) => [
           200,
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          await r.methods[method]!(db, createParams(r.path, url, baseURL), JSON.parse(data))
+          await r.methods[method]!(
+            db,
+            createParams(r.path, url, baseURL),
+            /^multipart/.test(headers['Content-Type'] || headers['content-type'])
+              ? await formToParams(data as Buffer, headers)
+              : JSON.parse(data)
+          )
         ])
       }
     })
