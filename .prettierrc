@@ -4,7 +4,7 @@
   "singleQuote": true,
   "overrides": [
     {
-      "files": ["*.yml"],
+      "files": ["*.md", "*.yml"],
       "options": {
         "singleQuote": false
       }
