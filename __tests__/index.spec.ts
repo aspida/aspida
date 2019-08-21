@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios'
 import fs from 'fs'
 import path from 'path'
-import mockServer, { MockRouter, DataStore, Seeds } from '~/src'
+import mockServer, { MockRouter, DataStore, Seeds, asyncResponse } from '~/src'
 import formToBuffer from './libs/formToBuffer'
 
 describe('initialize', () => {
@@ -30,7 +30,7 @@ describe('initialize', () => {
       {
         path: testPath,
         methods: {
-          get: () => dataStore.getCollection('test').asyncFind({})
+          get: () => asyncResponse(200, dataStore.getCollection('test').asyncFind({}))
         }
       }
     ]
@@ -43,6 +43,19 @@ describe('initialize', () => {
     expect(mockedData.data[0]).toEqual({ ...defaultValue, _id: expect.any(String) })
   })
 
+  test('404 request', async () => {
+    const testPath = '/test'
+    const router: MockRouter = [
+      {
+        path: testPath,
+        methods: {}
+      }
+    ]
+
+    await mockServer(client, router)
+    await expect(client.get(testPath)).rejects.toHaveProperty('response.status', 404)
+  })
+
   test('get with params', async () => {
     const testRegPath = '/test/_name'
     const testPath = '/test/sample'
@@ -52,7 +65,7 @@ describe('initialize', () => {
       {
         path: testRegPath,
         methods: {
-          get: ({ params }) => dataStore.getCollection('test').asyncFind(params)
+          get: ({ params }) => asyncResponse(200, dataStore.getCollection('test').asyncFind(params))
         }
       }
     ]
@@ -74,9 +87,10 @@ describe('initialize', () => {
       {
         path: testRegPath,
         methods: {
-          get: ({ params }) => dataStore.getCollection('test').asyncFind(params),
+          get: ({ params }) =>
+            asyncResponse(200, dataStore.getCollection('test').asyncFind(params)),
           post: ({ params: { name }, data: { title } }) =>
-            dataStore.getCollection('test').asyncInsert({ name, title })
+            asyncResponse(201, dataStore.getCollection('test').asyncInsert({ name, title }))
         }
       }
     ]
@@ -107,8 +121,9 @@ describe('initialize', () => {
       {
         path: testPath,
         methods: {
-          get: () => dataStore.getCollection('test').asyncFind({}),
-          post: ({ data: { file } }) => dataStore.getCollection('test').asyncInsert({ file })
+          get: () => asyncResponse(200, dataStore.getCollection('test').asyncFind({})),
+          post: ({ data: { file } }) =>
+            asyncResponse(201, dataStore.getCollection('test').asyncInsert({ file }))
         }
       }
     ]

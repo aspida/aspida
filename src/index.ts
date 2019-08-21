@@ -5,6 +5,7 @@ import DS, { Seeds as Sd } from './DataStore'
 
 export class DataStore extends DS {}
 export type Seeds = Sd
+export const asyncResponse = async (status: number, query: Promise<any>) => [status, await query]
 
 interface MockParams {
   [key: string]: string | number
@@ -37,7 +38,7 @@ export type MockRouter = ({
       headers: any
       params: ReturnType<typeof createParams>
       data: any
-    }) => Promise<any>
+    }) => Promise<any> | any
   }
 })[]
 
@@ -61,17 +62,18 @@ export default async (client: AxiosInstance, router: MockRouter) => {
           MockMethod,
           keyof typeof mock
         >
-        mock[key](regPath).reply(async ({ headers, url, baseURL, data = '{}' }) => [
-          200,
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          await r.methods[method]!({
-            headers,
-            params: createParams(r.path, url, baseURL),
-            data: /^multipart/.test(headers['Content-Type'] || headers['content-type'])
-              ? await formToParams(data as Buffer, headers)
-              : JSON.parse(data)
-          })
-        ])
+        mock[key](regPath).reply(async ({ headers, url, baseURL, data = '{}' }) =>
+          r.methods[method]
+            ? // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              r.methods[method]!({
+                headers,
+                params: createParams(r.path, url, baseURL),
+                data: /^multipart/.test(headers['Content-Type'] || headers['content-type'])
+                  ? await formToParams(data as Buffer, headers)
+                  : JSON.parse(data)
+              })
+            : [404, null]
+        )
       }
     })
   })
