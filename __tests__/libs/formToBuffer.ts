@@ -1,6 +1,6 @@
 const boundary = '--------------------------sampleBoundary'
 
-const buildStringChunk = ([key, value]: [string, string]) =>
+const buildStringChunk = ([key, value]: [string, string | number]) =>
   Buffer.from(
     ['', `Content-Disposition: form-data; name="${key}"`, '', value, `--${boundary}`].join('\r\n'),
     'utf8'
@@ -27,9 +27,9 @@ export default (formData: [string, string | number | Buffer][]) => {
 
   formData.forEach(entry =>
     values.push(
-      /(string|number)/.test(typeof entry[1])
-        ? buildStringChunk(entry as [string, string])
-        : buildFileChunk(entry as [string, Buffer])
+      entry[1] instanceof Buffer
+        ? buildFileChunk(entry as [string, Buffer])
+        : buildStringChunk(entry as [string, string | number])
     )
   )
 

@@ -7,7 +7,7 @@ export type Seeds = {
 export default class {
   private collections: { [key: string]: AsyncNedb } = {}
 
-  async initCollectionsAndSeeds(seeds: Seeds) {
+  async init(seeds: Seeds) {
     await Promise.all(
       Object.keys(seeds).map(key => {
         const collection = new AsyncNedb()
