@@ -5,6 +5,7 @@
   "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
   "license": "MIT",
   "main": "dist/index.js",
+  "bin": "bin/index.js",
   "homepage": "https://github.com/m-mitsuhide/axios-mock-server#readme",
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
   "devDependencies": {
     "@types/busboy": "^0.2.3",
     "@types/jest": "^24.0.18",
+    "@types/minimist": "^1.2.0",
     "@types/nedb": "^1.8.8",
     "@typescript-eslint/eslint-plugin": "^2.0.0",
     "@typescript-eslint/parser": "^2.0.0",
@@ -59,6 +61,7 @@
     "axios-mock-adapter": "^1.17.0",
     "busboy": "^0.3.1",
     "file-type": "^12.2.0",
+    "minimist": "^1.2.0",
     "nedb": "^1.8.0"
   }
 }
