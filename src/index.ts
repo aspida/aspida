@@ -1,4 +1,4 @@
-import { AxiosInstance } from 'axios'
+import axios, { AxiosInstance } from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import formToParams from './formToParams'
 import DS, { Seeds as Sd } from './DataStore'
@@ -25,7 +25,7 @@ function createParams(relativePath: string, url = '', baseURL = ''): MockParams 
   return params
 }
 
-const methodsList = ['get', 'post', 'put', 'delete', 'options', 'head', 'patch'] as const
+const methodsList = ['get', 'post', 'put', 'delete', 'head', 'patch'] as const
 type Methods = typeof methodsList[number]
 
 export type MockRouter = ({
@@ -42,41 +42,45 @@ export type MockRouter = ({
   }
 })[]
 
-export default async (client: AxiosInstance, router: MockRouter) => {
-  const mock = new MockAdapter(client)
+export default class {
+  public adapter!: MockAdapter
 
-  router.forEach(r => {
-    const regPath = new RegExp(`${r.path.replace(/\/_[^/]+/g, '/[^/]+')}$`)
+  setClient(client: AxiosInstance) {
+    this.adapter = new MockAdapter(client)
+  }
 
-    methodsList.forEach(method => {
-      if (r.methods[method]) {
-        type MockMethod =
-          | 'onGet'
-          | 'onPost'
-          | 'onPut'
-          | 'onDelete'
-          | 'onOptions'
-          | 'onHead'
-          | 'onPatch'
-        const key = `on${method[0].toUpperCase()}${method.slice(1)}` as Extract<
-          MockMethod,
-          keyof typeof mock
-        >
-        mock[key](regPath).reply(async ({ headers, url, baseURL, data = '{}' }) =>
-          r.methods[method]
-            ? // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              r.methods[method]!({
-                headers,
-                params: createParams(r.path, url, baseURL),
-                data: /^multipart/.test(headers['Content-Type'] || headers['content-type'])
-                  ? await formToParams(data as Buffer, headers)
-                  : JSON.parse(data)
-              })
-            : [404, null]
-        )
-      }
+  setRouter(router: MockRouter) {
+    router.forEach(r => {
+      const regPath = new RegExp(`${r.path.replace(/\/_[^/]+/g, '/[^/]+')}$`)
+
+      methodsList.forEach(method => {
+        if (r.methods[method]) {
+          type MockMethod = 'onGet' | 'onPost' | 'onPut' | 'onDelete' | 'onHead' | 'onPatch'
+          const key = `on${method[0].toUpperCase()}${method.slice(1)}` as MockMethod
+
+          this.adapter[key](regPath).reply(async ({ headers, url, baseURL, data = '{}' }) =>
+            r.methods[method]
+              ? // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                r.methods[method]!({
+                  headers,
+                  params: createParams(r.path, url, baseURL),
+                  data: /^multipart/.test(headers['Content-Type'] || headers['content-type'])
+                    ? await formToParams(data as Buffer, headers)
+                    : JSON.parse(data)
+                })
+              : [404, null]
+          )
+        }
+      })
     })
-  })
+  }
 
-  return mock
+  init(router: MockRouter, client?: AxiosInstance) {
+    this.setClient(client || axios)
+    this.setRouter(router)
+  }
+
+  reset() {
+    this.adapter.reset()
+  }
 }

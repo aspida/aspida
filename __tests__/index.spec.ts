@@ -1,24 +1,29 @@
 import axios, { AxiosInstance } from 'axios'
 import fs from 'fs'
 import path from 'path'
-import mockServer, { MockRouter, DataStore, Seeds, asyncResponse } from '~/src'
+import MockServer, { MockRouter, DataStore, Seeds, asyncResponse } from '~/src'
 import formToBuffer from './libs/formToBuffer'
 
 describe('initialize', () => {
+  const mock = new MockServer()
   let client: AxiosInstance
   let dataStore: DataStore
 
   beforeEach(() => {
     client = axios.create({ baseURL: 'https://google.com' })
+    mock.setClient(client)
     dataStore = new DataStore()
   })
 
-  afterEach(() => dataStore.deleteAll())
+  afterEach(() => {
+    mock.reset()
+    dataStore.deleteAll()
+  })
 
   test('enabled mock', async () => {
     const router: MockRouter = []
 
-    await mockServer(client, router)
+    mock.setRouter(router)
     await expect(client.get('/')).rejects.toHaveProperty('response.status', 404)
   })
 
@@ -35,8 +40,8 @@ describe('initialize', () => {
       }
     ]
 
-    dataStore.initCollectionsAndSeeds(seeds)
-    await mockServer(client, router)
+    dataStore.init(seeds)
+    mock.setRouter(router)
     const mockedData = await client.get(testPath)
 
     expect(mockedData.data).toHaveLength(1)
@@ -52,7 +57,7 @@ describe('initialize', () => {
       }
     ]
 
-    await mockServer(client, router)
+    mock.setRouter(router)
     await expect(client.get(testPath)).rejects.toHaveProperty('response.status', 404)
   })
 
@@ -70,8 +75,8 @@ describe('initialize', () => {
       }
     ]
 
-    dataStore.initCollectionsAndSeeds(seeds)
-    await mockServer(client, router)
+    dataStore.init(seeds)
+    mock.setRouter(router)
     const mockedData = await client.get(testPath)
 
     expect(mockedData.data).toHaveLength(1)
@@ -95,8 +100,8 @@ describe('initialize', () => {
       }
     ]
 
-    dataStore.initCollectionsAndSeeds(seeds)
-    await mockServer(client, router)
+    dataStore.init(seeds)
+    mock.setRouter(router)
     const mockedData = await client.post(testPath, { title: 'bbb' })
 
     expect(mockedData.data).toEqual({ ...defaultValue, _id: expect.any(String) })
@@ -128,8 +133,8 @@ describe('initialize', () => {
       }
     ]
 
-    dataStore.initCollectionsAndSeeds(seeds)
-    await mockServer(client, router)
+    dataStore.init(seeds)
+    mock.setRouter(router)
     const { boundary, buffer } = formToBuffer(formData)
     const mockedData = await client.post(testPath, buffer, {
       headers: { 'Content-Type': `multipart/form-data; boundary=${boundary}` }
