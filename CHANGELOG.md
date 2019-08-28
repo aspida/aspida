@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.1.0...v0.2.0) (2019-08-28)
+
+
+### Bug Fixes
+
+* **deps:** [security] bump eslint-utils from 1.4.0 to 1.4.2 ([7f797b5](https://github.com/m-mitsuhide/axios-mock-server/commit/7f797b5))
+
+
+### Documentation
+
+* fix CHANGELOG.md ([8c91ed1](https://github.com/m-mitsuhide/axios-mock-server/commit/8c91ed1))
+
+
+### Features
+
+* **cli:** add command line arguments parser ([9e6e24e](https://github.com/m-mitsuhide/axios-mock-server/commit/9e6e24e))
+* **main:** change function to class ([248cb18](https://github.com/m-mitsuhide/axios-mock-server/commit/248cb18))
+
 ## [0.1.0](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.0.1...v0.1.0) (2019-08-21)
 
 
