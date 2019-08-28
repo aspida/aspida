@@ -3,7 +3,7 @@ version: 1
 update_configs:
   - package_manager: "javascript"
     directory: "/"
-    update_schedule: "daily"
+    update_schedule: "live"
     version_requirement_updates: "increase_versions"
     commit_message:
       prefix: "fix"
