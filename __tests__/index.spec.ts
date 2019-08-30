@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios'
 import fs from 'fs'
 import path from 'path'
-import MockServer, { MockRouter, DataStore, Seeds, asyncResponse } from '~/src'
+import MockServer, { MockRoute, DataStore, Seeds, asyncResponse } from '~/src'
 import formToBuffer from './libs/formToBuffer'
 
 describe('initialize', () => {
@@ -21,9 +21,9 @@ describe('initialize', () => {
   })
 
   test('enabled mock', async () => {
-    const router: MockRouter = []
+    const route: MockRoute = []
 
-    mock.setRouter(router)
+    mock.setRoute(route)
     await expect(client.get('/')).rejects.toHaveProperty('response.status', 404)
   })
 
@@ -31,7 +31,7 @@ describe('initialize', () => {
     const testPath = '/test'
     const defaultValue = { name: 'test' }
     const seeds: Seeds = { test: [defaultValue] }
-    const router: MockRouter = [
+    const route: MockRoute = [
       {
         path: testPath,
         methods: {
@@ -41,7 +41,7 @@ describe('initialize', () => {
     ]
 
     dataStore.init(seeds)
-    mock.setRouter(router)
+    mock.setRoute(route)
     const mockedData = await client.get(testPath)
 
     expect(mockedData.data).toHaveLength(1)
@@ -50,14 +50,14 @@ describe('initialize', () => {
 
   test('404 request', async () => {
     const testPath = '/test'
-    const router: MockRouter = [
+    const route: MockRoute = [
       {
         path: testPath,
         methods: {}
       }
     ]
 
-    mock.setRouter(router)
+    mock.setRoute(route)
     await expect(client.get(testPath)).rejects.toHaveProperty('response.status', 404)
   })
 
@@ -66,7 +66,7 @@ describe('initialize', () => {
     const testPath = '/test/sample'
     const defaultValue = { name: 'sample' }
     const seeds: Seeds = { test: [defaultValue, { name: 'sample2' }] }
-    const router: MockRouter = [
+    const route: MockRoute = [
       {
         path: testRegPath,
         methods: {
@@ -76,7 +76,7 @@ describe('initialize', () => {
     ]
 
     dataStore.init(seeds)
-    mock.setRouter(router)
+    mock.setRoute(route)
     const mockedData = await client.get(testPath)
 
     expect(mockedData.data).toHaveLength(1)
@@ -88,7 +88,7 @@ describe('initialize', () => {
     const testPath = '/test/sample2'
     const defaultValue = { name: 'sample2', title: 'bbb' }
     const seeds: Seeds = { test: [{ name: 'sample', title: 'aaa' }] }
-    const router: MockRouter = [
+    const route: MockRoute = [
       {
         path: testRegPath,
         methods: {
@@ -101,7 +101,7 @@ describe('initialize', () => {
     ]
 
     dataStore.init(seeds)
-    mock.setRouter(router)
+    mock.setRoute(route)
     const mockedData = await client.post(testPath, { title: 'bbb' })
 
     expect(mockedData.data).toEqual({ ...defaultValue, _id: expect.any(String) })
@@ -122,7 +122,7 @@ describe('initialize', () => {
     ]
     const imageDataURI = fs.readFileSync(path.join(__dirname, './assets/logo.b64'), 'utf-8')
     const seeds: Seeds = { test: [] }
-    const router: MockRouter = [
+    const route: MockRoute = [
       {
         path: testPath,
         methods: {
@@ -134,7 +134,7 @@ describe('initialize', () => {
     ]
 
     dataStore.init(seeds)
-    mock.setRouter(router)
+    mock.setRoute(route)
     const { boundary, buffer } = formToBuffer(formData)
     const mockedData = await client.post(testPath, buffer, {
       headers: { 'Content-Type': `multipart/form-data; boundary=${boundary}` }
