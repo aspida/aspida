@@ -60,6 +60,7 @@
   "dependencies": {
     "axios-mock-adapter": "^1.17.0",
     "busboy": "^0.3.1",
+    "chokidar": "^3.0.2",
     "file-type": "^12.2.0",
     "minimist": "^1.2.0",
     "nedb": "^1.8.0"
