@@ -20,9 +20,17 @@ create `.mockserverrc` to project root
 
 ```json
 {
-  "input": "mock", // directory path
-  "target": "es6 | cjs"
+  "input": "mocks",
+  "target": "es6 | cjs",
+  "outputExt": "ts | js"
 }
+```
+
+`.gitignore`
+
+```
+mocks/$route.js
+mocks/$route.ts
 ```
 
 `package.json`
@@ -40,8 +48,7 @@ create `.mockserverrc` to project root
 
 ```javascript
 import MockServer from "axios-mock-server"
-import route from "mock/$route"
+import route from "mocks/$route"
 
-const mock = new MockServer()
-mock.setRoute(route)
+const mock = new MockServer(route)
 ```

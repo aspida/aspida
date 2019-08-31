@@ -1,11 +1,16 @@
 import axios, { AxiosInstance } from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import formToParams from './formToParams'
+// import formToParams from './formToParams'
 import DS, { Seeds as Sd } from './DataStore'
 
 export class DataStore extends DS {}
 export type Seeds = Sd
-export const asyncResponse = async (status: number, query: Promise<any>) => [status, await query]
+
+type MockResponse = [number, any]
+export const asyncResponse = async (status: number, query: Promise<any>): Promise<MockResponse> => [
+  status,
+  await query
+]
 
 interface MockParams {
   [key: string]: string | number
@@ -28,22 +33,28 @@ function createParams(relativePath: string, url = '', baseURL = ''): MockParams 
 const methodsList = ['get', 'post', 'put', 'delete', 'head', 'patch'] as const
 type Methods = typeof methodsList[number]
 
+export type MockMethods = {
+  [T in Methods]?: ({
+    params,
+    data
+  }: {
+    headers: any
+    params: ReturnType<typeof createParams>
+    data: any
+  }) => Promise<MockResponse> | MockResponse
+}
+
 export type MockRoute = ({
   path: string
-  methods: {
-    [T in Methods]?: ({
-      params,
-      data
-    }: {
-      headers: any
-      params: ReturnType<typeof createParams>
-      data: any
-    }) => Promise<any> | any
-  }
+  methods: MockMethods
 })[]
 
 export default class {
   public adapter!: MockAdapter
+
+  constructor(route?: MockRoute, client?: AxiosInstance) {
+    if (route) this.init(route, client)
+  }
 
   setClient(client: AxiosInstance) {
     this.adapter = new MockAdapter(client)
@@ -64,9 +75,9 @@ export default class {
                 r.methods[method]!({
                   headers,
                   params: createParams(r.path, url, baseURL),
-                  data: /^multipart/.test(headers['Content-Type'] || headers['content-type'])
-                    ? await formToParams(data as Buffer, headers)
-                    : JSON.parse(data)
+                  // data: /^multipart/.test(headers['Content-Type'] || headers['content-type'])
+                  //   ? await formToParams(data as Buffer, headers)
+                  data: JSON.parse(data)
                 })
               : [404, null]
           )

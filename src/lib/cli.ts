@@ -24,7 +24,7 @@ export function run() {
     const regMockExtension = /[^($route)]\.(js|ts)$/
     const mockFilePaths = replacePathSepIfWindows(listFiles(config.input, regMockExtension))
     const routeString = createRouteString(config.input, config.target, mockFilePaths)
-    fs.writeFileSync(path.join(config.input, '$route.js'), routeString, 'utf8')
+    fs.writeFileSync(path.join(config.input, `$route.${config.outputExt}`), routeString, 'utf8')
   }
 
   if (argv.build !== undefined || argv.watch !== undefined) {
@@ -33,7 +33,7 @@ export function run() {
     if (argv.watch !== undefined) {
       chokidar
         .watch(config.input, {
-          ignored: path.join(config.input, '$route.js')
+          ignored: path.join(config.input, `$route.${config.outputExt}`)
         })
         .on('all', build)
     }

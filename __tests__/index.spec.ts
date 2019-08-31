@@ -111,7 +111,7 @@ describe('initialize', () => {
     expect(mockedData2.data[0]).toEqual({ ...defaultValue, _id: expect.any(String) })
   })
 
-  test('post with multipart/form-data', async () => {
+  test.skip('post with multipart/form-data', async () => {
     const testPath = '/test'
     const name = 'sample-name'
     const imageBinary = fs.readFileSync(path.join(__dirname, './assets/logo.png'))
