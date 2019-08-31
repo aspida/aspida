@@ -28,7 +28,7 @@ function createParams(relativePath: string, url = '', baseURL = ''): MockParams 
 const methodsList = ['get', 'post', 'put', 'delete', 'head', 'patch'] as const
 type Methods = typeof methodsList[number]
 
-export type MockRouter = ({
+export type MockRoute = ({
   path: string
   methods: {
     [T in Methods]?: ({
@@ -49,8 +49,8 @@ export default class {
     this.adapter = new MockAdapter(client)
   }
 
-  setRouter(router: MockRouter) {
-    router.forEach(r => {
+  setRoute(route: MockRoute) {
+    route.forEach(r => {
       const regPath = new RegExp(`${r.path.replace(/\/_[^/]+/g, '/[^/]+')}$`)
 
       methodsList.forEach(method => {
@@ -75,9 +75,9 @@ export default class {
     })
   }
 
-  init(router: MockRouter, client?: AxiosInstance) {
+  init(route: MockRoute, client?: AxiosInstance) {
     this.setClient(client || axios)
-    this.setRouter(router)
+    this.setRoute(route)
   }
 
   reset() {

@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.2.0...v0.3.0) (2019-08-30)
+
+
+### Features
+
+* **CLI:** add 'watch' and 'build' ([45b41b6](https://github.com/m-mitsuhide/axios-mock-server/commit/45b41b6))
+
 ## [0.2.0](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.1.0...v0.2.0) (2019-08-28)
 
 

@@ -37,21 +37,12 @@ export default class extends nedb {
     }
   }
 
-  public asyncRemove(query: any, options?: any): Promise<number> {
-    if (options) {
-      return new Promise((resolve, reject) =>
-        super.remove(query, options, (err, n) => {
-          if (err) reject(err)
-          else resolve(n)
-        })
-      )
-    } else {
-      return new Promise((resolve, reject) =>
-        super.remove(query, (err, n) => {
-          if (err) reject(err)
-          else resolve(n)
-        })
-      )
-    }
+  public asyncRemove(query: any, options: nedb.RemoveOptions = {}): Promise<number> {
+    return new Promise((resolve, reject) =>
+      super.remove(query, options, (err, n) => {
+        if (err) reject(err)
+        else resolve(n)
+      })
+    )
   }
 }

@@ -12,5 +12,36 @@ RESTful mock server using axios-mock-adapter.
 ### Install axios-mock-server
 
 ```sh
+$ npm install axios
 $ npm install --save-dev axios-mock-server
+```
+
+create `.mockserverrc` to project root
+
+```json
+{
+  "input": "mock", // directory path
+  "target": "es6 | cjs"
+}
+```
+
+`package.json`
+
+```json
+{
+  "script": {
+    "mock:build": "axios-mock-server -b",
+    "mock:watch": "axios-mock-server -w"
+  }
+}
+```
+
+`your script`
+
+```javascript
+import MockServer from "axios-mock-server"
+import route from "mock/$route"
+
+const mock = new MockServer()
+mock.setRoute(route)
 ```
