@@ -1,40 +1,27 @@
 import axios, { AxiosInstance } from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-// import formToParams from './formToParams'
 import DS, { Seeds as Sd } from './DataStore'
+import binaryToDataURI from './binaryToDataURI'
+import createParams from './createParams'
+import untransformData from './untransformData'
 
 export class DataStore extends DS {}
 export type Seeds = Sd
+export const toDataURI = binaryToDataURI
 
-type MockResponse = [number, any]
-export const asyncResponse = async (status: number, query: Promise<any>): Promise<MockResponse> => [
-  status,
-  await query
-]
-
-interface MockParams {
-  [key: string]: string | number
-}
-
-function createParams(relativePath: string, url = '', baseURL = ''): MockParams {
-  const params: MockParams = {}
-  const dirList = relativePath.split('/')
-  const parsedRequestUrl = url.replace(baseURL, '').split('/')
-
-  parsedRequestUrl.forEach((dir, i) => {
-    if (dirList[i].startsWith('_')) {
-      params[dirList[i].slice(1)] = /^\d+$/.test(dir) ? +dir : dir
-    }
-  })
-
-  return params
-}
+type MockResponse = [number, any?, any?]
+export const asyncResponse = async (
+  status: number,
+  query: Promise<any>,
+  headers?: any
+): Promise<MockResponse> => [status, await query, headers]
 
 const methodsList = ['get', 'post', 'put', 'delete', 'head', 'patch'] as const
 type Methods = typeof methodsList[number]
 
 export type MockMethods = {
   [T in Methods]?: ({
+    headers,
     params,
     data
   }: {
@@ -69,17 +56,15 @@ export default class {
           type MockMethod = 'onGet' | 'onPost' | 'onPut' | 'onDelete' | 'onHead' | 'onPatch'
           const key = `on${method[0].toUpperCase()}${method.slice(1)}` as MockMethod
 
-          this.adapter[key](regPath).reply(async ({ headers, url, baseURL, data = '{}' }) =>
+          this.adapter[key](regPath).reply(({ headers, url, baseURL, data }) =>
             r.methods[method]
               ? // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 r.methods[method]!({
                   headers,
                   params: createParams(r.path, url, baseURL),
-                  // data: /^multipart/.test(headers['Content-Type'] || headers['content-type'])
-                  //   ? await formToParams(data as Buffer, headers)
-                  data: JSON.parse(data)
+                  data: untransformData(data, headers)
                 })
-              : [404, null]
+              : [404]
           )
         }
       })
