@@ -1,15 +1,12 @@
 import axios, { AxiosInstance } from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import DS, { Seeds as Sd } from './DataStore'
 import binaryToDataURI from './binaryToDataURI'
 import createParams from './createParams'
 import untransformData from './untransformData'
 
-export class DataStore extends DS {}
-export type Seeds = Sd
 export const toDataURI = binaryToDataURI
 
-type MockResponse = [number, any?, any?]
+export type MockResponse = [number, any?, any?]
 export const asyncResponse = async (
   status: number,
   query: Promise<any>,

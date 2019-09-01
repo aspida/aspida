@@ -5,7 +5,7 @@
 [![Codecov](https://img.shields.io/codecov/c/github/m-mitsuhide/axios-mock-server.svg)](https://codecov.io/gh/m-mitsuhide/axios-mock-server)
 ![License](https://img.shields.io/npm/l/axios-mock-server)
 
-RESTful mock server using axios-mock-adapter.
+RESTful mock server using axios.
 
 ## Usage
 

@@ -1,7 +1,7 @@
 {
   "name": "axios-mock-server",
   "version": "0.5.0",
-  "description": "RESTful mock server using axios-mock-adapter",
+  "description": "RESTful mock server using axios",
   "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
   "license": "MIT",
   "main": "dist/index.js",
@@ -31,10 +31,8 @@
     "test:watch": "npm test -- --watch"
   },
   "devDependencies": {
-    "@types/busboy": "^0.2.3",
     "@types/jest": "^24.0.18",
     "@types/minimist": "^1.2.0",
-    "@types/nedb": "^1.8.8",
     "@typescript-eslint/eslint-plugin": "^2.0.0",
     "@typescript-eslint/parser": "^2.0.0",
     "axios": "^0.19.0",
@@ -61,7 +59,6 @@
     "axios-mock-adapter": "^1.17.0",
     "chokidar": "^3.0.2",
     "file-type": "^12.2.0",
-    "minimist": "^1.2.0",
-    "nedb": "^1.8.0"
+    "minimist": "^1.2.0"
   }
 }
