@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.4.0...v0.5.0) (2019-09-01)
+
+
+### Bug Fixes
+
+* **main:** transform request data ([1057694](https://github.com/m-mitsuhide/axios-mock-server/commit/1057694))
+
+
+### Features
+
+* **Nedb:** add async methods ([488e9f6](https://github.com/m-mitsuhide/axios-mock-server/commit/488e9f6))
+
 ## [0.4.0](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.3.0...v0.4.0) (2019-08-31)
 
 
