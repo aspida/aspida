@@ -1,21 +1,16 @@
 import axios, { AxiosInstance } from 'axios'
-import MockServer, { MockRoute, DataStore, Seeds, asyncResponse } from '~/src'
+import MockServer, { MockRoute } from '~/src'
 
 describe('initialize', () => {
   const mock = new MockServer()
   let client: AxiosInstance
-  let dataStore: DataStore
 
   beforeEach(() => {
     client = axios.create({ baseURL: 'https://google.com' })
     mock.setClient(client)
-    dataStore = new DataStore()
   })
 
-  afterEach(() => {
-    mock.reset()
-    dataStore.deleteAll()
-  })
+  afterEach(() => mock.reset())
 
   test('enabled mock', async () => {
     const route: MockRoute = []
@@ -27,22 +22,20 @@ describe('initialize', () => {
   test('get', async () => {
     const testPath = '/test'
     const defaultValue = { name: 'test' }
-    const seeds: Seeds = { test: [defaultValue] }
     const route: MockRoute = [
       {
         path: testPath,
         methods: {
-          get: () => asyncResponse(200, dataStore.getCollection('test').asyncFind({}))
+          get: () => [200, [defaultValue]]
         }
       }
     ]
 
-    dataStore.init(seeds)
     mock.setRoute(route)
     const mockedData = await client.get(testPath)
 
     expect(mockedData.data).toHaveLength(1)
-    expect(mockedData.data[0]).toEqual({ ...defaultValue, _id: expect.any(String) })
+    expect(mockedData.data[0]).toEqual(defaultValue)
   })
 
   test('404 request', async () => {
@@ -62,49 +55,46 @@ describe('initialize', () => {
     const testRegPath = '/test/_name'
     const testPath = '/test/sample'
     const defaultValue = { name: 'sample' }
-    const seeds: Seeds = { test: [defaultValue, { name: 'sample2' }] }
+    const seeds = [defaultValue, { name: 'sample2' }]
     const route: MockRoute = [
       {
         path: testRegPath,
         methods: {
-          get: ({ params }) => asyncResponse(200, dataStore.getCollection('test').asyncFind(params))
+          get: ({ params }) => [200, seeds.find(seed => seed.name === params.name)]
         }
       }
     ]
 
-    dataStore.init(seeds)
     mock.setRoute(route)
     const mockedData = await client.get(testPath)
 
-    expect(mockedData.data).toHaveLength(1)
-    expect(mockedData.data[0]).toEqual({ ...defaultValue, _id: expect.any(String) })
+    expect(mockedData.data).toEqual(defaultValue)
   })
 
   test('post with data and params', async () => {
     const testRegPath = '/test/_name'
     const testPath = '/test/sample2'
     const defaultValue = { name: 'sample2', title: 'bbb' }
-    const seeds: Seeds = { test: [{ name: 'sample', title: 'aaa' }] }
+    const seeds = [{ name: 'sample', title: 'aaa' }]
     const route: MockRoute = [
       {
         path: testRegPath,
         methods: {
-          get: ({ params }) =>
-            asyncResponse(200, dataStore.getCollection('test').asyncFind(params)),
-          post: ({ params: { name }, data: { title } }) =>
-            asyncResponse(201, dataStore.getCollection('test').asyncInsert({ name, title }))
+          get: ({ params }) => [200, seeds.find(seed => seed.name === params.name)],
+          post: ({ params: { name }, data: { title } }) => {
+            if (typeof name === 'string') seeds.push({ name, title })
+            return [201, { name, title }]
+          }
         }
       }
     ]
 
-    dataStore.init(seeds)
     mock.setRoute(route)
     const mockedData = await client.post(testPath, { title: 'bbb' })
 
-    expect(mockedData.data).toEqual({ ...defaultValue, _id: expect.any(String) })
+    expect(mockedData.data).toEqual(defaultValue)
 
     const mockedData2 = await client.get(testPath)
-    expect(mockedData2.data).toHaveLength(1)
-    expect(mockedData2.data[0]).toEqual({ ...defaultValue, _id: expect.any(String) })
+    expect(mockedData2.data).toEqual(defaultValue)
   })
 })
