@@ -1,7 +1,6 @@
 import { AxiosInstance, AxiosAdapter, AxiosRequestConfig } from 'axios'
 import settle from 'axios/lib/core/settle'
-
-type MockResponse = [number, any?, any?]
+import { HttpMethod, MockResponse } from './'
 
 const makeResponse = ([status, data, headers]: MockResponse, config: AxiosRequestConfig) => ({
   status,
@@ -10,14 +9,12 @@ const makeResponse = ([status, data, headers]: MockResponse, config: AxiosReques
   config
 })
 
-const VERBS = ['get', 'post', 'head', 'delete', 'patch', 'put'] as const
-type Method = typeof VERBS[number]
 type MockCallback = (config: AxiosRequestConfig) => MockResponse | Promise<MockResponse>
-type HandlersSet = { [key in Method]?: [RegExp, MockCallback][] }
+type HandlersSet = { [key in HttpMethod]?: [RegExp, MockCallback][] }
 
 const findHandler = (config: AxiosRequestConfig, handlersSet: HandlersSet) => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const handlers = handlersSet[config.method!.toLowerCase() as Method]
+  const handlers = handlersSet[config.method!.toLowerCase() as HttpMethod]
   if (!handlers) return
 
   const url =
@@ -36,8 +33,9 @@ const findHandler = (config: AxiosRequestConfig, handlersSet: HandlersSet) => {
 class MockAdapter {
   private originalAdapter?: AxiosAdapter
   private handlersSet: HandlersSet = {}
+  private delayTime = 0
 
-  constructor(private axiosInstance: AxiosInstance, private delayResponse = 0) {
+  constructor(private axiosInstance: AxiosInstance) {
     this.originalAdapter = axiosInstance.defaults.adapter
 
     axiosInstance.defaults.adapter = config =>
@@ -50,23 +48,27 @@ class MockAdapter {
           if (result instanceof Promise) {
             result
               .then(values =>
-                this.callDelay(() => settle(resolve, reject, makeResponse(values, config)))
+                this.delayCall(() => settle(resolve, reject, makeResponse(values, config)))
               )
-              .catch(error => this.callDelay(() => reject(error)))
+              .catch(error => this.delayCall(() => reject(error)))
           } else {
-            this.callDelay(() => settle(resolve, reject, makeResponse(result, config)))
+            this.delayCall(() => settle(resolve, reject, makeResponse(result, config)))
           }
         } else {
-          this.callDelay(() => settle(resolve, reject, { status: 404, config }))
+          this.delayCall(() => settle(resolve, reject, { status: 404, config }))
         }
       })
   }
 
-  private callDelay(callback: () => void) {
-    setTimeout(callback, this.delayResponse)
+  private delayCall(callback: () => void) {
+    setTimeout(callback, this.delayTime)
   }
 
-  public on(method: Method, matcher: RegExp, callback: MockCallback) {
+  public setDelayTime(delayTime: number) {
+    this.delayTime = delayTime
+  }
+
+  public on(method: HttpMethod, matcher: RegExp, callback: MockCallback) {
     this.handlersSet[method] = [...(this.handlersSet[method] || []), [matcher, callback]]
   }
 

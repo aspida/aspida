@@ -6,18 +6,18 @@ import untransformData from './untransformData'
 
 export const toDataURI = binaryToDataURI
 
-export type MockResponse = [number, any?, any?]
+export type MockResponse = [number, any?, { [key: string]: any }?]
 export const asyncResponse = async (
   status: number,
   query: Promise<any>,
   headers?: any
 ): Promise<MockResponse> => [status, await query, headers]
 
-const methodsList = ['get', 'post', 'put', 'delete', 'head', 'patch'] as const
-type Methods = typeof methodsList[number]
+const httpMethods = ['get', 'post', 'put', 'delete', 'head', 'patch'] as const
+export type HttpMethod = typeof httpMethods[number]
 
 export type MockMethods = {
-  [T in Methods]?: ({
+  [T in HttpMethod]?: ({
     config,
     values,
     data
@@ -33,22 +33,26 @@ export type MockRoute = ({
   methods: MockMethods
 })[]
 
-export default class {
-  public adapter!: MockAdapter
+export class MockServer {
+  private adapter!: MockAdapter
 
   constructor(route?: MockRoute, client?: AxiosInstance) {
-    if (route) this.init(route, client)
+    if (route) {
+      this.setClient(client || axios)
+      this.setRoute(route)
+    }
   }
 
   setClient(client: AxiosInstance) {
     this.adapter = new MockAdapter(client)
+    return this
   }
 
   setRoute(route: MockRoute) {
     route.forEach(r => {
       const regPath = new RegExp(`${r.path.replace(/\/_[^/]+/g, '/[^/]+')}$`)
 
-      methodsList.forEach(method => {
+      httpMethods.forEach(method => {
         if (r.methods[method]) {
           this.adapter.on(method, regPath, config =>
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -61,14 +65,24 @@ export default class {
         }
       })
     })
+
+    return this
   }
 
-  init(route: MockRoute, client?: AxiosInstance) {
-    this.setClient(client || axios)
-    this.setRoute(route)
+  setDelayTime(delayTime: number) {
+    this.adapter.setDelayTime(delayTime)
+    return this
+  }
+
+  restore() {
+    this.adapter.restore()
+    return this
   }
 
   reset() {
-    this.adapter.reset()
+    this.setDelayTime(0).adapter.reset()
+    return this
   }
 }
+
+export default (route?: MockRoute, client?: AxiosInstance) => new MockServer(route, client)

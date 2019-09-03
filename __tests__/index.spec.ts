@@ -1,8 +1,8 @@
 import axios, { AxiosInstance } from 'axios'
-import MockServer, { MockRoute } from '~/src'
+import mockServer, { MockRoute } from '~/src'
 
 describe('initialize', () => {
-  const mock = new MockServer()
+  const mock = mockServer()
   let client: AxiosInstance
 
   beforeEach(() => {
