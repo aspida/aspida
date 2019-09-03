@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios'
-import MockAdapter from 'axios-mock-adapter'
+import MockAdapter from './adapter'
 import binaryToDataURI from './binaryToDataURI'
 import createParams from './createParams'
 import untransformData from './untransformData'
@@ -50,10 +50,7 @@ export default class {
 
       methodsList.forEach(method => {
         if (r.methods[method]) {
-          type MockMethod = 'onGet' | 'onPost' | 'onPut' | 'onDelete' | 'onHead' | 'onPatch'
-          const key = `on${method[0].toUpperCase()}${method.slice(1)}` as MockMethod
-
-          this.adapter[key](regPath).reply(({ headers, url, baseURL, data }) =>
+          this.adapter.on(method, regPath, ({ headers, url, baseURL, data }) =>
             r.methods[method]
               ? // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 r.methods[method]!({

@@ -3,7 +3,7 @@ import fs from 'fs'
 const defaultConfig = () => ({
   input: 'mocks',
   target: 'es6' as 'es6' | 'cjs',
-  outputExt: 'ts' as 'js' | 'ts'
+  outputExt: 'js' as 'js' | 'ts'
 })
 
 export default (rcFilePath: string): ReturnType<typeof defaultConfig> =>
