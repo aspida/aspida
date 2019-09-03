@@ -52,6 +52,26 @@ describe('initialize', () => {
   })
 
   test('get with params', async () => {
+    const testPath = '/test'
+    const name = 'mario'
+    const defaultValue = { name }
+    const seeds = [defaultValue, { name: 'taro' }]
+    const route: MockRoute = [
+      {
+        path: testPath,
+        methods: {
+          get: ({ config }) => [200, seeds.find(seed => seed.name === config.params.name)]
+        }
+      }
+    ]
+
+    mock.setRoute(route)
+    const mockedData = await client.get(testPath, { params: { name } })
+
+    expect(mockedData.data).toEqual(defaultValue)
+  })
+
+  test('get with values', async () => {
     const testRegPath = '/test/_name'
     const testPath = '/test/sample'
     const defaultValue = { name: 'sample' }
@@ -60,7 +80,7 @@ describe('initialize', () => {
       {
         path: testRegPath,
         methods: {
-          get: ({ params }) => [200, seeds.find(seed => seed.name === params.name)]
+          get: ({ values }) => [200, seeds.find(seed => seed.name === values.name)]
         }
       }
     ]
@@ -71,7 +91,7 @@ describe('initialize', () => {
     expect(mockedData.data).toEqual(defaultValue)
   })
 
-  test('post with data and params', async () => {
+  test('post with data and values', async () => {
     const testRegPath = '/test/_name'
     const testPath = '/test/sample2'
     const defaultValue = { name: 'sample2', title: 'bbb' }
@@ -80,8 +100,8 @@ describe('initialize', () => {
       {
         path: testRegPath,
         methods: {
-          get: ({ params }) => [200, seeds.find(seed => seed.name === params.name)],
-          post: ({ params: { name }, data: { title } }) => {
+          get: ({ values }) => [200, seeds.find(seed => seed.name === values.name)],
+          post: ({ values: { name }, data: { title } }) => {
             if (typeof name === 'string') seeds.push({ name, title })
             return [201, { name, title }]
           }

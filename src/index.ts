@@ -1,7 +1,7 @@
-import axios, { AxiosInstance } from 'axios'
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 import MockAdapter from './adapter'
 import binaryToDataURI from './binaryToDataURI'
-import createParams from './createParams'
+import createValues from './createValues'
 import untransformData from './untransformData'
 
 export const toDataURI = binaryToDataURI
@@ -18,14 +18,14 @@ type Methods = typeof methodsList[number]
 
 export type MockMethods = {
   [T in Methods]?: ({
-    headers,
-    params,
+    config,
+    values,
     data
   }: {
-    headers: any
-    params: ReturnType<typeof createParams>
+    config: AxiosRequestConfig
+    values: ReturnType<typeof createValues>
     data: any
-  }) => Promise<MockResponse> | MockResponse
+  }) => MockResponse | Promise<MockResponse>
 }
 
 export type MockRoute = ({
@@ -50,15 +50,13 @@ export default class {
 
       methodsList.forEach(method => {
         if (r.methods[method]) {
-          this.adapter.on(method, regPath, ({ headers, url, baseURL, data }) =>
-            r.methods[method]
-              ? // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                r.methods[method]!({
-                  headers,
-                  params: createParams(r.path, url, baseURL),
-                  data: untransformData(data, headers)
-                })
-              : [404]
+          this.adapter.on(method, regPath, config =>
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            r.methods[method]!({
+              config,
+              values: createValues(r.path, config.url, config.baseURL),
+              data: untransformData(config.data, config.headers)
+            })
           )
         }
       })

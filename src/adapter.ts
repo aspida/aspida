@@ -13,7 +13,7 @@ const makeResponse = ([status, data, headers]: MockResponse, config: AxiosReques
 const VERBS = ['get', 'post', 'head', 'delete', 'patch', 'put'] as const
 type Method = typeof VERBS[number]
 type MockCallback = (config: AxiosRequestConfig) => MockResponse | Promise<MockResponse>
-type HandlersSet = { [key in Method]: [RegExp, MockCallback][] }
+type HandlersSet = { [key in Method]?: [RegExp, MockCallback][] }
 
 const findHandler = (config: AxiosRequestConfig, handlersSet: HandlersSet) => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -35,7 +35,7 @@ const findHandler = (config: AxiosRequestConfig, handlersSet: HandlersSet) => {
 
 class MockAdapter {
   private originalAdapter?: AxiosAdapter
-  private handlersSet = {} as HandlersSet
+  private handlersSet: HandlersSet = {}
 
   constructor(private axiosInstance: AxiosInstance, private delayResponse = 0) {
     this.originalAdapter = axiosInstance.defaults.adapter
@@ -75,7 +75,7 @@ class MockAdapter {
   }
 
   public reset() {
-    this.handlersSet = {} as HandlersSet
+    this.handlersSet = {}
   }
 }
 
