@@ -22,7 +22,7 @@ create `.mockserverrc` to project root
 {
   "input": "mocks",
   "target": "es6 | cjs",
-  "outputExt": "ts | js"
+  "outputExt": "js | ts"
 }
 ```
 

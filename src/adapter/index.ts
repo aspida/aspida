@@ -1,65 +1,73 @@
 import { AxiosInstance, AxiosAdapter, AxiosRequestConfig } from 'axios'
 import settle from 'axios/lib/core/settle'
-import { findHandler, isSimpleObject } from './utils'
 
 type MockResponse = [number, any?, any?]
 
 const makeResponse = ([status, data, headers]: MockResponse, config: AxiosRequestConfig) => ({
   status,
-  data: isSimpleObject(data) ? JSON.parse(JSON.stringify(data)) : data,
+  data: data && data.toString() === '[object Object]' ? JSON.parse(JSON.stringify(data)) : data,
   headers,
   config
 })
 
-const VERBS = ['get', 'post', 'head', 'delete', 'patch', 'put', 'options'] as const
-
+const VERBS = ['get', 'post', 'head', 'delete', 'patch', 'put'] as const
+type Method = typeof VERBS[number]
 type MockCallback = (config: AxiosRequestConfig) => MockResponse | Promise<MockResponse>
-type Handlers = { [key in typeof VERBS[number]]: [RegExp, MockCallback][] }
-const getVerbObject = () =>
-  VERBS.reduce((accumulator, verb) => ({ ...accumulator, [verb]: [] }), {} as Handlers)
+type HandlersSet = { [key in Method]: [RegExp, MockCallback][] }
+
+const findHandler = (config: AxiosRequestConfig, handlersSet: HandlersSet) => {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const handlers = handlersSet[config.method!.toLowerCase() as Method]
+  if (!handlers) return
+
+  const url =
+    config.baseURL && config.url && new RegExp(`^${config.baseURL}`).test(config.url)
+      ? config.url.replace(config.baseURL, '')
+      : config.url || ''
+
+  return handlers.find(
+    handler =>
+      handler[0].test(url) ||
+      (config.baseURL &&
+        handler[0].test(`${config.baseURL.replace(/\/+$/, '')}/${url.replace(/^\/+/, '')}`))
+  )
+}
 
 class MockAdapter {
   private originalAdapter?: AxiosAdapter
-  private handlers: Handlers
+  private handlersSet = {} as HandlersSet
 
   constructor(private axiosInstance: AxiosInstance, private delayResponse = 0) {
     this.originalAdapter = axiosInstance.defaults.adapter
-    this.handlers = getVerbObject()
 
     axiosInstance.defaults.adapter = config =>
       new Promise((resolve, reject) => {
-        const handler = findHandler(
-          config,
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          this.handlers[config.method!.toLowerCase() as typeof VERBS[number]]
-        )
+        const handler = findHandler(config, this.handlersSet)
 
         if (handler) {
-          const result: MockResponse | Promise<MockResponse> = handler[1](config)
+          const result = handler[1](config)
 
           if (result instanceof Promise) {
             result
               .then(values =>
-                setTimeout(
-                  () => settle(resolve, reject, makeResponse(values, config)),
-                  this.delayResponse
-                )
+                this.callDelay(() => settle(resolve, reject, makeResponse(values, config)))
               )
-              .catch(error => setTimeout(() => reject(error), this.delayResponse))
+              .catch(error => this.callDelay(() => reject(error)))
           } else {
-            setTimeout(
-              () => settle(resolve, reject, makeResponse(result, config)),
-              this.delayResponse
-            )
+            this.callDelay(() => settle(resolve, reject, makeResponse(result, config)))
           }
         } else {
-          setTimeout(() => settle(resolve, reject, { status: 404, config }), this.delayResponse)
+          this.callDelay(() => settle(resolve, reject, { status: 404, config }))
         }
       })
   }
 
-  public on(method: typeof VERBS[number], matcher: RegExp, callback: MockCallback) {
-    this.handlers[method].push([matcher, callback])
+  private callDelay(callback: () => void) {
+    setTimeout(callback, this.delayResponse)
+  }
+
+  public on(method: Method, matcher: RegExp, callback: MockCallback) {
+    this.handlersSet[method] = [...(this.handlersSet[method] || []), [matcher, callback]]
   }
 
   public restore() {
@@ -67,7 +75,7 @@ class MockAdapter {
   }
 
   public reset() {
-    this.handlers = getVerbObject()
+    this.handlersSet = {} as HandlersSet
   }
 }
 
