@@ -22,20 +22,19 @@ export function run() {
 
   function build() {
     const regMockExtension = /[^($route)]\.(js|ts)$/
-    const mockFilePaths = replacePathSepIfWindows(listFiles(config.input, regMockExtension))
-    const routeString = createRouteString(config.input, config.target, mockFilePaths)
-    fs.writeFileSync(path.join(config.input, `$route.${config.outputExt}`), routeString, 'utf8')
+    const inputs = Array.isArray(config.input) ? config.input : [config.input]
+    inputs.forEach(input => {
+      const mockFilePaths = replacePathSepIfWindows(listFiles(input, regMockExtension))
+      const routeString = createRouteString(input, config.target, mockFilePaths)
+      fs.writeFileSync(path.join(input, `$route.${config.outputExt}`), routeString, 'utf8')
+    })
   }
 
   if (argv.build !== undefined || argv.watch !== undefined) {
     build()
 
     if (argv.watch !== undefined) {
-      chokidar
-        .watch(config.input, {
-          ignored: path.join(config.input, `$route.${config.outputExt}`)
-        })
-        .on('all', build)
+      chokidar.watch(config.input, { ignored: `*/$route.${config.outputExt}` }).on('all', build)
     }
   }
 }
