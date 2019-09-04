@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.6.0...v0.7.0) (2019-09-04)
+
+
+### Bug Fixes
+
+* **adapter:** delete utils.ts ([afdcd82](https://github.com/m-mitsuhide/axios-mock-server/commit/afdcd82))
+* **main:** add values and params ([adb9384](https://github.com/m-mitsuhide/axios-mock-server/commit/adb9384))
+
+
+### Features
+
+* **CLI:** extend multiple input ([bd1cdad](https://github.com/m-mitsuhide/axios-mock-server/commit/bd1cdad))
+* **main:** add factory ([3942401](https://github.com/m-mitsuhide/axios-mock-server/commit/3942401))
+* **main:** delete axios-mock-adapter ([d53aa6c](https://github.com/m-mitsuhide/axios-mock-server/commit/d53aa6c))
+
 ## [0.6.0](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.5.0...v0.6.0) (2019-09-01)
 
 
