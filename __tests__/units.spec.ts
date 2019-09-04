@@ -1,14 +1,13 @@
 import fs from 'fs'
 import path from 'path'
-import binaryToDataURI from '~/src/binaryToDataURI'
-import { asyncResponse } from '~/src'
+import { asyncResponse, toDataURI } from '~/src'
 
 describe('unit tests', () => {
   test('binary to dataURI', () => {
     const imageBinary = fs.readFileSync(path.join(__dirname, './assets/image.png'))
     const imageDataURI = fs.readFileSync(path.join(__dirname, './assets/image.b64'), 'utf-8')
 
-    expect(binaryToDataURI(imageBinary)).toBe(imageDataURI)
+    expect(toDataURI(imageBinary)).toBe(imageDataURI)
   })
 
   test('asyncResponse', async () => {
