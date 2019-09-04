@@ -1,7 +1,7 @@
 import fs from 'fs'
 
 const defaultConfig = () => ({
-  input: 'mocks',
+  input: 'mocks' as string | string[],
   target: 'es6' as 'es6' | 'cjs',
   outputExt: 'js' as 'js' | 'ts'
 })
