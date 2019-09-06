@@ -28,13 +28,17 @@ export function run() {
       const routeString = createRouteString(input, config.target, mockFilePaths)
       fs.writeFileSync(path.join(input, `$route.${config.outputExt}`), routeString, 'utf8')
     })
+
+    console.log(`$route.${config.outputExt} was built successfully.`)
   }
 
   if (argv.build !== undefined || argv.watch !== undefined) {
     build()
 
     if (argv.watch !== undefined) {
-      chokidar.watch(config.input, { ignored: `*/$route.${config.outputExt}` }).on('all', build)
+      chokidar
+        .watch(config.input, { ignoreInitial: true, ignored: `**/$route.${config.outputExt}` })
+        .on('all', build)
     }
   }
 }
