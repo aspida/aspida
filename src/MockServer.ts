@@ -4,6 +4,9 @@ import { HandlersSet, MockRoute, httpMethods } from './types'
 import makeResponse from './makeResponse'
 import findAndCallHandler from './findAndCallHandler'
 
+export const createPathRegExp = (path: string) =>
+  new RegExp(`^${path.replace(/\/_[^/]+/g, '/[^/]+')}$`)
+
 export default class {
   private originalAdapter?: AxiosAdapter
   private handlersSet: HandlersSet = {}
@@ -42,13 +45,13 @@ export default class {
 
   public setRoute(route: MockRoute) {
     route.forEach(r => {
-      const regPath = new RegExp(`${r.path.replace(/\/_[^/]+/g, '/[^/]+')}$`)
+      const pathRegExp = createPathRegExp(r.path)
 
       httpMethods.forEach(method => {
         if (r.methods[method]) {
           this.handlersSet[method] = [
             ...(this.handlersSet[method] || []),
-            [regPath, r.path, r.methods[method]]
+            [pathRegExp, r.path, r.methods[method]]
           ]
         }
       })
