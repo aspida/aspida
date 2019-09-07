@@ -1,5 +1,5 @@
 const createImportPath = (filePath: string, inputDir: string) =>
-  filePath.replace(new RegExp(`^${inputDir}`), '').replace(/\.(ts|js)$/, '')
+  filePath.replace(new RegExp(`^${inputDir}`), '').replace(/(\/index)?\.(ts|js)$/, '')
 const createCondition = (filePath: string, inputDir: string, methods: string) => `
   {
     path: '${createImportPath(filePath, inputDir)}',
