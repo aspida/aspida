@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.8.0](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.7.0...v0.8.0) (2019-09-07)
+
+
+### Bug Fixes
+
+* **chokidar:** change watcher config ([0552255](https://github.com/m-mitsuhide/axios-mock-server/commit/0552255))
+* **test:** add path pattern ([094d526](https://github.com/m-mitsuhide/axios-mock-server/commit/094d526))
+
+
+### Features
+
+* **toDataURI:** delete from repository ([8aa7223](https://github.com/m-mitsuhide/axios-mock-server/commit/8aa7223))
+
 ## [0.7.0](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.6.0...v0.7.0) (2019-09-04)
 
 
