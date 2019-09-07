@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.1](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.8.0...v0.8.1) (2019-09-07)
+
+
+### Bug Fixes
+
+* **CLI:** change path '/aaa/index.js' to '/aaa' ([3667fda](https://github.com/m-mitsuhide/axios-mock-server/commit/3667fda))
+
 ## [0.8.0](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.7.0...v0.8.0) (2019-09-07)
 
 
