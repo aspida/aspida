@@ -54,6 +54,9 @@ jobs:
           name: Run lint
           command: npm run lint
       - run:
+          name: Run type tests
+          command: npm run test:types
+      - run:
           name: Run tests
           command: npm test -- --coverage
       - run:
