@@ -1,4 +1,4 @@
-import axios, { AxiosAdapter, AxiosInstance } from 'axios'
+import axios, { AxiosInstance } from 'axios'
 import settle from 'axios/lib/core/settle'
 import { HandlersSet, MockRoute, httpMethods } from './types'
 import makeResponse from './makeResponse'
@@ -8,7 +8,6 @@ export const createPathRegExp = (path: string) =>
   new RegExp(`^${path.replace(/\/_[^/]+/g, '/[^/]+')}$`)
 
 export default class {
-  private originalAdapter?: AxiosAdapter
   private handlersSet: HandlersSet = {}
   private delayTime = 0
 
@@ -21,8 +20,6 @@ export default class {
   }
 
   public setClient(client: AxiosInstance) {
-    this.originalAdapter = client.defaults.adapter
-
     client.defaults.adapter = config =>
       new Promise((resolve, reject) => {
         const result = findAndCallHandler(config, this.handlersSet)
@@ -62,11 +59,6 @@ export default class {
 
   public setDelayTime(delayTime: number) {
     this.delayTime = delayTime
-    return this
-  }
-
-  public restore() {
-    if (this.client) this.client.defaults.adapter = this.originalAdapter
     return this
   }
 
