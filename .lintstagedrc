@@ -1,5 +1,5 @@
 {
-  "*.ts": ["tsc --noEmit"],
+  "*.ts": ["tslint --project ."],
   "*.{js,ts}": ["eslint --fix --no-ignore", "git add"],
   "*.{json,md,yml}": ["prettier --write", "git add"]
 }
