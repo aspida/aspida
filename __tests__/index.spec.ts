@@ -92,4 +92,24 @@ describe('initialize', () => {
 
     expect(mockedData.data).toEqual(name)
   })
+
+  test('set delayTime', async () => {
+    const delayTime = 500
+    const testPath = '/test'
+    const route: MockRoute = [
+      {
+        path: testPath,
+        methods: { get: () => [204] }
+      }
+    ]
+
+    mock.setRoute(route).setDelayTime(delayTime)
+    const startTime = Date.now()
+
+    await client.get(testPath)
+
+    const elapsedTime = Date.now() - startTime
+    expect(elapsedTime).toBeGreaterThanOrEqual(delayTime)
+    expect(elapsedTime).toBeLessThan(elapsedTime + 20)
+  })
 })
