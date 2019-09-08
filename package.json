@@ -1,6 +1,6 @@
 {
   "name": "axios-mock-server",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "description": "RESTful mock server using axios",
   "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
   "license": "MIT",
@@ -28,9 +28,13 @@
     "lint": "eslint --ext .js,.ts --ignore-path .gitignore .",
     "lint:fix": "npm run lint -- --fix",
     "test": "jest",
-    "test:watch": "npm test -- --watch"
+    "test:watch": "npm test -- --watch",
+    "test:types": "tsc --noEmit",
+    "test:types:watch": "tsc --watch --noEmit"
   },
   "devDependencies": {
+    "@commitlint/cli": "^8.1.0",
+    "@commitlint/config-conventional": "^8.1.0",
     "@types/jest": "^24.0.18",
     "@types/minimist": "^1.2.0",
     "@typescript-eslint/eslint-plugin": "^2.1.0",
