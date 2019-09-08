@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.9.0](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.8.1...v0.9.0) (2019-09-08)
+
+
+### Features
+
+* **mockserver:** remove 'restore' method ([bb186f9](https://github.com/m-mitsuhide/axios-mock-server/commit/bb186f9))
+
 ### [0.8.1](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.8.0...v0.8.1) (2019-09-07)
 
 
