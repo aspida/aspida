@@ -66,7 +66,8 @@ describe('unit tests', () => {
       expect(findHandler(config, handlersSet)).toBe(
         resultIndex === undefined
           ? undefined
-          : handlersSet[config.method as HttpMethod]![resultIndex]
+          : // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            handlersSet[config.method as HttpMethod]![resultIndex]
       )
     )
   })
