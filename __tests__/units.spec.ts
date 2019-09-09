@@ -84,6 +84,7 @@ describe('unit tests', () => {
       { url: '//apple.com/aa/bb', baseURL: 'https://google.com/', result: '/aa/bb' },
       { url: '/aa/bb', baseURL: undefined, result: '/aa/bb' },
       { url: '/cc/dd', baseURL: '/aa/bb', result: '/aa/bb/cc/dd' },
+      { url: undefined, baseURL: 'https://google.com/abc/', result: '/abc' },
       { url: undefined, baseURL: undefined, result: '' }
     ]
 
