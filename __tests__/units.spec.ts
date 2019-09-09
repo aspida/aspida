@@ -9,7 +9,7 @@ import createRelativePath from '~/src/createRelativePath'
 describe('unit tests', () => {
   test('createValues', () => {
     const list: {
-      conditions: [string, string, string?]
+      conditions: [string, string?, string?]
       values: { [key: string]: string | number }
     }[] = [
       {
@@ -19,6 +19,10 @@ describe('unit tests', () => {
       {
         conditions: ['/aa/_bb/cc/_dd', '/hoge/cc/123', 'http://google.com/aa'],
         values: { bb: 'hoge', dd: 123 }
+      },
+      {
+        conditions: ['/aa/_bb', undefined, 'http://google.com/aa/123/'],
+        values: { bb: 123 }
       }
     ]
 

@@ -24,8 +24,9 @@ export default class {
   public setClient(client: AxiosInstance) {
     client.defaults.adapter = config =>
       new Promise((resolve, reject) => {
-        if (this.needsLog)
+        if (this.needsLog) {
           console.log(`${config.method}: ${createRelativePath(config.url, config.baseURL)}`)
+        }
 
         const result = findAndCallHandler(config, this.handlersSet)
 
