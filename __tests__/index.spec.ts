@@ -36,6 +36,23 @@ describe('initialize', () => {
     expect(data).not.toBe(defaultValue)
   })
 
+  test('get without baseURL', async () => {
+    const axiosInstance = axios.create()
+    const testPath = '/test'
+    const defaultValue = { name: 'test' }
+    const route: MockRoute = [
+      {
+        path: testPath,
+        methods: { get: () => [200, defaultValue] }
+      }
+    ]
+
+    mockServer(route, axiosInstance)
+    const { data } = await axiosInstance.get(testPath)
+
+    expect(data).toEqual(defaultValue)
+  })
+
   test('404 request', async () => {
     const testPath = '/test'
     const route: MockRoute = [{ path: testPath, methods: {} }]
