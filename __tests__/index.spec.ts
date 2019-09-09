@@ -167,6 +167,8 @@ describe('initialize', () => {
   test('async methods', async () => {
     const testPath = '/test'
     const name = 'mario'
+    const errorStatus = 500
+    const errorMessage = 'error test'
     const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
     const route: MockRoute = [
       {
@@ -178,7 +180,11 @@ describe('initialize', () => {
           },
           async post() {
             await sleep(100)
-            return [500] as MockResponse
+            return [errorStatus] as MockResponse
+          },
+          async put() {
+            await sleep(100)
+            throw new Error(errorMessage)
           }
         }
       }
@@ -189,6 +195,7 @@ describe('initialize', () => {
 
     expect(data).toEqual(name)
 
-    await expect(client.post(testPath)).rejects.toHaveProperty('response.status', 500)
+    await expect(client.post(testPath)).rejects.toHaveProperty('response.status', errorStatus)
+    await expect(client.put(testPath)).rejects.toHaveProperty('message', errorMessage)
   })
 })
