@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios'
-import mockServer, { MockRoute } from '~/src'
+import mockServer, { MockRoute, MockResponse } from '~/src'
 
 describe('initialize', () => {
   const mock = mockServer()
@@ -162,5 +162,33 @@ describe('initialize', () => {
     const elapsedTime = Date.now() - startTime
     expect(elapsedTime).toBeGreaterThanOrEqual(delayTime)
     expect(elapsedTime).toBeLessThan(elapsedTime + 20)
+  })
+
+  test('async methods', async () => {
+    const testPath = '/test'
+    const name = 'mario'
+    const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+    const route: MockRoute = [
+      {
+        path: testPath,
+        methods: {
+          async get({ config }) {
+            await sleep(100)
+            return [200, config.params.name] as MockResponse
+          },
+          async post() {
+            await sleep(100)
+            return [500] as MockResponse
+          }
+        }
+      }
+    ]
+
+    mock.setRoute(route)
+    const { data } = await client.get(testPath, { params: { name } })
+
+    expect(data).toEqual(name)
+
+    await expect(client.post(testPath)).rejects.toHaveProperty('response.status', 500)
   })
 })
