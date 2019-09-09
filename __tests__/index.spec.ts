@@ -30,10 +30,10 @@ describe('initialize', () => {
     ]
 
     mock.setRoute(route)
-    const mockedData = await client.get(testPath)
+    const { data } = await client.get(testPath)
 
-    expect(mockedData.data).toEqual(defaultValue)
-    expect(mockedData.data).not.toBe(defaultValue)
+    expect(data).toEqual(defaultValue)
+    expect(data).not.toBe(defaultValue)
   })
 
   test('404 request', async () => {
@@ -55,9 +55,9 @@ describe('initialize', () => {
     ]
 
     mock.setRoute(route)
-    const mockedData = await client.get(testPath, { params: { name } })
+    const { data } = await client.get(testPath, { params: { name } })
 
-    expect(mockedData.data).toEqual(name)
+    expect(data).toEqual(name)
   })
 
   test('get with values', async () => {
@@ -72,9 +72,9 @@ describe('initialize', () => {
     ]
 
     mock.setRoute(route)
-    const mockedData = await client.get(testPath)
+    const { data } = await client.get(testPath)
 
-    expect(mockedData.data).toEqual(name)
+    expect(data).toEqual(name)
   })
 
   test('post with data', async () => {
@@ -88,9 +88,60 @@ describe('initialize', () => {
     ]
 
     mock.setRoute(route)
-    const mockedData = await client.post(testPath, { name })
+    const { data } = await client.post(testPath, { name })
 
-    expect(mockedData.data).toEqual(name)
+    expect(data).toEqual(name)
+  })
+
+  test('post with data by x-www-form-urlencoded', async () => {
+    const testPath = '/test'
+    const name = 'mario'
+    const params = new URLSearchParams()
+    params.append('name', name)
+
+    const route: MockRoute = [
+      {
+        path: testPath,
+        methods: { post: ({ data }) => [201, data.get('name')] }
+      }
+    ]
+
+    mock.setRoute(route)
+    const { data } = await client.post(testPath, params)
+
+    expect(data).toEqual(name)
+  })
+
+  test('put with data', async () => {
+    const testPath = '/test'
+    const name = 'mario'
+    const route: MockRoute = [
+      {
+        path: testPath,
+        methods: { put: ({ data: { name } }) => [200, name] }
+      }
+    ]
+
+    mock.setRoute(route)
+    const { data } = await client.put(testPath, { name })
+
+    expect(data).toEqual(name)
+  })
+
+  test('delete with data', async () => {
+    const testPath = '/test'
+    const name = 'mario'
+    const route: MockRoute = [
+      {
+        path: testPath,
+        methods: { delete: ({ data: { name } }) => [200, name] }
+      }
+    ]
+
+    mock.setRoute(route)
+    const { data } = await client.delete(testPath, { data: { name } })
+
+    expect(data).toEqual(name)
   })
 
   test('set delayTime', async () => {

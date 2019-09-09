@@ -4,6 +4,7 @@ import { asyncResponse } from '~/src'
 import createValues from '~/src/createValues'
 import findHandler from '~/src/findHandler'
 import { createPathRegExp } from '~/src/MockServer'
+import createRelativePath from '~/src/createRelativePath'
 
 describe('unit tests', () => {
   test('createValues', () => {
@@ -76,5 +77,16 @@ describe('unit tests', () => {
     const result = [200, { test: 'aaa' }, { 'cache-control': 'max-age=0' }] as const
     const res = await asyncResponse(result[0], (async () => result[1])(), result[2])
     expect(res).toEqual(result)
+  })
+
+  test('createRelativePath', () => {
+    const paths = [
+      { url: '//apple.com/aa/bb', baseURL: 'https://google.com/', result: '/aa/bb' },
+      { url: '/aa/bb', baseURL: undefined, result: '/aa/bb' },
+      { url: '/cc/dd', baseURL: '/aa/bb', result: '/aa/bb/cc/dd' },
+      { url: undefined, baseURL: undefined, result: '' }
+    ]
+
+    paths.forEach(path => expect(createRelativePath(path.url, path.baseURL)).toBe(path.result))
   })
 })
