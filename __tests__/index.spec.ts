@@ -36,6 +36,23 @@ describe('initialize', () => {
     expect(data).not.toBe(defaultValue)
   })
 
+  test('get without baseURL', async () => {
+    const axiosInstance = axios.create()
+    const testPath = '/test'
+    const defaultValue = { name: 'test' }
+    const route: MockRoute = [
+      {
+        path: testPath,
+        methods: { get: () => [200, defaultValue] }
+      }
+    ]
+
+    mockServer(route, axiosInstance)
+    const { data } = await axiosInstance.get(testPath)
+
+    expect(data).toEqual(defaultValue)
+  })
+
   test('404 request', async () => {
     const testPath = '/test'
     const route: MockRoute = [{ path: testPath, methods: {} }]
@@ -197,5 +214,30 @@ describe('initialize', () => {
 
     await expect(client.post(testPath)).rejects.toHaveProperty('response.status', errorStatus)
     await expect(client.put(testPath)).rejects.toHaveProperty('message', errorMessage)
+  })
+
+  test('enable log', async () => {
+    const spyLog = jest.spyOn(console, 'log')
+    const testPath = '/test'
+    const route: MockRoute = [
+      {
+        path: testPath,
+        methods: { get: () => [204] }
+      }
+    ]
+
+    spyLog.mockImplementation(x => x)
+    mock.setRoute(route).enableLog()
+    await client.get(testPath)
+
+    expect(console.log).toHaveBeenCalled()
+
+    spyLog.mockReset()
+    mock.disableLog()
+    await client.get(testPath)
+    expect(console.log).not.toHaveBeenCalled()
+
+    spyLog.mockReset()
+    spyLog.mockRestore()
   })
 })
