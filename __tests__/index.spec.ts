@@ -215,4 +215,29 @@ describe('initialize', () => {
     await expect(client.post(testPath)).rejects.toHaveProperty('response.status', errorStatus)
     await expect(client.put(testPath)).rejects.toHaveProperty('message', errorMessage)
   })
+
+  test('enable log', async () => {
+    const spyLog = jest.spyOn(console, 'log')
+    const testPath = '/test'
+    const route: MockRoute = [
+      {
+        path: testPath,
+        methods: { get: () => [204] }
+      }
+    ]
+
+    spyLog.mockImplementation(x => x)
+    mock.setRoute(route).enableLog()
+    await client.get(testPath)
+
+    expect(console.log).toHaveBeenCalled()
+
+    spyLog.mockReset()
+    mock.disableLog()
+    await client.get(testPath)
+    expect(console.log).not.toHaveBeenCalled()
+
+    spyLog.mockReset()
+    spyLog.mockRestore()
+  })
 })
