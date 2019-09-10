@@ -53,6 +53,25 @@ describe('initialize', () => {
     expect(data).toEqual(defaultValue)
   })
 
+  test('get with query and params', async () => {
+    const response = { name: 'mario', height: 155, color: 'red' }
+    const testPath = '/test'
+    const route: MockRoute = [
+      {
+        path: testPath,
+        methods: { get: ({ params }) => [200, params] }
+      }
+    ]
+
+    mock.setRoute(route)
+    const { data } = await client.get(
+      `${testPath}?height=${response.height}&color=${response.color}`,
+      { params: { name: response.name } }
+    )
+
+    expect(data).toEqual(response)
+  })
+
   test('404 request', async () => {
     const testPath = '/test'
     const route: MockRoute = [{ path: testPath, methods: {} }]
@@ -67,7 +86,7 @@ describe('initialize', () => {
     const route: MockRoute = [
       {
         path: testPath,
-        methods: { get: ({ config }) => [200, config.params.name] }
+        methods: { get: ({ params }) => [200, params.name] }
       }
     ]
 
@@ -191,11 +210,11 @@ describe('initialize', () => {
       {
         path: testPath,
         methods: {
-          async get({ config }) {
+          async get({ params }) {
             await sleep(100)
             return {
               status: 200,
-              data: config.params.name,
+              data: params.name,
               headers: { 'cache-control': 'max-age=0' }
             }
           },

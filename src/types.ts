@@ -1,5 +1,6 @@
 import { AxiosRequestConfig } from 'axios'
 import createValues from './createValues'
+import compositeParams from './compositeParams'
 
 export const httpMethods = ['get', 'post', 'put', 'delete', 'head', 'patch'] as const
 
@@ -13,10 +14,12 @@ export type MockMethods = {
   [T in HttpMethod]?: ({
     config,
     values,
+    params,
     data
   }: {
     config: AxiosRequestConfig
     values: ReturnType<typeof createValues>
+    params: ReturnType<typeof compositeParams>
     data: any
   }) => MockResponse | Promise<MockResponse>
 }
