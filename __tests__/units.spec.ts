@@ -62,6 +62,12 @@ describe('unit tests', () => {
           ]
         },
         resultIndex: 1
+      },
+      {
+        method: undefined,
+        path: '/aa',
+        handlersSet: { get: [[createPathRegExp('/aa'), '/aa', () => [200]]] },
+        resultIndex: undefined
       }
     ]
 
