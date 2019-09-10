@@ -1,9 +1,11 @@
+import { AxiosRequestConfig } from 'axios'
 import { HandlersSet, HttpMethod } from '~/src/types'
 import { asyncResponse } from '~/src'
 import createValues from '~/src/createValues'
 import findHandler from '~/src/findHandler'
 import { createPathRegExp } from '~/src/MockServer'
 import createRelativePath from '~/src/createRelativePath'
+import createLogString from '~/src/createLogString'
 
 describe('unit tests', () => {
   test('createValues', () => {
@@ -89,5 +91,44 @@ describe('unit tests', () => {
     ]
 
     paths.forEach(path => expect(createRelativePath(path.url, path.baseURL)).toBe(path.result))
+  })
+
+  test('createLogString', () => {
+    const configs = [
+      {
+        config: {
+          method: 'get',
+          url: '/bb/?cc=123',
+          baseURL: '//google.com/aa'
+        },
+        result: '[mock] get: /aa/bb/?cc=123'
+      },
+      {
+        config: {
+          method: 'post',
+          url: '/bb/?cc=123',
+          params: { dd: 'abc' }
+        },
+        result: '[mock] post: /bb/?cc=123&dd=abc'
+      },
+      {
+        config: {
+          method: 'put',
+          baseURL: '//google.com/aa',
+          params: { dd: 'abc' }
+        },
+        result: '[mock] put: /aa/?dd=abc'
+      },
+      {
+        config: {
+          method: 'delete',
+          url: '?aa=123',
+          params: { bb: 'abc' }
+        },
+        result: '[mock] delete: /?aa=123&bb=abc'
+      }
+    ]
+
+    configs.forEach(c => expect(createLogString(c.config as AxiosRequestConfig)).toBe(c.result))
   })
 })
