@@ -5,7 +5,9 @@ export const httpMethods = ['get', 'post', 'put', 'delete', 'head', 'patch'] as 
 
 export type HttpMethod = typeof httpMethods[number]
 
-export type MockResponse = [number, any?, { [key: string]: any }?]
+export type MockResponse =
+  | [number, any?, { [key: string]: any }?]
+  | { status: number; data?: any; headers?: { [key: string]: any } }
 
 export type MockMethods = {
   [T in HttpMethod]?: ({
