@@ -1,0 +1,4 @@
+{
+  "exec": "node src/index.js",
+  "watch": ["src", "mocks/$route.js"]
+}
