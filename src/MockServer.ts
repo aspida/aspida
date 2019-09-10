@@ -1,9 +1,9 @@
 import axios, { AxiosInstance } from 'axios'
 import settle from 'axios/lib/core/settle'
 import { HandlersSet, MockRoute, httpMethods } from './types'
+import createLogString from './createLogString'
 import makeResponse from './makeResponse'
 import findAndCallHandler from './findAndCallHandler'
-import createRelativePath from './createRelativePath'
 
 export const createPathRegExp = (path: string) =>
   new RegExp(`^${path.replace(/\/_[^/]+/g, '/[^/]+')}$`)
@@ -24,9 +24,7 @@ export default class {
   public setClient(client: AxiosInstance) {
     client.defaults.adapter = config =>
       new Promise((resolve, reject) => {
-        if (this.needsLog) {
-          console.log(`${config.method}: ${createRelativePath(config.url, config.baseURL)}`)
-        }
+        if (this.needsLog) console.log(createLogString(config))
 
         const result = findAndCallHandler(config, this.handlersSet)
 

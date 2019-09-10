@@ -1,9 +1,7 @@
-import createRelativePath from './createRelativePath'
-
-export default (path: string, url = '', baseURL?: string) => {
+export default (path: string, relativePath: string) => {
   const values: { [key: string]: string | number } = {}
   const dirList = path.split('/')
-  const parsedRequestUrl = createRelativePath(url, baseURL).split('/')
+  const parsedRequestUrl = relativePath.split('/')
 
   parsedRequestUrl.forEach((dir, i) => {
     if (dirList[i].startsWith('_')) {
