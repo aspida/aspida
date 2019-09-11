@@ -1,9 +1,18 @@
 import { AxiosRequestConfig } from 'axios'
 import { MockResponse } from './types'
 
-export default ([status, data, headers]: MockResponse, config: AxiosRequestConfig) => ({
-  status,
-  data: data && data.toString() === '[object Object]' ? JSON.parse(JSON.stringify(data)) : data,
-  headers,
-  config
-})
+const copyData = (data?: any) =>
+  data && data.toString() === '[object Object]' ? JSON.parse(JSON.stringify(data)) : data
+const arrayToObj = (mockRes: MockResponse) =>
+  Array.isArray(mockRes) ? { status: mockRes[0], data: mockRes[1], headers: mockRes[2] } : mockRes
+
+export default (mockRes: MockResponse, config: AxiosRequestConfig) => {
+  const { status, data, headers } = arrayToObj(mockRes)
+
+  return {
+    status,
+    data: copyData(data),
+    headers,
+    config
+  }
+}

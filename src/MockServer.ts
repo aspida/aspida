@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from 'axios'
 import settle from 'axios/lib/core/settle'
 import { HandlersSet, MockRoute, httpMethods } from './types'
+import createLogString from './createLogString'
 import makeResponse from './makeResponse'
 import findAndCallHandler from './findAndCallHandler'
 
@@ -10,8 +11,9 @@ export const createPathRegExp = (path: string) =>
 export default class {
   private handlersSet: HandlersSet = {}
   private delayTime = 0
+  private needsLog = false
 
-  constructor(route?: MockRoute, private client?: AxiosInstance) {
+  constructor(route?: MockRoute, client?: AxiosInstance) {
     if (route) this.setClient(client || axios).setRoute(route)
   }
 
@@ -22,6 +24,8 @@ export default class {
   public setClient(client: AxiosInstance) {
     client.defaults.adapter = config =>
       new Promise((resolve, reject) => {
+        if (this.needsLog) console.log(createLogString(config))
+
         const result = findAndCallHandler(config, this.handlersSet)
 
         if (!result) {
@@ -63,8 +67,18 @@ export default class {
   }
 
   public reset() {
-    this.setDelayTime(0)
+    this.setDelayTime(0).disableLog()
     this.handlersSet = {}
+    return this
+  }
+
+  public enableLog() {
+    this.needsLog = true
+    return this
+  }
+
+  public disableLog() {
+    this.needsLog = false
     return this
   }
 }
