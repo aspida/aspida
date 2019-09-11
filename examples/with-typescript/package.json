@@ -1,0 +1,21 @@
+{
+  "name": "with-typescript",
+  "private": true,
+  "scripts": {
+    "dev": "npm-run-all mock:build --parallel watch mock:watch",
+    "build": "axios-mock-server --build && tsc",
+    "watch": "nodemon",
+    "type-check": "tsc --noEmit",
+    "mock:build": "axios-mock-server --build",
+    "mock:watch": "axios-mock-server --watch"
+  },
+  "dependencies": {
+    "axios": "^0.19.0"
+  },
+  "devDependencies": {
+    "axios-mock-server": "latest",
+    "nodemon": "^1.19.2",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^3.6.3"
+  }
+}

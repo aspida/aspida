@@ -106,3 +106,10 @@ sw.*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+
+### Miscellaneous
+
+# examples directory
+examples/**/$route.*
+examples/**/package-lock.json
