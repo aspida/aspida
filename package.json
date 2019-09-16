@@ -33,7 +33,7 @@
     "test:types:watch": "tsc --watch --noEmit"
   },
   "devDependencies": {
-    "@commitlint/cli": "^8.1.0",
+    "@commitlint/cli": "^8.2.0",
     "@commitlint/config-conventional": "^8.1.0",
     "@types/jest": "^24.0.18",
     "@types/minimist": "^1.2.0",
