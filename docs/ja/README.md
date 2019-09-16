@@ -204,13 +204,14 @@ axios-mock-server は **ブラウザーでの利用** から **データの永�
   ブラウザーでの使用例
 - **[node](https://github.com/m-mitsuhide/axios-mock-server/tree/develop/examples/node)**:
   [Node.js][nodejs]（CommonJS）での使用例
+- **[with-nuxtjs](https://github.com/m-mitsuhide/axios-mock-server/tree/develop/examples/with-nuxtjs)**:
+  [Nuxt.js][nuxtjs] での使用例
 - **[with-typescript](https://github.com/m-mitsuhide/axios-mock-server/tree/develop/examples/with-typescript)**:
   [TypeScript][typescript] での使用例
 
 **WIP**
 
 - with-in-memory-database
-- with-nuxtjs
 
 </details>
 
@@ -349,13 +350,15 @@ import route from './mocks/$route.js'
 
 const mock = mockServer(route)
 
-// 有効にする
-mock.enableLog()
-axios.get('/foo', { baseURL: 'https://example.com/api', params: { bar: 'baz' } }) // 標準出力 -> [mock] get: /api/foo/?bar=baz
+;(async () => {
+  // 有効にする
+  mock.enableLog()
+  await axios.get('/foo', { baseURL: 'https://example.com/api', params: { bar: 'baz' } }) // 標準出力 -> [mock] get: /api/foo/?bar=baz
 
-// 無効にする
-mock.disableLog()
-axios.get('/foo', { baseURL: 'https://example.com/api', params: { bar: 'baz' } }) // 標準出力 ->
+  // 無効にする
+  mock.disableLog()
+  await axios.get('/foo', { baseURL: 'https://example.com/api', params: { bar: 'baz' } }) // 標準出力 ->
+})()
 ```
 
 ### 注意事項

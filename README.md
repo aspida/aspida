@@ -204,13 +204,14 @@ See [examples][axios-mock-server-examples] for source code.
   Use in browser
 - **[node](https://github.com/m-mitsuhide/axios-mock-server/tree/develop/examples/node)**:
   Use in [Node.js][nodejs] (CommonJS)
+- **[with-nuxtjs](https://github.com/m-mitsuhide/axios-mock-server/tree/develop/examples/with-nuxtjs)**:
+  Using with a [Nuxt.js][nuxtjs]
 - **[with-typescript](https://github.com/m-mitsuhide/axios-mock-server/tree/develop/examples/with-typescript)**:
   Using with a [TypeScript][typescript]
 
 **WIP**
 
 - with-in-memory-database
-- with-nuxtjs
 
 </details>
 
@@ -349,13 +350,15 @@ import route from './mocks/$route.js'
 
 const mock = mockServer(route)
 
-// To enable
-mock.enableLog()
-axios.get('/foo', { baseURL: 'https://example.com/api', params: { bar: 'baz' } }) // stdout -> [mock] get: /api/foo/?bar=baz
+;(async () => {
+  // To enable
+  mock.enableLog()
+  await axios.get('/foo', { baseURL: 'https://example.com/api', params: { bar: 'baz' } }) // stdout -> [mock] get: /api/foo/?bar=baz
 
-// To disable
-mock.disableLog()
-axios.get('/foo', { baseURL: 'https://example.com/api', params: { bar: 'baz' } }) // stdout ->
+  // To disable
+  mock.disableLog()
+  await axios.get('/foo', { baseURL: 'https://example.com/api', params: { bar: 'baz' } }) // stdout ->
+})()
 ```
 
 ### Cautions
