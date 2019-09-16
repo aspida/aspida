@@ -13,7 +13,7 @@
 [![Dependabot Status][badge-dependabot]][dependabot]
 [![License][badge-license]][axios-mock-server-license]
 
-[axios][axios] を使って RESTful API のモックサーバーを簡単かつ高速に作成することができます。
+[axios][axios] を使った RESTful API のモックサーバー。
 
 <details>
 <summary><b>目次</b></summary>
@@ -52,7 +52,7 @@ Please set the `githubCompatibility` option to `true`.
 
 ## 特徴
 
-- `GET` / `POST` / `PUT` / `DELETE` の API エンドポイントを数行で作成できます。
+- `GET`/`POST`/`PUT`/`DELETE` の API エンドポイントを数行で作成できます。
 - 専用のサーバーは不要です。
 - 静的な [JavaScript][javascript] ファイルとして SPA でも動作します。
 - [Node.js][nodejs] の環境でも [axios][axios] をモックにすることができます。
@@ -95,18 +95,22 @@ $ mkdir mocks
 次に `mocks` ディレクトリの中に API のエンドポイントとなるファイルを作成します。  
 `GET` リクエストでユーザーの基本情報を取得する API をモックとして定義してみましょう。
 
-`mocks/users` ディレクトリを作り `_userId.js` を作成します。
+`mocks/users` ディレクトリを作り `_userId.js` ファイルを作成します。
 
 ```sh
 $ mkdir mocks/users
 $ touch mocks/users/_userId.js
+
+# Windows の場合（コマンド プロンプト）
+> mkdir mocks\users
+> echo. > mocks\users\_userId.js
 ```
 
-`mocks/users/_userId.js` には以下の記述を追加します。
+`mocks/users/_userId.js` のファイルには以下の記述を追加します。
 
 <!-- prettier-ignore -->
 ```js
-// file: 'mocks/users/_userId.js'
+// ファイル: 'mocks/users/_userId.js'
 const users = [{ id: 0, name: 'foo' }, { id: 1, name: 'bar' }]
 
 module.exports = {
@@ -120,7 +124,7 @@ axios-mock-server のルーティングは [Nuxt.js][nuxtjs] のルーティン�
 
 参考: [Routing - Nuxt.js][nuxtjs-routing]
 
-つまり `mocks/users/_userId.js` は `/users/:userId` として、**動的なルーティングを利用したエンドポイントを定義することができます。**
+つまり `mocks/users/_userId.js` のファイルは `/users/:userId` のパスとして、**動的なルーティングを利用したエンドポイントを定義することができます。**
 
 #### API のビルド
 
@@ -129,12 +133,18 @@ CommonJS の形でファイルを生成する場合は、事前に `.mockserverr
 
 ```sh
 $ echo "{\"target\": \"cjs\"}" > .mockserverrc
+
+# Windows の場合（コマンド プロンプト）
+> echo {"target": "cjs"} > .mockserverrc
 ```
 
 コマンドラインから axios-mock-server に `--build` オプションを渡してビルドを開始します。
 
 ```sh
 $ node_modules/.bin/axios-mock-server --build
+
+# Windows の場合（コマンド プロンプト）
+> node_modules\.bin\axios-mock-server --build
 ```
 
 ビルドが成功すると `$route.js` ファイルが `mocks` ディレクトリの中に生成されています。
@@ -147,6 +157,9 @@ module.exports = [
     methods: require('./users/_userId')
   }
 ]
+
+# Windows の場合（コマンド プロンプト）
+> type mocks\$route.js
 ```
 
 #### axios のモック化
@@ -156,7 +169,7 @@ axios-mock-server はデフォルトで [axios][axios] のすべての通信を�
 
 <!-- prettier-ignore -->
 ```js
-// file: 'index.js'
+// ファイル: 'index.js'
 const axios = require('axios')
 const mockServer = require('axios-mock-server')
 const route = require('./mocks/$route.js')
@@ -180,18 +193,18 @@ $ node index.js
 ### 使用例
 
 axios-mock-server は **ブラウザーでの利用** から **データの永続化**、 **`multipart/form-data` 形式の通信** までモックにすることができます。  
-また、 **[Nuxt.js][nuxtjs]（[@nuxtjs/axios][nuxtjs-axios]） との連携** も簡単です。
+また、**[Nuxt.js][nuxtjs]（[@nuxtjs/axios][nuxtjs-axios]） との連携** も簡単です。
 
 ソースコードは [examples][axios-mock-server-examples] を参照してください。
 
 <details>
-<summary><b>使用例の一覧をみる</b></summary>
+<summary><b>使用例の一覧を見る</b></summary>
 
-- [browser](https://github.com/m-mitsuhide/axios-mock-server/tree/develop/examples/browser):
+- **[browser](https://github.com/m-mitsuhide/axios-mock-server/tree/develop/examples/browser)**:
   ブラウザーでの使用例
-- [node](https://github.com/m-mitsuhide/axios-mock-server/tree/develop/examples/node):
+- **[node](https://github.com/m-mitsuhide/axios-mock-server/tree/develop/examples/node)**:
   [Node.js][nodejs]（CommonJS）での使用例
-- [with-typescript](https://github.com/m-mitsuhide/axios-mock-server/tree/develop/examples/with-typescript):
+- **[with-typescript](https://github.com/m-mitsuhide/axios-mock-server/tree/develop/examples/with-typescript)**:
   [TypeScript][typescript] での使用例
 
 **WIP**
@@ -273,7 +286,7 @@ import route from './mocks/$route.js'
 
 mockServer(route)
 
-axios.get('https://example.com/api/foo').then((response) => {
+axios.get('https://example.com/api/foo').then(response => {
   /* ... */
 })
 ```
@@ -292,12 +305,12 @@ const client = axios.create({ baseURL: 'https://example.com/api' })
 
 mockServer(route, client)
 
-client.get('/foo').then((response) => {
+client.get('/foo').then(response => {
   /* ... */
 })
 
 // axios はモックされません
-axios.get('https://example.com/api/foo').catch((error) => {
+axios.get('https://example.com/api/foo').catch(error => {
   console.log(error.response.status) // 404
 })
 ```
@@ -319,8 +332,8 @@ import route from './mocks/$route.js'
 mockServer(route).setDelayTime(500)
 
 console.time()
-axios.get('/foo').then(() => {
-  console.timeEnd() // default: 501.565185546875ms
+axios.get('https://example.com/api/foo').then(() => {
+  console.timeEnd() // default: 506.590ms
 })
 ```
 
@@ -336,13 +349,13 @@ import route from './mocks/$route.js'
 
 const mock = mockServer(route)
 
-// enable
+// 有効にする
 mock.enableLog()
-axios.get('/foo', { params: { bar: 'baz' }}) // stdout -> [mock] get: /foo?bar=baz
+axios.get('/foo', { baseURL: 'https://example.com/api', params: { bar: 'baz' } }) // 標準出力 -> [mock] get: /api/foo/?bar=baz
 
-// disable
+// 無効にする
 mock.disableLog()
-axios.get('/foo', { params: { bar: 'baz' }}) // stdout ->
+axios.get('/foo', { baseURL: 'https://example.com/api', params: { bar: 'baz' } }) // 標準出力 ->
 ```
 
 ### 注意事項
