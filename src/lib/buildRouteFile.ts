@@ -15,10 +15,13 @@ const getTarget = (filePath?: string) =>
 const findExportingFile = (filePaths: string[]) =>
   filePaths.find(filePath => /export/.test(fs.readFileSync(filePath, 'utf8')))
 
-export default (input: string, config: Config) => {
-  const mockFilePaths = listFiles(input)
+const getMockFilePaths = (input: string) =>
+  listFiles(input)
     .filter(filePath => !routeFileRegExp.test(filePath))
     .map(filePath => replacePathSepIfWindows(filePath))
+
+export default (input: string, config: Config) => {
+  const mockFilePaths = getMockFilePaths(input)
   const routeString = createRouteString(
     input,
     config.target || getTarget(findExportingFile(mockFilePaths)),
