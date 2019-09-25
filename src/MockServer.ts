@@ -17,27 +17,21 @@ export default class {
     if (route) this.setClient(client || axios).setRoute(route)
   }
 
-  private delayCall(callback: () => void) {
-    setTimeout(callback, this.delayTime)
-  }
-
   public setClient(client: AxiosInstance) {
     client.defaults.adapter = config =>
-      new Promise((resolve, reject) => {
+      // eslint-disable-next-line no-async-promise-executor
+      new Promise(async (resolve, reject) => {
         if (this.needsLog) console.log(createLogString(config))
 
-        const result = findAndCallHandler(config, this.handlersSet)
+        try {
+          const result = findAndCallHandler(config, this.handlersSet)
+          const res = result
+            ? makeResponse(result instanceof Promise ? await result : result, config)
+            : { status: 404, config }
 
-        if (!result) {
-          this.delayCall(() => settle(resolve, reject, { status: 404, config }))
-        } else if (result instanceof Promise) {
-          result
-            .then(values =>
-              this.delayCall(() => settle(resolve, reject, makeResponse(values, config)))
-            )
-            .catch(error => this.delayCall(() => reject(error)))
-        } else {
-          this.delayCall(() => settle(resolve, reject, makeResponse(result, config)))
+          setTimeout(() => settle(resolve, reject, res), this.delayTime)
+        } catch (e) {
+          reject(e)
         }
       })
 
