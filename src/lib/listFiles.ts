@@ -1,25 +1,19 @@
 import fs from 'fs'
 import path from 'path'
 
-const listFiles = (mockDir: string, regMockExtension: RegExp) => {
+const listFiles = (mockDir: string) => {
   const list: string[] = []
 
-  if (!fs.existsSync(mockDir)) {
-    return list
-  }
-
-  if (fs.statSync(mockDir).isFile() && regMockExtension.test(mockDir)) {
+  if (fs.statSync(mockDir).isFile()) {
     list.push(mockDir)
-  }
-
-  if (fs.statSync(mockDir).isDirectory()) {
+  } else if (fs.statSync(mockDir).isDirectory()) {
     fs.readdirSync(mockDir).forEach(file => {
       const target = path.join(mockDir, file)
 
-      if (fs.statSync(target).isFile() && regMockExtension.test(target)) {
+      if (fs.statSync(target).isFile()) {
         list.push(target)
       } else if (fs.statSync(target).isDirectory()) {
-        list.push(...listFiles(target, regMockExtension))
+        list.push(...listFiles(target))
       }
     })
   }

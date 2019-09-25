@@ -225,6 +225,9 @@ describe('initialize', () => {
           async put() {
             await sleep(100)
             throw new Error(errorMessage)
+          },
+          delete() {
+            throw new Error(errorMessage)
           }
         }
       },
@@ -247,6 +250,7 @@ describe('initialize', () => {
 
     await expect(client.post(testPath)).rejects.toHaveProperty('response.status', errorStatus)
     await expect(client.put(testPath)).rejects.toHaveProperty('message', errorMessage)
+    await expect(client.delete(testPath)).rejects.toHaveProperty('message', errorMessage)
   })
 
   test('enable log', async () => {
