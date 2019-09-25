@@ -21,13 +21,13 @@ export default class {
     client.defaults.adapter = config =>
       // eslint-disable-next-line no-async-promise-executor
       new Promise(async (resolve, reject) => {
-        if (this.needsLog) console.log(createLogString(config))
-
         try {
           const result = findAndCallHandler(config, this.handlersSet)
           const res = result
             ? makeResponse(result instanceof Promise ? await result : result, config)
             : { status: 404, config }
+
+          if (this.needsLog) console.log(createLogString(config, res.status))
 
           setTimeout(() => settle(resolve, reject, res), this.delayTime)
         } catch (e) {

@@ -107,7 +107,8 @@ describe('unit tests', () => {
           url: '/bb/?cc=123',
           baseURL: '//google.com/aa'
         },
-        result: '[mock] get: /aa/bb/?cc=123'
+        status: 200,
+        result: '[mock] get: /aa/bb/?cc=123 => 200'
       },
       {
         config: {
@@ -115,7 +116,8 @@ describe('unit tests', () => {
           url: '/bb/?cc=123',
           params: { dd: 'abc' }
         },
-        result: '[mock] post: /bb/?cc=123&dd=abc'
+        status: 201,
+        result: '[mock] post: /bb/?cc=123&dd=abc => 201'
       },
       {
         config: {
@@ -123,7 +125,8 @@ describe('unit tests', () => {
           baseURL: '//google.com/aa',
           params: { dd: 'abc' }
         },
-        result: '[mock] put: /aa/?dd=abc'
+        status: 204,
+        result: '[mock] put: /aa/?dd=abc => 204'
       },
       {
         config: {
@@ -131,10 +134,13 @@ describe('unit tests', () => {
           url: '?aa=123',
           params: { bb: 'abc' }
         },
-        result: '[mock] delete: /?aa=123&bb=abc'
+        status: 204,
+        result: '[mock] delete: /?aa=123&bb=abc => 204'
       }
     ]
 
-    configs.forEach(c => expect(createLogString(c.config as AxiosRequestConfig)).toBe(c.result))
+    configs.forEach(c =>
+      expect(createLogString(c.config as AxiosRequestConfig, c.status)).toBe(c.result)
+    )
   })
 })
