@@ -1,5 +1,6 @@
 import minimist from 'minimist'
-import getConfig, { defaultConfig } from './getConfig'
+import getConfig from './getConfig'
+import getInputs from './getInputs'
 import build from './buildRouteFile'
 import watch from './watchInputDir'
 
@@ -17,11 +18,7 @@ export const run = (args: string[]) => {
   }
 
   if (argv.build !== undefined || argv.watch !== undefined) {
-    const inputs = Array.isArray(config.input)
-      ? config.input
-      : [config.input || defaultConfig.input]
-
-    inputs.forEach(input => {
+    getInputs(config.input).forEach(input => {
       build(input, config)
       if (argv.watch !== undefined) watch(input, () => build(input, config))
     })
