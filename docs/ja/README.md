@@ -129,15 +129,6 @@ axios-mock-server のルーティングは [Nuxt.js][nuxtjs] のルーティン�
 #### API のビルド
 
 axios-mock-server は実行前にルーティングに必要なファイルをビルドして生成する必要があります。  
-CommonJS の形でファイルを生成する場合は、事前に `.mockserverrc` という名前の設定ファイルを作成します。
-
-```sh
-$ echo "{\"target\": \"cjs\"}" > .mockserverrc
-
-# Windows の場合（コマンド プロンプト）
-> echo {"target": "cjs"} > .mockserverrc
-```
-
 コマンドラインから axios-mock-server に `--build` オプションを渡してビルドを開始します。
 
 ```sh
@@ -268,7 +259,7 @@ export default {
       name: data.name
     })
 
-    return { status: 200 }
+    return { status: 201 }
   }
 }
 ```
@@ -353,7 +344,7 @@ const mock = mockServer(route)
 ;(async () => {
   // 有効にする
   mock.enableLog()
-  await axios.get('/foo', { baseURL: 'https://example.com/api', params: { bar: 'baz' } }) // 標準出力 -> [mock] get: /api/foo/?bar=baz
+  await axios.get('/foo', { baseURL: 'https://example.com/api', params: { bar: 'baz' } }) // 標準出力 -> [mock] get: /api/foo/?bar=baz => 200
 
   // 無効にする
   mock.disableLog()
@@ -453,7 +444,10 @@ Command Line Interface では以下のオプションを指定することがで
       <td nowrap><code>--build</code><br /><code>-b</code></td>
       <td></td>
       <td></td>
-      <td>API をビルドします。</td>
+      <td>
+        axios-mock-server のルーティングに必要な <code>$route.js</code>、または
+        <code>$route.ts</code> を生成します。
+      </td>
     </tr>
     <tr>
       <td nowrap><code>--config</code><br /><code>-c</code></td>
@@ -465,13 +459,17 @@ Command Line Interface では以下のオプションを指定することがで
       <td nowrap><code>--watch</code><br /><code>-w</code></td>
       <td></td>
       <td></td>
-      <td>監視モードを有効にして変更が入るたびに API をビルドします。</td>
+      <td>
+        監視モードを有効にします。<br />
+        API のエンドポイントとなるファイルの増減に合わせて
+        <code>$route.js</code>、または <code>$route.ts</code> を再生成します。
+      </td>
     </tr>
     <tr>
       <td nowrap><code>--version</code><br /><code>-v</code></td>
       <td></td>
       <td></td>
-      <td>バージョンを表示します。</td>
+      <td>axios-mock-server のバージョンを表示します。</td>
     </tr>
   </tbody>
 </table>
@@ -496,20 +494,27 @@ Command Line Interface では以下のオプションを指定することがで
       <td><code>"mocks"</code></td>
       <td>
         API のエンドポイントとなるファイルが保存されているディレクトリを指定します。<br />
-        複数のディレクトリを指定した場合は、それぞれのディレクトリに <code>$route.js</code>、または <code>$route.ts</code> を生成します。
+        複数のディレクトリを指定した場合は、それぞれのディレクトリに
+        <code>$route.js</code>、または <code>$route.ts</code> を生成します。
       </td>
     </tr>
     <tr>
       <td><code>outputExt</code></td>
       <td><code>"js" | "ts"</code></td>
-      <td><code>"js"</code></td>
-      <td>ビルドで生成するファイルの拡張子を指定します。</td>
+      <td></td>
+      <td>
+        生成するファイルの拡張子を指定します。<br />
+        デフォルトは API エンドポイントのファイルの内容から自動で設定します。
+      </td>
     </tr>
     <tr>
       <td><code>target</code></td>
       <td><code>"es6" | "cjs"</code></td>
-      <td><code>"es6"</code></td>
-      <td>ビルドで生成するモジュールのコードを指定します。</td>
+      <td></td>
+      <td>
+        生成するモジュールのコードを指定します。<br />
+        デフォルトは API エンドポイントのファイルの拡張子から自動で設定します。
+      </td>
     </tr>
   </tbody>
 </table>
