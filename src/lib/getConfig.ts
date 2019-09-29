@@ -1,13 +1,18 @@
 import fs from 'fs'
 
-const defaultConfig = () => ({
-  input: 'mocks' as string | string[],
-  target: 'es6' as 'es6' | 'cjs',
-  outputExt: 'js' as 'js' | 'ts'
-})
+export type Config = {
+  input?: string | string[]
+  target?: 'es6' | 'cjs'
+  outputExt?: 'js' | 'ts'
+}
 
-export default (rcFilePath: string): ReturnType<typeof defaultConfig> =>
-  Object.assign(
-    defaultConfig(),
-    fs.existsSync(rcFilePath) ? JSON.parse(fs.readFileSync(rcFilePath, 'utf8')) : {}
-  )
+export const routeFileRegExp = /\$route\.(js|ts)$/
+
+export const defaultConfig = {
+  input: 'mocks',
+  target: 'es6' as const,
+  outputExt: 'js' as const
+}
+
+export default (rcFilePath = '.mockserverrc'): Config =>
+  fs.existsSync(rcFilePath) ? JSON.parse(fs.readFileSync(rcFilePath, 'utf8')) : {}

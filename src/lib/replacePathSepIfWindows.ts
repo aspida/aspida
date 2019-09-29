@@ -1,4 +1,2 @@
-export default (paths: string[]) =>
-  process.platform === 'win32'
-    ? paths.map(currentPath => currentPath.replace(/(^C:)?\\/g, '/'))
-    : paths
+export default (path: string) =>
+  process.platform === 'win32' ? path.replace(/(^C:)?\\/g, '/') : path

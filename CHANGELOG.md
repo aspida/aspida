@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.11.0](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.10.0...v0.11.0) (2019-09-29)
+
+
+### Bug Fixes
+
+* **deps:** bump chokidar from 3.0.2 to 3.1.1 ([55dd8cd](https://github.com/m-mitsuhide/axios-mock-server/commit/55dd8cd))
+* **jest:** ignore examples ([d2a9c75](https://github.com/m-mitsuhide/axios-mock-server/commit/d2a9c75))
+
+
+### Documentation
+
+* add README.md for Japanese ([5839148](https://github.com/m-mitsuhide/axios-mock-server/commit/5839148))
+* fix examples ([93c90ae](https://github.com/m-mitsuhide/axios-mock-server/commit/93c90ae))
+* translate README.md ([8c97c12](https://github.com/m-mitsuhide/axios-mock-server/commit/8c97c12))
+* update .mockserverrc ([7a963c0](https://github.com/m-mitsuhide/axios-mock-server/commit/7a963c0))
+* update README.md ([f72bea6](https://github.com/m-mitsuhide/axios-mock-server/commit/f72bea6))
+* update README.md ([ffef998](https://github.com/m-mitsuhide/axios-mock-server/commit/ffef998))
+
+
+### Features
+
+* **cli:** infer extension and import type ([2a545d4](https://github.com/m-mitsuhide/axios-mock-server/commit/2a545d4))
+* **log:** add status ([e1e849d](https://github.com/m-mitsuhide/axios-mock-server/commit/e1e849d))
+
+
+### Refactors
+
+* **cli:** clarify codes ([e88a43e](https://github.com/m-mitsuhide/axios-mock-server/commit/e88a43e))
+* **mockserver:** set-client method ([5f4d9c3](https://github.com/m-mitsuhide/axios-mock-server/commit/5f4d9c3))
+
 ## [0.10.0](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.9.0...v0.10.0) (2019-09-11)
 
 

@@ -1,44 +1,26 @@
 import minimist from 'minimist'
-import chokidar from 'chokidar'
-import fs from 'fs'
-import path from 'path'
 import getConfig from './getConfig'
-import listFiles from './listFiles'
-import replacePathSepIfWindows from './replacePathSepIfWindows'
-import createRouteString from './createRouteString'
+import getInputs from './getInputs'
+import build from './buildRouteFile'
+import watch from './watchInputDir'
 
 const options: minimist.Opts = {
   string: ['version', 'config', 'build', 'watch'],
   alias: { v: 'version', c: 'config', b: 'build', w: 'watch' }
 }
 
-export function run() {
-  const argv = minimist(process.argv.slice(2), options)
-  const config = getConfig(argv.config || '.mockserverrc')
+export const run = (args: string[]) => {
+  const argv = minimist(args, options)
+  const config = getConfig(argv.config)
 
   if (argv.version !== undefined) {
-    process.stdout.write(`v${require('../../package').version}\n`)
-  }
-
-  function build() {
-    const regMockExtension = /[^($route)]\.(js|ts)$/
-    const inputs = Array.isArray(config.input) ? config.input : [config.input]
-    inputs.forEach(input => {
-      const mockFilePaths = replacePathSepIfWindows(listFiles(input, regMockExtension))
-      const routeString = createRouteString(input, config.target, mockFilePaths)
-      fs.writeFileSync(path.join(input, `$route.${config.outputExt}`), routeString, 'utf8')
-    })
-
-    console.log(`$route.${config.outputExt} was built successfully.`)
+    console.log(`v${require('../../package').version}`)
   }
 
   if (argv.build !== undefined || argv.watch !== undefined) {
-    build()
-
-    if (argv.watch !== undefined) {
-      chokidar
-        .watch(config.input, { ignoreInitial: true, ignored: `**/$route.${config.outputExt}` })
-        .on('all', build)
-    }
+    getInputs(config.input).forEach(input => {
+      build(input, config)
+      if (argv.watch !== undefined) watch(input, () => build(input, config))
+    })
   }
 }
