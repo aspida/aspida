@@ -7,7 +7,8 @@ import compositeParams from './compositeParams'
 import createRelativePath from './createRelativePath'
 
 export default (config: AxiosRequestConfig, handlersSet: HandlersSet) => {
-  const [dirPath, query] = (config.url || '').split('?')
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const [dirPath, query] = config.url!.split('?')
   const relativePath = createRelativePath(dirPath, config.baseURL)
   const handler = findHandler(config.method, relativePath, handlersSet)
 

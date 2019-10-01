@@ -9,6 +9,6 @@ export default (config: AxiosRequestConfig, status: number) => {
   const searchString = params.toString()
 
   return `[mock] ${config.method}: ${relativePath}${
-    searchString === '' ? '' : `/?${searchString}`
+    searchString === '' ? '' : `?${searchString}`
   } => ${status}`
 }

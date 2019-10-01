@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.12.0](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.11.0...v0.12.0) (2019-10-01)
+
+
+### Bug Fixes
+
+* **deps:** bump chokidar from 3.1.1 to 3.2.0 ([bc22406](https://github.com/m-mitsuhide/axios-mock-server/commit/bc22406))
+
+
+### Features
+
+* **main:** ignore directory path of baseURL ([acd6cc1](https://github.com/m-mitsuhide/axios-mock-server/commit/acd6cc1))
+* **mock server:** add restore method ([0883db8](https://github.com/m-mitsuhide/axios-mock-server/commit/0883db8))
+
+
+### Refactors
+
+* **test:** add untransformData ([b626f9c](https://github.com/m-mitsuhide/axios-mock-server/commit/b626f9c))
+
 ## [0.11.0](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.10.0...v0.11.0) (2019-09-29)
 
 
