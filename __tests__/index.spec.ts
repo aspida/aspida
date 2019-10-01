@@ -6,7 +6,7 @@ describe('initialize', () => {
   let client: AxiosInstance
 
   beforeEach(() => {
-    client = axios.create({ baseURL: 'https://google.com' })
+    client = axios.create({ baseURL: 'https://google.com/aa' })
     mock.setClient(client)
   })
 

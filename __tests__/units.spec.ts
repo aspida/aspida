@@ -91,9 +91,9 @@ describe('unit tests', () => {
     const paths = [
       { url: '//apple.com/aa/bb', baseURL: 'https://google.com/', result: '/aa/bb' },
       { url: '/aa/bb', baseURL: undefined, result: '/aa/bb' },
-      { url: '/cc/dd', baseURL: '/aa/bb', result: '/aa/bb/cc/dd' },
-      { url: undefined, baseURL: 'https://google.com/abc/', result: '/abc' },
-      { url: undefined, baseURL: undefined, result: '' }
+      { url: '/cc/dd/', baseURL: '/aa/bb', result: '/cc/dd' },
+      { url: undefined, baseURL: 'https://google.com/abc/', result: '/' },
+      { url: undefined, baseURL: undefined, result: '/' }
     ]
 
     paths.forEach(path => expect(createRelativePath(path.url, path.baseURL)).toBe(path.result))
@@ -108,7 +108,7 @@ describe('unit tests', () => {
           baseURL: '//google.com/aa'
         },
         status: 200,
-        result: '[mock] get: /aa/bb/?cc=123 => 200'
+        result: '[mock] get: /bb?cc=123 => 200'
       },
       {
         config: {
@@ -117,7 +117,7 @@ describe('unit tests', () => {
           params: { dd: 'abc' }
         },
         status: 201,
-        result: '[mock] post: /bb/?cc=123&dd=abc => 201'
+        result: '[mock] post: /bb?cc=123&dd=abc => 201'
       },
       {
         config: {
@@ -126,7 +126,7 @@ describe('unit tests', () => {
           params: { dd: 'abc' }
         },
         status: 204,
-        result: '[mock] put: /aa/?dd=abc => 204'
+        result: '[mock] put: /?dd=abc => 204'
       },
       {
         config: {

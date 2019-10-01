@@ -353,7 +353,7 @@ const mock = mockServer(route)
 ;(async () => {
   // To enable
   mock.enableLog()
-  await axios.get('/foo', { baseURL: 'https://example.com/api', params: { bar: 'baz' } }) // stdout -> [mock] get: /api/foo/?bar=baz
+  await axios.get('/foo', { baseURL: 'https://example.com/api', params: { bar: 'baz' } }) // stdout -> [mock] get: /foo/?bar=baz
 
   // To disable
   mock.disableLog()
