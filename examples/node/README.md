@@ -5,7 +5,7 @@
 Download the example:
 
 ```sh
-$ curl https://codeload.github.com/m-mitsuhide/axios-mock-server/tar.gz/develop | tar -xz --strip=2 axios-mock-server-develop/examples/node
+$ curl https://codeload.github.com/m-mitsuhide/axios-mock-server/tar.gz/develop | tar -xzo --no-same-permissions --strip=2 axios-mock-server-develop/examples/node
 $ cd node
 ```
 
