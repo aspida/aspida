@@ -344,7 +344,7 @@ const mock = mockServer(route)
 ;(async () => {
   // 有効にする
   mock.enableLog()
-  await axios.get('/foo', { baseURL: 'https://example.com/api', params: { bar: 'baz' } }) // 標準出力 -> [mock] get: /foo/?bar=baz => 200
+  await axios.get('/foo', { baseURL: 'https://example.com/api', params: { bar: 'baz' } }) // 標準出力 -> [mock] get: /foo?bar=baz => 200
 
   // 無効にする
   mock.disableLog()
