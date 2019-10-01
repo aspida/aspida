@@ -6,7 +6,7 @@ describe('initialize', () => {
   let client: AxiosInstance
 
   beforeEach(() => {
-    client = axios.create({ baseURL: 'https://google.com' })
+    client = axios.create({ baseURL: 'https://google.com/aa' })
     mock.setClient(client)
   })
 
@@ -17,6 +17,26 @@ describe('initialize', () => {
 
     mock.setRoute(route)
     await expect(client.get('/')).rejects.toHaveProperty('response.status', 404)
+  })
+
+  test('default axios', async () => {
+    const testPath = '/test'
+    const defaultValue = { name: 'test' }
+    const route: MockRoute = [
+      {
+        path: testPath,
+        methods: { get: () => [200, defaultValue] }
+      }
+    ]
+
+    const mock = mockServer(route)
+
+    const { data } = await axios.get(testPath)
+
+    expect(data).toEqual(defaultValue)
+    expect(data).not.toBe(defaultValue)
+
+    mock.restore()
   })
 
   test('get', async () => {

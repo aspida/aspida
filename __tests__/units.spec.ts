@@ -6,6 +6,7 @@ import findHandler from '~/src/findHandler'
 import { createPathRegExp } from '~/src/MockServer'
 import createRelativePath from '~/src/createRelativePath'
 import createLogString from '~/src/createLogString'
+import untransformData from '~/src/untransformData'
 
 describe('unit tests', () => {
   test('createValues', () => {
@@ -91,9 +92,9 @@ describe('unit tests', () => {
     const paths = [
       { url: '//apple.com/aa/bb', baseURL: 'https://google.com/', result: '/aa/bb' },
       { url: '/aa/bb', baseURL: undefined, result: '/aa/bb' },
-      { url: '/cc/dd', baseURL: '/aa/bb', result: '/aa/bb/cc/dd' },
-      { url: undefined, baseURL: 'https://google.com/abc/', result: '/abc' },
-      { url: undefined, baseURL: undefined, result: '' }
+      { url: '/cc/dd/', baseURL: '/aa/bb', result: '/cc/dd' },
+      { url: undefined, baseURL: 'https://google.com/abc/', result: '/' },
+      { url: undefined, baseURL: undefined, result: '/' }
     ]
 
     paths.forEach(path => expect(createRelativePath(path.url, path.baseURL)).toBe(path.result))
@@ -108,7 +109,7 @@ describe('unit tests', () => {
           baseURL: '//google.com/aa'
         },
         status: 200,
-        result: '[mock] get: /aa/bb/?cc=123 => 200'
+        result: '[mock] get: /bb?cc=123 => 200'
       },
       {
         config: {
@@ -117,7 +118,7 @@ describe('unit tests', () => {
           params: { dd: 'abc' }
         },
         status: 201,
-        result: '[mock] post: /bb/?cc=123&dd=abc => 201'
+        result: '[mock] post: /bb?cc=123&dd=abc => 201'
       },
       {
         config: {
@@ -126,7 +127,7 @@ describe('unit tests', () => {
           params: { dd: 'abc' }
         },
         status: 204,
-        result: '[mock] put: /aa/?dd=abc => 204'
+        result: '[mock] put: /?dd=abc => 204'
       },
       {
         config: {
@@ -142,5 +143,19 @@ describe('unit tests', () => {
     configs.forEach(c =>
       expect(createLogString(c.config as AxiosRequestConfig, c.status)).toBe(c.result)
     )
+  })
+
+  test('untransformData', () => {
+    expect(untransformData('{"aa": 1}', { 'Content-Type': 'application/json' })).toEqual({ aa: 1 })
+    expect(untransformData(undefined, {})).toBe(undefined)
+
+    const fakeImage = {}
+    expect(untransformData(fakeImage, { 'Content-Type': 'image/jpeg' })).toBe(fakeImage)
+
+    const params: URLSearchParams = untransformData('foo=1&bar=2', {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    })
+    expect(params.get('foo')).toBe('1')
+    expect(params.get('bar')).toBe('2')
   })
 })

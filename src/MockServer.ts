@@ -12,12 +12,15 @@ export default class {
   private handlersSet: HandlersSet = {}
   private delayTime = 0
   private needsLog = false
+  private client!: AxiosInstance
 
   constructor(route?: MockRoute, client?: AxiosInstance) {
     if (route) this.setClient(client || axios).setRoute(route)
   }
 
   public setClient(client: AxiosInstance) {
+    this.client = client
+
     client.defaults.adapter = config =>
       // eslint-disable-next-line no-async-promise-executor
       new Promise(async (resolve, reject) => {
@@ -63,6 +66,13 @@ export default class {
   public reset() {
     this.setDelayTime(0).disableLog()
     this.handlersSet = {}
+    return this
+  }
+
+  public restore() {
+    this.reset()
+    delete this.client.defaults.adapter
+    delete this.client
     return this
   }
 
