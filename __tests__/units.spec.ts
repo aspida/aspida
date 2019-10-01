@@ -6,6 +6,7 @@ import findHandler from '~/src/findHandler'
 import { createPathRegExp } from '~/src/MockServer'
 import createRelativePath from '~/src/createRelativePath'
 import createLogString from '~/src/createLogString'
+import untransformData from '~/src/untransformData'
 
 describe('unit tests', () => {
   test('createValues', () => {
@@ -142,5 +143,19 @@ describe('unit tests', () => {
     configs.forEach(c =>
       expect(createLogString(c.config as AxiosRequestConfig, c.status)).toBe(c.result)
     )
+  })
+
+  test('untransformData', () => {
+    expect(untransformData('{"aa": 1}', { 'Content-Type': 'application/json' })).toEqual({ aa: 1 })
+    expect(untransformData(undefined, {})).toBe(undefined)
+
+    const fakeImage = {}
+    expect(untransformData(fakeImage, { 'Content-Type': 'image/jpeg' })).toBe(fakeImage)
+
+    const params: URLSearchParams = untransformData('foo=1&bar=2', {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    })
+    expect(params.get('foo')).toBe('1')
+    expect(params.get('bar')).toBe('2')
   })
 })
