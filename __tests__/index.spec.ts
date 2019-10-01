@@ -19,6 +19,26 @@ describe('initialize', () => {
     await expect(client.get('/')).rejects.toHaveProperty('response.status', 404)
   })
 
+  test('default axios', async () => {
+    const testPath = '/test'
+    const defaultValue = { name: 'test' }
+    const route: MockRoute = [
+      {
+        path: testPath,
+        methods: { get: () => [200, defaultValue] }
+      }
+    ]
+
+    const mock = mockServer(route)
+
+    const { data } = await axios.get(testPath)
+
+    expect(data).toEqual(defaultValue)
+    expect(data).not.toBe(defaultValue)
+
+    mock.restore()
+  })
+
   test('get', async () => {
     const testPath = '/test'
     const defaultValue = { name: 'test' }
