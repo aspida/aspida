@@ -22,17 +22,16 @@ const getMockFilePaths = (input: string) =>
 
 export default (input: string, config: Config) => {
   const mockFilePaths = getMockFilePaths(input)
-  const routeString = createRouteString(
+  const text = createRouteString(
     input,
     config.target || getTarget(findExportingFile(mockFilePaths)),
     mockFilePaths
   )
-  const routeFilePath = path.join(
+  const filePath = path.join(
     input,
     `$route.${config.outputExt ||
       (mockFilePaths[0] ? path.extname(mockFilePaths[0]).slice(1) : defaultConfig.outputExt)}`
   )
 
-  fs.writeFileSync(routeFilePath, routeString, 'utf8')
-  console.log(`${routeFilePath} was built successfully.`)
+  return { text, filePath }
 }

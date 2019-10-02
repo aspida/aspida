@@ -39,9 +39,9 @@ describe('initialize', () => {
     mock.restore()
   })
 
-  test('get', async () => {
+  test('get object', async () => {
     const testPath = '/test'
-    const defaultValue = { name: 'test' }
+    const defaultValue = [{ name: 'test1' }, { name: 'test2' }]
     const route: MockRoute = [
       {
         path: testPath,
