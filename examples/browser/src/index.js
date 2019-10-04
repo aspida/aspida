@@ -1,8 +1,7 @@
 import axios from 'axios'
-import mockServer from 'axios-mock-server'
-import route from '../mocks/$route'
+import mock from '../mocks/$mock'
 
-mockServer(route)
+mock()
 
 const button = document.querySelector('button')
 
