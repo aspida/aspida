@@ -1,4 +1,5 @@
 const moduleName = "'axios-mock-server'"
+const eslintComment = '/* eslint-disable */'
 const createImportPath = (filePath: string, inputDir: string) =>
   filePath.replace(new RegExp(`^${inputDir}`), '').replace(/(\/index)?\.(ts|js)$/, '')
 const createCondition = (filePath: string, inputDir: string, methods: string) => `
@@ -9,12 +10,13 @@ const createCondition = (filePath: string, inputDir: string, methods: string) =>
 
 export default (inputDir: string, target: 'es6' | 'cjs', isTS: boolean, pathList: string[]) =>
   target === 'es6'
-    ? `${
-        isTS
-          ? `import { AxiosInstance } from 'axios'
+    ? `${eslintComment}
+${
+  isTS
+    ? `import { AxiosInstance } from 'axios'
 `
-          : ''
-      }import mockServer from ${moduleName}
+    : ''
+}import mockServer from ${moduleName}
 ${pathList
   .map(
     (filePath, i) => `import mock${i} from '.${createImportPath(filePath, inputDir)}'
@@ -26,12 +28,13 @@ export default (client${isTS ? '?: AxiosInstance' : ''}) => mockServer([${pathLi
         .join(',')}
 ], client)
 `
-    : `${
-        isTS
-          ? `import { AxiosInstance } = require('axios')
+    : `${eslintComment}
+${
+  isTS
+    ? `import { AxiosInstance } = require('axios')
 `
-          : ''
-      }module.exports = (client${
+    : ''
+}module.exports = (client${
         isTS ? '?: AxiosInstance' : ''
       }) => require(${moduleName})([${pathList
         .map(filePath =>
