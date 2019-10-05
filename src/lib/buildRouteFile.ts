@@ -17,8 +17,8 @@ const findExportingFile = (filePaths: string[]) =>
 
 const getMockFilePaths = (input: string) =>
   listFiles(input)
-    .filter(filePath => !mockFileRegExp.test(filePath))
     .map(filePath => replacePathSepIfWindows(filePath))
+    .filter(filePath => !mockFileRegExp.test(filePath))
 
 export default (input: string, config: Config) => {
   const mockFilePaths = getMockFilePaths(input)
