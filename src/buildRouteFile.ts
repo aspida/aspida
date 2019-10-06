@@ -31,6 +31,11 @@ export default (input: string, config: Config, baseURL = '') => {
           node.forEachChild(method => {
             if (ts.isPropertySignature(method)) {
               const methodName = (method.name as ts.Identifier).escapedText
+              // if (!(method.type as ts.TypeLiteralNode).members) {
+              //   console.log((method.type as ts.TypeReferenceNode).typeName)
+              //   return
+              // }
+
               const typeInfo = (method.type as ts.TypeLiteralNode).members.reduce(
                 (prev, member) => {
                   return {
@@ -109,9 +114,9 @@ export default (input: string, config: Config, baseURL = '') => {
               }
 
               chanks.push(`${indent}  ${methodName}: ${tmpChanks[0]}
-  ${indent}    ${tmpChanks[1]},
-  ${indent}  $${methodName}: async ${tmpChanks[0]}
-  ${indent}    (await ${tmpChanks[1]}).data`)
+${indent}    ${tmpChanks[1]},
+${indent}  $${methodName}: async ${tmpChanks[0]}
+${indent}    (await ${tmpChanks[1]}).data`)
             }
           })
         }
@@ -129,40 +134,63 @@ export default (input: string, config: Config, baseURL = '') => {
     fs.readdirSync(mockDir).forEach(file => {
       const target = path.join(mockDir, file)
       let valFn = `${indent}${file.split('.')[0]}: {
-  <% next %>
-  ${indent}}`
+<% next %>
+${indent}}`
       let newUrl = `${url}/${file.split('.')[0]}`
 
       if (file.startsWith('_')) {
         valFn = `${indent}${file.split('.')[0]}: (val${valCount}: number | string) => ({
-  <% next %>
-  ${indent}})`
+<% next %>
+${indent}})`
 
         newUrl = `${url}/\${val${valCount}}`
         valCount += 1
       }
 
-      if (fs.statSync(target).isFile() && !file.startsWith('$')) {
-        const importName = `Val${imports.length}`
+      if (fs.statSync(target).isFile() && !file.startsWith('$') && file !== 'index.ts') {
+        const importName = `Methods${imports.length}`
         imports.push(`import { Methods as ${importName} } from '${target.split('.')[0]}'`)
 
         props.push(valFn.replace('<% next %>', createMethods(target, indent, importName, newUrl)))
       } else if (fs.statSync(target).isDirectory()) {
-        props.push(listFiles(target, indent, newUrl, valFn.replace('<% next %>', '<% props %>')))
+        const indexPath = path.join(target, 'index.ts')
+        let methods = ''
+
+        if (fs.existsSync(indexPath)) {
+          const importName = `Methods${imports.length}`
+          imports.push(`import { Methods as ${importName} } from '${indexPath.split('.')[0]}'`)
+          methods = `,
+${createMethods(indexPath, indent, importName, newUrl)}`
+        }
+
+        props.push(
+          listFiles(target, indent, newUrl, valFn.replace('<% next %>', `<% props %>${methods}`))
+        )
       }
     })
 
     return text.replace('<% props %>', props.join(',\n'))
   }
 
+  const rootIndexPath = path.join(input, 'index.ts')
+  const rootIndent = '  '
+  let rootMethods = ''
+
+  if (fs.existsSync(rootIndexPath)) {
+    const importName = 'Methods0'
+    imports.push(`import { Methods as ${importName} } from '${rootIndexPath.split('.')[0]}'`)
+    rootMethods = `,
+${createMethods(rootIndexPath, rootIndent, importName, input)}`
+  }
+
   const res = listFiles(
     input,
-    '  ',
+    rootIndent,
     // eslint-disable-next-line no-template-curly-in-string
     '${prefix}',
     `{
-  <% props %>
-    }`
+<% props %>${rootMethods}
+  }`
   )
 
   const template = fs.readFileSync(path.join(__dirname, 'template.ts'), 'utf8')
