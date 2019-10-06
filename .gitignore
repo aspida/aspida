@@ -111,5 +111,5 @@ sw.*
 ### Miscellaneous
 
 # examples directory
-examples/**/$route.*
+examples/**/$mock.*
 examples/**/package-lock.json
