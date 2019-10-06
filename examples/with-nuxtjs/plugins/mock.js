@@ -1,6 +1,5 @@
-import mockServer from 'axios-mock-server'
-import route from '~/mocks/$route.js'
+import mock from '~/mocks/$mock.js'
 
 export default ({ $axios }) => {
-  mockServer(route, $axios)
+  mock($axios)
 }

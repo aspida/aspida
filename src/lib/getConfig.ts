@@ -6,7 +6,7 @@ export type Config = {
   outputExt?: 'js' | 'ts'
 }
 
-export const routeFileRegExp = /\$route\.(js|ts)$/
+export const mockFileRegExp = /\/\$[^/]+\.(js|ts)$/
 
 export const defaultConfig = {
   input: 'mocks',

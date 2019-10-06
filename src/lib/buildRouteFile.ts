@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import { Config, defaultConfig, routeFileRegExp } from './getConfig'
+import { Config, defaultConfig, mockFileRegExp } from './getConfig'
 import listFiles from './listFiles'
 import replacePathSepIfWindows from './replacePathSepIfWindows'
 import createRouteString from './createRouteString'
@@ -17,21 +17,20 @@ const findExportingFile = (filePaths: string[]) =>
 
 const getMockFilePaths = (input: string) =>
   listFiles(input)
-    .filter(filePath => !routeFileRegExp.test(filePath))
     .map(filePath => replacePathSepIfWindows(filePath))
+    .filter(filePath => !mockFileRegExp.test(filePath))
 
 export default (input: string, config: Config) => {
   const mockFilePaths = getMockFilePaths(input)
+  const ext =
+    config.outputExt ||
+    (mockFilePaths[0] ? path.extname(mockFilePaths[0]).slice(1) : defaultConfig.outputExt)
   const text = createRouteString(
     input,
     config.target || getTarget(findExportingFile(mockFilePaths)),
+    ext === 'ts',
     mockFilePaths
   )
-  const filePath = path.join(
-    input,
-    `$route.${config.outputExt ||
-      (mockFilePaths[0] ? path.extname(mockFilePaths[0]).slice(1) : defaultConfig.outputExt)}`
-  )
 
-  return { text, filePath }
+  return { text, filePath: path.join(input, `$mock.${ext}`) }
 }
