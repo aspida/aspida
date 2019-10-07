@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.13.0](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.12.1...v0.13.0) (2019-10-06)
+
+
+### Bug Fixes
+
+* **cli:** add eslint-disable comment ([8465697](https://github.com/m-mitsuhide/axios-mock-server/commit/8465697))
+
+
+### Documentation
+
+* update README.md ([9bd4e9a](https://github.com/m-mitsuhide/axios-mock-server/commit/9bd4e9a))
+
+
+### Features
+
+* **cli:** change $route -> $mock ([4a8f19d](https://github.com/m-mitsuhide/axios-mock-server/commit/4a8f19d))
+
+### [0.12.1](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.12.0...v0.12.1) (2019-10-02)
+
+
+### Bug Fixes
+
+* **cli:** change route file write rules ([75cf691](https://github.com/m-mitsuhide/axios-mock-server/commit/75cf691))
+* **deps:** bump chokidar from 3.2.0 to 3.2.1 ([79f0af0](https://github.com/m-mitsuhide/axios-mock-server/commit/79f0af0))
+* **main:** copy response ([0dc3ba3](https://github.com/m-mitsuhide/axios-mock-server/commit/0dc3ba3))
+
 ## [0.12.0](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.11.0...v0.12.0) (2019-10-01)
 
 

@@ -40,8 +40,10 @@ Please set the `githubCompatibility` option to `true`.
   - [関数](#関数)
     - [`setDelayTime(millisecond: number): void`](#setdelaytimemillisecond-number-void)
     - [`enableLog(): void` と `disableLog(): void`](#enablelog-void-と-disablelog-void)
-  - [注意事項](#注意事項)
   - [TypeScript](#typescript)
+  - [注意事項](#注意事項)
+    - [`.gitignore`](#gitignore)
+    - [`@ts-ignore`, `eslint-disable`](#ts-ignore-eslint-disable)
 - [トラブルシューティング](#トラブルシューティング)
   - [TypeScript で `The expected type comes from property 'get' which is declared here on type 'MockMethods'` のエラー](#typescript-で-the-expected-type-comes-from-property-get-which-is-declared-here-on-type-mockmethods-のエラー)
 - [Command Line Interface のオプション](#command-line-interface-のオプション)
@@ -138,34 +140,34 @@ $ node_modules/.bin/axios-mock-server --build
 > node_modules\.bin\axios-mock-server --build
 ```
 
-ビルドが成功すると `$route.js` ファイルが `mocks` ディレクトリの中に生成されています。
+ビルドが成功すると `$mock.js` ファイルが `mocks` ディレクトリの中に生成されています。
 
 ```sh
-$ cat mocks/\$route.js
-module.exports = [
+$ cat mocks/\$mock.js
+/* eslint-disable */
+module.exports = (client) => require('axios-mock-server')([
   {
     path: '/users/_userId',
     methods: require('./users/_userId')
   }
-]
+], client)
 
 # Windows の場合（コマンド プロンプト）
-> type mocks\$route.js
+> type mocks\$mock.js
 ```
 
 #### axios のモック化
 
-最後に `index.js` ファイルなどで生成した `mocks/$route.js` ファイルをインポートし、axios-mock-server の引数に渡せば完成です。  
+最後に `index.js` ファイルなどで生成した `mocks/$mock.js` ファイルをインポートし、axios-mock-server の引数に渡せば完成です。  
 axios-mock-server はデフォルトで [axios][axios] のすべての通信をモック化します。
 
 <!-- prettier-ignore -->
 ```js
 // ファイル: 'index.js'
 const axios = require('axios')
-const mockServer = require('axios-mock-server')
-const route = require('./mocks/$route.js')
+const mock = require('./mocks/$mock.js')
 
-mockServer(route)
+mock()
 
 axios.get('https://example.com/users/1').then(({ data }) => {
   console.log(data)
@@ -183,7 +185,7 @@ $ node index.js
 
 ### 使用例
 
-axios-mock-server は **ブラウザーでの利用** から **データの永続化**、 **`multipart/form-data` 形式の通信** までモックにすることができます。  
+axios-mock-server は **ブラウザーでの利用** から **データの永続化**、**`multipart/form-data` 形式の通信** までモックにすることができます。  
 また、**[Nuxt.js][nuxtjs]（[@nuxtjs/axios][nuxtjs-axios]） との連携** も簡単です。
 
 ソースコードは [examples][axios-mock-server-examples] を参照してください。
@@ -273,10 +275,9 @@ axios-mock-server はデフォルトで [axios][axios] のすべての通信を�
 <!-- prettier-ignore -->
 ```js
 import axios from 'axios'
-import mockServer from 'axios-mock-server'
-import route from './mocks/$route.js'
+import mock from './mocks/$mock.js'
 
-mockServer(route)
+mock()
 
 axios.get('https://example.com/api/foo').then(response => {
   /* ... */
@@ -290,12 +291,11 @@ axios.get('https://example.com/api/foo').then(response => {
 <!-- prettier-ignore -->
 ```js
 import axios from 'axios'
-import mockServer from 'axios-mock-server'
-import route from './mocks/$route.js'
+import mock from './mocks/$mock.js'
 
 const client = axios.create({ baseURL: 'https://example.com/api' })
 
-mockServer(route, client)
+mock(client)
 
 client.get('/foo').then(response => {
   /* ... */
@@ -318,10 +318,9 @@ axios-mock-server ではいくつかの組み込み関数を利用すること�
 <!-- prettier-ignore -->
 ```js
 import axios from 'axios'
-import mockServer from 'axios-mock-server'
-import route from './mocks/$route.js'
+import mock from './mocks/$mock.js'
 
-mockServer(route).setDelayTime(500)
+mock().setDelayTime(500)
 
 console.time()
 axios.get('https://example.com/api/foo').then(() => {
@@ -336,39 +335,45 @@ axios.get('https://example.com/api/foo').then(() => {
 <!-- prettier-ignore -->
 ```js
 import axios from 'axios'
-import mockServer from 'axios-mock-server'
-import route from './mocks/$route.js'
+import mock from './mocks/$mock.js'
 
-const mock = mockServer(route)
+const mockServer = mock()
 
 ;(async () => {
   // 有効にする
-  mock.enableLog()
+  mockServer.enableLog()
   await axios.get('/foo', { baseURL: 'https://example.com/api', params: { bar: 'baz' } }) // 標準出力 -> [mock] get: /foo?bar=baz => 200
 
   // 無効にする
-  mock.disableLog()
+  mockServer.disableLog()
   await axios.get('/foo', { baseURL: 'https://example.com/api', params: { bar: 'baz' } }) // 標準出力 ->
 })()
-```
-
-### 注意事項
-
-axios-mock-server がビルドで生成する `$route.js`、または `$route.ts` を [Git][git] の監視から除外してください。
-
-```sh
-$ echo "\$route.*" >> .gitignore
 ```
 
 ### TypeScript
 
 axios-mock-server には [TypeScript][typescript] の定義が含まれています。
 
+### 注意事項
+
+#### `.gitignore`
+
+axios-mock-server がビルドで生成する `$mock.js`、または `$mock.ts` を [Git][git] の監視から除外してください。
+
+```sh
+$ echo "\$mock.*" >> .gitignore
+```
+
+#### `@ts-ignore`, `eslint-disable`
+
+[TypeScript][typescript] のプロジェクトの場合は、`$ mock.ts` をインポートする上の行に `// @ ts-ignore` コメントを追加します。
+[typescript-eslint][typescript-eslint] で [`@typescript-eslint/ban-ts-ignore`][typescript-eslint-ban-ts-ignore] ルールが有効になっている場合、[ESLint][eslint] から `// ts-ignore` コメントを除外してください。
+
 <!-- prettier-ignore -->
 ```ts
-import mockServer from 'axios-mock-server'
-
-mockServer()
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore: Cannot find module
+import mock from './mocks/$mock'
 ```
 
 ## トラブルシューティング
@@ -445,8 +450,8 @@ Command Line Interface では以下のオプションを指定することがで
       <td></td>
       <td></td>
       <td>
-        axios-mock-server のルーティングに必要な <code>$route.js</code>、または
-        <code>$route.ts</code> を生成します。
+        axios-mock-server のルーティングに必要な <code>$mock.js</code>、または
+        <code>$mock.ts</code> を生成します。
       </td>
     </tr>
     <tr>
@@ -462,7 +467,7 @@ Command Line Interface では以下のオプションを指定することがで
       <td>
         監視モードを有効にします。<br />
         API のエンドポイントとなるファイルの増減に合わせて
-        <code>$route.js</code>、または <code>$route.ts</code> を再生成します。
+        <code>$mock.js</code>、または <code>$mock.ts</code> を再生成します。
       </td>
     </tr>
     <tr>
@@ -495,7 +500,7 @@ Command Line Interface では以下のオプションを指定することがで
       <td>
         API のエンドポイントとなるファイルが保存されているディレクトリを指定します。<br />
         複数のディレクトリを指定した場合は、それぞれのディレクトリに
-        <code>$route.js</code>、または <code>$route.ts</code> を生成します。
+        <code>$mock.js</code>、または <code>$mock.ts</code> を生成します。
       </td>
     </tr>
     <tr>
@@ -548,6 +553,7 @@ axios-mock-server は [MIT License][axios-mock-server-license] のもとで利�
 [axios-instance]: https://github.com/axios/axios#creating-an-instance
 [axios]: https://github.com/axios/axios
 [dependabot]: https://dependabot.com
+[eslint]: https://eslint.org
 [git]: https://git-scm.com/
 [javascript]: https://developer.mozilla.org/en-US/docs/Web/JavaScript
 [nodejs]: https://nodejs.org/
@@ -555,5 +561,7 @@ axios-mock-server は [MIT License][axios-mock-server-license] のもとで利�
 [nuxtjs-axios]: https://github.com/nuxt-community/axios-module
 [nuxtjs-routing]: https://nuxtjs.org/guide/routing
 [nuxtjs]: https://nuxtjs.org/
+[typescript-eslint-ban-ts-ignore]: https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/ban-ts-ignore.md
+[typescript-eslint]: https://github.com/typescript-eslint/typescript-eslint
 [typescript]: https://www.typescriptlang.org/
 [yarn]: https://yarnpkg.com/
