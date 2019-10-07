@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.13.1](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.13.0...v0.13.1) (2019-10-07)
+
+
+### Bug Fixes
+
+* **main:** correspond es5 for ie11 ([7ba004c](https://github.com/m-mitsuhide/axios-mock-server/commit/7ba004c))
+* **package.json:** conflict ([8f9deac](https://github.com/m-mitsuhide/axios-mock-server/commit/8f9deac))
+
 ## [0.13.0](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.12.1...v0.13.0) (2019-10-06)
 
 
