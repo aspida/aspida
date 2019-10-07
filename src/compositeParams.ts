@@ -1,12 +1,12 @@
-export default (
-  query: string | undefined,
-  configParams: { [key: string]: any }
-): { [key: string]: any } => {
-  const searchParams = new URLSearchParams(query)
-  const searchObject = [...searchParams].reduce(
+import qs from 'query-string'
+
+export default (query = '', configParams: { [key: string]: any }): { [key: string]: any } => {
+  const searchParams = qs.parse(query)
+  const searchObject = Object.keys(searchParams).reduce(
     (prev, current) => ({
       ...prev,
-      [current[0]]: isNaN(+current[1]) ? current[1] : +current[1]
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      [current]: isNaN(+searchParams[current]!) ? searchParams[current]! : +searchParams[current]!
     }),
     {}
   )
