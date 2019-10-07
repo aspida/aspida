@@ -13,9 +13,7 @@
     "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es5",
-    "lib": ["dom", "dom.iterable"],
-    "downlevelIteration": true
+    "target": "es5"
   },
   "exclude": ["node_modules", "dist", "examples"]
 }
