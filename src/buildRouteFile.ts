@@ -31,6 +31,11 @@ export default (input: string, config: Config, baseURL = '') => {
           node.forEachChild(method => {
             if (ts.isPropertySignature(method)) {
               const methodName = (method.name as ts.Identifier).escapedText
+              // if (!(method.type as ts.TypeLiteralNode).members) {
+              //   console.log((method.type as ts.TypeReferenceNode).typeName)
+              //   return
+              // }
+
               const typeInfo = (method.type as ts.TypeLiteralNode).members.reduce(
                 (prev, member) => {
                   return {
@@ -109,9 +114,9 @@ export default (input: string, config: Config, baseURL = '') => {
               }
 
               chanks.push(`${indent}  ${methodName}: ${tmpChanks[0]}
-  ${indent}    ${tmpChanks[1]},
-  ${indent}  $${methodName}: async ${tmpChanks[0]}
-  ${indent}    (await ${tmpChanks[1]}).data`)
+${indent}    ${tmpChanks[1]},
+${indent}  $${methodName}: async ${tmpChanks[0]}
+${indent}    (await ${tmpChanks[1]}).data`)
             }
           })
         }
@@ -121,48 +126,96 @@ export default (input: string, config: Config, baseURL = '') => {
     return chanks.join(',\n')
   }
 
-  const listFiles = (mockDir: string, indent: string, url: string, text: string) => {
+  const listFiles = (
+    mockDir: string,
+    importBasePath: string,
+    indent: string,
+    url: string,
+    text: string
+  ) => {
     const props: string[] = []
 
     indent += '  '
 
-    fs.readdirSync(mockDir).forEach(file => {
-      const target = path.join(mockDir, file)
-      let valFn = `${indent}${file.split('.')[0]}: {
-  <% next %>
-  ${indent}}`
-      let newUrl = `${url}/${file.split('.')[0]}`
+    fs.readdirSync(mockDir)
+      .sort()
+      .forEach(file => {
+        const target = path.join(mockDir, file)
+        let valFn = `${indent}${file.split('.')[0]}: {
+<% next %>
+${indent}}`
+        let newUrl = `${url}/${file.split('.')[0]}`
 
-      if (file.startsWith('_')) {
-        valFn = `${indent}${file.split('.')[0]}: (val${valCount}: number | string) => ({
-  <% next %>
-  ${indent}})`
+        if (file.startsWith('_')) {
+          valFn = `${indent}${file.split('.')[0]}: (val${valCount}: number | string) => ({
+<% next %>
+${indent}})`
 
-        newUrl = `${url}/\${val${valCount}}`
-        valCount += 1
-      }
+          newUrl = `${url}/\${val${valCount}}`
+          valCount += 1
+        }
 
-      if (fs.statSync(target).isFile() && !file.startsWith('$')) {
-        const importName = `Val${imports.length}`
-        imports.push(`import { Methods as ${importName} } from '${target.split('.')[0]}'`)
+        if (fs.statSync(target).isFile() && !file.startsWith('$') && file !== 'index.ts') {
+          const importName = `Methods${imports.length}`
+          imports.push(
+            `import { Methods as ${importName} } from '${importBasePath}/${file.replace(
+              '.ts',
+              ''
+            )}'`
+          )
 
-        props.push(valFn.replace('<% next %>', createMethods(target, indent, importName, newUrl)))
-      } else if (fs.statSync(target).isDirectory()) {
-        props.push(listFiles(target, indent, newUrl, valFn.replace('<% next %>', '<% props %>')))
-      }
-    })
+          props.push(valFn.replace('<% next %>', createMethods(target, indent, importName, newUrl)))
+        } else if (fs.statSync(target).isDirectory()) {
+          const indexPath = path.join(target, 'index.ts')
+          let methods = ''
+
+          if (fs.existsSync(indexPath)) {
+            const importName = `Methods${imports.length}`
+            imports.push(
+              `import { Methods as ${importName} } from '${importBasePath}/${file}/index'`
+            )
+            methods = `,
+${createMethods(indexPath, indent, importName, newUrl)}`
+          }
+
+          props.push(
+            listFiles(
+              target,
+              `${importBasePath}/${file}`,
+              indent,
+              newUrl,
+              valFn.replace('<% next %>', `<% props %>${methods}`)
+            )
+          )
+        }
+      })
 
     return text.replace('<% props %>', props.join(',\n'))
   }
 
+  const rootIndexPath = path.join(input, 'index.ts')
+  const rootIndent = '  '
+  let rootMethods = ''
+
+  if (fs.existsSync(rootIndexPath)) {
+    const importName = 'Methods0'
+    imports.push(`import { Methods as ${importName} } from './index'`)
+    rootMethods = `,
+${
+  // eslint-disable-next-line no-template-curly-in-string
+  createMethods(rootIndexPath, rootIndent, importName, '${prefix}/')
+}`
+  }
+
   const res = listFiles(
     input,
-    '  ',
+    '.',
+    rootIndent,
     // eslint-disable-next-line no-template-curly-in-string
     '${prefix}',
     `{
-  <% props %>
-    }`
+<% props %>${rootMethods}
+  }`
   )
 
   const template = fs.readFileSync(path.join(__dirname, 'template.ts'), 'utf8')
