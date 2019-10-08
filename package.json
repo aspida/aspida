@@ -6,13 +6,13 @@
   "license": "MIT",
   "main": "dist/index.js",
   "bin": "bin/index.js",
-  "homepage": "https://github.com/aspida/aspida#readme",
+  "homepage": "https://github.com/aspidajs/aspida#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aspida/aspida.git"
+    "url": "git+https://github.com/aspidajs/aspida.git"
   },
   "bugs": {
-    "url": "https://github.com/aspida/aspida/issues"
+    "url": "https://github.com/aspidajs/aspida/issues"
   },
   "files": [
     "dist"
@@ -21,8 +21,7 @@
     "xhr",
     "http",
     "ajax",
-    "promise",
-    "mock"
+    "promise"
   ],
   "scripts": {
     "dev": "ts-node dev",
