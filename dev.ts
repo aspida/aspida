@@ -3,7 +3,7 @@ import write from './src/writeRouteFile'
 import getConfig from './src/getConfig'
 import watch from './src/watchInputDir'
 
-const input = './apis'
+const input = './__tests__/apis'
 const config = getConfig()
 const baseurl = 'https://example.com'
 
