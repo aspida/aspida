@@ -126,7 +126,13 @@ ${indent}    (await ${tmpChanks[1]}).data`)
     return chanks.join(',\n')
   }
 
-  const listFiles = (mockDir: string, indent: string, url: string, text: string) => {
+  const listFiles = (
+    mockDir: string,
+    importBasePath: string,
+    indent: string,
+    url: string,
+    text: string
+  ) => {
     const props: string[] = []
 
     indent += '  '
@@ -149,7 +155,9 @@ ${indent}})`
 
       if (fs.statSync(target).isFile() && !file.startsWith('$') && file !== 'index.ts') {
         const importName = `Methods${imports.length}`
-        imports.push(`import { Methods as ${importName} } from '${target.split('.')[0]}'`)
+        imports.push(
+          `import { Methods as ${importName} } from '${importBasePath}/${file.replace('.ts', '')}'`
+        )
 
         props.push(valFn.replace('<% next %>', createMethods(target, indent, importName, newUrl)))
       } else if (fs.statSync(target).isDirectory()) {
@@ -158,13 +166,19 @@ ${indent}})`
 
         if (fs.existsSync(indexPath)) {
           const importName = `Methods${imports.length}`
-          imports.push(`import { Methods as ${importName} } from '${indexPath.split('.')[0]}'`)
+          imports.push(`import { Methods as ${importName} } from '${importBasePath}/${file}/index'`)
           methods = `,
 ${createMethods(indexPath, indent, importName, newUrl)}`
         }
 
         props.push(
-          listFiles(target, indent, newUrl, valFn.replace('<% next %>', `<% props %>${methods}`))
+          listFiles(
+            target,
+            `${importBasePath}/${file}`,
+            indent,
+            newUrl,
+            valFn.replace('<% next %>', `<% props %>${methods}`)
+          )
         )
       }
     })
@@ -178,13 +192,17 @@ ${createMethods(indexPath, indent, importName, newUrl)}`
 
   if (fs.existsSync(rootIndexPath)) {
     const importName = 'Methods0'
-    imports.push(`import { Methods as ${importName} } from '${rootIndexPath.split('.')[0]}'`)
+    imports.push(`import { Methods as ${importName} } from './index'`)
     rootMethods = `,
-${createMethods(rootIndexPath, rootIndent, importName, input)}`
+${
+  // eslint-disable-next-line no-template-curly-in-string
+  createMethods(rootIndexPath, rootIndent, importName, '${prefix}/')
+}`
   }
 
   const res = listFiles(
     input,
+    '.',
     rootIndent,
     // eslint-disable-next-line no-template-curly-in-string
     '${prefix}',

@@ -1,6 +1,6 @@
 /* eslint-disable */
 import axios from 'axios'
-import aspida from './apis/$api'
+import aspida from './__tests__/apis/$api'
 
 ;(async () => {
   const hogeId = 2

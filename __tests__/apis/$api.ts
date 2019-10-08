@@ -1,11 +1,11 @@
 /* eslint-disable */
 import axios, { AxiosRequestConfig } from 'axios'
-import { Methods as Methods0 } from 'apis/index'
-import { Methods as Methods1 } from 'apis/v1/hoge/_hogeId/test/index'
-import { Methods as Methods2 } from 'apis/v1/hoge/_hogeId/test/fuga'
-import { Methods as Methods3 } from 'apis/v1/hoge/_hogeId/test/_fugaId'
-import { Methods as Methods4 } from 'apis/v1/test'
-import { Methods as Methods5 } from 'apis/v1/users/_userId'
+import { Methods as Methods0 } from './index'
+import { Methods as Methods1 } from './v1/hoge/_hogeId/test/index'
+import { Methods as Methods2 } from './v1/hoge/_hogeId/test/fuga'
+import { Methods as Methods3 } from './v1/hoge/_hogeId/test/_fugaId'
+import { Methods as Methods4 } from './v1/test'
+import { Methods as Methods5 } from './v1/users/_userId'
 
 export const baseURL = 'https://example.com'
 
@@ -96,20 +96,20 @@ export default (client = axios) => {
       }
     },
     get: (config?: AxiosRequestConfig & { params?: Methods0['get']['params'] & { [key: string]: any }}) =>
-      client.get<Methods0['get']['response']>(`./apis`, config),
+      client.get<Methods0['get']['response']>(`${prefix}/`, config),
     $get: async (config?: AxiosRequestConfig & { params?: Methods0['get']['params'] & { [key: string]: any }}) =>
-      (await client.get<Methods0['get']['response']>(`./apis`, config)).data,
+      (await client.get<Methods0['get']['response']>(`${prefix}/`, config)).data,
     post: (data?: Methods0['post']['data'], config?: AxiosRequestConfig & { params?: Methods0['post']['params'] & { [key: string]: any }}) =>
-      client.post<Methods0['post']['response']>(`./apis`, data, config),
+      client.post<Methods0['post']['response']>(`${prefix}/`, data, config),
     $post: async (data?: Methods0['post']['data'], config?: AxiosRequestConfig & { params?: Methods0['post']['params'] & { [key: string]: any }}) =>
-      (await client.post<Methods0['post']['response']>(`./apis`, data, config)).data,
+      (await client.post<Methods0['post']['response']>(`${prefix}/`, data, config)).data,
     put: (data: void, config?: AxiosRequestConfig & { params?: Methods0['put']['params'] & { [key: string]: any }}) =>
-      client.put<Methods0['put']['response']>(`./apis`, data, config),
+      client.put<Methods0['put']['response']>(`${prefix}/`, data, config),
     $put: async (data: void, config?: AxiosRequestConfig & { params?: Methods0['put']['params'] & { [key: string]: any }}) =>
-      (await client.put<Methods0['put']['response']>(`./apis`, data, config)).data,
+      (await client.put<Methods0['put']['response']>(`${prefix}/`, data, config)).data,
     delete: (config?: AxiosRequestConfig & { params?: Methods0['delete']['params'] & { [key: string]: any }} & { data?: void }) =>
-      client.delete<Methods0['delete']['response']>(`./apis`, config),
+      client.delete<Methods0['delete']['response']>(`${prefix}/`, config),
     $delete: async (config?: AxiosRequestConfig & { params?: Methods0['delete']['params'] & { [key: string]: any }} & { data?: void }) =>
-      (await client.delete<Methods0['delete']['response']>(`./apis`, config)).data
+      (await client.delete<Methods0['delete']['response']>(`${prefix}/`, config)).data
   }
 }
