@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import * as ts from 'typescript'
 import { Config } from './getConfig'
+import template from './template'
 import replacePath from './replacePathSepIfWindows'
 
 type HttpMethod = 'get' | 'post' | 'put' | 'delete' | 'head' | 'patch'
@@ -218,7 +219,6 @@ ${
   }`
   )
 
-  const template = fs.readFileSync(path.join(__dirname, 'template.ts'), 'utf8')
   const text = template
     .replace("'<% imports %>'", imports.map(i => replacePath(i).replace(input, '.')).join('\n'))
     .replace("'<% api %>'", res)

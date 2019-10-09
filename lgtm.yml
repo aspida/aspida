@@ -1,3 +1,3 @@
 path_classifiers:
   test:
-    - exclude: src/template.ts
+    - exclude: example.ts
