@@ -9,9 +9,7 @@ export type Config = {
 export const apiFileRegExp = /\/\$[^/]+\.(js|ts)$/
 
 export const defaultConfig = {
-  input: 'mocks',
-  target: 'es6' as const,
-  outputExt: 'js' as const
+  input: 'apis'
 }
 
 export default (rcFilePath = '.aspidarc'): Config =>

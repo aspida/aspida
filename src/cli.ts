@@ -21,12 +21,12 @@ export const run = (args: string[]) => {
 
   if (argv.build !== undefined || argv.watch !== undefined) {
     getInputs(config.input).forEach(input => {
-      let prevResult = build(input, config, argv.baseurl)
+      let prevResult = build(input, argv.baseurl)
       write(prevResult)
 
       if (argv.watch !== undefined) {
         watch(input, () => {
-          const result = build(input, config, argv.baseurl)
+          const result = build(input, argv.baseurl)
 
           if (prevResult.text !== result.text || prevResult.filePath !== result.filePath) {
             fs.unlink(prevResult.filePath, () => write(result))
