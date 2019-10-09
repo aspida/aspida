@@ -1,5 +1,5 @@
 /* eslint-disable */
-import axios, { AxiosRequestConfig } from 'axios'
+import axios, { AxiosRequestConfig, AxiosInstance } from 'axios'
 import { Methods as Methods0 } from './index'
 import { Methods as Methods1 } from './v1/hoge/_hogeId/test/index'
 import { Methods as Methods2 } from './v1/hoge/_hogeId/test/_fugaId'
@@ -9,7 +9,7 @@ import { Methods as Methods5 } from './v1/users/_userId'
 
 export const baseURL = 'https://example.com'
 
-export default (client = axios) => {
+export default (client: AxiosInstance = axios) => {
   const prefix = (client.defaults.baseURL ? '' : baseURL).replace(/\/$/, '')
 
   return {
