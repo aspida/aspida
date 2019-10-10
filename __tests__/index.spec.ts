@@ -1,12 +1,35 @@
 import fs from 'fs'
-import build from '../src/buildRouteFile'
-
-const input = './__tests__/apis'
-const baseurl = 'https://example.com'
-const result = fs.readFileSync(`${input}/$api.ts`, 'utf8')
+import build from '~/src/buildRouteFile'
 
 describe('cli test', () => {
   test('main', () => {
-    expect(build(input, baseurl).text).toBe(result)
+    const baseurl = 'https://example.com'
+    const paths = [
+      {
+        input: '__tests__/apis',
+        resultDirPath: '__tests__/apis'
+      },
+      {
+        input: './__tests__/apis',
+        resultDirPath: '__tests__/apis'
+      },
+      {
+        input: './__tests__/apis/',
+        resultDirPath: '__tests__/apis'
+      },
+      {
+        input: '__tests__/apis/',
+        resultDirPath: '__tests__/apis'
+      }
+    ]
+
+    paths.forEach(({ input, resultDirPath }) => {
+      const resultFilePath = `${resultDirPath}/$api.ts`
+      const result = fs.readFileSync(resultFilePath, 'utf8')
+      const { text, filePath } = build(input, baseurl)
+
+      expect(text).toBe(result)
+      expect(filePath).toBe(resultFilePath)
+    })
   })
 })
