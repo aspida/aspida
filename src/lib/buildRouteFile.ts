@@ -2,7 +2,6 @@ import fs from 'fs'
 import path from 'path'
 import { Config, defaultConfig, mockFileRegExp } from './getConfig'
 import listFiles from './listFiles'
-import replacePathSepIfWindows from './replacePathSepIfWindows'
 import createRouteString from './createRouteString'
 
 const getTarget = (filePath?: string) =>
@@ -17,7 +16,8 @@ const findExportingFile = (filePaths: string[]) =>
 
 const getMockFilePaths = (input: string) =>
   listFiles(input)
-    .map(filePath => replacePathSepIfWindows(filePath))
+    .sort()
+    .reverse()
     .filter(filePath => !mockFileRegExp.test(filePath))
 
 export default (input: string, config: Config) => {
@@ -32,5 +32,5 @@ export default (input: string, config: Config) => {
     mockFilePaths
   )
 
-  return { text, filePath: path.join(input, `$mock.${ext}`) }
+  return { text, filePath: path.posix.join(input, `$mock.${ext}`) }
 }

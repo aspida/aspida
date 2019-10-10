@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.13.2](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.13.1...v0.13.2) (2019-10-10)
+
+
+### Refactors
+
+* **axios:** move to devDependencies ([edb860e](https://github.com/m-mitsuhide/axios-mock-server/commit/edb860e))
+* **cli:** delete replacePathSepIfWindows ([0547552](https://github.com/m-mitsuhide/axios-mock-server/commit/0547552))
+
 ### [0.13.1](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.13.0...v0.13.1) (2019-10-07)
 
 

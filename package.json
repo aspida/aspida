@@ -1,6 +1,6 @@
 {
   "name": "axios-mock-server",
-  "version": "0.13.1",
+  "version": "0.13.2",
   "description": "RESTful mock server using axios",
   "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
   "license": "MIT",
@@ -23,6 +23,7 @@
     "mock"
   ],
   "scripts": {
+    "dev:cli": "ts-node src/lib/dev",
     "build": "rimraf dist && tsc --project tsconfig.build.json",
     "release": "standard-version --skip.tag",
     "lint": "eslint --ext .js,.ts --ignore-path .gitignore .",
@@ -37,8 +38,9 @@
     "@commitlint/config-conventional": "^8.2.0",
     "@types/jest": "^24.0.18",
     "@types/minimist": "^1.2.0",
-    "@typescript-eslint/eslint-plugin": "^2.3.2",
-    "@typescript-eslint/parser": "^2.3.2",
+    "@typescript-eslint/eslint-plugin": "^2.3.3",
+    "@typescript-eslint/parser": "^2.3.3",
+    "axios": "^0.19.0",
     "eslint": "^6.5.1",
     "eslint-config-prettier": "^6.4.0",
     "eslint-config-standard": "^14.1.0",
@@ -50,16 +52,15 @@
     "eslint-plugin-standard": "^4.0.1",
     "husky": "^3.0.8",
     "jest": "^24.9.0",
-    "lint-staged": "^9.4.1",
+    "lint-staged": "^9.4.2",
     "prettier": "^1.18.2",
     "rimraf": "^3.0.0",
     "standard-version": "^7.0.0",
     "ts-jest": "^24.1.0",
     "ts-node": "^8.4.1",
-    "typescript": "^3.6.3"
+    "typescript": "^3.6.4"
   },
   "dependencies": {
-    "axios": "^0.19.0",
     "chokidar": "^3.2.1",
     "minimist": "^1.2.0",
     "query-string": "^6.8.3"
