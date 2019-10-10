@@ -5,7 +5,7 @@ const listFiles = (mockDir: string) => {
   const list: string[] = []
 
   fs.readdirSync(mockDir).forEach(file => {
-    const target = path.join(mockDir, file)
+    const target = path.posix.join(mockDir, file)
 
     if (fs.statSync(target).isFile()) {
       list.push(target)
