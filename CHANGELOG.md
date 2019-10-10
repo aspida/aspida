@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.0](https://github.com/aspidajs/aspida/compare/v0.1.2...v0.2.0) (2019-10-10)
+
+
+### Features
+
+* **template:** export ApiInstance type ([bab8514](https://github.com/aspidajs/aspida/commit/bab8514))
+
+
+### Refactors
+
+* delete replacePathSepIfWindows ([07b05c7](https://github.com/aspidajs/aspida/commit/07b05c7))
+
 ### 0.1.2 (2019-10-10)
 
 
