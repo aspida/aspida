@@ -545,7 +545,7 @@ axios-mock-server is licensed under a [MIT License][axios-mock-server-license].
 [badge-ci]: https://img.shields.io/circleci/build/github/m-mitsuhide/axios-mock-server.svg?label=test
 [badge-coverage-url]: https://codecov.io/gh/m-mitsuhide/axios-mock-server
 [badge-coverage]: https://img.shields.io/codecov/c/github/m-mitsuhide/axios-mock-server.svg
-[badge-dependabot]: https://badgen.net/dependabot/m-mitsuhide/axios-mock-server?label=dependabot
+[badge-dependabot]: https://api.dependabot.com/badges/status?host=github&repo=m-mitsuhide/axios-mock-server
 [badge-lgtm-url]: https://lgtm.com/projects/g/m-mitsuhide/axios-mock-server/context:javascript
 [badge-lgtm]: https://img.shields.io/lgtm/grade/javascript/g/m-mitsuhide/axios-mock-server.svg
 [badge-license]: https://img.shields.io/npm/l/axios-mock-server
