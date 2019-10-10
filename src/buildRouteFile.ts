@@ -2,7 +2,6 @@ import fs from 'fs'
 import path from 'path'
 import * as ts from 'typescript'
 import template from './template'
-import replacePath from './replacePathSepIfWindows'
 
 type HttpMethod = 'get' | 'post' | 'put' | 'delete' | 'head' | 'patch'
 
@@ -140,7 +139,7 @@ ${indent}    (await ${tmpChanks[1]}).data`)
     fs.readdirSync(mockDir)
       .sort()
       .forEach(file => {
-        const target = path.join(mockDir, file)
+        const target = path.posix.join(mockDir, file)
         let valFn = `${indent}${file.split('.')[0]}: {
 <% next %>
 ${indent}}`
@@ -166,7 +165,7 @@ ${indent}})`
 
           props.push(valFn.replace('<% next %>', createMethods(target, indent, importName, newUrl)))
         } else if (fs.statSync(target).isDirectory()) {
-          const indexPath = path.join(target, 'index.ts')
+          const indexPath = path.posix.join(target, 'index.ts')
           let methods = ''
 
           if (fs.existsSync(indexPath)) {
@@ -193,7 +192,7 @@ ${createMethods(indexPath, indent, importName, newUrl)}`
     return text.replace('<% props %>', props.join(',\n'))
   }
 
-  const rootIndexPath = path.join(input, 'index.ts')
+  const rootIndexPath = path.posix.join(input, 'index.ts')
   const rootIndent = '  '
   let rootMethods = ''
 
@@ -219,9 +218,9 @@ ${
   )
 
   const text = template
-    .replace("'<% imports %>'", imports.map(i => replacePath(i).replace(input, '.')).join('\n'))
+    .replace("'<% imports %>'", imports.map(i => i.replace(input, '.')).join('\n'))
     .replace("'<% api %>'", res)
     .replace('<% baseURL %>', baseURL)
 
-  return { text, filePath: path.join(input, '$api.ts') }
+  return { text, filePath: path.posix.join(input, '$api.ts') }
 }

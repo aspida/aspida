@@ -9,7 +9,7 @@ import { Methods as Methods5 } from './v1/users/_userId'
 
 export const baseURL = 'https://example.com'
 
-export default (client: AxiosInstance = axios) => {
+const api = (client: AxiosInstance = axios) => {
   const prefix = (client.defaults.baseURL ? '' : baseURL).replace(/\/$/, '')
 
   return {
@@ -113,3 +113,7 @@ export default (client: AxiosInstance = axios) => {
       (await client.delete<Methods0['delete']['response']>(`${prefix}/`, config)).data
   }
 }
+
+export type ApiInstance = ReturnType<typeof api>
+
+export default api
