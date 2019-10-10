@@ -23,6 +23,7 @@
     "mock"
   ],
   "scripts": {
+    "dev:cli": "ts-node src/lib/dev",
     "build": "rimraf dist && tsc --project tsconfig.build.json",
     "release": "standard-version --skip.tag",
     "lint": "eslint --ext .js,.ts --ignore-path .gitignore .",

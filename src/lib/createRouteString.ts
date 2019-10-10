@@ -1,10 +1,13 @@
 const moduleName = "'axios-mock-server'"
 const eslintComment = '/* eslint-disable */'
 const createImportPath = (filePath: string, inputDir: string) =>
-  filePath.replace(new RegExp(`^${inputDir}`), '').replace(/(\/index)?\.(ts|js)$/, '')
+  filePath
+    .replace(new RegExp(`^(.\\/)?${inputDir.replace(/^.\//, '').replace(/\/$/, '')}`), '')
+    .replace(/\.(ts|js)$/, '')
+
 const createCondition = (filePath: string, inputDir: string, methods: string) => `
   {
-    path: '${createImportPath(filePath, inputDir)}',
+    path: '${createImportPath(filePath, inputDir).replace(/(\/index)$/, '') || '/'}',
     methods: ${methods}
   }`
 

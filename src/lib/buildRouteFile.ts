@@ -15,7 +15,10 @@ const findExportingFile = (filePaths: string[]) =>
   filePaths.find(filePath => /export/.test(fs.readFileSync(filePath, 'utf8')))
 
 const getMockFilePaths = (input: string) =>
-  listFiles(input).filter(filePath => !mockFileRegExp.test(filePath))
+  listFiles(input)
+    .sort()
+    .reverse()
+    .filter(filePath => !mockFileRegExp.test(filePath))
 
 export default (input: string, config: Config) => {
   const mockFilePaths = getMockFilePaths(input)
