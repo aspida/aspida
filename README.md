@@ -26,9 +26,13 @@ Aspida is licensed under a [MIT License][aspida-license].
 [badge-ci]: https://img.shields.io/circleci/build/github/aspidajs/aspida.svg?label=test
 [badge-coverage-url]: https://codecov.io/gh/aspidajs/aspida
 [badge-coverage]: https://img.shields.io/codecov/c/github/aspidajs/aspida.svg
-[badge-dependabot]: https://badgen.net/dependabot/aspidajs/aspida?label=dependabot
+[badge-dependabot]: https://api.dependabot.com/badges/status?host=github&repo=aspidajs/aspida
 [badge-lgtm-url]: https://lgtm.com/projects/g/aspidajs/aspida/context:javascript
 [badge-lgtm]: https://img.shields.io/lgtm/grade/javascript/g/aspidajs/aspida.svg
 [badge-license]: https://img.shields.io/npm/l/aspida
 [badge-npm-url]: https://www.npmjs.com/package/aspida
 [badge-npm]: https://img.shields.io/npm/v/aspida
+
+<!-- URL: General -->
+
+[dependabot]: https://dependabot.com
