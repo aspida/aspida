@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.0](https://github.com/aspidajs/aspida/compare/v0.1.2...v0.2.0) (2019-10-10)
+
+
+### Features
+
+* **template:** export ApiInstance type ([bab8514](https://github.com/aspidajs/aspida/commit/bab8514))
+
+
+### Refactors
+
+* delete replacePathSepIfWindows ([07b05c7](https://github.com/aspidajs/aspida/commit/07b05c7))
+
 ### 0.1.2 (2019-10-10)
 
 
@@ -16,14 +28,6 @@ All notable changes to this project will be documented in this file. See [standa
 
 * **config:** change default input to apis ([7eb65c7](https://github.com/aspidajs/aspida/commit/7eb65c7))
 * **template:** add AxiosInstance type ([5828743](https://github.com/aspidajs/aspida/commit/5828743))
-* **test:** update $api.ts snapshot ([daaf4c5](https://github.com/aspidajs/aspida/commit/daaf4c5))
-
-
-### Features
-
-* **builder:** add index.ts file ([817bf07](https://github.com/aspidajs/aspida/commit/817bf07))
-* **cli:** first commit ([962f4dd](https://github.com/aspidajs/aspida/commit/962f4dd))
-* **test:** add $api.ts snapshot ([4453e6a](https://github.com/aspidajs/aspida/commit/4453e6a))
 
 ### 0.1.0 (2019-10-08)
 
