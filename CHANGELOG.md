@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.1.2 (2019-10-10)
+
+
+### Bug Fixes
+
+* **tsconfig:** change target to es5 ([e8ea865](https://github.com/aspidajs/aspida/commit/e8ea865))
+
 ### 0.1.1 (2019-10-09)
 
 
