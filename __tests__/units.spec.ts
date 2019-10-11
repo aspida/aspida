@@ -152,10 +152,10 @@ describe('unit tests', () => {
     const fakeImage = {}
     expect(untransformData(fakeImage, { 'Content-Type': 'image/jpeg' })).toBe(fakeImage)
 
-    const params = untransformData('foo=1&bar=2', {
+    const params: URLSearchParams = untransformData('foo=1&bar=2', {
       'Content-Type': 'application/x-www-form-urlencoded'
     })
-    expect(params.foo).toBe('1')
-    expect(params.bar).toBe('2')
+    expect(params.get('foo')).toBe('1')
+    expect(params.get('bar')).toBe('2')
   })
 })

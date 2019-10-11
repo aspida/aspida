@@ -178,7 +178,7 @@ describe('initialize', () => {
     const route: MockRoute = [
       {
         path: testPath,
-        methods: { post: ({ data }) => [201, data.name] }
+        methods: { post: ({ data }) => [201, data.get('name')] }
       }
     ]
 

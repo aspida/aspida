@@ -13,7 +13,7 @@
     "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es5"
+    "target": "esnext"
   },
   "exclude": ["node_modules", "dist", "examples", "__tests__/mocks/$mock.ts"]
 }

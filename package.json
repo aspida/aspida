@@ -62,7 +62,6 @@
   },
   "dependencies": {
     "chokidar": "^3.2.1",
-    "minimist": "^1.2.0",
-    "query-string": "^6.8.3"
+    "minimist": "^1.2.0"
   }
 }
