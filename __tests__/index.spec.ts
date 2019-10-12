@@ -73,6 +73,26 @@ describe('initialize', () => {
     expect(data).toEqual(defaultValue)
   })
 
+  test('get path through', async () => {
+    const axiosInstance = axios.create({ baseURL: 'https://google.com/' })
+    const testPath = '/test'
+    const defaultValue = [{ name: 'test1' }, { name: 'test2' }]
+    const route: MockRoute = [
+      {
+        path: testPath,
+        methods: { get: () => [200, defaultValue] }
+      }
+    ]
+
+    mockServer(route, axiosInstance)
+
+    const { status } = await axiosInstance.get('/')
+    expect(status).toBe(200)
+
+    const { data } = await axiosInstance.get(testPath)
+    expect(data).toEqual(defaultValue)
+  })
+
   test('get with query and params', async () => {
     const response = { name: 'mario', height: 155, color: 'red' }
     const testPath = '/test'
