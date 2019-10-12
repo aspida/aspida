@@ -496,7 +496,7 @@ Command Line Interface では以下のオプションを指定することがで
     <tr>
       <td><code>input</code></td>
       <td><code>string | string[]</code></td>
-      <td><code>"mocks"</code></td>
+      <td><code>"mocks" or "apis"</code></td>
       <td>
         API のエンドポイントとなるファイルが保存されているディレクトリを指定します。<br />
         複数のディレクトリを指定した場合は、それぞれのディレクトリに
