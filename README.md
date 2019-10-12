@@ -499,7 +499,7 @@ Settings are written in `.mockserverrc` file with JSON syntax.
     <tr>
       <td><code>input</code></td>
       <td><code>string | string[]</code></td>
-      <td><code>"mocks"</code></td>
+      <td><code>"mocks" or "apis"</code></td>
       <td>
         Specify the directory where the API endpoint file is stored.<br />
         If multiple directories are specified, <code>$mock.js</code> or
