@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.14.0](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.13.2...v0.14.0) (2019-10-12)
+
+
+### Documentation
+
+* fix Dependabot badge ([f190e07](https://github.com/m-mitsuhide/axios-mock-server/commit/f190e07))
+
+
+### Features
+
+* **cli:** add default input config ([c49f8a0](https://github.com/m-mitsuhide/axios-mock-server/commit/c49f8a0))
+* **main:** add auto path through ([da17d79](https://github.com/m-mitsuhide/axios-mock-server/commit/da17d79))
+
 ### [0.13.2](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.13.1...v0.13.2) (2019-10-10)
 
 
