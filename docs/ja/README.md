@@ -496,7 +496,7 @@ Command Line Interface では以下のオプションを指定することがで
     <tr>
       <td><code>input</code></td>
       <td><code>string | string[]</code></td>
-      <td><code>"mocks"</code></td>
+      <td><code>"mocks" or "apis"</code></td>
       <td>
         API のエンドポイントとなるファイルが保存されているディレクトリを指定します。<br />
         複数のディレクトリを指定した場合は、それぞれのディレクトリに
@@ -541,7 +541,7 @@ axios-mock-server は [MIT License][axios-mock-server-license] のもとで利�
 [badge-ci]: https://img.shields.io/circleci/build/github/m-mitsuhide/axios-mock-server.svg?label=test
 [badge-coverage-url]: https://codecov.io/gh/m-mitsuhide/axios-mock-server
 [badge-coverage]: https://img.shields.io/codecov/c/github/m-mitsuhide/axios-mock-server.svg
-[badge-dependabot]: https://badgen.net/dependabot/m-mitsuhide/axios-mock-server?label=dependabot
+[badge-dependabot]: https://api.dependabot.com/badges/status?host=github&repo=m-mitsuhide/axios-mock-server
 [badge-lgtm-url]: https://lgtm.com/projects/g/m-mitsuhide/axios-mock-server/context:javascript
 [badge-lgtm]: https://img.shields.io/lgtm/grade/javascript/g/m-mitsuhide/axios-mock-server.svg
 [badge-license]: https://img.shields.io/npm/l/axios-mock-server

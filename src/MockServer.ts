@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios'
+import axios, { AxiosInstance, AxiosAdapter } from 'axios'
 import settle from 'axios/lib/core/settle'
 import { HandlersSet, MockRoute, httpMethods } from './types'
 import createLogString from './createLogString'
@@ -13,6 +13,7 @@ export default class {
   private delayTime = 0
   private needsLog = false
   private client!: AxiosInstance
+  private originalAdapter?: AxiosAdapter
 
   constructor(route?: MockRoute, client?: AxiosInstance) {
     if (route) this.setClient(client || axios).setRoute(route)
@@ -20,12 +21,19 @@ export default class {
 
   public setClient(client: AxiosInstance) {
     this.client = client
+    this.originalAdapter = client.defaults.adapter
 
     client.defaults.adapter = config =>
       // eslint-disable-next-line no-async-promise-executor
       new Promise(async (resolve, reject) => {
         try {
           const result = findAndCallHandler(config, this.handlersSet)
+
+          if (!result && this.originalAdapter) {
+            this.originalAdapter(config).then(resolve, reject)
+            return
+          }
+
           const res = result
             ? makeResponse(result instanceof Promise ? await result : result, config)
             : { status: 404, config }
@@ -72,6 +80,12 @@ export default class {
   public restore() {
     this.reset()
     delete this.client.defaults.adapter
+
+    if (this.originalAdapter) {
+      this.client.defaults.adapter = this.originalAdapter
+      delete this.originalAdapter
+    }
+
     delete this.client
     return this
   }
