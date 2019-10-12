@@ -5,6 +5,7 @@ import mock0 from './users/self'
 import mock1 from './users/index'
 import mock2 from './users/_userId'
 import mock3 from './index'
+import mock4 from './collections/entries.json'
 
 export default (client?: AxiosInstance) => mockServer([
   {
@@ -22,5 +23,9 @@ export default (client?: AxiosInstance) => mockServer([
   {
     path: '/',
     methods: mock3
+  },
+  {
+    path: '/collections/entries.json',
+    methods: mock4
   }
 ], client)

@@ -117,9 +117,9 @@ describe('initialize', () => {
   })
 
   test('get with values', async () => {
-    const testRegPath = '/test/_name'
+    const testRegPath = '/test/_name/hoge.json'
     const name = 'mario'
-    const testPath = `/test/${name}`
+    const testPath = `/test/${name}/hoge.json`
     const route: MockRoute = [
       {
         path: testRegPath,
