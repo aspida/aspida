@@ -140,17 +140,17 @@ ${indent}    (await ${tmpChanks[1]}).data`)
       .sort()
       .forEach(file => {
         const target = path.posix.join(mockDir, file)
-        let valFn = `${indent}${file
+        let valFn = `${indent}'${file
           .replace(/\.ts$/, '')
           .split('.')
           .map((f, i) => (i > 0 ? `${f.charAt(0).toUpperCase()}${f.slice(1)}` : f))
-          .join('')}: {
+          .join('')}': {
 <% next %>
 ${indent}}`
         let newUrl = `${url}/${file.replace(/\.ts$/, '')}`
 
         if (file.startsWith('_')) {
-          valFn = `${indent}${file.split('.')[0]}: (val${valCount}: number | string) => ({
+          valFn = `${indent}'${file.split('.')[0]}': (val${valCount}: number | string) => ({
 <% next %>
 ${indent}})`
 

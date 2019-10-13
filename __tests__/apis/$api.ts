@@ -14,17 +14,17 @@ const api = (client: AxiosInstance = axios) => {
   const prefix = (client.defaults.baseURL ? '' : baseURL).replace(/\/$/, '')
 
   return {
-    v1: {
-      hoge: {
-        _hogeId: (val0: number | string) => ({
-          entriesJson: {
+    'v1': {
+      'hoge': {
+        '_hogeId': (val0: number | string) => ({
+          'entriesJson': {
             get: (config?: AxiosRequestConfig) =>
               client.get<Methods1['get']['response']>(`${prefix}/v1/hoge/${val0}/entries.json`, config),
             $get: async (config?: AxiosRequestConfig) =>
               (await client.get<Methods1['get']['response']>(`${prefix}/v1/hoge/${val0}/entries.json`, config)).data
           },
-          test: {
-            _fugaId: (val1: number | string) => ({
+          'test': {
+            '_fugaId': (val1: number | string) => ({
               get: (config?: AxiosRequestConfig & { params?: Methods3['get']['params'] & { [key: string]: any }}) =>
                 client.get<Methods3['get']['response']>(`${prefix}/v1/hoge/${val0}/test/${val1}`, config),
               $get: async (config?: AxiosRequestConfig & { params?: Methods3['get']['params'] & { [key: string]: any }}) =>
@@ -42,7 +42,7 @@ const api = (client: AxiosInstance = axios) => {
               $delete: async (config?: AxiosRequestConfig & { params?: Methods3['delete']['params'] & { [key: string]: any }} & { data?: void }) =>
                 (await client.delete<Methods3['delete']['response']>(`${prefix}/v1/hoge/${val0}/test/${val1}`, config)).data
             }),
-            fuga: {
+            'fuga': {
               get: (config?: AxiosRequestConfig & { params?: Methods4['get']['params'] & { [key: string]: any }}) =>
                 client.get<Methods4['get']['response']>(`${prefix}/v1/hoge/${val0}/test/fuga`, config),
               $get: async (config?: AxiosRequestConfig & { params?: Methods4['get']['params'] & { [key: string]: any }}) =>
@@ -79,7 +79,7 @@ const api = (client: AxiosInstance = axios) => {
           }
         })
       },
-      test: {
+      'test': {
         get: (config?: AxiosRequestConfig & { params?: Methods5['get']['params'] & { [key: string]: any }} & { headers?: Methods5['get']['headers'] & { [key: string]: any }}) =>
           client.get<Methods5['get']['response']>(`${prefix}/v1/test`, config),
         $get: async (config?: AxiosRequestConfig & { params?: Methods5['get']['params'] & { [key: string]: any }} & { headers?: Methods5['get']['headers'] & { [key: string]: any }}) =>
@@ -89,8 +89,8 @@ const api = (client: AxiosInstance = axios) => {
         $post: async (data?: Methods5['post']['data'], config?: AxiosRequestConfig & { params?: Methods5['post']['params'] & { [key: string]: any }}) =>
           (await client.post<Methods5['post']['response']>(`${prefix}/v1/test`, data, config)).data
       },
-      users: {
-        _userId: (val2: number | string) => ({
+      'users': {
+        '_userId': (val2: number | string) => ({
           get: (config?: AxiosRequestConfig & { params?: Methods6['get']['params'] & { [key: string]: any }} & { headers?: Methods6['get']['headers'] & { [key: string]: any }}) =>
             client.get<Methods6['get']['response']>(`${prefix}/v1/users/${val2}`, config),
           $get: async (config?: AxiosRequestConfig & { params?: Methods6['get']['params'] & { [key: string]: any }} & { headers?: Methods6['get']['headers'] & { [key: string]: any }}) =>
