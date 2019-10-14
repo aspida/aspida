@@ -1,3 +1,5 @@
+import 'url-search-params-polyfill'
+
 import { AxiosInstance } from 'axios'
 import { MockRoute, HttpMethod, MockResponse, MockMethods } from './types'
 import MockServer from './MockServer'

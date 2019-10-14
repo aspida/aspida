@@ -3,13 +3,13 @@
     "baseUrl": ".",
     "declaration": true,
     "declarationMap": true,
+    "downlevelIteration": true,
     "esModuleInterop": true,
+    "lib": ["dom", "dom.iterable", "es6"],
     "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "dist",
-    "paths": {
-      "~/*": ["./*"]
-    },
+    "paths": { "~/*": ["./*"] },
     "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,
