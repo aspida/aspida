@@ -62,6 +62,7 @@
   },
   "dependencies": {
     "chokidar": "^3.2.1",
-    "minimist": "^1.2.0"
+    "minimist": "^1.2.0",
+    "url-search-params-polyfill": "^7.0.0"
   }
 }
