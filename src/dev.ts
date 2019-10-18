@@ -1,4 +1,4 @@
-import build from './buildRouteFile'
+import build from './buildTemplate'
 import write from './writeRouteFile'
 
 const input = './__tests__/apis'

@@ -2,7 +2,7 @@ import fs from 'fs'
 import minimist from 'minimist'
 import getConfig from './getConfig'
 import getInputs from './getInputs'
-import build from './buildRouteFile'
+import build from './buildTemplate'
 import write from './writeRouteFile'
 import watch from './watchInputDir'
 

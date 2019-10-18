@@ -1,5 +1,5 @@
 import fs from 'fs'
-import build from '~/src/buildRouteFile'
+import build from '~/src/buildTemplate'
 
 describe('cli test', () => {
   test('main', () => {
