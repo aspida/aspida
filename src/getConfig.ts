@@ -2,8 +2,6 @@ import fs from 'fs'
 
 export type Config = {
   input?: string | string[]
-  target?: 'es6' | 'cjs'
-  outputExt?: 'js' | 'ts'
 }
 
 export const apiFileRegExp = /\/\$[^/]+\.(js|ts)$/
