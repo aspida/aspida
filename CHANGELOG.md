@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://github.com/aspidajs/aspida/compare/v0.4.0...v0.5.0) (2019-10-19)
+
+
+### Features
+
+* **methods:** determine question flag of config ([8ba6336](https://github.com/aspidajs/aspida/commit/8ba6336))
+
+
+### Refactors
+
+* template builder ([fcc20ee](https://github.com/aspidajs/aspida/commit/fcc20ee))
+
 ## [0.4.0](https://github.com/aspidajs/aspida/compare/v0.3.1...v0.4.0) (2019-10-13)
 
 
