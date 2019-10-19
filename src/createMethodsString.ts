@@ -42,23 +42,31 @@ export default (target: string, indent: string, importName: string, newUrl: stri
               }
             )
             const tmpChanks: string[] = []
+            const hasNotDataQuestion = typeInfo.data && !typeInfo.data.hasQuestion
+            const isConfigRequired = typeInfo.params && !typeInfo.params.hasQuestion
 
             const data = (method: HttpMethod) =>
-              `data${
+              `data${`${hasNotDataQuestion || isConfigRequired ? '' : '?'}: ${
                 typeInfo.data
-                  ? `${typeInfo.data.hasQuestion ? '?' : ''}: ${importName}['${method}']['data']`
-                  : `${method === 'delete' ? '?' : ''}: void`
-              }`
+                  ? `${importName}['${method}']['data']${
+                      typeInfo.data.hasQuestion ? ' | null' : ''
+                    }`
+                  : 'null'
+              }`}`
             const params = (method: HttpMethod) =>
               typeInfo.params
-                ? ` & { params?: ${importName}['${method}']['params'] & { [key: string]: any }}`
+                ? `{ params${
+                    typeInfo.params.hasQuestion ? '?' : ''
+                  }: ${importName}['${method}']['params'] & { [key: string]: any }} & `
                 : ''
             const headers = (method: HttpMethod) =>
               typeInfo.headers
-                ? ` & { headers?: ${importName}['${method}']['headers'] & { [key: string]: any }}`
+                ? `{ headers?: ${importName}['${method}']['headers'] & { [key: string]: any }} & `
                 : ''
             const config = (method: HttpMethod) =>
-              `config?: AxiosRequestConfig${params(method)}${headers(method)}`
+              `config${
+                isConfigRequired || (method === 'delete' && hasNotDataQuestion) ? '' : '?'
+              }: ${params(method)}${headers(method)}AxiosRequestConfig`
             const response = (method: HttpMethod) =>
               `${method}${
                 typeInfo.response ? `<${importName}['${method}']['response']>` : '<void>'
@@ -97,7 +105,7 @@ export default (target: string, indent: string, importName: string, newUrl: stri
                 break
               case 'delete':
                 tmpChanks.push(
-                  `(${config('delete')} & { ${data('delete')} }) =>`,
+                  `(${config('delete')}${typeInfo.data ? ` & { ${data('delete')} }` : ''}) =>`,
                   `client.${response('delete')}(\`${newUrl}\`, config)`
                 )
                 break
