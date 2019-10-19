@@ -13,6 +13,10 @@ module.exports = (client) => require('axios-mock-server')([
     methods: require('./users/_userId')
   },
   {
+    path: '/search/_userName@string',
+    methods: require('./search/_userName@string')
+  },
+  {
     path: '/',
     methods: require('./index')
   },

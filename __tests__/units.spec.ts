@@ -19,8 +19,12 @@ describe('unit tests', () => {
         values: { bb: 'hoge', dd: 123 }
       },
       {
-        conditions: ['/aa/_bb/cc/_dd', '/aa/hoge/cc/123'],
+        conditions: ['/aa/_bb/cc/_dd@number', '/aa/hoge/cc/123'],
         values: { bb: 'hoge', dd: 123 }
+      },
+      {
+        conditions: ['/aa/_bb/cc/_dd@string', '/aa/hoge/cc/123'],
+        values: { bb: 'hoge', dd: '123' }
       }
     ]
 

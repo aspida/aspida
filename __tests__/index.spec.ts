@@ -143,14 +143,31 @@ describe('initialize', () => {
     const route: MockRoute = [
       {
         path: testRegPath,
-        methods: { get: ({ values }) => [200, values.name] }
+        methods: { get: ({ values }) => [200, { name: values.name }] }
       }
     ]
 
     mock.setRoute(route)
     const { data } = await client.get(testPath)
 
-    expect(data).toEqual(name)
+    expect(data.name).toEqual(name)
+  })
+
+  test('get with typed values', async () => {
+    const testRegPath = '/test/_name@string/hoge.json'
+    const name = '12345'
+    const testPath = `/test/${name}/hoge.json`
+    const route: MockRoute = [
+      {
+        path: testRegPath,
+        methods: { get: ({ values }) => [200, { name: values.name }] }
+      }
+    ]
+
+    mock.setRoute(route)
+    const { data } = await client.get(testPath)
+
+    expect(data.name).toEqual(name)
   })
 
   test('post with data', async () => {
