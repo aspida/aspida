@@ -17,6 +17,7 @@ export interface Methods {
 
   delete: {
     params: { aa: number }
+    data: { name: string }
     response: { id: number }
   }
 }

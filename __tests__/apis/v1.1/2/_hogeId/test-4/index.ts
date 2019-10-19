@@ -4,12 +4,12 @@ export interface Methods {
   }
 
   post: {
-    params: { aa: number }
+    params?: { aa: number }
     data?: { name: string }
   }
 
   put: {
-    params: { aa: number }
+    params?: { aa: number }
     response: { id: number }
   }
 

@@ -1,6 +1,6 @@
 export interface Methods {
   get: {
-    params: { aa?: number }
+    params?: { aa?: number }
     headers: {}
     response: { id: number }
   }
