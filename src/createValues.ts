@@ -5,7 +5,8 @@ export default (path: string, relativePath: string) => {
 
   parsedRequestUrl.forEach((dir, i) => {
     if (dirList[i].startsWith('_')) {
-      values[dirList[i].slice(1)] = isNaN(+dir) ? dir : +dir
+      const [valueName, type = 'number'] = dirList[i].slice(1).split('@')
+      values[valueName] = isNaN(+dir) || type !== 'number' ? dir : +dir
     }
   })
 

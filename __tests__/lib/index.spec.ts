@@ -22,38 +22,38 @@ describe('cli', () => {
   test('snapshot', () => {
     const configs = [
       {
-        input: '__tests__/mocks',
-        resultDirPath: '__tests__/mocks',
+        input: '__tests__/lib/mocks',
+        resultDirPath: '__tests__/lib/mocks',
         target: 'es6' as const,
         outputExt: 'ts' as const
       },
       {
-        input: '__tests__/mocks',
-        resultDirPath: '__tests__/mocks',
+        input: '__tests__/lib/mocks',
+        resultDirPath: '__tests__/lib/mocks',
         target: 'cjs' as const,
         outputExt: 'js' as const
       },
       {
-        input: './__tests__/mocks',
-        resultDirPath: '__tests__/mocks',
+        input: './__tests__/lib/mocks',
+        resultDirPath: '__tests__/lib/mocks',
         target: 'es6' as const,
         outputExt: 'ts' as const
       },
       {
-        input: './__tests__/mocks',
-        resultDirPath: '__tests__/mocks',
+        input: './__tests__/lib/mocks',
+        resultDirPath: '__tests__/lib/mocks',
         target: 'cjs' as const,
         outputExt: 'js' as const
       },
       {
-        input: '__tests__/mocks/',
-        resultDirPath: '__tests__/mocks',
+        input: '__tests__/lib/mocks/',
+        resultDirPath: '__tests__/lib/mocks',
         target: 'es6' as const,
         outputExt: 'ts' as const
       },
       {
-        input: '__tests__/mocks/',
-        resultDirPath: '__tests__/mocks',
+        input: '__tests__/lib/mocks/',
+        resultDirPath: '__tests__/lib/mocks',
         target: 'cjs' as const,
         outputExt: 'js' as const
       }

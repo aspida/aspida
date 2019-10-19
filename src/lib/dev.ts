@@ -1,7 +1,7 @@
 import build from './buildRouteFile'
 import write from './writeRouteFile'
 
-const input = '__tests__/mocks/'
+const input = '__tests__/lib/mocks/'
 const configs = [
   {
     input,
