@@ -7,8 +7,8 @@ import write from './writeRouteFile'
 import watch from './watchInputDir'
 
 const options: minimist.Opts = {
-  string: ['version', 'config', 'build', 'watch'],
-  alias: { v: 'version', c: 'config', b: 'build', w: 'watch' }
+  string: ['version', 'config', 'build', 'watch', 'baseurl'],
+  alias: { v: 'version', c: 'config', b: 'build', w: 'watch', u: 'baseurl' }
 }
 
 export const run = (args: string[]) => {
@@ -21,12 +21,12 @@ export const run = (args: string[]) => {
 
   if (argv.build !== undefined || argv.watch !== undefined) {
     getInputs(config.input).forEach(input => {
-      let prevResult = build(input, config)
+      let prevResult = build(input, config, argv.baseurl)
       write(prevResult)
 
       if (argv.watch !== undefined) {
         watch(input, () => {
-          const result = build(input, config)
+          const result = build(input, config, argv.baseurl)
 
           if (prevResult.text !== result.text || prevResult.filePath !== result.filePath) {
             fs.unlink(prevResult.filePath, () => write(result))
