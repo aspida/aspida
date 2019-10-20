@@ -21,6 +21,9 @@ export default (input: string) => {
       .sort()
       .forEach(file => {
         const target = path.posix.join(mockDir, file)
+
+        if (file.startsWith('$') || file.startsWith('@')) return
+
         let valFn = `${indent}${file
           .replace(/\.ts$/, '')
           .replace(/(-|\.|!| |'|\*|\(|\))/g, '_')
@@ -30,7 +33,13 @@ ${indent}}`
         let newUrl = `${url}/${file.replace(/\.ts$/, '')}`
 
         if (file.startsWith('_')) {
-          valFn = `${indent}${file.replace(/\.ts$/, '')}: (val${valCount}: number | string) => ({
+          let [valName, valType = 'number | string'] = file.replace(/\.ts$/, '').split('@')
+
+          if (/^[A-Z]/.test(valType) && valType.indexOf(valType) > -1) {
+            valType = `ApiTypes.${valType}`
+          }
+
+          valFn = `${indent}${valName}: (val${valCount}: ${valType}) => ({
 <% next %>
 ${indent}})`
 
@@ -38,7 +47,7 @@ ${indent}})`
           valCount += 1
         }
 
-        if (fs.statSync(target).isFile() && !file.startsWith('$') && file !== 'index.ts') {
+        if (fs.statSync(target).isFile() && file !== 'index.ts') {
           const importName = `Methods${imports.length}`
           imports.push(
             `import { Methods as ${importName} } from '${importBasePath}/${file.replace(

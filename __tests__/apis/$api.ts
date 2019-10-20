@@ -1,22 +1,24 @@
 /* eslint-disable */
 import axios, { AxiosRequestConfig, AxiosInstance } from 'axios'
+import * as ApiTypes from './@types'
+import * as apiUtils from './@utils'
 import { Methods as Methods0 } from './index'
-import { Methods as Methods1 } from './v1.1/2/_hogeId/entries.json'
-import { Methods as Methods2 } from './v1.1/2/_hogeId/test-4/index'
-import { Methods as Methods3 } from './v1.1/2/_hogeId/test-4/_fugaId'
-import { Methods as Methods4 } from './v1.1/2/_hogeId/test-4/fuga aa'
+import { Methods as Methods1 } from './v1.1/2/_hogeId@HogeId/entries.json'
+import { Methods as Methods2 } from './v1.1/2/_hogeId@HogeId/test-4/index'
+import { Methods as Methods3 } from './v1.1/2/_hogeId@HogeId/test-4/_fugaId'
+import { Methods as Methods4 } from './v1.1/2/_hogeId@HogeId/test-4/fuga aa'
 import { Methods as Methods5 } from './v1.1/3.1'
-import { Methods as Methods6 } from './v1.1/users/_userId'
+import { Methods as Methods6 } from './v1.1/users/_userId@number'
 
-export const baseURL = 'https://example.com'
+const apiBaseURL = 'https://example.com'
 
 const api = (client: AxiosInstance = axios) => {
-  const prefix = (client.defaults.baseURL ? '' : baseURL).replace(/\/$/, '')
+  const prefix = (client.defaults.baseURL ? '' : apiBaseURL).replace(/\/$/, '')
 
   return {
     v1_1: {
       $2: {
-        _hogeId: (val0: number | string) => ({
+        _hogeId: (val0: ApiTypes.HogeId) => ({
           entries_json: {
             get: (config?: AxiosRequestConfig) =>
               client.get<Methods1['get']['response']>(`${prefix}/v1.1/2/${val0}/entries.json`, config),
@@ -90,7 +92,7 @@ const api = (client: AxiosInstance = axios) => {
           (await client.post<Methods5['post']['response']>(`${prefix}/v1.1/3.1`, data, config)).data
       },
       users: {
-        _userId: (val2: number | string) => ({
+        _userId: (val2: number) => ({
           get: (config: { params: Methods6['get']['params'] & { [key: string]: any }} & { headers?: Methods6['get']['headers'] & { [key: string]: any }} & AxiosRequestConfig) =>
             client.get<Methods6['get']['response']>(`${prefix}/v1.1/users/${val2}`, config),
           $get: async (config: { params: Methods6['get']['params'] & { [key: string]: any }} & { headers?: Methods6['get']['headers'] & { [key: string]: any }} & AxiosRequestConfig) =>
@@ -121,6 +123,7 @@ const api = (client: AxiosInstance = axios) => {
   }
 }
 
-export type ApiInstance = ReturnType<typeof api>
+type ApiInstance = ReturnType<typeof api>
 
+export { ApiInstance, apiBaseURL, ApiTypes, apiUtils }
 export default api
