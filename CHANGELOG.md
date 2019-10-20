@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.15.0](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.14.1...v0.15.0) (2019-10-20)
+
+
+### Features
+
+* **cli:** change file ignore pattern ([d23604d](https://github.com/m-mitsuhide/axios-mock-server/commit/d23604d36bacc9aab9ce42ebfe56201086c4f587))
+* **cli:** implement typed path values ([757a530](https://github.com/m-mitsuhide/axios-mock-server/commit/757a530aefbecd56005cc4dac468d103491f8dbb))
+
+
+### Bug Fixes
+
+* **deps:** bump chokidar from 3.2.1 to 3.2.2 ([530ae8e](https://github.com/m-mitsuhide/axios-mock-server/commit/530ae8e48f449cc63c5a9fd33d67473e9da41464))
+
 ### [0.14.1](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.14.0...v0.14.1) (2019-10-14)
 
 ## [0.14.0](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.13.2...v0.14.0) (2019-10-12)

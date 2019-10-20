@@ -1,6 +1,6 @@
 {
   "name": "axios-mock-server",
-  "version": "0.14.1",
+  "version": "0.15.0",
   "description": "RESTful mock server using axios",
   "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
   "license": "MIT",
@@ -61,7 +61,7 @@
     "typescript": "^3.6.4"
   },
   "dependencies": {
-    "chokidar": "^3.2.1",
+    "chokidar": "^3.2.2",
     "minimist": "^1.2.0",
     "url-search-params-polyfill": "^7.0.0"
   }

@@ -15,5 +15,5 @@
     "strict": true,
     "target": "es5"
   },
-  "exclude": ["node_modules", "dist", "examples", "__tests__/mocks/$mock.ts"]
+  "exclude": ["node_modules", "dist", "examples", "__tests__/lib/mocks/$mock.ts"]
 }

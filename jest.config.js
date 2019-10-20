@@ -5,7 +5,7 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   watchPathIgnorePatterns: ['<rootDir>/examples/'],
-  testPathIgnorePatterns: ['<rootDir>/__tests__/mocks/'],
+  testPathIgnorePatterns: ['<rootDir>/__tests__/lib/mocks/'],
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
     prefix: '<rootDir>/'
   })
