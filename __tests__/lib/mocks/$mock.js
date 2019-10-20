@@ -24,4 +24,4 @@ module.exports = (client) => require('axios-mock-server')([
     path: '/collections/entries.json',
     methods: require('./collections/entries.json')
   }
-], client)
+], client, 'https://example.com/api')

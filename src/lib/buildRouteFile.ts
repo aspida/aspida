@@ -20,7 +20,7 @@ const getMockFilePaths = (input: string) =>
     .reverse()
     .filter(filePath => !mockFileRegExp.test(filePath))
 
-export default (input: string, config: Config) => {
+export default (input: string, config: Config, baseURL = '') => {
   const mockFilePaths = getMockFilePaths(input)
   const ext =
     config.outputExt ||
@@ -29,7 +29,8 @@ export default (input: string, config: Config) => {
     input,
     config.target || getTarget(findExportingFile(mockFilePaths)),
     ext === 'ts',
-    mockFilePaths
+    mockFilePaths,
+    baseURL
   )
 
   return { text, filePath: path.posix.join(input, `$mock.${ext}`) }
