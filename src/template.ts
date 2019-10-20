@@ -1,16 +1,17 @@
 export default `/* eslint-disable */
 import axios, { AxiosRequestConfig, AxiosInstance } from 'axios'
-'<% imports %>'
+<% types %><% utils %><% imports %>
 
-export const baseURL = '<% baseURL %>'
+const apiBaseURL = '<% baseURL %>'
 
 const api = (client: AxiosInstance = axios) => {
-  const prefix = (client.defaults.baseURL ? '' : baseURL).replace(/\\/$/, '')
+  const prefix = (client.defaults.baseURL ? '' : apiBaseURL).replace(/\\/$/, '')
 
-  return '<% api %>'
+  return <% api %>
 }
 
-export type ApiInstance = ReturnType<typeof api>
+type ApiInstance = ReturnType<typeof api>
 
+export { ApiInstance, apiBaseURL<% ApiTypes %><% apiUtils %> }
 export default api
 `
