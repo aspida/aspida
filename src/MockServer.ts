@@ -14,9 +14,13 @@ export default class {
   private needsLog = false
   private client!: AxiosInstance
   private originalAdapter?: AxiosAdapter
+  private baseURL = ''
 
-  constructor(route?: MockRoute, client?: AxiosInstance) {
-    if (route) this.setClient(client || axios).setRoute(route)
+  constructor(route?: MockRoute, client?: AxiosInstance, baseURL = '') {
+    if (route)
+      this.setBaseURL(baseURL)
+        .setClient(client || axios)
+        .setRoute(route)
   }
 
   public setClient(client: AxiosInstance) {
@@ -26,19 +30,24 @@ export default class {
     client.defaults.adapter = config =>
       // eslint-disable-next-line no-async-promise-executor
       new Promise(async (resolve, reject) => {
+        const customConfig = {
+          ...config,
+          baseURL: config.baseURL || this.baseURL
+        }
+
         try {
-          const result = findAndCallHandler(config, this.handlersSet)
+          const result = findAndCallHandler(customConfig, this.handlersSet)
 
           if (!result && this.originalAdapter) {
-            this.originalAdapter(config).then(resolve, reject)
+            this.originalAdapter(customConfig).then(resolve, reject)
             return
           }
 
           const res = result
-            ? makeResponse(result instanceof Promise ? await result : result, config)
-            : { status: 404, config }
+            ? makeResponse(result instanceof Promise ? await result : result, customConfig)
+            : { status: 404, config: customConfig }
 
-          if (this.needsLog) console.log(createLogString(config, res.status))
+          if (this.needsLog) console.log(createLogString(customConfig, res.status))
 
           setTimeout(() => settle(resolve, reject, res), this.delayTime)
         } catch (e) {
@@ -68,6 +77,11 @@ export default class {
 
   public setDelayTime(delayTime: number) {
     this.delayTime = delayTime
+    return this
+  }
+
+  public setBaseURL(baseURL: string) {
+    this.baseURL = baseURL
     return this
   }
 

@@ -11,7 +11,13 @@ const createCondition = (filePath: string, inputDir: string, methods: string) =>
     methods: ${methods}
   }`
 
-export default (inputDir: string, target: 'es6' | 'cjs', isTS: boolean, pathList: string[]) =>
+export default (
+  inputDir: string,
+  target: 'es6' | 'cjs',
+  isTS: boolean,
+  pathList: string[],
+  baseURL = ''
+) =>
   target === 'es6'
     ? `${eslintComment}
 ${
@@ -29,7 +35,7 @@ ${pathList
 export default (client${isTS ? '?: AxiosInstance' : ''}) => mockServer([${pathList
         .map((filePath, i) => createCondition(filePath, inputDir, `mock${i}`))
         .join(',')}
-], client)
+], client, '${baseURL}')
 `
     : `${eslintComment}
 ${
@@ -44,5 +50,5 @@ ${
           createCondition(filePath, inputDir, `require('.${createImportPath(filePath, inputDir)}')`)
         )
         .join(',')}
-], client)
+], client, '${baseURL}')
 `
