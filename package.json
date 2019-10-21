@@ -1,6 +1,6 @@
 {
   "name": "axios-mock-server",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "description": "RESTful mock server using axios",
   "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
   "license": "MIT",
