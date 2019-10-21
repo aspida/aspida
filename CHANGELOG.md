@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.16.1](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.16.0...v0.16.1) (2019-10-21)
+
+
+### Bug Fixes
+
+* **factory:** add baseURL ([71fa401](https://github.com/m-mitsuhide/axios-mock-server/commit/71fa401afd7ac13930bbc680e3d53f686748aa56))
+
 ## [0.16.0](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.15.0...v0.16.0) (2019-10-21)
 
 
