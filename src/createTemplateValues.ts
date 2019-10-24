@@ -48,6 +48,8 @@ ${indent}})`
         }
 
         if (fs.statSync(target).isFile() && file !== 'index.ts') {
+          if (path.extname(file) !== '.ts') return
+
           const importName = `Methods${imports.length}`
           imports.push(
             `import { Methods as ${importName} } from '${importBasePath}/${file.replace(
