@@ -3,9 +3,17 @@ import build from '../buildTemplate'
 import { Template } from '../build/template'
 import { Command } from './command'
 
-export class BuildCommandRunner implements Command {
+export class BuildCommandFactory implements Command {
+  static getFactory(config: Config, io: BuildIO) {
+    return {
+      create(command: BuildCommand): Command {
+        return new BuildCommandFactory(command, config, io)
+      }
+    }
+  }
+
   // eslint-disable-next-line no-useless-constructor
-  constructor(
+  private constructor(
     private readonly command: BuildCommand,
     private readonly config: Config,
     private readonly io: BuildIO
