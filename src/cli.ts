@@ -19,21 +19,25 @@ export const run = (args: string[]) => {
     console.log(`v${require('../package').version}`)
   }
 
-  if (argv.build !== undefined || argv.watch !== undefined) {
-    getInputs(config.input).forEach(input => {
-      let prevResult = build(input, argv.baseurl)
-      write(prevResult)
+  if (argv.build === undefined && argv.watch === undefined) {
+    return
+  }
 
-      if (argv.watch !== undefined) {
-        watch(input, () => {
-          const result = build(input, argv.baseurl)
+  getInputs(config.input).forEach(input => {
+    let prevResult = build(input, argv.baseurl)
+    write(prevResult)
 
-          if (prevResult.text !== result.text || prevResult.filePath !== result.filePath) {
-            fs.unlink(prevResult.filePath, () => write(result))
-            prevResult = result
-          }
-        })
+    if (argv.watch === undefined) {
+      return
+    }
+
+    watch(input, () => {
+      const result = build(input, argv.baseurl)
+
+      if (prevResult.text !== result.text || prevResult.filePath !== result.filePath) {
+        fs.unlink(prevResult.filePath, () => write(result))
+        prevResult = result
       }
     })
-  }
+  })
 }
