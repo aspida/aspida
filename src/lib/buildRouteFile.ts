@@ -18,7 +18,9 @@ const getMockFilePaths = (input: string) =>
   listFiles(input)
     .sort()
     .reverse()
-    .filter(filePath => !mockFileRegExp.test(filePath))
+    .filter(
+      filePath => !mockFileRegExp.test(filePath) && /^\.(js|ts)$/.test(path.extname(filePath))
+    )
 
 export default (input: string, config: Config, baseURL = '') => {
   const mockFilePaths = getMockFilePaths(input)

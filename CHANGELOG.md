@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.16.2](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.16.1...v0.16.2) (2019-10-24)
+
+
+### Bug Fixes
+
+* **cli:** ignore files other than js and ts ([fe31b37](https://github.com/m-mitsuhide/axios-mock-server/commit/fe31b376cc5168ce6e749aa686f5be3fa7ab48de))
+
 ### [0.16.1](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.16.0...v0.16.1) (2019-10-21)
 
 
