@@ -34,10 +34,12 @@ export const run = (args: string[]) => {
     watch(input, () => {
       const result = build(input, argv.baseurl)
 
-      if (prevResult.text !== result.text || prevResult.filePath !== result.filePath) {
-        fs.unlink(prevResult.filePath, () => write(result))
-        prevResult = result
+      if (prevResult.text === result.text && prevResult.filePath !== result.filePath) {
+        return
       }
+
+      fs.unlink(prevResult.filePath, () => write(result))
+      prevResult = result
     })
   })
 }
