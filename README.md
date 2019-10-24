@@ -10,6 +10,17 @@
 
 Type safe HTTP client for the browser and node.js.
 
+## Contribution
+
+### Build
+
+```bash
+npm install
+npm run build
+mkdir apis
+node ./bin/index.js --build --baseurl=http://example.com
+```
+
 ## License
 
 Aspida is licensed under a [MIT License][aspida-license].
