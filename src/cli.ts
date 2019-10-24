@@ -1,31 +1,20 @@
 import fs from 'fs'
 import minimist from 'minimist'
-import getConfig from './getConfig'
+import getConfig, { Config } from './getConfig'
 import read from './getInputs'
 import write from './writeRouteFile'
 import watch from './watchInputDir'
-import { Build, Watch, BuildCommandRunner } from './cli/build'
+import { Build, Watch, BuildCommandFactory } from './cli/build'
+import { Command, nullCommand } from './cli/command'
+import { version as versionCommand } from './cli/version'
 
 const options: minimist.Opts = {
   string: ['version', 'config', 'build', 'watch', 'baseurl'],
   alias: { v: 'version', c: 'config', b: 'build', w: 'watch', u: 'baseurl' }
 }
 
-export const run = (args: string[]) => {
-  const argv = minimist(args, options)
-  const config = getConfig(argv.config)
-
-  if (argv.version !== undefined) {
-    console.log(`v${require('../package').version}`)
-  }
-
-  if (argv.build === undefined && argv.watch === undefined) {
-    return
-  }
-
-  const buildCommand = argv.watch === undefined ? new Build(argv.baseurl) : new Watch(argv.baseurl)
-
-  const buildCommandRunner = new BuildCommandRunner(buildCommand, config, {
+const getBuildCommandFactory = (config: Config) =>
+  BuildCommandFactory.getFactory(config, {
     read,
     write,
     watch,
@@ -33,5 +22,18 @@ export const run = (args: string[]) => {
       fs.unlink(filePath, callback)
     }
   })
-  buildCommandRunner.exec()
+
+export const run = (args: string[]) => {
+  const argv = minimist(args, options)
+
+  const commands: Command[] = [
+    argv.version !== undefined ? versionCommand : nullCommand,
+    argv.build !== undefined || argv.watch !== undefined
+      ? getBuildCommandFactory(getConfig(argv.config)).create(
+          argv.watch !== undefined ? new Watch(argv.baseurl) : new Build(argv.baseurl)
+        )
+      : nullCommand
+  ]
+
+  commands.forEach(c => c.exec())
 }
