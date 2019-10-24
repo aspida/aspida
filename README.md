@@ -21,6 +21,9 @@ mkdir apis
 node ./bin/index.js --build --baseurl=http://example.com
 ```
 
+if you want to watch file changes and rebuild automatically,
+you can use `--watch` instead of `--build`
+
 ## License
 
 Aspida is licensed under a [MIT License][aspida-license].
