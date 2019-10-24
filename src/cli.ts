@@ -1,10 +1,10 @@
 import fs from 'fs'
 import minimist from 'minimist'
 import getConfig from './getConfig'
-import getInputs from './getInputs'
-import build from './buildTemplate'
+import read from './getInputs'
 import write from './writeRouteFile'
 import watch from './watchInputDir'
+import { Build, Watch, CommandRunner } from './cli/build'
 
 const options: minimist.Opts = {
   string: ['version', 'config', 'build', 'watch', 'baseurl'],
@@ -23,23 +23,15 @@ export const run = (args: string[]) => {
     return
   }
 
-  getInputs(config.input).forEach(input => {
-    let prevResult = build(input, argv.baseurl)
-    write(prevResult)
+  const buildCommand = argv.watch === undefined ? new Build(argv.baseurl) : new Watch(argv.baseurl)
 
-    if (argv.watch === undefined) {
-      return
+  const buildCommandRunner = new CommandRunner(buildCommand, config, {
+    read,
+    write,
+    watch,
+    remove(filePath: string, callback: () => void) {
+      fs.unlink(filePath, callback)
     }
-
-    watch(input, () => {
-      const result = build(input, argv.baseurl)
-
-      if (prevResult.text === result.text && prevResult.filePath !== result.filePath) {
-        return
-      }
-
-      fs.unlink(prevResult.filePath, () => write(result))
-      prevResult = result
-    })
   })
+  buildCommandRunner.exec()
 }
