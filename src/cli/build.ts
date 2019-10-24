@@ -1,19 +1,9 @@
 import { Config } from '../getConfig'
 import build from '../buildTemplate'
 import { Template } from '../build/template'
+import { Command } from './command'
 
-interface BuildCommand {
-  run(input: string, io: BuildIO): void
-}
-
-export interface BuildIO {
-  read(input?: string | string[]): string[]
-  write(template: Template): void
-  remove(filePath: string, callback: () => void): void
-  watch(input: string, callback: () => void): void
-}
-
-export class CommandRunner {
+export class BuildCommandRunner implements Command {
   // eslint-disable-next-line no-useless-constructor
   constructor(
     private readonly command: BuildCommand,
@@ -26,6 +16,17 @@ export class CommandRunner {
       this.command.run(input, this.io)
     })
   }
+}
+
+interface BuildCommand {
+  run(input: string, io: BuildIO): void
+}
+
+export interface BuildIO {
+  read(input?: string | string[]): string[]
+  write(template: Template): void
+  remove(filePath: string, callback: () => void): void
+  watch(input: string, callback: () => void): void
 }
 
 export class Build implements BuildCommand {

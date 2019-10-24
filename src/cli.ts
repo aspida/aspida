@@ -4,7 +4,7 @@ import getConfig from './getConfig'
 import read from './getInputs'
 import write from './writeRouteFile'
 import watch from './watchInputDir'
-import { Build, Watch, CommandRunner } from './cli/build'
+import { Build, Watch, BuildCommandRunner } from './cli/build'
 
 const options: minimist.Opts = {
   string: ['version', 'config', 'build', 'watch', 'baseurl'],
@@ -25,7 +25,7 @@ export const run = (args: string[]) => {
 
   const buildCommand = argv.watch === undefined ? new Build(argv.baseurl) : new Watch(argv.baseurl)
 
-  const buildCommandRunner = new CommandRunner(buildCommand, config, {
+  const buildCommandRunner = new BuildCommandRunner(buildCommand, config, {
     read,
     write,
     watch,
