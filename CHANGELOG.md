@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.1](https://github.com/aspidajs/aspida/compare/v0.6.0...v0.6.1) (2019-10-25)
+
+
+### Bug Fixes
+
+* **builder:** ignore  files other than ts ([17ca0a8](https://github.com/aspidajs/aspida/commit/17ca0a8))
+
+
+### Documentation
+
+* add contribution section and how to build on local ([fed3110](https://github.com/aspidajs/aspida/commit/fed3110))
+* add how to watch file changes ([cb15b3d](https://github.com/aspidajs/aspida/commit/cb15b3d))
+
+
+### Refactors
+
+* define command interface ([428922d](https://github.com/aspidajs/aspida/commit/428922d))
+* define template interface which is used to build and write ([0a7cf33](https://github.com/aspidajs/aspida/commit/0a7cf33))
+* implements build command objects ([47638c0](https://github.com/aspidajs/aspida/commit/47638c0))
+* implements command interface ([1ac82b7](https://github.com/aspidajs/aspida/commit/1ac82b7))
+* refactor cli interface to explicit what argument are usable ([7812353](https://github.com/aspidajs/aspida/commit/7812353))
+* rename command class name for build ([eaf2c6d](https://github.com/aspidajs/aspida/commit/eaf2c6d))
+* return early to make code nest shallow ([21f83de](https://github.com/aspidajs/aspida/commit/21f83de))
+* return early to make code nest shallow ([a054ee5](https://github.com/aspidajs/aspida/commit/a054ee5))
+
 ## [0.6.0](https://github.com/aspidajs/aspida/compare/v0.5.0...v0.6.0) (2019-10-20)
 
 
