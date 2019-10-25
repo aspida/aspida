@@ -4,7 +4,7 @@ import getConfig, { Config } from './getConfig'
 import read from './getInputs'
 import write from './writeRouteFile'
 import watch from './watchInputDir'
-import { Build, Watch, BuildCommandFactory } from './cli/build'
+import { Build, Watch, CommandToBuild } from './cli/build'
 import { Command, nullCommand } from './cli/command'
 import { version as versionCommand } from './cli/version'
 
@@ -14,7 +14,7 @@ const options: minimist.Opts = {
 }
 
 const getBuildCommandFactory = (config: Config) =>
-  BuildCommandFactory.getFactory(config, {
+  CommandToBuild.getFactory(config, {
     read,
     write,
     watch,

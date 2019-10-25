@@ -3,11 +3,11 @@ import build from '../buildTemplate'
 import { Template } from '../build/template'
 import { Command } from './command'
 
-export class BuildCommandFactory implements Command {
+export class CommandToBuild implements Command {
   static getFactory(config: Config, io: BuildIO) {
     return {
       create(command: BuildCommand): Command {
-        return new BuildCommandFactory(command, config, io)
+        return new CommandToBuild(command, config, io)
       }
     }
   }
