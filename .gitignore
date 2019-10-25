@@ -111,5 +111,7 @@ sw.*
 ### Miscellaneous
 
 # examples directory
-examples/**/$route.*
+examples/**/$*.ts
 examples/**/package-lock.json
+apis/*
+!apis/.gitkeep

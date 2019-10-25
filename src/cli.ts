@@ -1,39 +1,39 @@
 import fs from 'fs'
 import minimist from 'minimist'
-import getConfig from './getConfig'
-import getInputs from './getInputs'
-import build from './buildTemplate'
+import getConfig, { Config } from './getConfig'
+import read from './getInputs'
 import write from './writeRouteFile'
 import watch from './watchInputDir'
+import { Build, Watch, CommandToBuild } from './cli/build'
+import { Command, nullCommand } from './cli/command'
+import { version as versionCommand } from './cli/version'
 
 const options: minimist.Opts = {
   string: ['version', 'config', 'build', 'watch', 'baseurl'],
   alias: { v: 'version', c: 'config', b: 'build', w: 'watch', u: 'baseurl' }
 }
 
+const getBuildCommandFactory = (config: Config) =>
+  CommandToBuild.getFactory(config, {
+    read,
+    write,
+    watch,
+    remove(filePath: string, callback: () => void) {
+      fs.unlink(filePath, callback)
+    }
+  })
+
 export const run = (args: string[]) => {
   const argv = minimist(args, options)
-  const config = getConfig(argv.config)
 
-  if (argv.version !== undefined) {
-    console.log(`v${require('../package').version}`)
-  }
+  const commands: Command[] = [
+    argv.version !== undefined ? versionCommand : nullCommand,
+    argv.build !== undefined || argv.watch !== undefined
+      ? getBuildCommandFactory(getConfig(argv.config)).create(
+          argv.watch !== undefined ? new Watch(argv.baseurl) : new Build(argv.baseurl)
+        )
+      : nullCommand
+  ]
 
-  if (argv.build !== undefined || argv.watch !== undefined) {
-    getInputs(config.input).forEach(input => {
-      let prevResult = build(input, argv.baseurl)
-      write(prevResult)
-
-      if (argv.watch !== undefined) {
-        watch(input, () => {
-          const result = build(input, argv.baseurl)
-
-          if (prevResult.text !== result.text || prevResult.filePath !== result.filePath) {
-            fs.unlink(prevResult.filePath, () => write(result))
-            prevResult = result
-          }
-        })
-      }
-    })
-  }
+  commands.forEach(c => c.exec())
 }

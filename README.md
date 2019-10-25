@@ -1,4 +1,4 @@
-<h1>Aspida</h1>
+<h1>aspida</h1>
 
 [![npm version][badge-npm]][badge-npm-url]
 [![npm bundle size][badge-bundlephobia]][badge-bundlephobia-url]
@@ -10,12 +10,51 @@
 
 Type safe HTTP client for the browser and node.js.
 
+## Getting Started
+
+### Installation
+
+- Using [npm][npm]:
+
+  ```sh
+  $ npm install axios aspida
+  ```
+
+- Using [Yarn][yarn]:
+
+  ```sh
+  $ yarn add axios aspida
+  ```
+
+### Examples
+
+See [examples][aspida-examples] for source code.
+
+- **[node](https://github.com/aspidajs/aspida/tree/develop/examples/node)**:
+  Use in [Node.js][nodejs] (TypeScript)
+- **[with-mock](https://github.com/aspidajs/aspida/tree/develop/examples/with-mock)**:
+  Using with a [axios-mock-server][axios-mock-server]
+
+## Contribution
+
+### Build
+
+```bash
+npm install
+npm run build
+node ./bin/index.js --build --baseurl=http://example.com
+```
+
+if you want to watch file changes and rebuild automatically,
+you can use `--watch` instead of `--build`
+
 ## License
 
 Aspida is licensed under a [MIT License][aspida-license].
 
 <!-- URL: aspida -->
 
+[aspida-examples]: https://github.com/aspidajs/aspida/tree/develop/examples
 [aspida-license]: https://github.com/aspidajs/aspida/blob/develop/LICENSE
 
 <!-- URL: Badges -->
@@ -35,4 +74,8 @@ Aspida is licensed under a [MIT License][aspida-license].
 
 <!-- URL: General -->
 
+[axios-mock-server]: https://github.com/m-mitsuhide/axios-mock-server/
 [dependabot]: https://dependabot.com
+[nodejs]: https://nodejs.org/
+[npm]: https://www.npmjs.com/
+[yarn]: https://yarnpkg.com/
