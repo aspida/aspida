@@ -24,12 +24,12 @@
     "promise"
   ],
   "scripts": {
-    "dev": "ts-node src/dev",
     "build": "rimraf dist && tsc --project tsconfig.build.json",
     "release": "standard-version --skip.tag",
     "lint": "eslint --ext .js,.ts --ignore-path .gitignore .",
     "lint:fix": "npm run lint -- --fix",
     "test": "jest",
+    "test:update:snapshot": "ts-node __tests__/utils/updateSnapshot",
     "test:watch": "npm test -- --watch",
     "test:types": "tsc --noEmit",
     "test:types:watch": "tsc --watch --noEmit"
