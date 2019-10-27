@@ -1,5 +1,5 @@
-import build from './buildTemplate'
-import write from './writeRouteFile'
+import build from '../../src/buildTemplate'
+import write from '../../src/writeRouteFile'
 
 const input = './__tests__/apis'
 const baseurl = 'https://example.com'
