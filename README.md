@@ -25,7 +25,7 @@ Type safe HTTP client for the browser and node.js.
 1. Reproduce the endpoint directory structure in the apis directory
 1. Export Methods interface with TS file
 1. Call 'aspida --build' with npm scripts
-1. API type definition file 'apis / \$ api.ts' will be generated, so import the application and make an HTTP request
+1. API type definition file 'apis/\$api.ts' will be generated, so import the application and make an HTTP request
 
 ## Getting Started
 
