@@ -11,7 +11,8 @@ export default (input: string) => {
     importBasePath: string,
     indent: string,
     url: string,
-    text: string
+    text: string,
+    methodsOfIndexTsFile?: string
   ) => {
     const props: string[] = []
 
@@ -61,15 +62,14 @@ ${indent}})`
           props.push(valFn.replace('<% next %>', createMethods(target, indent, importName, newUrl)))
         } else if (fs.statSync(target).isDirectory()) {
           const indexPath = path.posix.join(target, 'index.ts')
-          let methods = ''
+          let methods
 
           if (fs.existsSync(indexPath)) {
             const importName = `Methods${imports.length}`
             imports.push(
               `import { Methods as ${importName} } from '${importBasePath}/${file}/index'`
             )
-            methods = `,
-${createMethods(indexPath, indent, importName, newUrl)}`
+            methods = createMethods(indexPath, indent, importName, newUrl)
           }
 
           props.push(
@@ -78,27 +78,30 @@ ${createMethods(indexPath, indent, importName, newUrl)}`
               `${importBasePath}/${file}`,
               indent,
               newUrl,
-              valFn.replace('<% next %>', `<% props %>${methods}`)
+              valFn.replace('<% next %>', '<% props %>'),
+              methods
             )
           )
         }
       })
 
-    return text.replace('<% props %>', props.join(',\n'))
+    return text.replace(
+      '<% props %>',
+      `${props.join(',\n')}${
+        methodsOfIndexTsFile ? `${props.length ? ',\n' : ''}${methodsOfIndexTsFile}` : ''
+      }`
+    )
   }
 
   const rootIndexPath = path.posix.join(input, 'index.ts')
   const rootIndent = '  '
-  let rootMethods = ''
+  let rootMethods
 
   if (fs.existsSync(rootIndexPath)) {
     const importName = 'Methods0'
     imports.push(`import { Methods as ${importName} } from './index'`)
-    rootMethods = `,
-${
-  // eslint-disable-next-line no-template-curly-in-string
-  createMethods(rootIndexPath, rootIndent, importName, '${prefix}/')
-}`
+    // eslint-disable-next-line no-template-curly-in-string
+    rootMethods = createMethods(rootIndexPath, rootIndent, importName, '${prefix}/')
   }
 
   return {
@@ -109,8 +112,9 @@ ${
       // eslint-disable-next-line no-template-curly-in-string
       '${prefix}',
       `{
-<% props %>${rootMethods}
-  }`
+<% props %>
+  }`,
+      rootMethods
     ),
     imports
   }

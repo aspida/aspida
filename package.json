@@ -1,6 +1,6 @@
 {
   "name": "aspida",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "Type safe HTTP client for the browser and node.js",
   "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
   "license": "MIT",
@@ -24,12 +24,12 @@
     "promise"
   ],
   "scripts": {
-    "dev": "ts-node src/dev",
     "build": "rimraf dist && tsc --project tsconfig.build.json",
     "release": "standard-version --skip.tag",
     "lint": "eslint --ext .js,.ts --ignore-path .gitignore .",
     "lint:fix": "npm run lint -- --fix",
     "test": "jest",
+    "test:update:snapshot": "ts-node __tests__/utils/updateSnapshot",
     "test:watch": "npm test -- --watch",
     "test:types": "tsc --noEmit",
     "test:types:watch": "tsc --watch --noEmit"
@@ -46,7 +46,7 @@
     "eslint-config-prettier": "^6.3.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jest": "^22.17.0",
+    "eslint-plugin-jest": "^23.0.0",
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-promise": "^4.2.1",

@@ -12,24 +12,24 @@
 [![Dependabot Status][badge-dependabot]][dependabot]
 [![License][badge-license]][aspida-license]
 
-Type safe HTTP client for the browser and node.js.
+ブラウザと node.js のための型安全な HTTP クライアント。
 
-## Fetures
+## 特徴
 
-- CLI that generates a TS file that can define types for path, URL query, header, body, and response.
-- The return value is an axios response object
-- baseURL and common header can be set with axios
+- パス・URL クエリ・ヘッダー・ボディ・レスポンス全てに型を定義できる TS ファイルを生成する CLI
+- 返り値は axios のレスポンスオブジェクト
+- baseURL や共通ヘッダーは axios で設定可能
 
-## Procedure
+## 手順
 
-1. Reproduce the endpoint directory structure in the apis directory
-1. Export Methods interface with TS file
-1. Call 'aspida --build' with npm scripts
-1. API type definition file 'apis/\$api.ts' will be generated, so import the application and make an HTTP request
+1. エンドポイントのディレクトリ構造を apis ディレクトリに再現する
+1. TS ファイルで Methods インターフェースを export する
+1. npm scripts で aspida --build を起動
+1. API 型定義ファイル apis/\$api.ts が生成されるのでアプリケーションで import して HTTP リクエストを行う
 
-## Getting Started
+## 入門
 
-### Installation
+### インストール
 
 - Using [npm][npm]:
 
@@ -45,13 +45,13 @@ Type safe HTTP client for the browser and node.js.
   $ yarn add aspida --dev
   ```
 
-### Create apis directory
+### apis ディレクトリを作成する
 
 ```sh
 $ mkdir apis
 ```
 
-### Create an endpoint type definition file
+### エンドポイントの型定義ファイルを作成する
 
 - GET: /v1/users/?limit={number}
 - POST: /v1/users
@@ -88,8 +88,8 @@ $ mkdir apis
 
   `apis/v1/users/_userId@number.ts`
 
-  Specify the type of path variable “userId” starting with underscore with “@number”  
-  If not specified with @, the default path variable type is "number | string"
+  アンダースコアから始まるパス変数「userId」の型を「@number」で指定する  
+  @での指定がない場合、パス変数の型のデフォルトは「number | string」
 
   ```typescript
   interface User {
@@ -112,11 +112,11 @@ $ mkdir apis
   }
   ```
 
-### Build type definition file
+### 型定義ファイルをビルドする
 
 `package.json`
 
-If baseurl is not specified, empty string is used by default
+baseurl を指定しない場合、空文字をデフォルトで使用する
 
 ```json
 {
@@ -132,7 +132,7 @@ $ npm run api:build
 > apis/$api.ts was built successfully.
 ```
 
-### Make HTTP request by giving token from application
+### アプリケーションから token を付与して HTTP リクエストを行う
 
 `src/index.ts`
 
@@ -161,7 +161,7 @@ axios.defaults.headers.common["X-Auth-Token"] = "YOUR TOKEN"
 })()
 ```
 
-### Examples
+### 使用例
 
 See [examples][aspida-examples] for source code.
 
@@ -172,9 +172,9 @@ See [examples][aspida-examples] for source code.
 
 ## Tips
 
-### Overwrite baseURL
+### baseURL を上書きする
 
-Set in axios to specify a baseURL different from the one set at build time in the application
+ビルド時に設定したものとは異なる baseURL をアプリケーションで指定するには axios で設定
 
 `src/index.ts`
 
