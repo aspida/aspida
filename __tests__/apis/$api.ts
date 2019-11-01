@@ -9,6 +9,7 @@ import { Methods as Methods3 } from './v1.1/2/_hogeId@HogeId/test-4/_fugaId'
 import { Methods as Methods4 } from './v1.1/2/_hogeId@HogeId/test-4/fuga aa'
 import { Methods as Methods5 } from './v1.1/3.1'
 import { Methods as Methods6 } from './v1.1/users/_userId@number'
+import { Methods as Methods7 } from './v2.0/index'
 
 const apiBaseURL = 'https://example.com'
 
@@ -103,6 +104,12 @@ const api = (client: AxiosInstance = axios) => {
             (await client.post<Methods6['post']['response']>(`${prefix}/v1.1/users/${val2}`, data, config)).data
         })
       }
+    },
+    v2_0: {
+      get: (config?: AxiosRequestConfig) =>
+        client.get<Methods7['get']['response']>(`${prefix}/v2.0`, config),
+      $get: async (config?: AxiosRequestConfig) =>
+        (await client.get<Methods7['get']['response']>(`${prefix}/v2.0`, config)).data
     },
     get: (config: { params: Methods0['get']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
       client.get<Methods0['get']['response']>(`${prefix}/`, config),
