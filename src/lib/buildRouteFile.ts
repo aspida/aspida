@@ -16,11 +16,14 @@ const findExportingFile = (filePaths: string[]) =>
 
 const getMockFilePaths = (input: string) =>
   listFiles(input)
+    .filter(
+      filePath =>
+        !mockFileRegExp.test(filePath) &&
+        /^\.(js|ts)$/.test(path.extname(filePath)) &&
+        /(\n|^)(export default|module.exports)/.test(fs.readFileSync(filePath, 'utf8'))
+    )
     .sort()
     .reverse()
-    .filter(
-      filePath => !mockFileRegExp.test(filePath) && /^\.(js|ts)$/.test(path.extname(filePath))
-    )
 
 export default (input: string, config: Config, baseURL = '') => {
   const mockFilePaths = getMockFilePaths(input)

@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.16.3](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.16.2...v0.16.3) (2019-11-06)
+
+
+### Bug Fixes
+
+* ignore empty file ([c1ea53e](https://github.com/m-mitsuhide/axios-mock-server/commit/c1ea53e14aacfd05386cf6ad55486e7303003570))
+* **deps:** bump chokidar from 3.2.2 to 3.2.3 ([0fec72f](https://github.com/m-mitsuhide/axios-mock-server/commit/0fec72f1bee310bdaf30238dc0b16a41aa92e7c9))
+* **deps:** bump chokidar from 3.2.3 to 3.3.0 ([68000b2](https://github.com/m-mitsuhide/axios-mock-server/commit/68000b23b0ce1f2d3bd846322236bbd1b2985aee))
+
 ### [0.16.2](https://github.com/m-mitsuhide/axios-mock-server/compare/v0.16.1...v0.16.2) (2019-10-24)
 
 
