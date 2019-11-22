@@ -38,27 +38,22 @@ export interface BuildIO {
 }
 
 export class Build implements BuildCommand {
-  // eslint-disable-next-line no-useless-constructor
-  constructor(private readonly baseUrl: string) {}
-
   run(input: string, io: BuildIO): void {
-    const template = build(input, this.baseUrl)
+    const template = build(input)
 
     io.write(template)
   }
 }
+
 export class Watch implements BuildCommand {
   // eslint-disable-next-line no-useless-constructor
-  constructor(
-    private readonly baseUrl: string,
-    private readonly build: Build = new Build(baseUrl)
-  ) {}
+  constructor(private readonly build = new Build()) {}
 
   run(input: string, io: BuildIO): void {
     this.build.run(input, io)
 
     io.watch(input, () => {
-      const result = build(input, this.baseUrl)
+      const result = build(input)
 
       io.remove(result.filePath, () => io.write(result))
     })
