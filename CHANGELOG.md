@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0](https://github.com/aspidajs/aspida/compare/v0.6.1...v0.7.0) (2019-11-23)
+
+
+### Features
+
+* **cli:** delete baseurl option ([9fc0bf3](https://github.com/aspidajs/aspida/commit/9fc0bf36c657a78175369422d7b6814855a87ab7))
+
 ### [0.6.2](https://github.com/aspidajs/aspida/compare/v0.6.1...v0.6.2) (2019-11-01)
 
 

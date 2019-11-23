@@ -9,8 +9,8 @@ import { Command, nullCommand } from './cli/command'
 import { version as versionCommand } from './cli/version'
 
 const options: minimist.Opts = {
-  string: ['version', 'config', 'build', 'watch', 'baseurl'],
-  alias: { v: 'version', c: 'config', b: 'build', w: 'watch', u: 'baseurl' }
+  string: ['version', 'config', 'build', 'watch'],
+  alias: { v: 'version', c: 'config', b: 'build', w: 'watch' }
 }
 
 const getBuildCommandFactory = (config: Config) =>
@@ -30,7 +30,7 @@ export const run = (args: string[]) => {
     argv.version !== undefined ? versionCommand : nullCommand,
     argv.build !== undefined || argv.watch !== undefined
       ? getBuildCommandFactory(getConfig(argv.config)).create(
-          argv.watch !== undefined ? new Watch(argv.baseurl) : new Build(argv.baseurl)
+          argv.watch !== undefined ? new Watch() : new Build()
         )
       : nullCommand
   ]
