@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0](https://github.com/aspidajs/aspida/compare/v0.6.1...v0.7.0) (2019-11-23)
+
+
+### Features
+
+* **cli:** delete baseurl option ([9fc0bf3](https://github.com/aspidajs/aspida/commit/9fc0bf36c657a78175369422d7b6814855a87ab7))
+
+
+### Bug Fixes
+
+* control the comma when index.ts is alone ([4d668d1](https://github.com/aspidajs/aspida/commit/4d668d1f96f24a037e8a6b9f59d1532bab67b616))
+* update modules ([1967e00](https://github.com/aspidajs/aspida/commit/1967e00d32152e567724dafacbb384ca2db03c5e))
+* update modules ([c569c1f](https://github.com/aspidajs/aspida/commit/c569c1fafb87806c38e8cdc1ce5d5cd5a5e407c7))
+
 ### [0.6.2](https://github.com/aspidajs/aspida/compare/v0.6.1...v0.6.2) (2019-11-01)
 
 
