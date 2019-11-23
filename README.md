@@ -3,11 +3,11 @@
   <a href="https://github.com/aspidajs/aspida/blob/develop/docs/ja/README.md">🇯🇵日本語</a>
 </p>
 
-<h1>aspida</h1>
-
 <div align="center">
   <img src="https://aspidajs.github.io/aspida/assets/images/logo.png" alt="aspida" title="aspida" />
 </div>
+
+<h1>aspida</h1>
 
 [![npm version][badge-npm]][badge-npm-url]
 [![CircleCI][badge-ci]][badge-ci-url]
