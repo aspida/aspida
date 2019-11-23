@@ -5,6 +5,10 @@
 
 <h1>aspida</h1>
 
+<div align="center">
+  <img src="https://aspidajs.github.io/aspida/assets/images/logo.png" alt="aspida" title="aspida" />
+</div>
+
 [![npm version][badge-npm]][badge-npm-url]
 [![CircleCI][badge-ci]][badge-ci-url]
 [![Codecov][badge-coverage]][badge-coverage-url]
@@ -116,12 +120,10 @@ $ mkdir apis
 
 `package.json`
 
-baseurl を指定しない場合、空文字をデフォルトで使用する
-
 ```json
 {
   "scripts": {
-    "api:build": "aspida --build --baseurl https://examples.com"
+    "api:build": "aspida --build"
   }
 }
 ```
@@ -132,15 +134,12 @@ $ npm run api:build
 > apis/$api.ts was built successfully.
 ```
 
-### アプリケーションから token を付与して HTTP リクエストを行う
+### アプリケーションから HTTP リクエストを行う
 
 `src/index.ts`
 
 ```typescript
-import axios from "axios"
 import api from "../apis/$api"
-
-axios.defaults.headers.common["X-Auth-Token"] = "YOUR TOKEN"
 ;(async () => {
   const userId = 0
   const limit = 10
@@ -149,14 +148,14 @@ axios.defaults.headers.common["X-Auth-Token"] = "YOUR TOKEN"
 
   const res = await api().v1.users.get({ params: { limit } })
   console.log(res)
-  // req -> GET: https://examples.com/v1/users/?limit=10
+  // req -> GET: /v1/users/?limit=10
   // res -> { status: 200, data: [{ id: 0, name: 'taro' }], headers: {...} }
 
   const user = await api()
     .v1.users._userId(userId)
     .$get()
   console.log(user)
-  // req -> GET: https://examples.com/v1/users/0
+  // req -> GET: /v1/users/0
   // res -> { id: 0, name: 'taro' }
 })()
 ```
@@ -172,9 +171,52 @@ See [examples][aspida-examples] for source code.
 
 ## Tips
 
-### baseURL を上書きする
+### baseURL を設定する
 
-ビルド時に設定したものとは異なる baseURL をアプリケーションで指定するには axios で設定
+`src/index.ts`
+
+```typescript
+import axios from "axios"
+import api from "../apis/$api"
+
+axios.defaults.baseURL = "http://localhost:8080"
+;(async () => {
+  const limit = 10
+
+  await api().v1.users.post({ name: "mario" })
+
+  const res = await api().v1.users.$get({ params: { limit } })
+  console.log(res)
+  // req -> GET: http://localhost:8080/v1/users/?limit=10
+  // res -> [{ id: 0, name: 'mario' }]
+})()
+```
+
+### 共通ヘッダーに token を付与してリクエストする
+
+`src/index.ts`
+
+```typescript
+import axios from "axios"
+import api from "../apis/$api"
+
+axios.defaults.headers.common["X-Auth-Token"] = "YOUR TOKEN"
+;(async () => {
+  const userId = 0
+  const limit = 10
+
+  await api().v1.users.post({ name: "taro" })
+
+  const user = await api()
+    .v1.users._userId(userId)
+    .$get()
+  console.log(user)
+  // req -> GET: /v1/users/0
+  // res -> { id: 0, name: 'taro' }
+})()
+```
+
+### axios Instance を使ってリクエストする
 
 `src/index.ts`
 
@@ -182,37 +224,18 @@ See [examples][aspida-examples] for source code.
 import axios from "axios"
 import api from "../apis/$api"
 ;(async () => {
-  const userId = 0
   const limit = 10
 
-  await api().v1.users.post({ name: "taro" })
-
-  const res = await api().v1.users.get({ params: { limit } })
-  console.log(res)
-  // req -> GET: https://examples.com/v1/users/?limit=10
-  // res -> { status: 200, data: [{ id: 0, name: 'taro' }], headers: {...} }
-
-  axios.defaults.baseURL = "http://localhost:8080"
-
-  await api().v1.users.post({ name: "yoko" })
-
-  const localRes = await api().v1.users.get({ params: { limit } })
-  console.log(localRes)
-  // req -> GET: http://localhost:8080/v1/users/?limit=10
-  // res -> { status: 200, data: [{ id: 0, name: 'yoko' }], headers: {...} }
-
   // using axios instance
-  const instance = axios.create({
-    baseURL: "http://localhost:10000"
-  })
-  const $api = api(instance)
+  const client = axios.create({ baseURL: "http://localhost:10000" })
+  const $api = api(client)
 
   await $api.v1.users.post({ name: "mario" })
 
-  const instanceRes = await $api.v1.users.get({ params: { limit } })
-  console.log(instanceRes)
+  const res = await $api.v1.users.$get({ params: { limit } })
+  console.log(res)
   // req -> GET: http://localhost:10000/v1/users/?limit=10
-  // res -> { status: 200, data: [{ id: 0, name: 'mario' }], headers: {...} }
+  // res -> [{ id: 0, name: 'mario' }]
 })()
 ```
 
@@ -223,7 +246,7 @@ import api from "../apis/$api"
 ```bash
 npm install
 npm run build
-node ./bin/index.js --build --baseurl=http://example.com
+node ./bin/index.js --build
 ```
 
 if you want to watch file changes and rebuild automatically,
