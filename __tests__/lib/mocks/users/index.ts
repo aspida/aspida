@@ -1,6 +1,9 @@
 import { MockMethods } from '~/src/types'
 
-export const users = [{ id: 0, name: 'aaa' }, { id: 1, name: '123' }]
+export const users = [
+  { id: 0, name: 'aaa' },
+  { id: 1, name: '123' }
+]
 
 export default {
   get: () => [200, users],

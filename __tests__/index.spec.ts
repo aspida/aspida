@@ -106,7 +106,9 @@ describe('initialize', () => {
     mock.setRoute(route)
     const { data } = await client.get(
       `${testPath}/?height=${response.height}&color=${response.color}`,
-      { params: { name: response.name } }
+      {
+        params: { name: response.name }
+      }
     )
 
     expect(data).toEqual(response)

@@ -32,7 +32,9 @@ ${pathList
 `
   )
   .join('')}
-export default (client${isTS ? '?: AxiosInstance' : ''}) => mockServer([${pathList
+export default (client${
+        isTS ? '?: AxiosInstance' : ''
+      }) => mockServer([${pathList
         .map((filePath, i) => createCondition(filePath, inputDir, `mock${i}`))
         .join(',')}
 ], client, '${baseURL}')

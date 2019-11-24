@@ -27,7 +27,7 @@ export type MockMethods = {
 type Handler = [RegExp, string, MockMethods[HttpMethod]]
 export type HandlersSet = { [key in HttpMethod]?: Handler[] }
 
-export type MockRoute = ({
+export type MockRoute = {
   path: string
   methods: MockMethods
-})[]
+}[]
