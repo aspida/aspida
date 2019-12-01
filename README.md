@@ -18,6 +18,8 @@
 
 Type safe HTTP client for the browser and node.js.
 
+<img src="https://aspidajs.github.io/aspida/assets/images/vscode.gif" width="720" alt="vscode" title="vscode" />
+
 ## Fetures
 
 - CLI that generates a TS file that can define types for path, URL query, header, body, and response.

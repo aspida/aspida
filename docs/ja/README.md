@@ -16,7 +16,9 @@
 [![Dependabot Status][badge-dependabot]][dependabot]
 [![License][badge-license]][aspida-license]
 
-ブラウザと node.js のための型安全な HTTP クライアント。
+ブラウザと node.js のための型安全な HTTP クライアント
+
+<img src="https://aspidajs.github.io/aspida/assets/images/vscode.gif" width="720" alt="vscode" title="vscode" />
 
 ## 特徴
 
