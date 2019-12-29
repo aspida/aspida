@@ -15,5 +15,5 @@
     "strict": true,
     "target": "es5"
   },
-  "exclude": ["node_modules", "dist", "examples", "apis"]
+  "exclude": ["node_modules", "dist", "apis"]
 }

@@ -1,38 +1,12 @@
 {
-  "name": "aspida",
-  "version": "0.7.0",
-  "description": "Type safe HTTP client for the browser and node.js",
-  "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
-  "license": "MIT",
-  "main": "dist/index.js",
-  "bin": "bin/index.js",
-  "homepage": "https://github.com/aspidajs/aspida#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/aspidajs/aspida.git"
-  },
-  "bugs": {
-    "url": "https://github.com/aspidajs/aspida/issues"
-  },
-  "files": [
-    "dist"
-  ],
-  "keywords": [
-    "xhr",
-    "http",
-    "ajax",
-    "promise"
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "examples/*"
   ],
   "scripts": {
-    "build": "rimraf dist && tsc --project tsconfig.build.json",
-    "release": "standard-version --skip.tag",
-    "lint": "eslint --ext .js,.ts --ignore-path .gitignore .",
-    "lint:fix": "npm run lint -- --fix",
-    "test": "jest",
-    "test:update:snapshot": "ts-node __tests__/utils/updateSnapshot",
-    "test:watch": "npm test -- --watch",
-    "test:types": "tsc --noEmit",
-    "test:types:watch": "tsc --watch --noEmit"
+    "lint": "yarn workspace aspida lint",
+    "test": "yarn workspace aspida test"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",
@@ -60,9 +34,5 @@
     "ts-jest": "^24.1.0",
     "ts-node": "^8.4.1",
     "typescript": "^3.6.3"
-  },
-  "dependencies": {
-    "chokidar": "^3.2.0",
-    "minimist": "^1.2.0"
   }
 }
