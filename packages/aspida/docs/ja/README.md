@@ -1,6 +1,6 @@
 <p align="right">
   <a href="https://github.com/aspidajs/aspida#readme">🇺🇸English</a> |
-  <a href="https://github.com/aspidajs/aspida/blob/develop/docs/ja/README.md">🇯🇵日本語</a>
+  <a href="https://github.com/aspidajs/aspida/blob/develop/packages/aspida/docs/ja/README.md">🇯🇵日本語</a>
 </p>
 
 <div align="center">

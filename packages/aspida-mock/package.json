@@ -1,18 +1,18 @@
 {
-  "name": "axios-mock-server",
+  "name": "aspida-mock",
   "version": "0.16.3",
   "description": "RESTful mock server using axios",
   "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
   "license": "MIT",
   "main": "dist/index.js",
   "bin": "bin/index.js",
-  "homepage": "https://github.com/m-mitsuhide/axios-mock-server#readme",
+  "homepage": "https://github.com/aspidajs/aspida#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/m-mitsuhide/axios-mock-server.git"
+    "url": "git+https://github.com/aspidajs/aspida.git"
   },
   "bugs": {
-    "url": "https://github.com/m-mitsuhide/axios-mock-server/issues"
+    "url": "https://github.com/aspidajs/aspida/issues"
   },
   "files": [
     "dist"
@@ -23,15 +23,7 @@
     "mock"
   ],
   "scripts": {
-    "dev:cli": "ts-node src/lib/dev",
-    "build": "rimraf dist && tsc --project tsconfig.build.json",
-    "release": "standard-version --skip.tag",
-    "lint": "eslint --ext .js,.ts --ignore-path .gitignore .",
-    "lint:fix": "npm run lint -- --fix",
-    "test": "jest",
-    "test:watch": "npm test -- --watch",
-    "test:types": "tsc --noEmit",
-    "test:types:watch": "tsc --watch --noEmit"
+    "build": "rimraf dist && tsc --project tsconfig.build.json"
   },
   "dependencies": {
     "chokidar": "^3.3.1",

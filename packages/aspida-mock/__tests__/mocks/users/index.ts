@@ -1,4 +1,4 @@
-import { MockMethods } from '~/src/types'
+import { MockMethods } from '~/aspida-mock/src/types'
 
 export const users = [
   { id: 0, name: 'aaa' },

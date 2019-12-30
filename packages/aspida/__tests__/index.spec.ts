@@ -1,25 +1,25 @@
 import fs from 'fs'
-import build from '~/src/buildTemplate'
+import build from '~/aspida/src/buildTemplate'
 
 describe('cli test', () => {
   test('main', () => {
     const baseurl = 'https://example.com'
     const paths = [
       {
-        input: '__tests__/apis',
-        resultDirPath: '__tests__/apis'
+        input: 'packages/aspida/__tests__/apis',
+        resultDirPath: 'packages/aspida/__tests__/apis'
       },
       {
-        input: './__tests__/apis',
-        resultDirPath: '__tests__/apis'
+        input: './packages/aspida/__tests__/apis',
+        resultDirPath: 'packages/aspida/__tests__/apis'
       },
       {
-        input: './__tests__/apis/',
-        resultDirPath: '__tests__/apis'
+        input: './packages/aspida/__tests__/apis/',
+        resultDirPath: 'packages/aspida/__tests__/apis'
       },
       {
-        input: '__tests__/apis/',
-        resultDirPath: '__tests__/apis'
+        input: 'packages/aspida/__tests__/apis/',
+        resultDirPath: 'packages/aspida/__tests__/apis'
       }
     ]
 

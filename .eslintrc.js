@@ -23,7 +23,7 @@ module.exports = {
       }
     },
     {
-      files: ['packages/*/examples/**/*.{js,ts}'],
+      files: ['examples/**/*.{js,ts}'],
       env: {
         browser: true
       }

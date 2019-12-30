@@ -1,6 +1,6 @@
 import fs from 'fs'
-import { run } from '~/src/lib/cli'
-import build from '~/src/lib/buildRouteFile'
+import { run } from '~/aspida-mock/src/lib/cli'
+import build from '~/aspida-mock/src/lib/buildRouteFile'
 
 describe('cli', () => {
   test('version command', () => {
@@ -22,38 +22,38 @@ describe('cli', () => {
   test('snapshot', () => {
     const configs = [
       {
-        input: '__tests__/lib/mocks',
-        resultDirPath: '__tests__/lib/mocks',
+        input: 'packages/aspida-mock/__tests__/mocks',
+        resultDirPath: 'packages/aspida-mock/__tests__/mocks',
         target: 'es6' as const,
         outputExt: 'ts' as const
       },
       {
-        input: '__tests__/lib/mocks',
-        resultDirPath: '__tests__/lib/mocks',
+        input: 'packages/aspida-mock/__tests__/mocks',
+        resultDirPath: 'packages/aspida-mock/__tests__/mocks',
         target: 'cjs' as const,
         outputExt: 'js' as const
       },
       {
-        input: './__tests__/lib/mocks',
-        resultDirPath: '__tests__/lib/mocks',
+        input: './packages/aspida-mock/__tests__/mocks',
+        resultDirPath: 'packages/aspida-mock/__tests__/mocks',
         target: 'es6' as const,
         outputExt: 'ts' as const
       },
       {
-        input: './__tests__/lib/mocks',
-        resultDirPath: '__tests__/lib/mocks',
+        input: './packages/aspida-mock/__tests__/mocks',
+        resultDirPath: 'packages/aspida-mock/__tests__/mocks',
         target: 'cjs' as const,
         outputExt: 'js' as const
       },
       {
-        input: '__tests__/lib/mocks/',
-        resultDirPath: '__tests__/lib/mocks',
+        input: 'packages/aspida-mock/__tests__/mocks/',
+        resultDirPath: 'packages/aspida-mock/__tests__/mocks',
         target: 'es6' as const,
         outputExt: 'ts' as const
       },
       {
-        input: '__tests__/lib/mocks/',
-        resultDirPath: '__tests__/lib/mocks',
+        input: 'packages/aspida-mock/__tests__/mocks/',
+        resultDirPath: 'packages/aspida-mock/__tests__/mocks',
         target: 'cjs' as const,
         outputExt: 'js' as const
       }

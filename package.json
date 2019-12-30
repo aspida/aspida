@@ -5,8 +5,16 @@
     "examples/*"
   ],
   "scripts": {
-    "lint": "yarn workspace aspida lint",
-    "test": "yarn workspace aspida test"
+    "build:aspida": "yarn workspace aspida build",
+    "build:mock": "yarn workspace aspida-mock build",
+    "release": "standard-version --skip.tag",
+    "lint": "eslint --ext .js,.ts --ignore-path .gitignore .",
+    "lint:fix": "npm run lint -- --fix",
+    "snapshot:aspida": "ts-node packages/aspida/__tests__/utils/updateSnapshot",
+    "snapshot:mock": "ts-node packages/aspida-mock/__tests__/utils/updateSnapshot",
+    "test": "jest",
+    "test:watch": "npm test -- --watch",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",

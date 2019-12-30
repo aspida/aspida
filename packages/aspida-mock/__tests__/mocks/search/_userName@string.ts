@@ -1,4 +1,4 @@
-import { MockMethods } from '~/src/types'
+import { MockMethods } from '~/aspida-mock/src/types'
 import { users } from '../users/index'
 
 export default {

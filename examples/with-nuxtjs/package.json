@@ -1,5 +1,6 @@
 {
   "name": "with-nuxtjs",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
     "dev": "npm-run-all mock:build --parallel nuxt mock:watch",
