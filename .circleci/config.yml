@@ -10,7 +10,7 @@ commands:
   install_packages:
     parameters:
       cache_key:
-        default: package-lock.json
+        default: yarn.lock
         description: File to use as a Node cache checksum
         type: string
       cache_version:
@@ -23,7 +23,7 @@ commands:
           key: dependencies-<< parameters.cache_version >>-{{ checksum "<< parameters.cache_key >>" }}
       - run:
           name: Install dependencies
-          command: echo "package-lock=false" >> .npmrc && npm install
+          command: yarn install
       - save_cache:
           name: Cache dependencies
           key: dependencies-<< parameters.cache_version >>-{{ checksum "<< parameters.cache_key >>" }}
@@ -84,7 +84,7 @@ jobs:
       - checkout
       - run:
           name: Run a security audit
-          command: npm audit
+          command: yarn audit
 
 workflows:
   commit:
