@@ -3,17 +3,19 @@
     "baseUrl": ".",
     "declaration": true,
     "declarationMap": true,
+    "downlevelIteration": true,
     "esModuleInterop": true,
+    "lib": ["dom", "dom.iterable"],
     "module": "commonjs",
     "moduleResolution": "node",
-    "outDir": "dist",
     "paths": {
-      "~/*": ["./*"]
+      "~/aspida/*": ["./packages/aspida/*"],
+      "~/aspida-mock/*": ["./packages/aspida-mock/*"]
     },
     "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,
     "target": "es5"
   },
-  "exclude": ["node_modules", "dist", "examples", "apis"]
+  "exclude": ["dist", "examples"]
 }

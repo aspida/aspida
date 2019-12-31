@@ -1,68 +1,46 @@
 {
-  "name": "aspida",
-  "version": "0.7.0",
-  "description": "Type safe HTTP client for the browser and node.js",
-  "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
-  "license": "MIT",
-  "main": "dist/index.js",
-  "bin": "bin/index.js",
-  "homepage": "https://github.com/aspidajs/aspida#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/aspidajs/aspida.git"
-  },
-  "bugs": {
-    "url": "https://github.com/aspidajs/aspida/issues"
-  },
-  "files": [
-    "dist"
-  ],
-  "keywords": [
-    "xhr",
-    "http",
-    "ajax",
-    "promise"
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "examples/*"
   ],
   "scripts": {
-    "build": "rimraf dist && tsc --project tsconfig.build.json",
+    "build:aspida": "yarn workspace aspida build",
+    "build:mock": "yarn workspace aspida-mock build",
     "release": "standard-version --skip.tag",
     "lint": "eslint --ext .js,.ts --ignore-path .gitignore .",
     "lint:fix": "npm run lint -- --fix",
+    "snapshot:aspida": "ts-node packages/aspida/__tests__/utils/updateSnapshot",
+    "snapshot:mock": "ts-node packages/aspida-mock/__tests__/utils/updateSnapshot",
     "test": "jest",
-    "test:update:snapshot": "ts-node __tests__/utils/updateSnapshot",
     "test:watch": "npm test -- --watch",
-    "test:types": "tsc --noEmit",
-    "test:types:watch": "tsc --watch --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",
     "@commitlint/config-conventional": "^8.2.0",
-    "@types/jest": "^24.0.18",
+    "@types/jest": "^24.0.25",
     "@types/minimist": "^1.2.0",
-    "@typescript-eslint/eslint-plugin": "^2.3.2",
-    "@typescript-eslint/parser": "^2.3.2",
+    "@typescript-eslint/eslint-plugin": "^2.13.0",
+    "@typescript-eslint/parser": "^2.13.0",
     "axios": "^0.19.0",
-    "eslint": "^6.5.1",
-    "eslint-config-prettier": "^6.3.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.9.0",
     "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jest": "^23.0.0",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-jest": "^23.2.0",
     "eslint-plugin-node": "^11.0.0",
-    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "husky": "^3.0.7",
+    "husky": "^3.1.0",
     "jest": "^24.9.0",
-    "lint-staged": "^9.4.1",
-    "prettier": "^1.18.2",
+    "lint-staged": "^9.5.0",
+    "prettier": "^1.19.1",
     "rimraf": "^3.0.0",
-    "standard-version": "^7.0.0",
-    "ts-jest": "^24.1.0",
-    "ts-node": "^8.4.1",
-    "typescript": "^3.6.3"
-  },
-  "dependencies": {
-    "chokidar": "^3.2.0",
-    "minimist": "^1.2.0"
+    "standard-version": "^7.0.1",
+    "ts-jest": "^24.2.0",
+    "ts-node": "^8.5.4",
+    "typescript": "^3.7.4"
   }
 }

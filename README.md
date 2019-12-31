@@ -1,6 +1,6 @@
 <p align="right">
   <a href="https://github.com/aspidajs/aspida#readme">🇺🇸English</a> |
-  <a href="https://github.com/aspidajs/aspida/blob/develop/docs/ja/README.md">🇯🇵日本語</a>
+  <a href="https://github.com/aspidajs/aspida/blob/develop/packages/aspida/docs/ja/README.md">🇯🇵日本語</a>
 </p>
 
 <div align="center">
@@ -166,9 +166,9 @@ import api from "../apis/$api"
 
 See [examples][aspida-examples] for source code.
 
-- **[node](https://github.com/aspidajs/aspida/tree/develop/examples/node)**:
+- **[node](https://github.com/aspidajs/aspida/tree/develop/examples/aspida-node)**:
   Use in [Node.js][nodejs] (TypeScript)
-- **[with-mock](https://github.com/aspidajs/aspida/tree/develop/examples/with-mock)**:
+- **[with-mock](https://github.com/aspidajs/aspida/tree/develop/examples/aspida-mock)**:
   Using with a [axios-mock-server][axios-mock-server]
 
 ## Tips
