@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios'
-import mockServer, { MockRoute, asyncResponse, MockResponse } from '~/aspida-mock/src'
+import mockServer, { MockRoute, asyncResponse, MockResponse } from '~/axios-mock-server/src'
 
 describe('initialize', () => {
   const mock = mockServer()

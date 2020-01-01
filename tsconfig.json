@@ -10,7 +10,7 @@
     "moduleResolution": "node",
     "paths": {
       "~/aspida/*": ["./packages/aspida/*"],
-      "~/aspida-mock/*": ["./packages/aspida-mock/*"]
+      "~/axios-mock-server/*": ["./packages/axios-mock-server/*"]
     },
     "resolveJsonModule": true,
     "sourceMap": true,

@@ -1,6 +1,6 @@
 import fs from 'fs'
-import { run } from '~/aspida-mock/src/lib/cli'
-import build from '~/aspida-mock/src/lib/buildRouteFile'
+import { run } from '~/axios-mock-server/src/lib/cli'
+import build from '~/axios-mock-server/src/lib/buildRouteFile'
 
 describe('cli', () => {
   test('version command', () => {
@@ -22,38 +22,38 @@ describe('cli', () => {
   test('snapshot', () => {
     const configs = [
       {
-        input: 'packages/aspida-mock/__tests__/mocks',
-        resultDirPath: 'packages/aspida-mock/__tests__/mocks',
+        input: 'packages/axios-mock-server/__tests__/mocks',
+        resultDirPath: 'packages/axios-mock-server/__tests__/mocks',
         target: 'es6' as const,
         outputExt: 'ts' as const
       },
       {
-        input: 'packages/aspida-mock/__tests__/mocks',
-        resultDirPath: 'packages/aspida-mock/__tests__/mocks',
+        input: 'packages/axios-mock-server/__tests__/mocks',
+        resultDirPath: 'packages/axios-mock-server/__tests__/mocks',
         target: 'cjs' as const,
         outputExt: 'js' as const
       },
       {
-        input: './packages/aspida-mock/__tests__/mocks',
-        resultDirPath: 'packages/aspida-mock/__tests__/mocks',
+        input: './packages/axios-mock-server/__tests__/mocks',
+        resultDirPath: 'packages/axios-mock-server/__tests__/mocks',
         target: 'es6' as const,
         outputExt: 'ts' as const
       },
       {
-        input: './packages/aspida-mock/__tests__/mocks',
-        resultDirPath: 'packages/aspida-mock/__tests__/mocks',
+        input: './packages/axios-mock-server/__tests__/mocks',
+        resultDirPath: 'packages/axios-mock-server/__tests__/mocks',
         target: 'cjs' as const,
         outputExt: 'js' as const
       },
       {
-        input: 'packages/aspida-mock/__tests__/mocks/',
-        resultDirPath: 'packages/aspida-mock/__tests__/mocks',
+        input: 'packages/axios-mock-server/__tests__/mocks/',
+        resultDirPath: 'packages/axios-mock-server/__tests__/mocks',
         target: 'es6' as const,
         outputExt: 'ts' as const
       },
       {
-        input: 'packages/aspida-mock/__tests__/mocks/',
-        resultDirPath: 'packages/aspida-mock/__tests__/mocks',
+        input: 'packages/axios-mock-server/__tests__/mocks/',
+        resultDirPath: 'packages/axios-mock-server/__tests__/mocks',
         target: 'cjs' as const,
         outputExt: 'js' as const
       }

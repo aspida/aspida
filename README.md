@@ -168,7 +168,7 @@ See [examples][aspida-examples] for source code.
 
 - **[node](https://github.com/aspidajs/aspida/tree/develop/examples/aspida-node)**:
   Use in [Node.js][nodejs] (TypeScript)
-- **[with-mock](https://github.com/aspidajs/aspida/tree/develop/examples/aspida-mock)**:
+- **[with-mock](https://github.com/aspidajs/aspida/tree/develop/examples/axios-mock-server)**:
   Using with a [axios-mock-server][axios-mock-server]
 
 ## Tips

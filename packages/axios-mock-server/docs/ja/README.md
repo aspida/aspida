@@ -1,6 +1,6 @@
 <p align="right">
-  <a href="https://github.com/aspidajs/aspida/blob/develop/packages/aspida-mock/README.md">🇺🇸English</a> |
-  <a href="https://github.com/aspidajs/aspida/blob/develop/packages/aspida-mock/docs/ja/README.md">🇯🇵日本語</a>
+  <a href="https://github.com/aspidajs/aspida/blob/develop/packages/axios-mock-server/README.md">🇺🇸English</a> |
+  <a href="https://github.com/aspidajs/aspida/blob/develop/packages/axios-mock-server/docs/ja/README.md">🇯🇵日本語</a>
 </p>
 
 <h1>axios-mock-server</h1>

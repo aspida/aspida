@@ -1,4 +1,4 @@
-import { MockMethods } from '~/aspida-mock/src/types'
+import { MockMethods } from '~/axios-mock-server/src/types'
 import { users } from './index'
 
 export default {
