@@ -1,7 +1,7 @@
 import build from '../../src/lib/buildRouteFile'
 import write from '../../src/lib/writeRouteFile'
 
-const input = 'packages/aspida-mock/__tests__/mocks/'
+const input = 'packages/axios-mock-server/__tests__/mocks/'
 const baseurl = 'https://example.com/api'
 const configs = [
   {

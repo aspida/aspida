@@ -1,12 +1,12 @@
 import { AxiosRequestConfig } from 'axios'
-import { HandlersSet, HttpMethod } from '~/aspida-mock/src/types'
-import { asyncResponse } from '~/aspida-mock/src'
-import createValues from '~/aspida-mock/src/createValues'
-import findHandler from '~/aspida-mock/src/findHandler'
-import { createPathRegExp } from '~/aspida-mock/src/MockServer'
-import createRelativePath from '~/aspida-mock/src/createRelativePath'
-import createLogString from '~/aspida-mock/src/createLogString'
-import untransformData from '~/aspida-mock/src/untransformData'
+import { HandlersSet, HttpMethod } from '~/axios-mock-server/src/types'
+import { asyncResponse } from '~/axios-mock-server/src'
+import createValues from '~/axios-mock-server/src/createValues'
+import findHandler from '~/axios-mock-server/src/findHandler'
+import { createPathRegExp } from '~/axios-mock-server/src/MockServer'
+import createRelativePath from '~/axios-mock-server/src/createRelativePath'
+import createLogString from '~/axios-mock-server/src/createLogString'
+import untransformData from '~/axios-mock-server/src/untransformData'
 
 describe('unit tests', () => {
   test('createValues', () => {

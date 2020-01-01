@@ -5,8 +5,8 @@ module.exports = {
     'examples',
     '<rootDir>/packages/aspida/__tests__/apis/',
     '<rootDir>/packages/aspida/__tests__/utils/',
-    '<rootDir>/packages/aspida-mock/__tests__/mocks/',
-    '<rootDir>/packages/aspida-mock/__tests__/utils/'
+    '<rootDir>/packages/axios-mock-server/__tests__/mocks/',
+    '<rootDir>/packages/axios-mock-server/__tests__/utils/'
   ],
   moduleNameMapper: { '^~/(.+)': '<rootDir>/packages/$1' }
 }
