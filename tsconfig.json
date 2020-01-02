@@ -17,5 +17,5 @@
     "strict": true,
     "target": "es5"
   },
-  "exclude": ["dist", "examples"]
+  "exclude": ["dist", "examples", "packages/axios-mock-server/__tests__/mocks/$mock.ts"]
 }
