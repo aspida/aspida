@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "exclude": [
+    "dist",
+    "examples",
+    "**/$mock.ts",
+    "**/$api.ts",
+    "packages/aspida-axios/index.ts",
+    "packages/aspida-fetch/index.ts",
+    "packages/aspida-ky/index.ts"
+  ]
+}

@@ -16,7 +16,7 @@
     "snapshot:mock": "ts-node packages/axios-mock-server/__tests__/utils/updateSnapshot",
     "test": "jest",
     "test:watch": "npm test -- --watch",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit --project tsconfig.check.json"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",
