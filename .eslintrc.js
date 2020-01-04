@@ -1,7 +1,8 @@
 module.exports = {
   env: {
     es6: true,
-    node: true
+    node: true,
+    browser: true
   },
   extends: [
     'standard',
@@ -11,21 +12,11 @@ module.exports = {
     'prettier/@typescript-eslint',
     'prettier/standard'
   ],
-  globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly'
-  },
   overrides: [
     {
       files: ['*.js'],
       rules: {
         '@typescript-eslint/no-var-requires': 'off'
-      }
-    },
-    {
-      files: ['examples/**/*.{js,ts}'],
-      env: {
-        browser: true
       }
     }
   ],

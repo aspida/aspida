@@ -1,13 +1,14 @@
 export interface Methods {
   get: {
-    params?: { aa?: number }
-    headers: {}
-    response: { id: number }
+    query?: { aa?: number }
+    reqHeaders: {}
+    resData: { id: number }
   }
 
   post: {
-    params: { aa: number }
-    data?: { name: string }
-    response: { id: number }
+    query: { aa: number }
+    reqType: URLSearchParams
+    reqData?: { name: string }
+    resData: { id: number }
   }
 }

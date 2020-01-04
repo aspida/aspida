@@ -1,6 +1,6 @@
 export interface Methods {
   get: {
-    response: {
+    resData: {
       id: number
       title: string
     }[]

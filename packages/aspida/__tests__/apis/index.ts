@@ -1,22 +1,22 @@
 export interface Methods {
   get: {
-    params: { aa?: number }
-    response: { id: number }
+    query: { aa?: number }
+    resData: FormData
   }
 
   post: {
-    params: { aa: number }
-    data?: { name: string }
-    response: { id: number }
+    query: { aa: number }
+    reqData?: { name: string }
+    resData: ArrayBuffer
   }
 
   put: {
-    params: { aa: number }
-    response: { id: number }
+    query: { aa: number }
+    resData: string
   }
 
   delete: {
-    params: { aa: number }
-    response: { id: number }
+    query: { aa: number }
+    resData: Blob
   }
 }

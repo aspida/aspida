@@ -1,5 +1,5 @@
 /* eslint-disable */
-import axios, { AxiosRequestConfig, AxiosInstance } from 'axios'
+import { AspidaClient, optionToRequest } from 'aspida'
 import * as ApiTypes from './@types'
 import * as apiUtils from './@utils'
 import { Methods as Methods0 } from './index'
@@ -13,120 +13,120 @@ import { Methods as Methods7 } from './v2.0/index'
 
 const apiBaseURL = 'https://example.com'
 
-const api = (client: AxiosInstance = axios) => {
-  const prefix = (client.defaults.baseURL ? '' : apiBaseURL).replace(/\/$/, '')
+const api = (client: AspidaClient) => {
+  const prefix = (client.baseURL === undefined ? apiBaseURL : client.baseURL).replace(/\/$/, '')
 
   return {
     v1_1: {
       $2: {
         _hogeId: (val0: ApiTypes.HogeId) => ({
           entries_json: {
-            get: (config?: AxiosRequestConfig) =>
-              client.get<Methods1['get']['response']>(`${prefix}/v1.1/2/${val0}/entries.json`, config),
-            $get: async (config?: AxiosRequestConfig) =>
-              (await client.get<Methods1['get']['response']>(`${prefix}/v1.1/2/${val0}/entries.json`, config)).data
+            get: () =>
+              client.fetch<Methods1['get']['resData']>(`${prefix}/v1.1/2/${val0}/entries.json`, 'GET').json(),
+            $get: async () =>
+              (await client.fetch<Methods1['get']['resData']>(`${prefix}/v1.1/2/${val0}/entries.json`, 'GET').json()).data
           },
           test_4: {
             _fugaId: (val1: number | string) => ({
-              get: (config?: { params?: Methods3['get']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-                client.get<Methods3['get']['response']>(`${prefix}/v1.1/2/${val0}/test-4/${val1}`, config),
-              $get: async (config?: { params?: Methods3['get']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-                (await client.get<Methods3['get']['response']>(`${prefix}/v1.1/2/${val0}/test-4/${val1}`, config)).data,
-              post: (data: Methods3['post']['data'] | null, config: { params: Methods3['post']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-                client.post<Methods3['post']['response']>(`${prefix}/v1.1/2/${val0}/test-4/${val1}`, data, config),
-              $post: async (data: Methods3['post']['data'] | null, config: { params: Methods3['post']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-                (await client.post<Methods3['post']['response']>(`${prefix}/v1.1/2/${val0}/test-4/${val1}`, data, config)).data,
-              put: (data: null, config: { params: Methods3['put']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-                client.put<Methods3['put']['response']>(`${prefix}/v1.1/2/${val0}/test-4/${val1}`, data, config),
-              $put: async (data: null, config: { params: Methods3['put']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-                (await client.put<Methods3['put']['response']>(`${prefix}/v1.1/2/${val0}/test-4/${val1}`, data, config)).data,
-              delete: (config: { params: Methods3['delete']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-                client.delete<Methods3['delete']['response']>(`${prefix}/v1.1/2/${val0}/test-4/${val1}`, config),
-              $delete: async (config: { params: Methods3['delete']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-                (await client.delete<Methods3['delete']['response']>(`${prefix}/v1.1/2/${val0}/test-4/${val1}`, config)).data
+              get: (option?: { query?: Methods3['get']['query'] }) =>
+                client.fetch<Methods3['get']['resData']>(`${prefix}/v1.1/2/${val0}/test-4/${val1}`, 'GET', option).json(),
+              $get: async (option?: { query?: Methods3['get']['query'] }) =>
+                (await client.fetch<Methods3['get']['resData']>(`${prefix}/v1.1/2/${val0}/test-4/${val1}`, 'GET', option).json()).data,
+              post: (option: { data?: Methods3['post']['reqData'], query: Methods3['post']['query'] }) =>
+                client.fetch<Methods3['post']['resData']>(`${prefix}/v1.1/2/${val0}/test-4/${val1}`, 'POST', optionToRequest(option)).json(),
+              $post: async (option: { data?: Methods3['post']['reqData'], query: Methods3['post']['query'] }) =>
+                (await client.fetch<Methods3['post']['resData']>(`${prefix}/v1.1/2/${val0}/test-4/${val1}`, 'POST', optionToRequest(option)).json()).data,
+              put: (option: { query: Methods3['put']['query'] }) =>
+                client.fetch<Methods3['put']['resData']>(`${prefix}/v1.1/2/${val0}/test-4/${val1}`, 'PUT', option).json(),
+              $put: async (option: { query: Methods3['put']['query'] }) =>
+                (await client.fetch<Methods3['put']['resData']>(`${prefix}/v1.1/2/${val0}/test-4/${val1}`, 'PUT', option).json()).data,
+              delete: (option: { query: Methods3['delete']['query'] }) =>
+                client.fetch<Methods3['delete']['resData']>(`${prefix}/v1.1/2/${val0}/test-4/${val1}`, 'DELETE', option).json(),
+              $delete: async (option: { query: Methods3['delete']['query'] }) =>
+                (await client.fetch<Methods3['delete']['resData']>(`${prefix}/v1.1/2/${val0}/test-4/${val1}`, 'DELETE', option).json()).data
             }),
             fuga_aa: {
-              get: (config: { params: Methods4['get']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-                client.get<Methods4['get']['response']>(`${prefix}/v1.1/2/${val0}/test-4/fuga aa`, config),
-              $get: async (config: { params: Methods4['get']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-                (await client.get<Methods4['get']['response']>(`${prefix}/v1.1/2/${val0}/test-4/fuga aa`, config)).data,
-              post: (data: Methods4['post']['data'] | null, config: { params: Methods4['post']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-                client.post<Methods4['post']['response']>(`${prefix}/v1.1/2/${val0}/test-4/fuga aa`, data, config),
-              $post: async (data: Methods4['post']['data'] | null, config: { params: Methods4['post']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-                (await client.post<Methods4['post']['response']>(`${prefix}/v1.1/2/${val0}/test-4/fuga aa`, data, config)).data,
-              put: (data: null, config: { params: Methods4['put']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-                client.put<Methods4['put']['response']>(`${prefix}/v1.1/2/${val0}/test-4/fuga aa`, data, config),
-              $put: async (data: null, config: { params: Methods4['put']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-                (await client.put<Methods4['put']['response']>(`${prefix}/v1.1/2/${val0}/test-4/fuga aa`, data, config)).data,
-              delete: (config: { params: Methods4['delete']['params'] & { [key: string]: any }} & AxiosRequestConfig & { data: Methods4['delete']['data'] }) =>
-                client.delete<Methods4['delete']['response']>(`${prefix}/v1.1/2/${val0}/test-4/fuga aa`, config),
-              $delete: async (config: { params: Methods4['delete']['params'] & { [key: string]: any }} & AxiosRequestConfig & { data: Methods4['delete']['data'] }) =>
-                (await client.delete<Methods4['delete']['response']>(`${prefix}/v1.1/2/${val0}/test-4/fuga aa`, config)).data
+              get: (option: { query: Methods4['get']['query'] }) =>
+                client.fetch<Methods4['get']['resData']>(`${prefix}/v1.1/2/${val0}/test-4/fuga aa`, 'GET', option).json(),
+              $get: async (option: { query: Methods4['get']['query'] }) =>
+                (await client.fetch<Methods4['get']['resData']>(`${prefix}/v1.1/2/${val0}/test-4/fuga aa`, 'GET', option).json()).data,
+              post: (option: { data?: Methods4['post']['reqData'], query: Methods4['post']['query'] }) =>
+                client.fetch<Methods4['post']['resData']>(`${prefix}/v1.1/2/${val0}/test-4/fuga aa`, 'POST', optionToRequest(option)).json(),
+              $post: async (option: { data?: Methods4['post']['reqData'], query: Methods4['post']['query'] }) =>
+                (await client.fetch<Methods4['post']['resData']>(`${prefix}/v1.1/2/${val0}/test-4/fuga aa`, 'POST', optionToRequest(option)).json()).data,
+              put: (option: { query: Methods4['put']['query'] }) =>
+                client.fetch<Methods4['put']['resData']>(`${prefix}/v1.1/2/${val0}/test-4/fuga aa`, 'PUT', option).json(),
+              $put: async (option: { query: Methods4['put']['query'] }) =>
+                (await client.fetch<Methods4['put']['resData']>(`${prefix}/v1.1/2/${val0}/test-4/fuga aa`, 'PUT', option).json()).data,
+              delete: (option: { data: Methods4['delete']['reqData'], query: Methods4['delete']['query'] }) =>
+                client.fetch<Methods4['delete']['resData']>(`${prefix}/v1.1/2/${val0}/test-4/fuga aa`, 'DELETE', optionToRequest(option)).json(),
+              $delete: async (option: { data: Methods4['delete']['reqData'], query: Methods4['delete']['query'] }) =>
+                (await client.fetch<Methods4['delete']['resData']>(`${prefix}/v1.1/2/${val0}/test-4/fuga aa`, 'DELETE', optionToRequest(option)).json()).data
             },
-            get: (config: { params: Methods2['get']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-              client.get<void>(`${prefix}/v1.1/2/${val0}/test-4`, config),
-            $get: async (config: { params: Methods2['get']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-              (await client.get<void>(`${prefix}/v1.1/2/${val0}/test-4`, config)).data,
-            post: (data?: Methods2['post']['data'] | null, config?: { params?: Methods2['post']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-              client.post<void>(`${prefix}/v1.1/2/${val0}/test-4`, data, config),
-            $post: async (data?: Methods2['post']['data'] | null, config?: { params?: Methods2['post']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-              (await client.post<void>(`${prefix}/v1.1/2/${val0}/test-4`, data, config)).data,
-            put: (data?: null, config?: { params?: Methods2['put']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-              client.put<Methods2['put']['response']>(`${prefix}/v1.1/2/${val0}/test-4`, data, config),
-            $put: async (data?: null, config?: { params?: Methods2['put']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-              (await client.put<Methods2['put']['response']>(`${prefix}/v1.1/2/${val0}/test-4`, data, config)).data,
-            delete: (config: { params: Methods2['delete']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-              client.delete<Methods2['delete']['response']>(`${prefix}/v1.1/2/${val0}/test-4`, config),
-            $delete: async (config: { params: Methods2['delete']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-              (await client.delete<Methods2['delete']['response']>(`${prefix}/v1.1/2/${val0}/test-4`, config)).data
+            get: (option: { query: Methods2['get']['query'] }) =>
+              client.fetch<void>(`${prefix}/v1.1/2/${val0}/test-4`, 'GET', option).send(),
+            $get: async (option: { query: Methods2['get']['query'] }) =>
+              (await client.fetch<void>(`${prefix}/v1.1/2/${val0}/test-4`, 'GET', option).send()).data,
+            post: (option?: { data?: Methods2['post']['reqData'], query?: Methods2['post']['query'] }) =>
+              client.fetch<void>(`${prefix}/v1.1/2/${val0}/test-4`, 'POST', !option ? undefined : optionToRequest(option)).send(),
+            $post: async (option?: { data?: Methods2['post']['reqData'], query?: Methods2['post']['query'] }) =>
+              (await client.fetch<void>(`${prefix}/v1.1/2/${val0}/test-4`, 'POST', !option ? undefined : optionToRequest(option)).send()).data,
+            put: (option?: { query?: Methods2['put']['query'] }) =>
+              client.fetch<Methods2['put']['resData']>(`${prefix}/v1.1/2/${val0}/test-4`, 'PUT', option).json(),
+            $put: async (option?: { query?: Methods2['put']['query'] }) =>
+              (await client.fetch<Methods2['put']['resData']>(`${prefix}/v1.1/2/${val0}/test-4`, 'PUT', option).json()).data,
+            delete: (option: { query: Methods2['delete']['query'] }) =>
+              client.fetch<Methods2['delete']['resData']>(`${prefix}/v1.1/2/${val0}/test-4`, 'DELETE', option).json(),
+            $delete: async (option: { query: Methods2['delete']['query'] }) =>
+              (await client.fetch<Methods2['delete']['resData']>(`${prefix}/v1.1/2/${val0}/test-4`, 'DELETE', option).json()).data
           }
         })
       },
       $3_1: {
-        get: (config?: { params?: Methods5['get']['params'] & { [key: string]: any }} & { headers?: Methods5['get']['headers'] & { [key: string]: any }} & AxiosRequestConfig) =>
-          client.get<Methods5['get']['response']>(`${prefix}/v1.1/3.1`, config),
-        $get: async (config?: { params?: Methods5['get']['params'] & { [key: string]: any }} & { headers?: Methods5['get']['headers'] & { [key: string]: any }} & AxiosRequestConfig) =>
-          (await client.get<Methods5['get']['response']>(`${prefix}/v1.1/3.1`, config)).data,
-        post: (data: Methods5['post']['data'] | null, config: { params: Methods5['post']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-          client.post<Methods5['post']['response']>(`${prefix}/v1.1/3.1`, data, config),
-        $post: async (data: Methods5['post']['data'] | null, config: { params: Methods5['post']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-          (await client.post<Methods5['post']['response']>(`${prefix}/v1.1/3.1`, data, config)).data
+        get: (option: { query?: Methods5['get']['query'], headers: Methods5['get']['reqHeaders'] }) =>
+          client.fetch<Methods5['get']['resData']>(`${prefix}/v1.1/3.1`, 'GET', option).json(),
+        $get: async (option: { query?: Methods5['get']['query'], headers: Methods5['get']['reqHeaders'] }) =>
+          (await client.fetch<Methods5['get']['resData']>(`${prefix}/v1.1/3.1`, 'GET', option).json()).data,
+        post: (option: { data?: Methods5['post']['reqData'], query: Methods5['post']['query'] }) =>
+          client.fetch<Methods5['post']['resData']>(`${prefix}/v1.1/3.1`, 'POST', optionToRequest(option, 'URLSearchParams')).json(),
+        $post: async (option: { data?: Methods5['post']['reqData'], query: Methods5['post']['query'] }) =>
+          (await client.fetch<Methods5['post']['resData']>(`${prefix}/v1.1/3.1`, 'POST', optionToRequest(option, 'URLSearchParams')).json()).data
       },
       users: {
         _userId: (val2: number) => ({
-          get: (config: { params: Methods6['get']['params'] & { [key: string]: any }} & { headers?: Methods6['get']['headers'] & { [key: string]: any }} & AxiosRequestConfig) =>
-            client.get<Methods6['get']['response']>(`${prefix}/v1.1/users/${val2}`, config),
-          $get: async (config: { params: Methods6['get']['params'] & { [key: string]: any }} & { headers?: Methods6['get']['headers'] & { [key: string]: any }} & AxiosRequestConfig) =>
-            (await client.get<Methods6['get']['response']>(`${prefix}/v1.1/users/${val2}`, config)).data,
-          post: (data: null, config: { params: Methods6['post']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-            client.post<Methods6['post']['response']>(`${prefix}/v1.1/users/${val2}`, data, config),
-          $post: async (data: null, config: { params: Methods6['post']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-            (await client.post<Methods6['post']['response']>(`${prefix}/v1.1/users/${val2}`, data, config)).data
+          get: (option: { query: Methods6['get']['query'], headers: Methods6['get']['reqHeaders'] }) =>
+            client.fetch<Methods6['get']['resData']>(`${prefix}/v1.1/users/${val2}`, 'GET', option).json(),
+          $get: async (option: { query: Methods6['get']['query'], headers: Methods6['get']['reqHeaders'] }) =>
+            (await client.fetch<Methods6['get']['resData']>(`${prefix}/v1.1/users/${val2}`, 'GET', option).json()).data,
+          post: (option: { query: Methods6['post']['query'] }) =>
+            client.fetch<Methods6['post']['resData']>(`${prefix}/v1.1/users/${val2}`, 'POST', option).json(),
+          $post: async (option: { query: Methods6['post']['query'] }) =>
+            (await client.fetch<Methods6['post']['resData']>(`${prefix}/v1.1/users/${val2}`, 'POST', option).json()).data
         })
       }
     },
     v2_0: {
-      get: (config?: AxiosRequestConfig) =>
-        client.get<Methods7['get']['response']>(`${prefix}/v2.0`, config),
-      $get: async (config?: AxiosRequestConfig) =>
-        (await client.get<Methods7['get']['response']>(`${prefix}/v2.0`, config)).data
+      get: (option: { data: Methods7['get']['reqData'], query: Methods7['get']['query'], headers: Methods7['get']['reqHeaders'] }) =>
+        client.fetch<Methods7['get']['resData'], Methods7['get']['resHeaders']>(`${prefix}/v2.0`, 'GET', optionToRequest(option, 'FormData')).json(),
+      $get: async (option: { data: Methods7['get']['reqData'], query: Methods7['get']['query'], headers: Methods7['get']['reqHeaders'] }) =>
+        (await client.fetch<Methods7['get']['resData'], Methods7['get']['resHeaders']>(`${prefix}/v2.0`, 'GET', optionToRequest(option, 'FormData')).json()).data
     },
-    get: (config: { params: Methods0['get']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-      client.get<Methods0['get']['response']>(`${prefix}/`, config),
-    $get: async (config: { params: Methods0['get']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-      (await client.get<Methods0['get']['response']>(`${prefix}/`, config)).data,
-    post: (data: Methods0['post']['data'] | null, config: { params: Methods0['post']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-      client.post<Methods0['post']['response']>(`${prefix}/`, data, config),
-    $post: async (data: Methods0['post']['data'] | null, config: { params: Methods0['post']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-      (await client.post<Methods0['post']['response']>(`${prefix}/`, data, config)).data,
-    put: (data: null, config: { params: Methods0['put']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-      client.put<Methods0['put']['response']>(`${prefix}/`, data, config),
-    $put: async (data: null, config: { params: Methods0['put']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-      (await client.put<Methods0['put']['response']>(`${prefix}/`, data, config)).data,
-    delete: (config: { params: Methods0['delete']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-      client.delete<Methods0['delete']['response']>(`${prefix}/`, config),
-    $delete: async (config: { params: Methods0['delete']['params'] & { [key: string]: any }} & AxiosRequestConfig) =>
-      (await client.delete<Methods0['delete']['response']>(`${prefix}/`, config)).data
+    get: (option: { query: Methods0['get']['query'] }) =>
+      client.fetch<Methods0['get']['resData']>(`${prefix}/`, 'GET', option).formData(),
+    $get: async (option: { query: Methods0['get']['query'] }) =>
+      (await client.fetch<Methods0['get']['resData']>(`${prefix}/`, 'GET', option).formData()).data,
+    post: (option: { data?: Methods0['post']['reqData'], query: Methods0['post']['query'] }) =>
+      client.fetch<Methods0['post']['resData']>(`${prefix}/`, 'POST', optionToRequest(option)).arrayBuffer(),
+    $post: async (option: { data?: Methods0['post']['reqData'], query: Methods0['post']['query'] }) =>
+      (await client.fetch<Methods0['post']['resData']>(`${prefix}/`, 'POST', optionToRequest(option)).arrayBuffer()).data,
+    put: (option: { query: Methods0['put']['query'] }) =>
+      client.fetch<Methods0['put']['resData']>(`${prefix}/`, 'PUT', option).text(),
+    $put: async (option: { query: Methods0['put']['query'] }) =>
+      (await client.fetch<Methods0['put']['resData']>(`${prefix}/`, 'PUT', option).text()).data,
+    delete: (option: { query: Methods0['delete']['query'] }) =>
+      client.fetch<Methods0['delete']['resData']>(`${prefix}/`, 'DELETE', option).blob(),
+    $delete: async (option: { query: Methods0['delete']['query'] }) =>
+      (await client.fetch<Methods0['delete']['resData']>(`${prefix}/`, 'DELETE', option).blob()).data
   }
 }
 

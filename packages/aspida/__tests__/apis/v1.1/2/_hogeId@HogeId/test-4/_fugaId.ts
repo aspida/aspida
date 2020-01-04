@@ -1,22 +1,22 @@
 export interface Methods {
   get: {
-    params?: { aa?: number }
-    response: { id: number }
+    query?: { aa?: number }
+    resData: { id: number }
   }
 
   post: {
-    params: { aa: number }
-    data?: { name: string }
-    response: { id: number }
+    query: { aa: number }
+    reqData?: { name: string }
+    resData: { id: number }
   }
 
   put: {
-    params: { aa: number }
-    response: { id: number }
+    query: { aa: number }
+    resData: { id: number }
   }
 
   delete: {
-    params: { aa: number }
-    response: { id: number }
+    query: { aa: number }
+    resData: { id: number }
   }
 }
