@@ -5,6 +5,9 @@
   ],
   "scripts": {
     "build:aspida": "yarn workspace aspida build",
+    "build:aspida-axios": "yarn workspace @aspida/axios build",
+    "build:aspida-fetch": "yarn workspace @aspida/fetch build",
+    "build:aspida-ky": "yarn workspace @aspida/ky build",
     "build:mock": "yarn workspace axios-mock-server build",
     "release": "standard-version --skip.tag",
     "lint": "eslint --ext .js,.ts --ignore-path .gitignore .",

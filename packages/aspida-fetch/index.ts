@@ -7,19 +7,19 @@ import {
   BasicHeaders
 } from 'aspida'
 
-export default (client = fetch, baseURL?: string, init?: RequestInit): AspidaClient => ({
-  baseURL,
+export default (client = fetch, init?: RequestInit): AspidaClient => ({
   fetch<T, U extends BasicHeaders>(url: string, method: HttpMethod, request?: AspidaRequest) {
-    const fullURL = `${url}${request?.query ? `?${dataToURLString(request.query)}` : ''}`
-    const config: RequestInit = {
-      ...init,
-      method,
-      body: request?.body,
-      headers: { ...init?.headers, ...request?.headers }
-    }
-
     const send = <V>(fn: (res: Response) => Promise<V>) => async () => {
-      const res = await client(fullURL, config)
+      const res = await client(
+        `${url}${request?.query ? `?${dataToURLString(request.query)}` : ''}`,
+        {
+          ...init,
+          method,
+          body: request?.body,
+          headers: { ...init?.headers, ...request?.headers }
+        }
+      )
+
       return {
         status: res.status,
         headers: headersToObject<U>(res.headers),

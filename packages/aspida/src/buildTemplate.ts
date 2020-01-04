@@ -10,6 +10,7 @@ export default (input: string, baseURL = ''): Template => {
     fs.existsSync(path.join(input, '@types')) || fs.existsSync(path.join(input, '@types.ts'))
   const hasUtils =
     fs.existsSync(path.join(input, '@utils')) || fs.existsSync(path.join(input, '@utils.ts'))
+  const exportsList = [...(hasTypes ? ['ApiTypes'] : []), ...(hasUtils ? ['apiUtils'] : [])]
 
   const text = template
     .replace(
@@ -19,7 +20,6 @@ export default (input: string, baseURL = ''): Template => {
 `
         : ''
     )
-    .replace('<% ApiTypes %>', hasTypes ? ', ApiTypes' : '')
     .replace(
       '<% utils %>',
       hasUtils
@@ -27,8 +27,14 @@ export default (input: string, baseURL = ''): Template => {
 `
         : ''
     )
-    .replace('<% apiUtils %>', hasUtils ? ', apiUtils' : '')
     .replace('<% imports %>', imports.map(i => i.replace(input, '.')).join('\n'))
+    .replace(
+      '<% exports %>',
+      exportsList.length
+        ? `
+export { ${exportsList.join(', ')} }`
+        : ''
+    )
     .replace('<% api %>', api)
     .replace('<% baseURL %>', baseURL)
 

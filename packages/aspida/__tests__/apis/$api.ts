@@ -11,10 +11,8 @@ import { Methods as Methods5 } from './v1.1/3.1'
 import { Methods as Methods6 } from './v1.1/users/_userId@number'
 import { Methods as Methods7 } from './v2.0/index'
 
-const apiBaseURL = 'https://example.com'
-
-const api = (client: AspidaClient) => {
-  const prefix = (client.baseURL === undefined ? apiBaseURL : client.baseURL).replace(/\/$/, '')
+const api = (client: AspidaClient, baseURL?: string) => {
+  const prefix = (baseURL === undefined ? 'https://example.com' : baseURL).replace(/\/$/, '')
 
   return {
     v1_1: {
@@ -130,7 +128,6 @@ const api = (client: AspidaClient) => {
   }
 }
 
-type ApiInstance = ReturnType<typeof api>
-
-export { ApiInstance, apiBaseURL, ApiTypes, apiUtils }
+export { ApiTypes, apiUtils }
+export type ApiInstance = ReturnType<typeof api>
 export default api

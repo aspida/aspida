@@ -1,18 +1,16 @@
 import { AspidaClient, AspidaRequest, HttpMethod, headersToObject, BasicHeaders } from 'aspida'
-import ky, { Options } from 'ky'
+import ky from 'ky'
 
-export default (client = ky, baseURL?: string): AspidaClient => ({
-  baseURL,
+export default (client = ky): AspidaClient => ({
   fetch<T, U extends BasicHeaders>(url: string, method: HttpMethod, request?: AspidaRequest) {
-    const config: Options = {
-      method,
-      body: request?.body,
-      searchParams: request?.query,
-      headers: request?.headers
-    }
-
     const send = <V>(fn: (res: Response) => Promise<V>) => async () => {
-      const res = await client(url, config)
+      const res = await client(url, {
+        method,
+        body: request?.body,
+        searchParams: request?.query,
+        headers: request?.headers
+      })
+
       return {
         status: res.status,
         headers: headersToObject<U>(res.headers),

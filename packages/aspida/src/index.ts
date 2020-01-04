@@ -17,7 +17,6 @@ export interface AspidaResponse<T, U> {
 }
 
 export interface AspidaClient {
-  baseURL?: string
   fetch: <T, U extends BasicHeaders = BasicHeaders>(
     url: string,
     method: HttpMethod,
