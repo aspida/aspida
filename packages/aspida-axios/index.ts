@@ -1,16 +1,17 @@
 import { AspidaClient, AspidaRequest, HttpMethod } from 'aspida'
-import axios, { AxiosInstance } from 'axios'
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 
-export default (client: AxiosInstance = axios): AspidaClient => ({
+export default (client: AxiosInstance = axios, config?: AxiosRequestConfig): AspidaClient => ({
   fetch(url: string, method: HttpMethod, request?: AspidaRequest) {
     const send = (responseType?: 'arraybuffer' | 'blob' | 'json' | 'text') => async () => {
       const { status, headers, data } = await client.request({
+        ...config,
         url,
         method,
         responseType,
         data: request?.body,
         params: request?.query,
-        headers: request?.headers
+        headers: { ...config?.headers, ...request?.headers }
       })
 
       return { status, headers, body: data, data }
