@@ -1,0 +1,22 @@
+{
+  "name": "@aspida/axios",
+  "version": "0.0.0",
+  "description": "axios client for aspida",
+  "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "homepage": "https://github.com/aspidajs/aspida/tree/develop/packages/aspida-axios#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aspidajs/aspida.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aspidajs/aspida/issues"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rimraf dist && tsc --project tsconfig.build.json"
+  }
+}

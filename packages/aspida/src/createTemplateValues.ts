@@ -100,8 +100,7 @@ ${indent}})`
   if (fs.existsSync(rootIndexPath)) {
     const importName = 'Methods0'
     imports.push(`import { Methods as ${importName} } from './index'`)
-    // eslint-disable-next-line no-template-curly-in-string
-    rootMethods = createMethods(rootIndexPath, rootIndent, importName, '${prefix}/')
+    rootMethods = createMethods(rootIndexPath, rootIndent, importName, '/')
   }
 
   return {
@@ -109,8 +108,7 @@ ${indent}})`
       input,
       '.',
       rootIndent,
-      // eslint-disable-next-line no-template-curly-in-string
-      '${prefix}',
+      '',
       `{
 <% props %>
   }`,

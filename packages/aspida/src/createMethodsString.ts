@@ -2,88 +2,81 @@ import { Project } from 'ts-morph'
 import { SyntaxKind } from 'typescript'
 
 type HttpMethod = 'get' | 'post' | 'put' | 'delete' | 'head' | 'patch'
-type MethodsProperties = 'data' | 'params' | 'headers' | 'response'
+type MethodsProperties = 'query' | 'reqHeaders' | 'reqData' | 'reqType' | 'resHeaders' | 'resData'
 
 export default (target: string, indent: string, importName: string, newUrl: string) => {
   const source = new Project().addSourceFileAtPath(target)
   const chanks: string[] = []
-
   const methodsInterface = source.getInterface('Methods')
   if (!methodsInterface) return ''
 
   methodsInterface.getProperties().forEach(method => {
-    const methodName = method.getName()
-    const typeInfo: { [key in MethodsProperties]?: { hasQuestion: boolean } } = {}
+    const methodName = method.getName() as HttpMethod
+    const typeInfo: { [key in MethodsProperties]?: { value: string; hasQuestion: boolean } } = {}
     method.getChildrenOfKind(SyntaxKind.TypeLiteral).forEach(n =>
       n.getProperties().forEach(p => {
-        typeInfo[p.getName() as MethodsProperties] = { hasQuestion: p.hasQuestionToken() }
+        typeInfo[p.getName() as MethodsProperties] = {
+          value: p.getType() ? p.getType().getText() : '',
+          hasQuestion: p.hasQuestionToken()
+        }
       })
     )
 
-    const tmpChanks: string[] = []
-    const hasNotDataQuestion = typeInfo.data && !typeInfo.data.hasQuestion
-    const isConfigRequired = typeInfo.params && !typeInfo.params.hasQuestion
+    const hasOption = typeInfo.query || typeInfo.reqData || typeInfo.reqHeaders
+    const isOptionRequired =
+      (typeInfo.query && !typeInfo.query.hasQuestion) ||
+      (typeInfo.reqData && !typeInfo.reqData.hasQuestion) ||
+      (typeInfo.reqHeaders && !typeInfo.reqHeaders.hasQuestion)
 
-    const data = (method: HttpMethod) =>
-      `data${`${hasNotDataQuestion || isConfigRequired ? '' : '?'}: ${
-        typeInfo.data
-          ? `${importName}['${method}']['data']${typeInfo.data.hasQuestion ? ' | null' : ''}`
-          : 'null'
-      }`}`
-    const params = (method: HttpMethod) =>
-      typeInfo.params
-        ? `{ params${
-            typeInfo.params.hasQuestion ? '?' : ''
-          }: ${importName}['${method}']['params'] & { [key: string]: any }} & `
+    const reqData = (method: HttpMethod) =>
+      typeInfo.reqData
+        ? ` data${typeInfo.reqData.hasQuestion ? '?' : ''}: ${importName}['${method}']['reqData'],`
         : ''
-    const headers = (method: HttpMethod) =>
-      typeInfo.headers
-        ? `{ headers?: ${importName}['${method}']['headers'] & { [key: string]: any }} & `
+    const query = (method: HttpMethod) =>
+      typeInfo.query
+        ? ` query${typeInfo.query.hasQuestion ? '?' : ''}: ${importName}['${method}']['query'],`
         : ''
-    const config = (method: HttpMethod) =>
-      `config${
-        isConfigRequired || (method === 'delete' && hasNotDataQuestion) ? '' : '?'
-      }: ${params(method)}${headers(method)}AxiosRequestConfig`
-    const response = (method: HttpMethod) =>
-      `${method}${typeInfo.response ? `<${importName}['${method}']['response']>` : '<void>'}`
+    const reqHeaders = (method: HttpMethod) =>
+      typeInfo.reqHeaders
+        ? ` headers${
+            typeInfo.reqHeaders.hasQuestion ? '?' : ''
+          }: ${importName}['${method}']['reqHeaders'],`
+        : ''
+    const resHeaders = (method: HttpMethod) =>
+      typeInfo.resHeaders ? `, ${importName}['${method}']['resHeaders']` : ''
+    const option = (method: HttpMethod) =>
+      hasOption
+        ? `option${isOptionRequired ? '' : '?'}: {${`${reqData(method)}${query(method)}${reqHeaders(
+            method
+          )}`.slice(0, -1)} }`
+        : ''
+    const request = () =>
+      !hasOption
+        ? ''
+        : !typeInfo.reqData
+        ? ', option'
+        : `, ${isOptionRequired ? '' : '!option ? undefined : '}optionToRequest(option${
+            typeInfo.reqType
+              ? `, '${typeInfo.reqType.value}'`
+              : typeInfo.reqData && /^(ArrayBuffer|Blob|string)$/.test(typeInfo.reqData.value)
+              ? `, '${typeInfo.reqData.value}'`
+              : ''
+          })`
+    const resData = (method: HttpMethod) =>
+      `${typeInfo.resData ? `${importName}['${method}']['resData']` : 'void'}`
+    const resMethodName = () =>
+      !typeInfo.resData
+        ? 'send'
+        : ({ ArrayBuffer: 'arrayBuffer', Blob: 'blob', string: 'text', FormData: 'formData' } as {
+            [key: string]: string
+          })[typeInfo.resData.value] || 'json'
 
-    switch (methodName) {
-      case 'get':
-        tmpChanks.push(`(${config('get')}) =>`, `client.${response('get')}(\`${newUrl}\`, config)`)
-        break
-      case 'head':
-        tmpChanks.push(
-          `(${config('head')}) =>`,
-          `client.${response('head')}(\`${newUrl}\`, config)`
-        )
-        break
-      case 'post':
-        tmpChanks.push(
-          `(${data('post')}, ${config('post')}) =>`,
-          `client.${response('post')}(\`${newUrl}\`, data, config)`
-        )
-        break
-      case 'put':
-        tmpChanks.push(
-          `(${data('put')}, ${config('put')}) =>`,
-          `client.${response('put')}(\`${newUrl}\`, data, config)`
-        )
-        break
-      case 'patch':
-        tmpChanks.push(
-          `(${data('patch')}, ${config('patch')}) =>`,
-          `client.${response('patch')}(\`${newUrl}\`, data, config)`
-        )
-        break
-      case 'delete':
-        tmpChanks.push(
-          `(${config('delete')}${typeInfo.data ? ` & { ${data('delete')} }` : ''}) =>`,
-          `client.${response('delete')}(\`${newUrl}\`, config)`
-        )
-        break
-      default:
-        break
-    }
+    const tmpChanks = [
+      `(${option(methodName)}) =>`,
+      `client.fetch<${resData(methodName)}${resHeaders(
+        methodName
+      )}>(\`$\{prefix}${newUrl}\`, '${methodName.toUpperCase()}'${request()}).${resMethodName()}()`
+    ]
 
     chanks.push(`${indent}  ${methodName}: ${tmpChanks[0]}
 ${indent}    ${tmpChanks[1]},
