@@ -37,6 +37,9 @@ commands:
         type: string
     steps:
       - run:
+          name: Change working directory
+          command: cd packages/aspida
+      - run:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
       - run:

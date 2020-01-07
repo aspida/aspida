@@ -16,15 +16,16 @@
 [![Dependabot Status][badge-dependabot]][dependabot]
 [![License][badge-license]][aspida-license]
 
-ブラウザと node.js のための型安全な HTTP クライアント
+ブラウザと node.js のための型安全な HTTP クライアントラッパー
 
 <img src="https://aspidajs.github.io/aspida/assets/images/vscode.gif" width="720" alt="vscode" title="vscode" />
 
 ## 特徴
 
-- パス・URL クエリ・ヘッダー・ボディ・レスポンス全てに型を定義できる TS ファイルを生成する CLI
-- 返り値は axios のレスポンスオブジェクト
-- baseURL や共通ヘッダーは axios で設定可能
+- パス・URL クエリ・ヘッダー・ボディ・レスポンス全てを型安全に扱える
+- FormData / URLSearchParams の内容も型安全に扱える
+- HTTP クライアントは axios / ky / ky-universal / fetch に対応
+- パス定義は Nuxt.js の pages と同じ命名規則
 
 ## 手順
 
@@ -35,20 +36,18 @@
 
 ## 入門
 
-### インストール
+### インストール (axios ver.)
 
 - Using [npm][npm]:
 
   ```sh
-  $ npm install axios
-  $ npm install aspida --save-dev
+  $ npm install aspida axios @aspida/axios
   ```
 
 - Using [Yarn][yarn]:
 
   ```sh
-  $ yarn add axios
-  $ yarn add aspida --dev
+  $ yarn add  aspida axios @aspida/axios
   ```
 
 ### apis ディレクトリを作成する
@@ -72,19 +71,19 @@ $ mkdir apis
 
   export interface Methods {
     get: {
-      params?: {
+      query?: {
         limit: number
       }
 
-      response: User[]
+      resData: User[]
     }
 
     post: {
-      data: {
+      reqData: {
         name: string
       }
 
-      response: User
+      resData: User
     }
   }
   ```
@@ -105,15 +104,15 @@ $ mkdir apis
 
   export interface Methods {
     get: {
-      response: User
+      resData: User
     }
 
     put: {
-      data: {
+      reqData: {
         name: string
       }
 
-      response: User
+      resData: User
     }
   }
   ```
@@ -141,106 +140,176 @@ $ npm run api:build
 `src/index.ts`
 
 ```typescript
+import aspida from "@aspida/axios"
 import api from "../apis/$api"
 ;(async () => {
   const userId = 0
   const limit = 10
+  const baseURL = "http://localhost:8080/api"
+  const client = api(aspida(), baseURL)
 
-  await api().v1.users.post({ name: "taro" })
+  await client.v1.users.post({ data: { name: "taro" } })
 
-  const res = await api().v1.users.get({ params: { limit } })
+  const res = await client.v1.users.get({ query: { limit } })
   console.log(res)
-  // req -> GET: /v1/users/?limit=10
+  // req -> GET: http://localhost:8080/api/v1/users/?limit=10
   // res -> { status: 200, data: [{ id: 0, name: 'taro' }], headers: {...} }
 
-  const user = await api()
-    .v1.users._userId(userId)
-    .$get()
+  const user = await client.v1.users._userId(userId).$get()
   console.log(user)
-  // req -> GET: /v1/users/0
+  // req -> GET: http://localhost:8080/api/v1/users/0
   // res -> { id: 0, name: 'taro' }
 })()
 ```
 
-### 使用例
+### HTTP クライアントについてもっと詳しく
 
-See [examples][aspida-examples] for source code.
-
-- **[node](https://github.com/aspidajs/aspida/tree/develop/examples/node)**:
-  Use in [Node.js][nodejs] (TypeScript)
-- **[with-mock](https://github.com/aspidajs/aspida/tree/develop/examples/with-mock)**:
-  Using with a [axios-mock-server][axios-mock-server]
+- **[aspida-axios](https://github.com/aspidajs/aspida/tree/develop/packages/aspida-axios#readme)**
+- **[aspida-ky](https://github.com/aspidajs/aspida/tree/develop/packages/aspida-ky#readme)**
+- **[aspida-fetch](https://github.com/aspidajs/aspida/tree/develop/packages/aspida-fetch#readme)**
 
 ## Tips
 
-### baseURL を設定する
+### 型定義ファイルを置くディレクトリを apis 以外に変更する
 
-`src/index.ts`
+設定ファイルをプロジェクトのルートに作成する
 
-```typescript
-import axios from "axios"
-import api from "../apis/$api"
+`.aspidarc`
 
-axios.defaults.baseURL = "http://localhost:8080"
-;(async () => {
-  const limit = 10
-
-  await api().v1.users.post({ name: "mario" })
-
-  const res = await api().v1.users.$get({ params: { limit } })
-  console.log(res)
-  // req -> GET: http://localhost:8080/v1/users/?limit=10
-  // res -> [{ id: 0, name: 'mario' }]
-})()
+```json
+{
+  "input": "src"
+}
 ```
 
-### 共通ヘッダーに token を付与してリクエストする
+複数の API エンドポイントを型定義したい場合は配列で指定する
+
+```json
+{
+  "input": ["api1", "api2"]
+}
+```
+
+### FormData を POST する
+
+`apis/v1/users/index.ts`
+
+```typescript
+export interface Methods {
+  post: {
+    reqType: FormData
+
+    reqData: {
+      name: string
+      icon: ArrayBuffer
+    }
+
+    resData: {
+      id: number
+      name: string
+    }
+  }
+}
+```
 
 `src/index.ts`
 
 ```typescript
-import axios from "axios"
+import aspida from "@aspida/axios"
 import api from "../apis/$api"
-
-axios.defaults.headers.common["X-Auth-Token"] = "YOUR TOKEN"
 ;(async () => {
   const userId = 0
   const limit = 10
+  const baseURL = "http://localhost:8080/api"
+  const client = api(aspida(), baseURL)
+  const iconImage = imageBuffer
 
-  await api().v1.users.post({ name: "taro" })
-
-  const user = await api()
-    .v1.users._userId(userId)
-    .$get()
+  const user = await client.v1.users.$post({
+    data: {
+      name: "taro",
+      icon: iconImage
+    }
+  })
   console.log(user)
-  // req -> GET: /v1/users/0
+  // req -> POST: http://localhost:8080/api/v1/users/0
   // res -> { id: 0, name: 'taro' }
 })()
 ```
 
-### axios Instance を使ってリクエストする
+### URLSearchParams を POST する
+
+`apis/v1/users/index.ts`
+
+```typescript
+export interface Methods {
+  post: {
+    reqType: URLSearchParams
+
+    reqData: {
+      name: string
+    }
+
+    resData: {
+      id: number
+      name: string
+    }
+  }
+}
+```
 
 `src/index.ts`
 
 ```typescript
-import axios from "axios"
+import aspida from "@aspida/axios"
 import api from "../apis/$api"
 ;(async () => {
+  const userId = 0
   const limit = 10
+  const baseURL = "http://localhost:8080/api"
+  const client = api(aspida(), baseURL)
 
-  // using axios instance
-  const client = axios.create({ baseURL: "http://localhost:10000" })
-  const $api = api(client)
-
-  await $api.v1.users.post({ name: "mario" })
-
-  const res = await $api.v1.users.$get({ params: { limit } })
-  console.log(res)
-  // req -> GET: http://localhost:10000/v1/users/?limit=10
-  // res -> [{ id: 0, name: 'mario' }]
+  const user = await client.v1.users.$post({ data: { name: "taro" } })
+  console.log(user)
+  // req -> POST: http://localhost:8080/api/v1/users/0
+  // res -> { id: 0, name: 'taro' }
 })()
 ```
 
+### レスポンスを ArrayBuffer で受け取る
+
+`apis/v1/users/index.ts`
+
+```typescript
+export interface Methods {
+  get: {
+    query: {
+      name: string
+    }
+
+    resData: ArrayBuffer
+  }
+}
+```
+
+`src/index.ts`
+
+```typescript
+import aspida from "@aspida/axios"
+import api from "../apis/$api"
+;(async () => {
+  const userId = 0
+  const limit = 10
+  const baseURL = "http://localhost:8080/api"
+  const client = api(aspida(), baseURL)
+
+  const user = await client.v1.users.$get({ query: { name: "taro" } })
+  console.log(user)
+  // req -> POST: http://localhost:8080/api/v1/users/0
+  // res -> ArrayBuffer
+})()
+```
+
+<!--
 ## Contribution
 
 ### Build
@@ -253,6 +322,7 @@ node ./bin/index.js --build
 
 if you want to watch file changes and rebuild automatically,
 you can use `--watch` instead of `--build`
+-->
 
 ## License
 
