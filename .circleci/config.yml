@@ -77,7 +77,7 @@ jobs:
       - install_packages
       - run:
           name: Build scripts
-          command: npm run build
+          command: npm run build:aspida
       - publish_npm_package:
           npm_dist_tag: << parameters.npm_dist_tag >>
   audit:
