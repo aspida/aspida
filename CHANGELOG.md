@@ -2,7 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [0.7.0](https://github.com/aspidajs/aspida/compare/v0.6.1...v0.7.0) (2019-11-23)
+## [0.8.0](https://github.com/aspidajs/aspida/compare/v0.7.0...v0.8.0) (2020-01-07)
+
+
+### Features
+
+* add aspida clients ([2dd9fc2](https://github.com/aspidajs/aspida/commit/2dd9fc2540f7959145e72a9b4a3b79baf35e3819))
+* redesign for aspida client ([0ee43fd](https://github.com/aspidajs/aspida/commit/0ee43fdc3656cde0f725ab236e3d64ef6f78030c))
+
+
+### Bug Fixes
+
+* typecheck config ([2d9b0f5](https://github.com/aspidajs/aspida/commit/2d9b0f56c487fb73145efca782cd82e8573a97f9))
+
+
+### Refactors
+
+* merge npm scripts ([ac070a0](https://github.com/aspidajs/aspida/commit/ac070a011273710cf98d3180cf9e3232e270cf05))
+* monorepo ([d97babc](https://github.com/aspidajs/aspida/commit/d97babced029dcbc06c391358ae2bcecb99636f5))
+* monorepo for aspida ([75b12ef](https://github.com/aspidajs/aspida/commit/75b12efdf6a6a704bcc2b1e1956a9d28e8d5dad7))
+* use ts-morph ([3d10079](https://github.com/aspidajs/aspida/commit/3d100792a561cf3aa457da83e0db462c632d58ad))
+
+## [0.7.0](https://github.com/aspidajs/aspida/compare/v0.6.2...v0.7.0) (2019-11-23)
 
 
 ### Features

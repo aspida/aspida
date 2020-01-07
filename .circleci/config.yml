@@ -10,7 +10,7 @@ commands:
   install_packages:
     parameters:
       cache_key:
-        default: package-lock.json
+        default: yarn.lock
         description: File to use as a Node cache checksum
         type: string
       cache_version:
@@ -23,7 +23,7 @@ commands:
           key: dependencies-<< parameters.cache_version >>-{{ checksum "<< parameters.cache_key >>" }}
       - run:
           name: Install dependencies
-          command: echo "package-lock=false" >> .npmrc && npm install
+          command: yarn install
       - save_cache:
           name: Cache dependencies
           key: dependencies-<< parameters.cache_version >>-{{ checksum "<< parameters.cache_key >>" }}
@@ -36,6 +36,9 @@ commands:
         description: Package distribution tags
         type: string
     steps:
+      - run:
+          name: Change working directory
+          command: cd packages/aspida
       - run:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
@@ -54,8 +57,8 @@ jobs:
           name: Run lint
           command: npm run lint
       - run:
-          name: Run type tests
-          command: npm run test:types
+          name: Run type checks
+          command: npm run typecheck
       - run:
           name: Run tests
           command: npm test -- --coverage
@@ -84,7 +87,7 @@ jobs:
       - checkout
       - run:
           name: Run a security audit
-          command: npm audit
+          command: yarn audit
 
 workflows:
   commit:

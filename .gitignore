@@ -109,9 +109,6 @@ sw.*
 
 
 ### Miscellaneous
-
-# examples directory
-examples/**/$*.ts
-examples/**/package-lock.json
+package-lock.json
 apis/*
 !apis/.gitkeep
