@@ -1,4 +1,4 @@
-<h1>aspida-fetch</h1>
+<h1>@aspida/fetch</h1>
 
 [![npm version][badge-npm]][badge-npm-url]
 [![CircleCI][badge-ci]][badge-ci-url]

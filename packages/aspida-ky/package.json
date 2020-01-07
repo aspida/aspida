@@ -19,6 +19,11 @@
   "publishConfig": {
     "access": "public"
   },
+  "keywords": [
+    "aspida",
+    "ky",
+    "ky-universal"
+  ],
   "scripts": {
     "build": "rimraf dist && tsc --project tsconfig.build.json"
   }
