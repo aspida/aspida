@@ -16,6 +16,13 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "aspida",
+    "axios"
+  ],
   "scripts": {
     "build": "rimraf dist && tsc --project tsconfig.build.json"
   }

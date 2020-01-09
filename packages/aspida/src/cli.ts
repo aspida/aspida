@@ -1,7 +1,6 @@
 import fs from 'fs'
 import minimist from 'minimist'
 import getConfig, { Config } from './getConfig'
-import read from './getInputs'
 import write from './writeRouteFile'
 import watch from './watchInputDir'
 import { Build, Watch, CommandToBuild } from './cli/build'
@@ -15,12 +14,10 @@ const options: minimist.Opts = {
 
 const getBuildCommandFactory = (config: Config) =>
   CommandToBuild.getFactory(config, {
-    read,
     write,
     watch,
-    remove(filePath: string, callback: () => void) {
-      fs.unlink(filePath, callback)
-    }
+    read: ({ input }) => (Array.isArray(input) ? input : [input]),
+    remove: (filePath: string, callback: () => void) => fs.unlink(filePath, callback)
   })
 
 export const run = (args: string[]) => {

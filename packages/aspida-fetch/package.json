@@ -16,6 +16,13 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "aspida",
+    "fetch"
+  ],
   "scripts": {
     "build": "rimraf dist && tsc --project tsconfig.build.json"
   }

@@ -1,14 +1,7 @@
-import {
-  AspidaClient,
-  AspidaRequest,
-  HttpMethod,
-  dataToURLString,
-  headersToObject,
-  BasicHeaders
-} from 'aspida'
+import { AspidaClient, AspidaRequest, HttpMethod, dataToURLString, headersToObject } from 'aspida'
 
 export default (client = fetch, init?: RequestInit): AspidaClient => ({
-  fetch<T, U extends BasicHeaders>(url: string, method: HttpMethod, request?: AspidaRequest) {
+  fetch<T, U>(url: string, method: HttpMethod, request?: AspidaRequest) {
     const send = <V>(fn: (res: Response) => Promise<V>) => async () => {
       const res = await client(
         `${url}${request?.query ? `?${dataToURLString(request.query)}` : ''}`,

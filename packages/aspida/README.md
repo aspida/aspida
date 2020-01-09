@@ -174,19 +174,19 @@ import api from "../apis/$api"
 
 Create a configuration file at the root of the project
 
-`.aspidarc`
+`aspida.config.js`
 
-```json
-{
-  "input": "src"
+```javascript
+module.exports = {
+  aspida: { input: 'src' }
 }
 ```
 
 If you want to define multiple API endpoints, specify them in an array
 
-```json
-{
-  "input": ["api1", "api2"]
+```javascript
+module.exports = {
+  aspida: { input: ['api1', 'api2'] }
 }
 ```
 
@@ -308,21 +308,6 @@ import api from "../apis/$api"
   // res -> ArrayBuffer
 })()
 ```
-
-<!--
-## Contribution
-
-### Build
-
-```bash
-npm install
-npm run build
-node ./bin/index.js --build
-```
-
-if you want to watch file changes and rebuild automatically,
-you can use `--watch` instead of `--build`
--->
 
 ## License
 

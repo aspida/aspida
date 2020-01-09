@@ -1,4 +1,4 @@
-<h1>aspida-axios</h1>
+<h1>@aspida/axios</h1>
 
 [![npm version][badge-npm]][badge-npm-url]
 [![CircleCI][badge-ci]][badge-ci-url]
