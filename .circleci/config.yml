@@ -37,14 +37,11 @@ commands:
         type: string
     steps:
       - run:
-          name: Change working directory
-          command: cd packages/aspida
-      - run:
           name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
+          command: cd packages/aspida && echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
       - run:
           name: Publish a package
-          command: npm publish --tag << parameters.npm_dist_tag >>
+          command: cd packages/aspida && npm publish --tag << parameters.npm_dist_tag >>
 
 jobs:
   test:
