@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.9.0](https://github.com/aspidajs/aspida/compare/v0.8.0...v0.9.0) (2020-01-09)
+
+
+### Features
+
+* add aspida.config.js ([dc97979](https://github.com/aspidajs/aspida/commit/dc97979f1932dd29e5fcd5b573dfe0fc24d9ecfd))
+
+
+### Bug Fixes
+
+* **ci:** publish command ([3b96b02](https://github.com/aspidajs/aspida/commit/3b96b02c1ff417c6db02d72e88cae7bcdedc24bc))
+
+
+### Refactors
+
+* **aspida:** delete URLSearchParams polyfill ([53b2184](https://github.com/aspidajs/aspida/commit/53b2184c5870404f4b8ffa711309657bbfe29b87))
+* **mock:** delete URLSearchParams polyfill ([d6596ed](https://github.com/aspidajs/aspida/commit/d6596ed982b1a0cc6773ca92272b552f8cd8b7fd))
+
+
+### Documentation
+
+* **aspida:** rewirte for config file ([04c65f4](https://github.com/aspidajs/aspida/commit/04c65f43a4833e5e6b3872e5312977f1a8d075e3))
+
 ## [0.8.0](https://github.com/aspidajs/aspida/compare/v0.7.0...v0.8.0) (2020-01-07)
 
 
