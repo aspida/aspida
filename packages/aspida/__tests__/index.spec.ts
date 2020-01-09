@@ -5,20 +5,20 @@ describe('cli test', () => {
   test('main', () => {
     const paths = [
       {
-        input: 'packages/aspida/__tests__/apis',
-        resultDirPath: 'packages/aspida/__tests__/apis'
+        input: 'packages/aspida/samples',
+        resultDirPath: 'packages/aspida/samples'
       },
       {
-        input: './packages/aspida/__tests__/apis',
-        resultDirPath: 'packages/aspida/__tests__/apis'
+        input: './packages/aspida/samples',
+        resultDirPath: 'packages/aspida/samples'
       },
       {
-        input: './packages/aspida/__tests__/apis/',
-        resultDirPath: 'packages/aspida/__tests__/apis'
+        input: './packages/aspida/samples/',
+        resultDirPath: 'packages/aspida/samples'
       },
       {
-        input: 'packages/aspida/__tests__/apis/',
-        resultDirPath: 'packages/aspida/__tests__/apis'
+        input: 'packages/aspida/samples/',
+        resultDirPath: 'packages/aspida/samples'
       }
     ]
 

@@ -3,7 +3,7 @@ module.exports = {
   testEnvironment: 'node',
   testPathIgnorePatterns: [
     'examples',
-    '<rootDir>/packages/aspida/__tests__/apis/',
+    '<rootDir>/packages/aspida/samples/',
     '<rootDir>/packages/aspida/__tests__/utils/',
     '<rootDir>/packages/axios-mock-server/__tests__/mocks/',
     '<rootDir>/packages/axios-mock-server/__tests__/utils/'
