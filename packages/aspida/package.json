@@ -23,9 +23,6 @@
     "ajax",
     "promise"
   ],
-  "scripts": {
-    "build": "rimraf dist && tsc --project tsconfig.build.json"
-  },
   "dependencies": {
     "chokidar": "^3.3.1",
     "minimist": "^1.2.0",

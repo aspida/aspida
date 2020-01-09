@@ -3,7 +3,6 @@ import build from '~/aspida/src/buildTemplate'
 
 describe('cli test', () => {
   test('main', () => {
-    const baseurl = 'https://example.com'
     const paths = [
       {
         input: 'packages/aspida/__tests__/apis',
@@ -26,7 +25,7 @@ describe('cli test', () => {
     paths.forEach(({ input, resultDirPath }) => {
       const resultFilePath = `${resultDirPath}/$api.ts`
       const result = fs.readFileSync(resultFilePath, 'utf8')
-      const { text, filePath } = build(input, baseurl)
+      const { text, filePath } = build(input)
 
       expect(text).toBe(result)
       expect(filePath).toBe(resultFilePath)

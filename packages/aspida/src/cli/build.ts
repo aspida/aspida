@@ -20,7 +20,7 @@ export class CommandToBuild implements Command {
   ) {}
 
   exec() {
-    this.io.read(this.config.input).forEach(input => {
+    this.io.read(this.config).forEach(input => {
       this.command.run(input, this.io)
     })
   }
@@ -31,7 +31,7 @@ interface BuildCommand {
 }
 
 export interface BuildIO {
-  read(input?: string | string[]): string[]
+  read(config: Config): string[]
   write(template: Template): void
   remove(filePath: string, callback: () => void): void
   watch(input: string, callback: () => void): void
@@ -41,7 +41,7 @@ export class Build implements BuildCommand {
   run(input: string, io: BuildIO): void {
     const template = build(input)
 
-    io.write(template)
+    io.remove(template.filePath, () => io.write(template))
   }
 }
 
@@ -51,11 +51,6 @@ export class Watch implements BuildCommand {
 
   run(input: string, io: BuildIO): void {
     this.build.run(input, io)
-
-    io.watch(input, () => {
-      const result = build(input)
-
-      io.remove(result.filePath, () => io.write(result))
-    })
+    io.watch(input, () => this.build.run(input, io))
   }
 }

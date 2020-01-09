@@ -1,14 +1,11 @@
 import fs from 'fs'
+import path from 'path'
 
-export type Config = {
-  input?: string | string[]
-}
+export type Config = { input: string | string[] }
 
-export const apiFileRegExp = /\/\$[^/]+\.(js|ts)$/
+const defaultConfig: Config = { input: 'apis' }
 
-export const defaultConfig = {
-  input: 'apis'
-}
-
-export default (rcFilePath = '.aspidarc'): Config =>
-  fs.existsSync(rcFilePath) ? JSON.parse(fs.readFileSync(rcFilePath, 'utf8')) : {}
+export default (configPath = 'aspida.config.js'): Config =>
+  (fs.existsSync(configPath) &&
+    require(path.join(process.cwd(), configPath))[require('../package.json').name]) ||
+  defaultConfig
