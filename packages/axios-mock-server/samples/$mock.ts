@@ -33,4 +33,4 @@ export default (client?: AxiosInstance) => mockServer([
     path: '/collections/entries.json',
     methods: mock5
   }
-], client, 'https://example.com/api')
+], client, '')

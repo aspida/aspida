@@ -5,15 +5,15 @@
   ],
   "scripts": {
     "dev:aspida": "yarn build:aspida && cd packages/aspida && node bin/index.js --build",
+    "dev:mock": "yarn build:mock && cd packages/axios-mock-server && node bin/index.js --build",
     "build:aspida": "cd packages/aspida && rimraf dist && tsc --project tsconfig.build.json",
     "build:aspida-axios": "yarn workspace @aspida/axios build",
     "build:aspida-fetch": "yarn workspace @aspida/fetch build",
     "build:aspida-ky": "yarn workspace @aspida/ky build",
-    "build:mock": "yarn workspace axios-mock-server build",
+    "build:mock": "cd packages/axios-mock-server && rimraf dist && tsc --project tsconfig.build.json",
     "release": "standard-version --skip.tag",
     "lint": "eslint --ext .js,.ts --ignore-path .gitignore .",
     "lint:fix": "npm run lint -- --fix",
-    "snapshot:mock": "ts-node packages/axios-mock-server/__tests__/utils/updateSnapshot",
     "test": "jest",
     "test:watch": "npm test -- --watch",
     "typecheck": "tsc --noEmit --project tsconfig.check.json"
