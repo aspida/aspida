@@ -174,19 +174,19 @@ import api from "../apis/$api"
 
 設定ファイルをプロジェクトのルートに作成する
 
-`.aspidarc`
+`aspida.config.js`
 
-```json
-{
-  "input": "src"
+```javascript
+module.exports = {
+  aspida: { input: 'src' }
 }
 ```
 
 複数の API エンドポイントを型定義したい場合は配列で指定する
 
-```json
-{
-  "input": ["api1", "api2"]
+```javascript
+module.exports = {
+  aspida: { input: ['api1', 'api2'] }
 }
 ```
 
@@ -308,21 +308,6 @@ import api from "../apis/$api"
   // res -> ArrayBuffer
 })()
 ```
-
-<!--
-## Contribution
-
-### Build
-
-```bash
-npm install
-npm run build
-node ./bin/index.js --build
-```
-
-if you want to watch file changes and rebuild automatically,
-you can use `--watch` instead of `--build`
--->
 
 ## License
 

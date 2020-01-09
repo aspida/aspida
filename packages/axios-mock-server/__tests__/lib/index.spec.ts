@@ -22,47 +22,50 @@ describe('cli', () => {
   test('snapshot', () => {
     const configs = [
       {
-        input: 'packages/axios-mock-server/__tests__/mocks',
-        resultDirPath: 'packages/axios-mock-server/__tests__/mocks',
+        input: 'packages/axios-mock-server/samples',
+        resultDirPath: 'packages/axios-mock-server/samples',
         target: 'es6' as const,
         outputExt: 'ts' as const
       },
       {
-        input: 'packages/axios-mock-server/__tests__/mocks',
-        resultDirPath: 'packages/axios-mock-server/__tests__/mocks',
+        input: 'packages/axios-mock-server/samples',
+        resultDirPath: 'packages/axios-mock-server/samples',
         target: 'cjs' as const,
-        outputExt: 'js' as const
+        outputExt: 'js' as const,
+        baseURL: 'https://example.com/api'
       },
       {
-        input: './packages/axios-mock-server/__tests__/mocks',
-        resultDirPath: 'packages/axios-mock-server/__tests__/mocks',
+        input: './packages/axios-mock-server/samples',
+        resultDirPath: 'packages/axios-mock-server/samples',
         target: 'es6' as const,
         outputExt: 'ts' as const
       },
       {
-        input: './packages/axios-mock-server/__tests__/mocks',
-        resultDirPath: 'packages/axios-mock-server/__tests__/mocks',
+        input: './packages/axios-mock-server/samples',
+        resultDirPath: 'packages/axios-mock-server/samples',
         target: 'cjs' as const,
-        outputExt: 'js' as const
+        outputExt: 'js' as const,
+        baseURL: 'https://example.com/api'
       },
       {
-        input: 'packages/axios-mock-server/__tests__/mocks/',
-        resultDirPath: 'packages/axios-mock-server/__tests__/mocks',
+        input: 'packages/axios-mock-server/samples/',
+        resultDirPath: 'packages/axios-mock-server/samples',
         target: 'es6' as const,
         outputExt: 'ts' as const
       },
       {
-        input: 'packages/axios-mock-server/__tests__/mocks/',
-        resultDirPath: 'packages/axios-mock-server/__tests__/mocks',
+        input: 'packages/axios-mock-server/samples/',
+        resultDirPath: 'packages/axios-mock-server/samples',
         target: 'cjs' as const,
-        outputExt: 'js' as const
+        outputExt: 'js' as const,
+        baseURL: 'https://example.com/api'
       }
     ]
 
     configs.forEach(config => {
       const resultFilePath = `${config.resultDirPath}/$mock.${config.outputExt}`
       const result = fs.readFileSync(resultFilePath, 'utf8')
-      const { text, filePath } = build(config.input, config, 'https://example.com/api')
+      const { text, filePath } = build(config.input, config, config.baseURL)
 
       expect(text).toBe(result)
       expect(filePath).toBe(resultFilePath)

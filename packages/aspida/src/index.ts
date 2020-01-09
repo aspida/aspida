@@ -1,11 +1,9 @@
-import 'url-search-params-polyfill'
+export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD' | 'PATCH' | 'OPTIONS'
 
-export type BasicHeaders = { [key: string]: string }
-export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD' | 'PATCH'
-
+type BasicHeaders = { [key: string]: string }
 export interface AspidaRequest<T = any> {
-  query?: { [key: string]: any }
-  headers?: BasicHeaders
+  query?: any
+  headers?: any
   body?: T
 }
 
@@ -17,7 +15,7 @@ export interface AspidaResponse<T, U> {
 }
 
 export interface AspidaClient {
-  fetch: <T, U extends BasicHeaders = BasicHeaders>(
+  fetch: <T, U = BasicHeaders>(
     url: string,
     method: HttpMethod,
     request?: AspidaRequest
@@ -31,8 +29,8 @@ export interface AspidaClient {
   }
 }
 
-export function headersToObject<T extends BasicHeaders>(headers: Headers) {
-  return [...headers.entries()].reduce((prev, [key, val]) => ({ ...prev, [key]: val }), {}) as T
+export function headersToObject<T>(headers: Headers) {
+  return [...headers.entries()].reduce((prev, [key, val]) => ({ ...prev, [key]: val }), {} as T)
 }
 
 function dataToFormData(data: { [key: string]: any }) {
