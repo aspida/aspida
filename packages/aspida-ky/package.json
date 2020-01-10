@@ -1,6 +1,6 @@
 {
   "name": "@aspida/ky",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "ky client for aspida",
   "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
   "license": "MIT",
@@ -23,8 +23,5 @@
     "aspida",
     "ky",
     "ky-universal"
-  ],
-  "scripts": {
-    "build": "rimraf dist && tsc --project tsconfig.build.json"
-  }
+  ]
 }
