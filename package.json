@@ -36,7 +36,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "husky": "^4.0.5",
+    "husky": "^4.0.6",
     "jest": "^24.9.0",
     "ky": "^0.16.1",
     "ky-universal": "^0.3.0",
