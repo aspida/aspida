@@ -4,10 +4,10 @@ import { Template } from '../build/template'
 import { Command } from './command'
 
 export class CommandToBuild implements Command {
-  static getFactory(config: Config, io: BuildIO) {
+  static getFactory(configs: Config[], io: BuildIO) {
     return {
       create(command: BuildCommand): Command {
-        return new CommandToBuild(command, config, io)
+        return new CommandToBuild(command, configs, io)
       }
     }
   }
@@ -15,12 +15,12 @@ export class CommandToBuild implements Command {
   // eslint-disable-next-line no-useless-constructor
   private constructor(
     private readonly command: BuildCommand,
-    private readonly config: Config,
+    private readonly configs: Config[],
     private readonly io: BuildIO
   ) {}
 
   exec() {
-    this.io.read(this.config).forEach(input => {
+    this.configs.forEach(({ input }) => {
       this.command.run(input, this.io)
     })
   }
@@ -31,7 +31,6 @@ interface BuildCommand {
 }
 
 export interface BuildIO {
-  read(config: Config): string[]
   write(template: Template): void
   remove(filePath: string, callback: () => void): void
   watch(input: string, callback: () => void): void
