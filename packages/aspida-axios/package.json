@@ -1,6 +1,6 @@
 {
   "name": "@aspida/axios",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "axios client for aspida",
   "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
   "license": "MIT",
@@ -22,8 +22,5 @@
   "keywords": [
     "aspida",
     "axios"
-  ],
-  "scripts": {
-    "build": "rimraf dist && tsc --project tsconfig.build.json"
-  }
+  ]
 }
