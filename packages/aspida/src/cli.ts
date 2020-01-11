@@ -1,6 +1,6 @@
 import fs from 'fs'
 import minimist from 'minimist'
-import getConfig, { Config } from './getConfig'
+import getConfig, { BaseConfig } from './getConfig'
 import write from './writeRouteFile'
 import watch from './watchInputDir'
 import { Build, Watch, CommandToBuild } from './cli/build'
@@ -12,7 +12,7 @@ export const options: minimist.Opts = {
   alias: { v: 'version', c: 'config', b: 'build', w: 'watch' }
 }
 
-const getBuildCommandFactory = (config: Config[]) =>
+const getBuildCommandFactory = (config: BaseConfig[]) =>
   CommandToBuild.getFactory(config, {
     write,
     watch,

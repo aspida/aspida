@@ -1,10 +1,11 @@
 import fs from 'fs'
 import path from 'path'
+import { BaseConfig } from './getConfig'
 import template from './template'
 import createTemplateValues from './createTemplateValues'
 import { Template } from './build/template'
 
-export default (input: string, baseURL = ''): Template => {
+export default ({ input, baseURL }: BaseConfig): Template => {
   const { api, imports } = createTemplateValues(input)
   const hasTypes =
     fs.existsSync(path.join(input, '@types')) || fs.existsSync(path.join(input, '@types.ts'))

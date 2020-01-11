@@ -34,6 +34,22 @@ update_configs:
           update_type: "semver:patch"
 
   - package_manager: "javascript"
+    directory: "/packages/aspida-swagger"
+    update_schedule: "live"
+    version_requirement_updates: "increase_versions"
+    commit_message:
+      prefix: "fix"
+      prefix_development: "chore"
+      include_scope: true
+    automerged_updates:
+      - match:
+          dependency_type: "development"
+          update_type: "semver:minor"
+      - match:
+          dependency_type: "production"
+          update_type: "semver:patch"
+
+  - package_manager: "javascript"
     directory: "/packages/axios-mock-server"
     update_schedule: "live"
     version_requirement_updates: "increase_versions"
