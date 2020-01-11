@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { OpenAPIV3 } from 'openapi-types'
 import { Template } from './Template'
 
@@ -19,7 +20,19 @@ const isObjectSchema = (
 ): schema is OpenAPIV3.NonArraySchemaObject => !isRefObject(schema) && schema.type !== 'array'
 const enum2value = (en: any[]) => `'${en.join("' | '")}'`
 const array2value = (schema: OpenAPIV3.ArraySchemaObject, indent: string) =>
+  // eslint-disable-next-line @typescript-eslint/no-use-before-define
   `${schema2value(schema.items, indent)}[]`
+const object2value = (properties: OpenAPIV3.NonArraySchemaObject['properties'], indent: string) => {
+  return properties
+    ? `{
+${Object.keys(properties).map(
+  // eslint-disable-next-line @typescript-eslint/no-use-before-define
+  name => `${indent}  '${name}': ${schema2value(properties![name], `${indent}  `)}`
+).join(`
+`)}
+${indent}}`
+    : '{}'
+}
 const schema2value = (
   schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject,
   indent: string
@@ -65,24 +78,13 @@ const schema2value = (
 }
 
 const methodNames = ['get', 'post', 'put', 'delete', 'head', 'options', 'patch'] as const
-const getDirName = (text: string, methods: OpenAPIV3.PathItemObject) => {
+const getDirName = (text: string /* , methods: OpenAPIV3.PathItemObject */) => {
   if (!/^{/.test(text)) return text
 
   const valName = text.slice(1, -1)
   // const method = methodNames.find(name => methods[name]?.parameters?.find((param) => !isRefObject(param) && param.name === valName && param.in === 'path'))
   // return `_${valName}${method ? `@${type2value(methods[method]!.parameters!.filter((param) => !isRefObject(param) && param.name === valName && param.in === 'path')[0], '')}` : ''}`
   return `_${valName}`
-}
-
-const object2value = (properties: OpenAPIV3.NonArraySchemaObject['properties'], indent: string) => {
-  return properties
-    ? `{
-${Object.keys(properties).map(
-  name => `${indent}  '${name}': ${schema2value(properties![name], `${indent}  `)}`
-).join(`
-`)}
-${indent}}`
-    : '{}'
 }
 
 const parameters2interfaces = (params: OpenAPIV3.ComponentsObject['parameters']) =>
@@ -163,7 +165,7 @@ export default (swagger: OpenAPIV3.Document): Template => {
             .replace(/\/$/, '')
             .split('/')
             .slice(1)
-            .map(p => getDirName(p, swagger.paths[path])),
+            .map(p => getDirName(p /* , swagger.paths[path] */)),
           ...(isParent ? ['index'] : [])
         ]
         const methods = Object.keys(swagger.paths[path])
@@ -344,7 +346,7 @@ export default (swagger: OpenAPIV3.Document): Template => {
           file,
           methods: `${
             needsImportTypes
-              ? `import * as Types from '${file.map(_ => '').join('../')}@types'\n\n`
+              ? `import * as Types from '${file.map(() => '').join('../')}@types'\n\n`
               : ''
           }export interface Methods {\n${methods}\n}\n`
         }

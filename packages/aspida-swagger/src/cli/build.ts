@@ -1,6 +1,6 @@
 import { Config } from '../getConfig'
 import build from '../buildTemplate'
-import { Template } from '../template'
+import { Template } from '../Template'
 import { Command } from 'aspida/src/cli/command'
 
 export class CommandToBuild implements Command {

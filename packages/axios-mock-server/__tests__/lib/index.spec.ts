@@ -1,6 +1,6 @@
 import fs from 'fs'
-import { run } from '~/axios-mock-server/src/lib/cli'
-import build from '~/axios-mock-server/src/lib/buildRouteFile'
+import { run } from '../../src/lib/cli'
+import build from '../../src/lib/buildRouteFile'
 
 describe('cli', () => {
   test('version command', () => {

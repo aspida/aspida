@@ -9,7 +9,7 @@ export interface Config {
 }
 
 export interface AspidaSwaggerConfig extends AspidaConfig {
-  aspida_swagger?: {
+  aspidaSwagger?: {
     swagger: string
     yaml?: boolean
   }
@@ -20,18 +20,25 @@ const defaultSwaggerConfig = {
 }
 
 const createConfig = (config?: AspidaSwaggerConfig) => {
-  const inputFile = config?.aspida_swagger?.swagger || defaultSwaggerConfig.swagger
+  const inputFile = config?.aspidaSwagger?.swagger || defaultSwaggerConfig.swagger
 
   return {
     inputFile,
     output: config?.aspida?.input || defaultConfig.input,
-    isYaml: config?.aspida_swagger?.yaml === undefined ? path.extname(inputFile).slice(1) === 'yaml' : config?.aspida_swagger?.yaml
+    isYaml:
+      config?.aspidaSwagger?.yaml === undefined
+        ? path.extname(inputFile).slice(1) === 'yaml'
+        : config?.aspidaSwagger?.yaml
   }
 }
 
 export default (configPath = defaultConfigPath): Config[] => {
   if (fs.existsSync(configPath)) {
-    const config: AspidaSwaggerConfig | AspidaSwaggerConfig[] = require(path.join(process.cwd(), configPath))
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const config: AspidaSwaggerConfig | AspidaSwaggerConfig[] = require(path.join(
+      process.cwd(),
+      configPath
+    ))
 
     return Array.isArray(config) ? config.map(c => createConfig(c)) : [createConfig(config)]
   }

@@ -14,9 +14,12 @@ export const defaultConfig = { input: 'apis' }
 
 export default (configPath = defaultConfigPath): Config[] => {
   if (fs.existsSync(configPath)) {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const config: AspidaConfig | AspidaConfig[] = require(path.join(process.cwd(), configPath))
 
-    return Array.isArray(config) ? config.map(c => c.aspida || defaultConfig) : [config.aspida || defaultConfig]
+    return Array.isArray(config)
+      ? config.map(c => c.aspida || defaultConfig)
+      : [config.aspida || defaultConfig]
   }
 
   return [defaultConfig]
