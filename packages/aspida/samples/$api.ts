@@ -12,7 +12,7 @@ import { Methods as Methods6 } from './v1.1/users/_userId@number'
 import { Methods as Methods7 } from './v2.0/index'
 
 const api = (client: AspidaClient, baseURL?: string) => {
-  const prefix = (baseURL === undefined ? '' : baseURL).replace(/\/$/, '')
+  const prefix = (baseURL === undefined ? 'https://example.com/api/' : baseURL).replace(/\/$/, '')
 
   return {
     v1_1: {

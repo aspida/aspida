@@ -22,5 +22,5 @@ export default (input: string, { baseURL, types, files }: Template) => {
     fs.writeFileSync(`${input}/${p.file.join('/')}/${fileName}.ts`, p.methods, 'utf8')
   })
 
-  aspidaWrite(aspidaBuild(input, baseURL))
+  aspidaWrite(aspidaBuild({ input, baseURL }))
 }

@@ -1,3 +1,1 @@
-module.exports = {
-  aspida: { input: 'samples' }
-}
+module.exports = { input: 'samples', baseURL: 'https://example.com/api/' }

@@ -1,14 +1,14 @@
 module.exports = [
   {
-    aspida: { input: 'samples/yamlV2' },
-    aspidaSwagger: { swagger: 'samples/swaggerV2.yaml' }
+    input: 'samples/yamlV2',
+    swagger: { inputFile: 'samples/swaggerV2.yaml' }
   },
   {
-    aspida: { input: 'samples/jsonV2' },
-    aspidaSwagger: { swagger: 'samples/swaggerV2.json' }
+    input: 'samples/jsonV2',
+    swagger: { inputFile: 'samples/swaggerV2.json' }
   },
   {
-    aspida: { input: 'samples/jsonV3' },
-    aspidaSwagger: { swagger: 'samples/swaggerV3.json', yaml: false }
+    input: 'samples/jsonV3',
+    swagger: { inputFile: 'samples/swaggerV3.json', yaml: false }
   }
 ]

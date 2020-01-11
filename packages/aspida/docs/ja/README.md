@@ -177,17 +177,22 @@ import api from "../apis/$api"
 `aspida.config.js`
 
 ```javascript
-module.exports = {
-  aspida: { input: 'src' }
-}
+module.exports = { input: 'src' }
+```
+
+baseURLを設定ファイルで指定する
+
+```javascript
+module.exports = { input: 'apis', baseURL: 'https://example.com/api' }
 ```
 
 複数の API エンドポイントを型定義したい場合は配列で指定する
 
 ```javascript
-module.exports = {
-  aspida: { input: ['api1', 'api2'] }
-}
+module.exports = [
+  { input: 'api1' },
+  { input: 'api2', baseURL: 'https://example.com/api' }
+]
 ```
 
 ### FormData を POST する

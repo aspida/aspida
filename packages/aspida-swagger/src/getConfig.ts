@@ -1,6 +1,5 @@
-import fs from 'fs'
 import path from 'path'
-import { AspidaConfig, defaultConfigPath, defaultConfig } from 'aspida/src/getConfig'
+import getBaseConfig, { BaseConfig } from 'aspida/src/getConfig'
 
 export interface Config {
   inputFile: string
@@ -8,40 +7,25 @@ export interface Config {
   isYaml: boolean
 }
 
-export interface AspidaSwaggerConfig extends AspidaConfig {
-  aspidaSwagger?: {
-    swagger: string
+interface ConfigFile extends BaseConfig {
+  swagger?: {
+    inputFile: string
     yaml?: boolean
   }
 }
 
-const defaultSwaggerConfig = {
-  swagger: 'swagger.json'
-}
-
-const createConfig = (config?: AspidaSwaggerConfig) => {
-  const inputFile = config?.aspidaSwagger?.swagger || defaultSwaggerConfig.swagger
+const createConfig = (config: ConfigFile) => {
+  const inputFile = config.swagger?.inputFile || 'swagger.json'
 
   return {
     inputFile,
-    output: config?.aspida?.input || defaultConfig.input,
+    output: config.input,
     isYaml:
-      config?.aspidaSwagger?.yaml === undefined
+      config.swagger?.yaml === undefined
         ? path.extname(inputFile).slice(1) === 'yaml'
-        : config?.aspidaSwagger?.yaml
+        : config.swagger?.yaml
   }
 }
 
-export default (configPath = defaultConfigPath): Config[] => {
-  if (fs.existsSync(configPath)) {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const config: AspidaSwaggerConfig | AspidaSwaggerConfig[] = require(path.join(
-      process.cwd(),
-      configPath
-    ))
-
-    return Array.isArray(config) ? config.map(c => createConfig(c)) : [createConfig(config)]
-  }
-
-  return [createConfig()]
-}
+export default (configPath?: string): Config[] =>
+  getBaseConfig(configPath).map(c => createConfig(c))
