@@ -1,36 +1,25 @@
 import fs from 'fs'
 import build from '../src/buildTemplate'
+import write from '../src/writeRouteFile'
 import getConfig from '../src/getConfig'
+
+const basePath = 'packages/aspida'
 
 describe('cli test', () => {
   test('main', () => {
-    const { baseURL } = getConfig('packages/aspida/aspida.config.js')[0]
-    const paths = [
-      {
-        input: 'packages/aspida/samples',
-        resultDirPath: 'packages/aspida/samples'
-      },
-      {
-        input: './packages/aspida/samples',
-        resultDirPath: 'packages/aspida/samples'
-      },
-      {
-        input: './packages/aspida/samples/',
-        resultDirPath: 'packages/aspida/samples'
-      },
-      {
-        input: 'packages/aspida/samples/',
-        resultDirPath: 'packages/aspida/samples'
-      }
-    ]
+    const spyLog = jest.spyOn(fs, 'writeFileSync').mockImplementation(x => x)
+    const { input, baseURL } = getConfig(`${basePath}/aspida.config.js`)[0]
+    const inputDir = `${basePath}/${input}`
+    const inputs = [inputDir, `./${inputDir}`, `./${inputDir}/`, `${inputDir}/`]
 
-    paths.forEach(({ input, resultDirPath }) => {
-      const resultFilePath = `${resultDirPath}/$api.ts`
+    inputs.forEach(inputPath => {
+      const resultFilePath = `${inputDir}/$api.ts`
       const result = fs.readFileSync(resultFilePath, 'utf8')
-      const { text, filePath } = build({ input, baseURL })
-
-      expect(text).toBe(result)
-      expect(filePath).toBe(resultFilePath)
+      write(build({ input: inputPath, baseURL }))
+      expect(fs.writeFileSync).toHaveBeenLastCalledWith(resultFilePath, result, 'utf8')
     })
+
+    spyLog.mockReset()
+    spyLog.mockRestore()
   })
 })
