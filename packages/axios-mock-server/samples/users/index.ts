@@ -1,4 +1,4 @@
-import { MockMethods } from '~/axios-mock-server/src/types'
+import { MockMethods } from '../../src/types'
 
 export const users = [
   { id: 0, name: 'aaa' },

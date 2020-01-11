@@ -1,22 +1,20 @@
-import fs from 'fs'
 import minimist from 'minimist'
+import rimraf from 'rimraf'
 import getConfig, { Config } from './getConfig'
 import write from './writeRouteFile'
-import watch from './watchInputDir'
+import watch from 'aspida/src/watchInputDir'
+import { options } from 'aspida/src/cli'
 import { Build, Watch, CommandToBuild } from './cli/build'
-import { Command, nullCommand } from './cli/command'
-import { version as versionCommand } from './cli/version'
+import { Command, nullCommand } from 'aspida/src/cli/command'
+import { version as versionCommand } from 'aspida/src/cli/version'
 
-export const options: minimist.Opts = {
-  string: ['version', 'config', 'build', 'watch'],
-  alias: { v: 'version', c: 'config', b: 'build', w: 'watch' }
-}
-
-const getBuildCommandFactory = (config: Config[]) =>
-  CommandToBuild.getFactory(config, {
+const getBuildCommandFactory = (configs: Config[]) =>
+  CommandToBuild.getFactory(configs, {
     write,
     watch,
-    remove: (filePath: string, callback: () => void) => fs.unlink(filePath, callback)
+    remove(outputPath: string, callback: () => void) {
+      rimraf(outputPath, callback)
+    }
   })
 
 export const run = (args: string[]) => {

@@ -1,7 +1,7 @@
 import { Config } from '../getConfig'
 import build from '../buildTemplate'
-import { Template } from '../build/template'
-import { Command } from './command'
+import { Template } from '../Template'
+import { Command } from 'aspida/src/cli/command'
 
 export class CommandToBuild implements Command {
   static getFactory(configs: Config[], io: BuildIO) {
@@ -20,27 +20,27 @@ export class CommandToBuild implements Command {
   ) {}
 
   exec() {
-    this.configs.forEach(({ input }) => {
-      this.command.run(input, this.io)
+    this.configs.forEach(config => {
+      this.command.run(config, this.io)
     })
   }
 }
 
 interface BuildCommand {
-  run(input: string, io: BuildIO): void
+  run(config: Config, io: BuildIO): Promise<void>
 }
 
 export interface BuildIO {
-  write(template: Template): void
+  write(outputDir: string, template: Template): void
   remove(filePath: string, callback: () => void): void
   watch(input: string, callback: () => void): void
 }
 
 export class Build implements BuildCommand {
-  run(input: string, io: BuildIO): void {
-    const template = build(input)
+  async run(config: Config, io: BuildIO) {
+    const template = await build(config.inputFile, config.isYaml)
 
-    io.remove(template.filePath, () => io.write(template))
+    io.remove(config.output, () => io.write(config.output, template))
   }
 }
 
@@ -48,8 +48,8 @@ export class Watch implements BuildCommand {
   // eslint-disable-next-line no-useless-constructor
   constructor(private readonly build = new Build()) {}
 
-  run(input: string, io: BuildIO): void {
-    this.build.run(input, io)
-    io.watch(input, () => this.build.run(input, io))
+  async run(config: Config, io: BuildIO) {
+    await this.build.run(config, io)
+    io.watch(config.inputFile, () => this.build.run(config, io))
   }
 }

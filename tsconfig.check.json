@@ -1,5 +1,10 @@
 {
   "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "~/*": ["packages/*"]
+    }
+  },
   "exclude": [
     "dist",
     "examples",

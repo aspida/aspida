@@ -1,12 +1,12 @@
 import { AxiosRequestConfig } from 'axios'
-import { HandlersSet, HttpMethod } from '~/axios-mock-server/src/types'
-import { asyncResponse } from '~/axios-mock-server/src'
-import createValues from '~/axios-mock-server/src/createValues'
-import findHandler from '~/axios-mock-server/src/findHandler'
-import { createPathRegExp } from '~/axios-mock-server/src/MockServer'
-import createRelativePath from '~/axios-mock-server/src/createRelativePath'
-import createLogString from '~/axios-mock-server/src/createLogString'
-import untransformData from '~/axios-mock-server/src/untransformData'
+import { HandlersSet, HttpMethod } from '../src/types'
+import { asyncResponse } from '../src'
+import createValues from '../src/createValues'
+import findHandler from '../src/findHandler'
+import { createPathRegExp } from '../src/MockServer'
+import createRelativePath from '../src/createRelativePath'
+import createLogString from '../src/createLogString'
+import untransformData from '../src/untransformData'
 
 describe('unit tests', () => {
   test('createValues', () => {
