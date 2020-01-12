@@ -1,11 +1,27 @@
 import fs from 'fs'
 import path from 'path'
 
-export type Config = { input: string | string[] }
+export interface BaseConfig {
+  input: string
+  baseURL: string
+}
 
-const defaultConfig: Config = { input: 'apis' }
+interface ConfigFile {
+  input: string
+  baseURL?: string
+}
 
-export default (configPath = 'aspida.config.js'): Config =>
-  (fs.existsSync(configPath) &&
-    require(path.join(process.cwd(), configPath))[require('../package.json').name]) ||
-  defaultConfig
+const defaultConfig = { input: 'apis', baseURL: '' }
+
+export default (configPath = 'aspida.config.js'): BaseConfig[] => {
+  if (fs.existsSync(configPath)) {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const config: ConfigFile | ConfigFile[] = require(path.join(process.cwd(), configPath))
+
+    return Array.isArray(config)
+      ? config.map(c => ({ ...defaultConfig, ...c }))
+      : [{ ...defaultConfig, ...config }]
+  }
+
+  return [{ ...defaultConfig }]
+}

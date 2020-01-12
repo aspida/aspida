@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.10.0](https://github.com/aspidajs/aspida/compare/v0.9.0...v0.10.0) (2020-01-12)
+
+
+### Features
+
+* add baseURL to config ([b150a3d](https://github.com/aspidajs/aspida/commit/b150a3d2c02907d0882a5984681f55e4fa8b89bf))
+* **aspida:** change config file for common use ([08d3ed5](https://github.com/aspidajs/aspida/commit/08d3ed5638746fc883d4a25773222cadf2d80b54))
+
+
+### Bug Fixes
+
+* lint ([10de823](https://github.com/aspidajs/aspida/commit/10de823b224582d9dd0e21dbf8c3420a94fe22d1))
+
 ## [0.9.0](https://github.com/aspidajs/aspida/compare/v0.8.0...v0.9.0) (2020-01-09)
 
 

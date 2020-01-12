@@ -8,10 +8,6 @@
     "lib": ["dom", "dom.iterable"],
     "module": "commonjs",
     "moduleResolution": "node",
-    "paths": {
-      "~/aspida/*": ["./packages/aspida/*"],
-      "~/axios-mock-server/*": ["./packages/axios-mock-server/*"]
-    },
     "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,
