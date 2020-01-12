@@ -1,5 +1,5 @@
 import path from 'path'
-import getBaseConfig, { BaseConfig } from 'aspida/src/getConfig'
+import getBaseConfig, { BaseConfig } from 'aspida/dist/getConfig'
 
 export interface Config {
   inputFile: string

@@ -18,6 +18,8 @@ const isArraySchema = (schema: OpenAPIV3.SchemaObject): schema is OpenAPIV3.Arra
 const isObjectSchema = (
   schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject
 ): schema is OpenAPIV3.NonArraySchemaObject => !isRefObject(schema) && schema.type !== 'array'
+const getPropertyName = (name: string) =>
+  /^[a-zA-Z_$][0-9a-zA-Z_$]*$/.test(name) ? name : `'${name}'`
 const enum2value = (en: any[]) => `'${en.join("' | '")}'`
 const array2value = (schema: OpenAPIV3.ArraySchemaObject, indent: string) =>
   // eslint-disable-next-line @typescript-eslint/no-use-before-define
@@ -27,7 +29,7 @@ const object2value = (properties: OpenAPIV3.NonArraySchemaObject['properties'], 
     ? `{
 ${Object.keys(properties).map(
   // eslint-disable-next-line @typescript-eslint/no-use-before-define
-  name => `${indent}  '${name}': ${schema2value(properties![name], `${indent}  `)}`
+  name => `${indent}  ${getPropertyName(name)}: ${schema2value(properties![name], `${indent}  `)}`
 ).join(`
 `)}
 ${indent}}`
@@ -98,7 +100,7 @@ export interface ${defKey} extends ${$ref2Type(target.$ref)} {}
 `
         : `
 export interface ${defKey} {
-  '${target.name}': ${target.schema ? schema2value(target.schema, '') : 'null'}
+  ${getPropertyName(target.name)}: ${target.schema ? schema2value(target.schema, '') : 'null'}
 }
 `
     })
@@ -159,7 +161,6 @@ export default (swagger: OpenAPIV3.Document): Template => {
     files.push(
       ...Object.keys(swagger.paths).map((path, _i, pathList) => {
         const isParent = pathList.some(p => new RegExp(`^${path}/.+`).test(p))
-        let needsImportTypes = false
         const file = [
           ...path
             .replace(/\/$/, '')
@@ -187,11 +188,9 @@ export default (swagger: OpenAPIV3.Document): Template => {
                   switch (ref.in) {
                     case 'header':
                       reqRefHeaders.push($ref2Type(p.$ref))
-                      needsImportTypes = true
                       break
                     case 'query':
-                      query.push(`'${ref.name}': ${$ref2Type(p.$ref)}`)
-                      needsImportTypes = true
+                      query.push(`${getPropertyName(ref.name)}: ${$ref2Type(p.$ref)}`)
                       break
                     default:
                       break
@@ -200,11 +199,17 @@ export default (swagger: OpenAPIV3.Document): Template => {
                   switch (p.in) {
                     case 'header':
                       reqHeaders.push(
-                        `'${p.name}': ${p.schema ? schema2value(p.schema, '  ') : 'null'}`
+                        `${getPropertyName(p.name)}: ${
+                          p.schema ? schema2value(p.schema, '  ') : 'null'
+                        }`
                       )
                       break
                     case 'query':
-                      query.push(`'${p.name}': ${p.schema ? schema2value(p.schema, '  ') : 'null'}`)
+                      query.push(
+                        `${getPropertyName(p.name)}: ${
+                          p.schema ? schema2value(p.schema, '  ') : 'null'
+                        }`
+                      )
                       break
                     default:
                       break
@@ -235,41 +240,37 @@ export default (swagger: OpenAPIV3.Document): Template => {
                 if (isRefObject(res)) {
                   const ref = resolveResRef(swagger, res.$ref)
                   if (ref.content?.['application/json']?.schema) {
-                    resData = schema2value(ref.content?.['application/json']?.schema, '    ')
-                    needsImportTypes = true
+                    resData = schema2value(ref.content['application/json'].schema, '    ')
                   }
 
                   if (ref.headers) {
                     Object.keys(ref.headers).forEach(header => {
                       const headerData = ref.headers![header]
                       resHeaders.push(
-                        `'${header}': ${
+                        `${getPropertyName(header)}: ${
                           !isRefObject(headerData) && headerData.schema
                             ? schema2value(headerData.schema, '    ')
                             : 'null'
                         }`
                       )
                     })
-                    needsImportTypes = true
                   }
                 } else {
                   if (res.content?.['application/json']?.schema) {
                     resData = schema2value(res.content['application/json'].schema, '    ')
-                    if (isRefObject(res.content['application/json'].schema)) needsImportTypes = true
                   }
                   res.headers &&
                     Object.keys(res.headers).forEach(header => {
                       const headerData = res.headers![header]
-                      if (isRefObject(headerData)) {
-                        resHeaders.push(`'${header}': ${$ref2Type(headerData.$ref)}`)
-                        needsImportTypes = true
-                      } else {
-                        resHeaders.push(
-                          `'${header}': ${
-                            headerData.schema ? schema2value(headerData.schema, '    ') : 'null'
-                          }`
-                        )
-                      }
+                      resHeaders.push(
+                        `${getPropertyName(header)}: ${
+                          isRefObject(headerData)
+                            ? $ref2Type(headerData.$ref)
+                            : headerData.schema
+                            ? schema2value(headerData.schema, '    ')
+                            : 'null'
+                        }`
+                      )
                     })
                 }
 
@@ -295,7 +296,6 @@ export default (swagger: OpenAPIV3.Document): Template => {
                 }
 
                 reqData = $ref2Type(target.requestBody.$ref)
-                needsImportTypes = true
               } else {
                 if (target.requestBody.content['multipart/form-data']?.schema) {
                   reqType = 'FormData'
@@ -303,8 +303,6 @@ export default (swagger: OpenAPIV3.Document): Template => {
                     target.requestBody.content['multipart/form-data'].schema,
                     '    '
                   )
-                  if (isRefObject(target.requestBody.content['multipart/form-data'].schema))
-                    needsImportTypes = true
                 } else if (
                   target.requestBody.content['application/x-www-form-urlencoded']?.schema
                 ) {
@@ -313,19 +311,11 @@ export default (swagger: OpenAPIV3.Document): Template => {
                     target.requestBody.content['application/x-www-form-urlencoded'].schema,
                     '    '
                   )
-                  if (
-                    isRefObject(
-                      target.requestBody.content['application/x-www-form-urlencoded'].schema
-                    )
-                  )
-                    needsImportTypes = true
                 } else if (target.requestBody.content['application/json']?.schema) {
                   reqData = schema2value(
                     target.requestBody.content['application/json'].schema,
                     '    '
                   )
-                  if (isRefObject(target.requestBody.content['application/json'].schema))
-                    needsImportTypes = true
                 }
               }
 
@@ -344,8 +334,8 @@ export default (swagger: OpenAPIV3.Document): Template => {
 
         return {
           file,
-          methods: `${
-            needsImportTypes
+          methods: `/* eslint-disable */\n${
+            / Types\./.test(methods)
               ? `import * as Types from '${file.map(() => '').join('../')}@types'\n\n`
               : ''
           }export interface Methods {\n${methods}\n}\n`
@@ -356,8 +346,8 @@ export default (swagger: OpenAPIV3.Document): Template => {
 
   return {
     baseURL: swagger.servers?.[0].url || '',
-    types: `/* eslint-disable */${parameters2interfaces(swagger.components?.parameters) || ''}
-${schemas2interfaces(swagger.components?.schemas) || ''}`,
+    types: `/* eslint-disable */${parameters2interfaces(swagger.components?.parameters) ||
+      ''}${schemas2interfaces(swagger.components?.schemas) || ''}`.replace(/ Types\./g, ' '),
     files
   }
 }
