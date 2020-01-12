@@ -1,10 +1,10 @@
 import fs from 'fs'
-import aspidaBuild from 'aspida/src/buildTemplate'
-import aspidaWrite from 'aspida/src/writeRouteFile'
+import aspidaBuild from 'aspida/dist/buildTemplate'
+import aspidaWrite from 'aspida/dist/writeRouteFile'
 import { Template } from './Template'
 
 export default (input: string, { baseURL, types, files }: Template) => {
-  fs.mkdirSync(input, '0777')
+  fs.mkdirSync(input)
 
   if (types) {
     fs.writeFileSync(`${input}/@types.ts`, types, 'utf8')
@@ -15,7 +15,7 @@ export default (input: string, { baseURL, types, files }: Template) => {
     p.file.forEach((_d, i, dirList) => {
       const dirPath = `${input}/${dirList.slice(0, i + 1).join('/')}`
       if (!fs.existsSync(dirPath)) {
-        fs.mkdirSync(dirPath, '0777')
+        fs.mkdirSync(dirPath)
       }
     })
 

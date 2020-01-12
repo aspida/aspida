@@ -61,16 +61,36 @@ export default (swagger: OpenAPIV2.Document): Template => {
     files.push(
       ...Object.keys(swagger.paths).map((path, _i, pathList) => {
         const isParent = pathList.some(p => new RegExp(`^${path}/.+`).test(p))
+        const file = [
+          ...path
+            .replace(/\/$/, '')
+            .split('/')
+            .slice(1)
+            .map(p => getDirName(p, swagger.paths[path])),
+          ...(isParent ? ['index'] : [])
+        ]
+
+        const needsImportTypes = false
+        const methods = Object.keys(swagger.paths[path])
+          .map(method => {
+            const target: OpenAPIV2.OperationObject =
+              swagger.paths[path][method as typeof methodNames[number]]
+
+            if (!target) return ''
+
+            const params: string[] = []
+
+            return `  ${method}: {\n${params.join('\n')}  }`
+          })
+          .join('\n\n')
+
         return {
-          file: [
-            ...path
-              .replace(/\/$/, '')
-              .split('/')
-              .slice(1)
-              .map(p => getDirName(p, swagger.paths[path])),
-            ...(isParent ? ['index'] : [])
-          ],
-          methods: swagger.paths[path]
+          file,
+          methods: `/* eslint-disable */\n${
+            needsImportTypes
+              ? `import * as Types from '${file.map(() => '').join('../')}@types'\n\n`
+              : ''
+          }export interface Methods {\n${methods}\n}\n`
         }
       })
     )
@@ -86,7 +106,7 @@ export default (swagger: OpenAPIV2.Document): Template => {
 export interface ${defKey} ${type2value(swagger.definitions![defKey], '')}
 `
         )
-        .join('')}`,
+        .join('')}`.replace(/: Types\./g, ': '),
     files
   }
 }
