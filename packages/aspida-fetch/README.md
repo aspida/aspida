@@ -16,13 +16,13 @@
 - Using [npm][npm]:
 
   ```sh
-  $ npm install aspida @aspida/fetch
+  $ npm install @aspida/fetch
   ```
 
 - Using [Yarn][yarn]:
 
   ```sh
-  $ yarn add aspida @aspida/fetch
+  $ yarn add @aspida/fetch
   ```
 
 ### Make HTTP request from application
