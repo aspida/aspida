@@ -41,13 +41,13 @@ Type safe HTTP client wrapper for the browser and node.js.
 - Using [npm][npm]:
 
   ```sh
-  $ npm install aspida axios @aspida/axios
+  $ npm install @aspida/axios axios
   ```
 
 - Using [Yarn][yarn]:
 
   ```sh
-  $ yarn add  aspida axios @aspida/axios
+  $ yarn add @aspida/axios axios
   ```
 
 ### Create apis directory
