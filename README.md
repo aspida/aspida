@@ -1,8 +1,10 @@
-<div align="center">
-  <img src="https://aspidajs.github.io/aspida/assets/images/logo.png" alt="aspida" title="aspida" />
-</div>
+# aspida
 
-<h1>aspida</h1>
+<br />
+<div align="center">
+  <img src="https://aspidajs.github.io/aspida/logos/svg/black.svg" alt="aspida" title="aspida" width="600" />
+</div>
+<br />
 
 [![npm version][badge-npm]][badge-npm-url]
 [![CircleCI][badge-ci]][badge-ci-url]
