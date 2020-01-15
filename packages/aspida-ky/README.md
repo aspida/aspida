@@ -16,13 +16,13 @@
 - Using [npm][npm]:
 
   ```sh
-  $ npm install aspida ky @aspida/ky
+  $ npm install @aspida/ky ky
   ```
 
 - Using [Yarn][yarn]:
 
   ```sh
-  $ yarn add aspida ky @aspida/ky
+  $ yarn add @aspida/ky ky
   ```
 
 ### Make HTTP request from application
