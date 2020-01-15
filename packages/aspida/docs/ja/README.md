@@ -1,24 +1,40 @@
-<p align="right">
-  <a href="https://github.com/aspidajs/aspida/tree/develop/packages/aspida#readme">🇺🇸English</a> |
-  <a href="https://github.com/aspidajs/aspida/tree/develop/packages/aspida/docs/ja#readme">🇯🇵日本語</a>
-</p>
-
+<br />
+<br />
+<br />
 <div align="center">
-  <img src="https://aspidajs.github.io/aspida/assets/images/logo.png" alt="aspida" title="aspida" />
+  <img src="https://aspidajs.github.io/aspida/logos/svg/black.svg" alt="aspida" title="aspida" width="600" />
 </div>
-
-<h1>aspida</h1>
-
-[![npm version][badge-npm]][badge-npm-url]
-[![CircleCI][badge-ci]][badge-ci-url]
-[![Codecov][badge-coverage]][badge-coverage-url]
-[![Language grade: JavaScript][badge-lgtm]][badge-lgtm-url]
-[![Dependabot Status][badge-dependabot]][dependabot]
-[![License][badge-license]][aspida-license]
-
-ブラウザと node.js のための型安全な HTTP クライアントラッパー
-
-<img src="https://aspidajs.github.io/aspida/assets/images/vscode.gif" width="720" alt="vscode" title="vscode" />
+<br />
+<br />
+<br />
+<div align="center">
+  <a href="https://www.npmjs.com/package/aspida">
+    <img src="https://img.shields.io/npm/v/aspida" alt="npm version" />
+  </a>
+  <a href="https://circleci.com/gh/aspidajs/aspida">
+    <img src="https://img.shields.io/circleci/build/github/aspidajs/aspida.svg?label=test" alt="CircleCI" />
+  </a>
+  <a href="https://codecov.io/gh/aspidajs/aspida">
+    <img src="https://img.shields.io/codecov/c/github/aspidajs/aspida.svg" alt="Codecov" />
+  </a>
+  <a href="https://lgtm.com/projects/g/aspidajs/aspida/context:javascript">
+    <img src="https://img.shields.io/lgtm/grade/javascript/g/aspidajs/aspida.svg" alt="Language grade: JavaScript" />
+  </a>
+  <a href="https://dependabot.com">
+    <img src="https://api.dependabot.com/badges/status?host=github&repo=aspidajs/aspida" alt="Dependabot Status" />
+  </a>
+  <a href="https://github.com/aspidajs/aspida/blob/master/packages/aspida/LICENSE">
+    <img src="https://img.shields.io/npm/l/aspida" alt="License" />
+  </a>
+</div>
+<br />
+<p align="center">ブラウザと node.js のための型安全な HTTP クライアントラッパー</p>
+<div align="center">
+  <a href="https://github.com/aspidajs/aspida/tree/master/packages/aspida#readme">🇺🇸English</a> |
+  <a href="https://github.com/aspidajs/aspida/tree/master/packages/aspida/docs/ja#readme">🇯🇵日本語</a>
+</div>
+<br />
+<br />
 
 ## 特徴
 
@@ -26,6 +42,10 @@
 - FormData / URLSearchParams の内容も型安全に扱える
 - HTTP クライアントは axios / ky / ky-universal / fetch に対応
 - パス定義は Nuxt.js の pages と同じ命名規則
+
+<br />
+<img src="https://aspidajs.github.io/aspida/assets/images/vscode.gif" width="720" alt="vscode" />
+<br />
 
 ## 手順
 
