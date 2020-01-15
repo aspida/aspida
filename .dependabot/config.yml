@@ -4,6 +4,7 @@ update_configs:
   - package_manager: "javascript"
     directory: "/"
     update_schedule: "live"
+    target_branch: "develop"
     version_requirement_updates: "increase_versions"
     commit_message:
       prefix: "fix"
@@ -20,6 +21,7 @@ update_configs:
   - package_manager: "javascript"
     directory: "/packages/aspida"
     update_schedule: "live"
+    target_branch: "develop"
     version_requirement_updates: "increase_versions"
     commit_message:
       prefix: "fix"
@@ -36,6 +38,7 @@ update_configs:
   - package_manager: "javascript"
     directory: "/packages/aspida-swagger"
     update_schedule: "live"
+    target_branch: "develop"
     version_requirement_updates: "increase_versions"
     commit_message:
       prefix: "fix"
@@ -52,6 +55,7 @@ update_configs:
   - package_manager: "javascript"
     directory: "/packages/axios-mock-server"
     update_schedule: "live"
+    target_branch: "develop"
     version_requirement_updates: "increase_versions"
     commit_message:
       prefix: "fix"
