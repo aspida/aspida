@@ -58,8 +58,8 @@ import ky from "ky"
 import aspida from "@aspida/ky"
 import api from "../apis/$api"
 
-const kyOptions = { timeout: 3000 }
-const client = api(aspida(ky, kyOptions), "https://example.com/api")
+const kyConfig = { timeout: 3000, prefixUrl: "https://example.com/api" }
+const client = api(aspida(ky, kyConfig))
 ;(async () => {
   const userId = 0
   const limit = 10

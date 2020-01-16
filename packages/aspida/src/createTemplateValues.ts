@@ -21,8 +21,6 @@ export default (input: string) => {
     fs.readdirSync(mockDir)
       .sort()
       .forEach(file => {
-        const target = path.posix.join(mockDir, file)
-
         if (file.startsWith('$') || file.startsWith('@')) return
 
         let valFn = `${indent}${file
@@ -47,6 +45,8 @@ ${indent}})`
           newUrl = `${url}/\${val${valCount}}`
           valCount += 1
         }
+
+        const target = path.posix.join(mockDir, file)
 
         if (fs.statSync(target).isFile() && file !== 'index.ts') {
           if (path.extname(file) !== '.ts') return

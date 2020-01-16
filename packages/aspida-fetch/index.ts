@@ -1,22 +1,28 @@
 import { AspidaClient, AspidaRequest, HttpMethod, dataToURLString, headersToObject } from 'aspida'
 
-export default (client = fetch, init?: RequestInit): AspidaClient => ({
-  fetch<T, U>(url: string, method: HttpMethod, request?: AspidaRequest) {
+interface FetchConfig extends RequestInit {
+  baseURL?: string
+}
+
+export default (client = fetch, config?: FetchConfig): AspidaClient<FetchConfig> => ({
+  baseURL: config?.baseURL,
+  fetch<T, U>(baseURL: string, url: string, method: HttpMethod, request?: AspidaRequest<T, FetchConfig>) {
     const send = <V>(fn: (res: Response) => Promise<V>) => async () => {
       const res = await client(
-        `${url}${request?.query ? `?${dataToURLString(request.query)}` : ''}`,
+        `${baseURL}${url}${request?.query ? `?${dataToURLString(request.query)}` : ''}`,
         {
-          ...init,
           method,
-          body: request?.body,
-          headers: { ...init?.headers, ...request?.headers }
+          ...config,
+          ...request?.config,
+          body: request?.body as any,
+          headers: { ...config?.headers, ...request?.config?.headers, ...request?.headers }
         }
       )
 
       return {
         status: res.status,
         headers: headersToObject<U>(res.headers),
-        body: res.body,
+        originalResponse: res,
         data: await fn(res)
       }
     }
