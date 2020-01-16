@@ -1,24 +1,27 @@
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD' | 'PATCH' | 'OPTIONS'
 
 type BasicHeaders = { [key: string]: string }
-export interface AspidaRequest<T = any> {
+export interface AspidaRequest<T = any, Config = any> {
   query?: any
   headers?: any
   body?: T
+  config?: Config
 }
 
 export interface AspidaResponse<T, U> {
   status: number
   headers: U
-  body: any
+  originalResponse: any
   data: T
 }
 
-export interface AspidaClient {
+export interface AspidaClient<Config> {
+  baseURL: string | undefined
   fetch: <T, U = BasicHeaders>(
-    url: string,
+    prefix: string,
+    path: string,
     method: HttpMethod,
-    request?: AspidaRequest
+    request?: AspidaRequest<any, Config>
   ) => {
     send(): Promise<AspidaResponse<null, U>>
     json(): Promise<AspidaResponse<T, U>>
@@ -49,17 +52,8 @@ export function dataToURLString(data: { [key: string]: any }) {
   return params.toString()
 }
 
-type Option<T = any> = { query?: any; headers?: any; data?: T }
+type Option<T = any> = { config?: any, query?: any; headers?: any; data?: T }
 
-function optionToRequest(option: Option, type: 'FormData'): AspidaRequest<FormData>
-function optionToRequest(option: Option, type: 'URLSearchParams'): AspidaRequest<URLSearchParams>
-function optionToRequest(
-  option: Option<ArrayBuffer>,
-  type: 'ArrayBuffer'
-): AspidaRequest<ArrayBuffer>
-function optionToRequest(option: Option<Blob>, type: 'Blob'): AspidaRequest<Blob>
-function optionToRequest(option: Option<string>, type: 'string'): AspidaRequest<string>
-function optionToRequest(option: Option): AspidaRequest
 function optionToRequest(
   option: Option,
   type?: 'FormData' | 'URLSearchParams' | 'ArrayBuffer' | 'Blob' | 'string'
@@ -88,7 +82,7 @@ function optionToRequest(
       break
   }
 
-  return { query: option.query, headers, body }
+  return { query: option.query, headers, body, config: option.config }
 }
 
 export { optionToRequest }

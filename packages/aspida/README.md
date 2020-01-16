@@ -165,19 +165,18 @@ import api from "../apis/$api"
 ;(async () => {
   const userId = 0
   const limit = 10
-  const baseURL = "http://localhost:8080/api"
-  const client = api(aspida(), baseURL)
+  const client = api(aspida())
 
   await client.v1.users.post({ data: { name: "taro" } })
 
   const res = await client.v1.users.get({ query: { limit } })
   console.log(res)
-  // req -> GET: http://localhost:8080/api/v1/users/?limit=10
+  // req -> GET: /v1/users/?limit=10
   // res -> { status: 200, data: [{ id: 0, name: 'taro' }], headers: {...} }
 
   const user = await client.v1.users._userId(userId).$get()
   console.log(user)
-  // req -> GET: http://localhost:8080/api/v1/users/0
+  // req -> GET: /v1/users/0
   // res -> { id: 0, name: 'taro' }
 })()
 ```
@@ -245,8 +244,7 @@ import api from "../apis/$api"
 ;(async () => {
   const userId = 0
   const limit = 10
-  const baseURL = "http://localhost:8080/api"
-  const client = api(aspida(), baseURL)
+  const client = api(aspida())
   const iconImage = imageBuffer
 
   const user = await client.v1.users.$post({
@@ -256,7 +254,7 @@ import api from "../apis/$api"
     }
   })
   console.log(user)
-  // req -> POST: http://localhost:8080/api/v1/users/0
+  // req -> POST: h/v1/users/0
   // res -> { id: 0, name: 'taro' }
 })()
 ```
@@ -290,12 +288,11 @@ import api from "../apis/$api"
 ;(async () => {
   const userId = 0
   const limit = 10
-  const baseURL = "http://localhost:8080/api"
-  const client = api(aspida(), baseURL)
+  const client = api(aspida())
 
   const user = await client.v1.users.$post({ data: { name: "taro" } })
   console.log(user)
-  // req -> POST: http://localhost:8080/api/v1/users/0
+  // req -> POST: /v1/users/0
   // res -> { id: 0, name: 'taro' }
 })()
 ```
@@ -324,12 +321,11 @@ import api from "../apis/$api"
 ;(async () => {
   const userId = 0
   const limit = 10
-  const baseURL = "http://localhost:8080/api"
-  const client = api(aspida(), baseURL)
+  const client = api(aspida())
 
   const user = await client.v1.users.$get({ query: { name: "taro" } })
   console.log(user)
-  // req -> POST: http://localhost:8080/api/v1/users/0
+  // req -> POST: /v1/users/0
   // res -> ArrayBuffer
 })()
 ```

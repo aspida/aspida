@@ -22,7 +22,6 @@ export default (target: string, indent: string, importName: string, newUrl: stri
       })
     )
 
-    const hasOption = typeInfo.query || typeInfo.reqData || typeInfo.reqHeaders
     const isOptionRequired =
       (typeInfo.query && !typeInfo.query.hasQuestion) ||
       (typeInfo.reqData && !typeInfo.reqData.hasQuestion) ||
@@ -45,15 +44,9 @@ export default (target: string, indent: string, importName: string, newUrl: stri
     const resHeaders = (method: HttpMethod) =>
       typeInfo.resHeaders ? `, ${importName}['${method}']['resHeaders']` : ''
     const option = (method: HttpMethod) =>
-      hasOption
-        ? `option${isOptionRequired ? '' : '?'}: {${`${reqData(method)}${query(method)}${reqHeaders(
-            method
-          )}`.slice(0, -1)} }`
-        : ''
+      `option${isOptionRequired ? '' : '?'}: {${reqData(method)}${query(method)}${reqHeaders(method)} config?: U }`
     const request = () =>
-      !hasOption
-        ? ''
-        : !typeInfo.reqData
+      !typeInfo.reqData
         ? ', option'
         : `, ${isOptionRequired ? '' : '!option ? undefined : '}optionToRequest(option${
             typeInfo.reqType
@@ -75,7 +68,7 @@ export default (target: string, indent: string, importName: string, newUrl: stri
       `(${option(methodName)}) =>`,
       `client.fetch<${resData(methodName)}${resHeaders(
         methodName
-      )}>(\`$\{prefix}${newUrl}\`, '${methodName.toUpperCase()}'${request()}).${resMethodName()}()`
+      )}>(prefix, ${newUrl.includes('${') ? '`' : '\''}${newUrl}${newUrl.includes('${') ? '`' : '\''}, '${methodName.toUpperCase()}'${request()}).${resMethodName()}()`
     ]
 
     chanks.push(`${indent}  ${methodName}: ${tmpChanks[0]}
