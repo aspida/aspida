@@ -5,10 +5,14 @@ const listFiles = (mockDir: string) => {
   const list: string[] = []
 
   fs.readdirSync(mockDir).forEach(file => {
+    if (file.startsWith('$') || file.startsWith('@')) return
+
     const target = path.posix.join(mockDir, file)
 
     if (fs.statSync(target).isFile()) {
-      list.push(target)
+      if (/(\n|^)export default/.test(fs.readFileSync(target, 'utf8'))) {
+        list.push(target)
+      }
     } else if (fs.statSync(target).isDirectory()) {
       list.push(...listFiles(target))
     }

@@ -1,12 +1,12 @@
 {
-  "name": "axios-mock-server",
-  "version": "0.16.3",
-  "description": "RESTful mock server using axios",
+  "name": "aspida-mock",
+  "version": "0.0.0",
+  "description": "RESTful mock server for aspida",
   "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
   "license": "MIT",
   "main": "dist/index.js",
   "bin": "bin/index.js",
-  "homepage": "https://github.com/aspidajs/aspida/tree/develop/packages/axios-mock-server#readme",
+  "homepage": "https://github.com/aspidajs/aspida/tree/develop/packages/aspida-mock#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aspidajs/aspida.git"
@@ -18,12 +18,7 @@
     "dist"
   ],
   "keywords": [
-    "axios",
-    "test",
+    "aspida",
     "mock"
-  ],
-  "dependencies": {
-    "chokidar": "^3.3.1",
-    "minimist": "^1.2.0"
-  }
+  ]
 }

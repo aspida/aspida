@@ -1,10 +1,12 @@
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD' | 'PATCH' | 'OPTIONS'
+export type LowerHttpMethod = 'get' | 'post' | 'put' | 'delete' | 'head' | 'patch' | 'options'
 
 type BasicHeaders = { [key: string]: string }
 export interface AspidaRequest<T = any, Config = any> {
   query?: any
   headers?: any
   body?: T
+  data?: any
   config?: Config
 }
 
@@ -52,16 +54,14 @@ export function dataToURLString(data: { [key: string]: any }) {
   return params.toString()
 }
 
-type Option<T = any> = { config?: any, query?: any; headers?: any; data?: T }
-
-function optionToRequest(
-  option: Option,
+export const optionToRequest = (
+  option: { config?: any; query?: any; headers?: any; data?: any },
   type?: 'FormData' | 'URLSearchParams' | 'ArrayBuffer' | 'Blob' | 'string'
-): AspidaRequest {
+): AspidaRequest => {
   if (!option.data) return option
 
   let body
-  const headers = { ...option.headers }
+  const headers: BasicHeaders = {}
 
   switch (type) {
     case 'FormData':
@@ -82,7 +82,17 @@ function optionToRequest(
       break
   }
 
-  return { query: option.query, headers, body, config: option.config }
+  return { body, ...option, headers: { ...headers, ...option.headers } }
 }
 
-export { optionToRequest }
+export interface AspidaMethodParams {
+  query?: any
+  reqHeaders?: any
+  reqData?: any
+  resHeaders?: any
+  resData?: any
+}
+
+export type AspidaMethods = {
+  [method in LowerHttpMethod]?: AspidaMethodParams
+}

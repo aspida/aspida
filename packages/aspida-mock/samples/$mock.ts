@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { AxiosInstance } from 'axios'
-import mockServer from 'axios-mock-server'
+import mockServer from 'aspida-mock'
 import mock0 from './users/self'
 import mock1 from './users/index'
 import mock2 from './users/_userId'
@@ -33,4 +33,4 @@ export default (client?: AxiosInstance) => mockServer([
     path: '/collections/entries.json',
     methods: mock5
   }
-], client, '')
+], client)
