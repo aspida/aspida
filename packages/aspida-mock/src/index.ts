@@ -1,7 +1,16 @@
-import { AspidaMethods, HttpMethod } from 'aspida'
-import { MockMethods } from './types'
+import { AspidaMethods, HttpMethod, dataToURLString } from 'aspida'
+import { MockMethods, MockResponse } from './types'
+import callMockHandler from './callMockHandler'
 
 export const mockMethods = <T extends AspidaMethods>(methods: MockMethods<T>) => methods
+
+export const printLog = (config: MockRequestConfig, status: number) => {
+  const searchString = dataToURLString(config.query)
+
+  console.log(
+    `[mock] ${config.method}: ${config.path}${searchString ? `?${searchString}` : ''} => ${status}`
+  )
+}
 
 export interface MockRoute<T extends AspidaMethods = AspidaMethods> {
   path: string
@@ -10,12 +19,12 @@ export interface MockRoute<T extends AspidaMethods = AspidaMethods> {
 
 export interface MockConfig {
   log?: boolean
-  delay?: number
+  delayMSec?: number
 }
 
 export interface MockClient {
-  initMock<T>(this: T, route: MockRoute[], config?: MockConfig): T
-  resetMock<T>(this: T): T
+  attachMock<T>(this: T, route: MockRoute[], config?: MockConfig): T
+  detachMock<T>(this: T): T
 }
 
 export interface MockRequestConfig {
@@ -25,3 +34,5 @@ export interface MockRequestConfig {
   reqHeaders?: any
   query?: any
 }
+
+export { MockResponse, callMockHandler }

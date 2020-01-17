@@ -1,8 +1,7 @@
 import { LowerHttpMethod } from 'aspida'
 import { MockRequestConfig, MockRoute } from './'
 import { MockResponse } from './types'
-import createValues from './createValues'
-import { createPathRegExp, copyData } from './utils'
+import { createPathRegExp, copyData, createValues } from './utils'
 
 export default async (config: MockRequestConfig, routes: MockRoute[]) => {
   const route = routes.find(

@@ -1,6 +1,5 @@
 import { AxiosResponse } from 'axios'
-import { MockRequestConfig } from './'
-import { MockResponse } from './types'
+import { MockRequestConfig, MockResponse } from 'aspida-mock'
 
 export default (mockRes: MockResponse, config: MockRequestConfig): AxiosResponse => ({
   status: mockRes.status,
