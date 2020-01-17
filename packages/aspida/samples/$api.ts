@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { AspidaClient, optionToRequest } from 'aspida'
+import { AspidaClient } from 'aspida'
 import * as ApiTypes from './@types'
 import * as apiUtils from './@utils'
 import { Methods as Methods0 } from './index'
@@ -31,9 +31,9 @@ const api = <U>(client: AspidaClient<U>) => {
               $get: async (option?: { query?: Methods3['get']['query'], config?: U }) =>
                 (await client.fetch<Methods3['get']['resData']>(prefix, `/v1.1/2/${val0}/test-4/${val1}`, 'GET', option).json()).data,
               post: (option: { data?: Methods3['post']['reqData'], query: Methods3['post']['query'], config?: U }) =>
-                client.fetch<Methods3['post']['resData']>(prefix, `/v1.1/2/${val0}/test-4/${val1}`, 'POST', optionToRequest(option)).json(),
+                client.fetch<Methods3['post']['resData']>(prefix, `/v1.1/2/${val0}/test-4/${val1}`, 'POST', option).json(),
               $post: async (option: { data?: Methods3['post']['reqData'], query: Methods3['post']['query'], config?: U }) =>
-                (await client.fetch<Methods3['post']['resData']>(prefix, `/v1.1/2/${val0}/test-4/${val1}`, 'POST', optionToRequest(option)).json()).data,
+                (await client.fetch<Methods3['post']['resData']>(prefix, `/v1.1/2/${val0}/test-4/${val1}`, 'POST', option).json()).data,
               put: (option: { query: Methods3['put']['query'], config?: U }) =>
                 client.fetch<Methods3['put']['resData']>(prefix, `/v1.1/2/${val0}/test-4/${val1}`, 'PUT', option).json(),
               $put: async (option: { query: Methods3['put']['query'], config?: U }) =>
@@ -49,26 +49,26 @@ const api = <U>(client: AspidaClient<U>) => {
               $get: async (option: { query: Methods4['get']['query'], config?: U }) =>
                 (await client.fetch<Methods4['get']['resData']>(prefix, `/v1.1/2/${val0}/test-4/fuga aa`, 'GET', option).json()).data,
               post: (option: { data?: Methods4['post']['reqData'], query: Methods4['post']['query'], config?: U }) =>
-                client.fetch<Methods4['post']['resData']>(prefix, `/v1.1/2/${val0}/test-4/fuga aa`, 'POST', optionToRequest(option)).json(),
+                client.fetch<Methods4['post']['resData']>(prefix, `/v1.1/2/${val0}/test-4/fuga aa`, 'POST', option).json(),
               $post: async (option: { data?: Methods4['post']['reqData'], query: Methods4['post']['query'], config?: U }) =>
-                (await client.fetch<Methods4['post']['resData']>(prefix, `/v1.1/2/${val0}/test-4/fuga aa`, 'POST', optionToRequest(option)).json()).data,
+                (await client.fetch<Methods4['post']['resData']>(prefix, `/v1.1/2/${val0}/test-4/fuga aa`, 'POST', option).json()).data,
               put: (option: { query: Methods4['put']['query'], config?: U }) =>
                 client.fetch<Methods4['put']['resData']>(prefix, `/v1.1/2/${val0}/test-4/fuga aa`, 'PUT', option).json(),
               $put: async (option: { query: Methods4['put']['query'], config?: U }) =>
                 (await client.fetch<Methods4['put']['resData']>(prefix, `/v1.1/2/${val0}/test-4/fuga aa`, 'PUT', option).json()).data,
               delete: (option: { data: Methods4['delete']['reqData'], query: Methods4['delete']['query'], config?: U }) =>
-                client.fetch<Methods4['delete']['resData']>(prefix, `/v1.1/2/${val0}/test-4/fuga aa`, 'DELETE', optionToRequest(option)).json(),
+                client.fetch<Methods4['delete']['resData']>(prefix, `/v1.1/2/${val0}/test-4/fuga aa`, 'DELETE', option).json(),
               $delete: async (option: { data: Methods4['delete']['reqData'], query: Methods4['delete']['query'], config?: U }) =>
-                (await client.fetch<Methods4['delete']['resData']>(prefix, `/v1.1/2/${val0}/test-4/fuga aa`, 'DELETE', optionToRequest(option)).json()).data
+                (await client.fetch<Methods4['delete']['resData']>(prefix, `/v1.1/2/${val0}/test-4/fuga aa`, 'DELETE', option).json()).data
             },
             get: (option: { query: Methods2['get']['query'], config?: U }) =>
               client.fetch<void>(prefix, `/v1.1/2/${val0}/test-4`, 'GET', option).send(),
             $get: async (option: { query: Methods2['get']['query'], config?: U }) =>
               (await client.fetch<void>(prefix, `/v1.1/2/${val0}/test-4`, 'GET', option).send()).data,
             post: (option?: { data?: Methods2['post']['reqData'], query?: Methods2['post']['query'], config?: U }) =>
-              client.fetch<void>(prefix, `/v1.1/2/${val0}/test-4`, 'POST', !option ? undefined : optionToRequest(option)).send(),
+              client.fetch<void>(prefix, `/v1.1/2/${val0}/test-4`, 'POST', option).send(),
             $post: async (option?: { data?: Methods2['post']['reqData'], query?: Methods2['post']['query'], config?: U }) =>
-              (await client.fetch<void>(prefix, `/v1.1/2/${val0}/test-4`, 'POST', !option ? undefined : optionToRequest(option)).send()).data,
+              (await client.fetch<void>(prefix, `/v1.1/2/${val0}/test-4`, 'POST', option).send()).data,
             put: (option?: { query?: Methods2['put']['query'], config?: U }) =>
               client.fetch<Methods2['put']['resData']>(prefix, `/v1.1/2/${val0}/test-4`, 'PUT', option).json(),
             $put: async (option?: { query?: Methods2['put']['query'], config?: U }) =>
@@ -86,9 +86,9 @@ const api = <U>(client: AspidaClient<U>) => {
         $get: async (option: { query?: Methods5['get']['query'], headers: Methods5['get']['reqHeaders'], config?: U }) =>
           (await client.fetch<Methods5['get']['resData']>(prefix, '/v1.1/3.1', 'GET', option).json()).data,
         post: (option: { data?: Methods5['post']['reqData'], query: Methods5['post']['query'], config?: U }) =>
-          client.fetch<Methods5['post']['resData']>(prefix, '/v1.1/3.1', 'POST', optionToRequest(option, 'URLSearchParams')).json(),
+          client.fetch<Methods5['post']['resData']>(prefix, '/v1.1/3.1', 'POST', option, 'URLSearchParams').json(),
         $post: async (option: { data?: Methods5['post']['reqData'], query: Methods5['post']['query'], config?: U }) =>
-          (await client.fetch<Methods5['post']['resData']>(prefix, '/v1.1/3.1', 'POST', optionToRequest(option, 'URLSearchParams')).json()).data
+          (await client.fetch<Methods5['post']['resData']>(prefix, '/v1.1/3.1', 'POST', option, 'URLSearchParams').json()).data
       },
       users: {
         _userId: (val2: number) => ({
@@ -105,18 +105,18 @@ const api = <U>(client: AspidaClient<U>) => {
     },
     v2_0: {
       get: (option: { data: Methods7['get']['reqData'], query: Methods7['get']['query'], headers: Methods7['get']['reqHeaders'], config?: U }) =>
-        client.fetch<Methods7['get']['resData'], Methods7['get']['resHeaders']>(prefix, '/v2.0', 'GET', optionToRequest(option, 'FormData')).json(),
+        client.fetch<Methods7['get']['resData'], Methods7['get']['resHeaders']>(prefix, '/v2.0', 'GET', option, 'FormData').json(),
       $get: async (option: { data: Methods7['get']['reqData'], query: Methods7['get']['query'], headers: Methods7['get']['reqHeaders'], config?: U }) =>
-        (await client.fetch<Methods7['get']['resData'], Methods7['get']['resHeaders']>(prefix, '/v2.0', 'GET', optionToRequest(option, 'FormData')).json()).data
+        (await client.fetch<Methods7['get']['resData'], Methods7['get']['resHeaders']>(prefix, '/v2.0', 'GET', option, 'FormData').json()).data
     },
     get: (option: { query: Methods0['get']['query'], config?: U }) =>
       client.fetch<Methods0['get']['resData']>(prefix, '/', 'GET', option).formData(),
     $get: async (option: { query: Methods0['get']['query'], config?: U }) =>
       (await client.fetch<Methods0['get']['resData']>(prefix, '/', 'GET', option).formData()).data,
     post: (option: { data?: Methods0['post']['reqData'], query: Methods0['post']['query'], config?: U }) =>
-      client.fetch<Methods0['post']['resData']>(prefix, '/', 'POST', optionToRequest(option)).arrayBuffer(),
+      client.fetch<Methods0['post']['resData']>(prefix, '/', 'POST', option).arrayBuffer(),
     $post: async (option: { data?: Methods0['post']['reqData'], query: Methods0['post']['query'], config?: U }) =>
-      (await client.fetch<Methods0['post']['resData']>(prefix, '/', 'POST', optionToRequest(option)).arrayBuffer()).data,
+      (await client.fetch<Methods0['post']['resData']>(prefix, '/', 'POST', option).arrayBuffer()).data,
     put: (option: { query: Methods0['put']['query'], config?: U }) =>
       client.fetch<Methods0['put']['resData']>(prefix, '/', 'PUT', option).text(),
     $put: async (option: { query: Methods0['put']['query'], config?: U }) =>

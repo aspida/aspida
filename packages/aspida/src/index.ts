@@ -1,11 +1,13 @@
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD' | 'PATCH' | 'OPTIONS'
 export type LowerHttpMethod = 'get' | 'post' | 'put' | 'delete' | 'head' | 'patch' | 'options'
+export type RequestType = 'FormData' | 'URLSearchParams' | 'ArrayBuffer' | 'Blob' | 'string' | 'any'
 
 type BasicHeaders = { [key: string]: string }
-export interface AspidaRequest<T = any, Config = any> {
+
+export interface AspidaRequest<Config = any> {
   query?: any
   headers?: any
-  body?: T
+  body?: any
   data?: any
   config?: Config
 }
@@ -17,13 +19,21 @@ export interface AspidaResponse<T, U> {
   data: T
 }
 
+export interface AspidaParams<Config = any> {
+  query?: any
+  headers?: any
+  data?: any
+  config?: Config
+}
+
 export interface AspidaClient<Config> {
   baseURL: string | undefined
   fetch: <T, U = BasicHeaders>(
     prefix: string,
     path: string,
     method: HttpMethod,
-    request?: AspidaRequest<any, Config>
+    params?: AspidaParams<Config>,
+    type?: RequestType
   ) => {
     send(): Promise<AspidaResponse<null, U>>
     json(): Promise<AspidaResponse<T, U>>
@@ -34,11 +44,10 @@ export interface AspidaClient<Config> {
   }
 }
 
-export function headersToObject<T>(headers: Headers) {
-  return [...headers.entries()].reduce((prev, [key, val]) => ({ ...prev, [key]: val }), {} as T)
-}
+export const headersToObject = (headers: Headers): any =>
+  [...headers.entries()].reduce((prev, [key, val]) => ({ ...prev, [key]: val }), {})
 
-function dataToFormData(data: { [key: string]: any }) {
+const dataToFormData = (data: { [key: string]: any }) => {
   const formData = new FormData()
   Object.keys(data).forEach(key => {
     formData.append(key, data[key])
@@ -46,19 +55,33 @@ function dataToFormData(data: { [key: string]: any }) {
   return formData
 }
 
-export function dataToURLString(data: { [key: string]: any }) {
-  const params = new URLSearchParams()
-  Object.keys(data).forEach(key => {
-    params.append(key, data[key])
-  })
-  return params.toString()
+const replacedChars: { [key: string]: string } = {
+  '!': '%21',
+  "'": '%27',
+  '(': '%28',
+  ')': '%29',
+  '~': '%7E',
+  '%20': '+',
+  '%00': '\x00'
 }
 
+const encode = (str: Parameters<typeof encodeURIComponent>[0]) =>
+  encodeURIComponent(str).replace(/[!'()~]|%20|%00/g, match => replacedChars[match])
+
+export const dataToURLString = (data: { [key: string]: any }) =>
+  Object.keys(data)
+    .map(key =>
+      Array.isArray(data[key])
+        ? data[key].map((v: string) => `${encode(key)}=${encode(v)}`).join('&')
+        : `${encode(key)}=${encode(data[key])}`
+    )
+    .join('&')
+
 export const optionToRequest = (
-  option: { config?: any; query?: any; headers?: any; data?: any },
-  type?: 'FormData' | 'URLSearchParams' | 'ArrayBuffer' | 'Blob' | 'string'
-): AspidaRequest => {
-  if (!option.data) return option
+  option?: AspidaParams,
+  type?: RequestType
+): AspidaRequest | undefined => {
+  if (!option?.data) return option
 
   let body
   const headers: BasicHeaders = {}
@@ -74,6 +97,7 @@ export const optionToRequest = (
     case 'ArrayBuffer':
     case 'string':
     case 'Blob':
+    case 'any':
       body = option.data
       break
     default:
@@ -88,6 +112,7 @@ export const optionToRequest = (
 export interface AspidaMethodParams {
   query?: any
   reqHeaders?: any
+  reqType?: RequestType
   reqData?: any
   resHeaders?: any
   resData?: any

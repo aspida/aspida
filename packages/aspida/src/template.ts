@@ -1,5 +1,5 @@
 export default `/* eslint-disable */
-import { AspidaClient<% optionToRequest %> } from 'aspida'
+import { AspidaClient } from 'aspida'
 <% types %><% utils %><% imports %>
 
 const api = <U>(client: AspidaClient<U>) => {

@@ -1,4 +1,12 @@
-import { AspidaClient, AspidaRequest, HttpMethod, dataToURLString, headersToObject } from 'aspida'
+import {
+  AspidaClient,
+  optionToRequest,
+  HttpMethod,
+  AspidaParams,
+  RequestType,
+  dataToURLString,
+  headersToObject
+} from 'aspida'
 
 interface FetchConfig extends RequestInit {
   baseURL?: string
@@ -6,8 +14,15 @@ interface FetchConfig extends RequestInit {
 
 export default (client = fetch, config?: FetchConfig): AspidaClient<FetchConfig> => ({
   baseURL: config?.baseURL,
-  fetch<T, U>(baseURL: string, url: string, method: HttpMethod, request?: AspidaRequest<T, FetchConfig>) {
+  fetch(
+    baseURL: string,
+    url: string,
+    method: HttpMethod,
+    params?: AspidaParams<FetchConfig>,
+    type?: RequestType
+  ) {
     const send = <V>(fn: (res: Response) => Promise<V>) => async () => {
+      const request = optionToRequest(params, type)
       const res = await client(
         `${baseURL}${url}${request?.query ? `?${dataToURLString(request.query)}` : ''}`,
         {
@@ -21,7 +36,7 @@ export default (client = fetch, config?: FetchConfig): AspidaClient<FetchConfig>
 
       return {
         status: res.status,
-        headers: headersToObject<U>(res.headers),
+        headers: headersToObject(res.headers),
         originalResponse: res,
         data: await fn(res)
       }

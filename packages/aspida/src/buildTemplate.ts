@@ -15,10 +15,6 @@ export default ({ input, baseURL }: BaseConfig): Template => {
 
   const text = template
     .replace(
-      '<% optionToRequest %>',
-      api.includes('optionToRequest') ? ', optionToRequest' : ''
-    )
-    .replace(
       '<% types %>',
       hasTypes
         ? `import * as ApiTypes from './@types'
