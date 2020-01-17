@@ -1,11 +1,11 @@
 import fs from 'fs'
 import minimist from 'minimist'
-import getConfig, { BaseConfig } from './getConfig'
-import write from './writeRouteFile'
-import watch from './watchInputDir'
-import { Build, Watch, CommandToBuild } from './cli/build'
-import { Command, nullCommand } from './cli/command'
-import { version as versionCommand } from './cli/version'
+import getConfig, { BaseConfig } from '../getConfig'
+import write from '../writeRouteFile'
+import watch from '../watchInputDir'
+import { Build, Watch, CommandToBuild } from './build'
+import { Command, nullCommand } from './command'
+import { version as versionCommand } from './version'
 
 export const options: minimist.Opts = {
   string: ['version', 'config', 'build', 'watch'],

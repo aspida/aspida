@@ -1,6 +1,6 @@
 import fs from 'fs'
-import { run } from '../../src/lib/cli'
-import build from '../../src/lib/buildRouteFile'
+import { run } from '../../src/cli'
+import build from '../../src/cli/buildRouteFile'
 
 describe('cli', () => {
   test('version command', () => {
