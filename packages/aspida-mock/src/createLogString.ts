@@ -1,14 +1,10 @@
-import { AxiosRequestConfig } from 'axios'
-import createRelativePath from './createRelativePath'
+import { dataToURLString } from 'aspida'
+import { MockRequestConfig } from './'
 
-export default (config: AxiosRequestConfig, status: number) => {
-  const [dirPath, query] = (config.url || '').split('?')
-  const relativePath = createRelativePath(dirPath, config.baseURL)
-  const params = new URLSearchParams(query)
-  Object.keys(config.params || {}).forEach(key => params.append(key, config.params[key]))
-  const searchString = params.toString()
+export default (config: MockRequestConfig, status: number) => {
+  const searchString = dataToURLString(config.query)
 
-  return `[mock] ${config.method}: ${relativePath}${
-    searchString === '' ? '' : `?${searchString}`
+  return `[mock] ${config.method}: ${config.path}${
+    searchString ? `?${searchString}` : ''
   } => ${status}`
 }

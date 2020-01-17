@@ -11,16 +11,9 @@ const createCondition = (filePath: string, inputDir: string, methods: string) =>
 
 export default (inputDir: string, pathList: string[]) =>
   `/* eslint-disable */
-import { AxiosInstance } from 'axios'
-import mockServer from 'aspida-mock'
 ${pathList
-  .map(
-    (filePath, i) => `import mock${i} from '.${createImportPath(filePath, inputDir)}'
-`
-  )
+  .map((filePath, i) => `import mock${i} from '.${createImportPath(filePath, inputDir)}'\n`)
   .join('')}
-export default (client?: AxiosInstance) => mockServer([${pathList
+export default () => [${pathList
     .map((filePath, i) => createCondition(filePath, inputDir, `mock${i}`))
-    .join(',')}
-], client)
-`
+    .join(',')}\n]\n`

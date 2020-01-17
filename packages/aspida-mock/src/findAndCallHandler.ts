@@ -1,25 +1,22 @@
-import { AxiosRequestConfig } from 'axios'
-import { HandlersSet } from './types'
-import findHandler from './findHandler'
+import { LowerHttpMethod } from 'aspida'
+import { MockRequestConfig, MockRoute } from './'
+import { MockResponse } from './types'
 import createValues from './createValues'
-import untransformData from './untransformData'
-import compositeParams from './compositeParams'
-import createRelativePath from './createRelativePath'
+import { createPathRegExp, copyData } from './utils'
 
-export default (config: AxiosRequestConfig, handlersSet: HandlersSet) => {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const [dirPath, query] = config.url!.split('?')
-  const relativePath = createRelativePath(dirPath, config.baseURL)
-  const handler = findHandler(config.method, relativePath, handlersSet)
-
-  return (
-    handler &&
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    handler[2]!({
-      config,
-      values: createValues(handler[1], relativePath),
-      params: compositeParams(query, config.params),
-      data: untransformData(config.data, config.headers)
-    })
+export default async (config: MockRequestConfig, routes: MockRoute[]) => {
+  const route = routes.find(
+    route =>
+      createPathRegExp(route.path).test(config.path) &&
+      route.methods[config.method.toLowerCase() as LowerHttpMethod]
   )
+
+  const res = route?.methods[config.method.toLowerCase() as LowerHttpMethod]?.({
+    values: createValues(route.path, config.path),
+    query: config.query,
+    reqHeaders: config.reqHeaders,
+    reqData: config.reqData
+  })
+
+  return res && copyData((res instanceof Promise ? await res : res) as MockResponse)
 }

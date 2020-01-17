@@ -1,14 +1,27 @@
-import { AxiosInstance } from 'axios'
-import { MockRoute, HttpMethod, MockResponse, MockMethods } from './types'
-import MockServer from './MockServer'
-import asyncResponse from './asyncResponse'
+import { AspidaMethods, HttpMethod } from 'aspida'
+import { MockMethods } from './types'
 
-export { asyncResponse, MockServer, MockRoute, HttpMethod, MockResponse, MockMethods }
+export const mockMethods = <T extends AspidaMethods>(methods: MockMethods<T>) => methods
 
-export default (route?: MockRoute, client?: AxiosInstance, baseURL = '') =>
-  new MockServer(route, client, baseURL)
+export interface MockRoute<T extends AspidaMethods = AspidaMethods> {
+  path: string
+  methods: MockMethods<T>
+}
 
-/* eslint-disable dot-notation */
-module.exports = exports['default']
-module.exports.default = exports['default']
-module.exports.asyncResponse = asyncResponse
+export interface MockConfig {
+  log?: boolean
+  delay?: number
+}
+
+export interface MockClient {
+  initMock<T>(this: T, route: MockRoute[], config?: MockConfig): T
+  resetMock<T>(this: T): T
+}
+
+export interface MockRequestConfig {
+  path: string
+  method: HttpMethod
+  reqData?: any
+  reqHeaders?: any
+  query?: any
+}

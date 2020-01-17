@@ -1,26 +1,21 @@
 import axios, { AxiosInstance, AxiosAdapter } from 'axios'
 import settle from 'axios/lib/core/settle'
-import { HandlersSet, MockRoute, httpMethods } from './types'
+import { MockRoute } from './'
+import toMockConfig from './toMockConfig'
 import createLogString from './createLogString'
 import makeResponse from './makeResponse'
 import findAndCallHandler from './findAndCallHandler'
 
-export const createPathRegExp = (path: string) =>
-  new RegExp(`^${path.replace(/\/_[^/]+/g, '/[^/]+')}$`)
-
 export default class {
-  private handlersSet: HandlersSet = {}
   private delayTime = 0
   private needsLog = false
   private client!: AxiosInstance
   private originalAdapter?: AxiosAdapter
-  private baseURL = ''
+  private routes: MockRoute[] = []
 
-  constructor(route?: MockRoute, client?: AxiosInstance, baseURL = '') {
-    if (route)
-      this.setBaseURL(baseURL)
-        .setClient(client || axios)
-        .setRoute(route)
+  constructor(routes: MockRoute[], client?: AxiosInstance, baseURL = '') {
+    this.routes = routes
+    this.setClient(client || axios)
   }
 
   public setClient(client: AxiosInstance) {
@@ -30,22 +25,17 @@ export default class {
     client.defaults.adapter = config =>
       // eslint-disable-next-line no-async-promise-executor
       new Promise(async (resolve, reject) => {
-        const customConfig = {
-          ...config,
-          baseURL: config.baseURL || this.baseURL
-        }
+        const customConfig = toMockConfig(config)
 
         try {
-          const result = findAndCallHandler(customConfig, this.handlersSet)
+          const result = await findAndCallHandler(customConfig, this.routes)
 
           if (!result && this.originalAdapter) {
-            this.originalAdapter(customConfig).then(resolve, reject)
+            this.originalAdapter(config).then(resolve, reject)
             return
           }
 
-          const res = result
-            ? makeResponse(result instanceof Promise ? await result : result, customConfig)
-            : { status: 404, config: customConfig }
+          const res = result ? makeResponse(result, customConfig) : { status: 404, config }
 
           if (this.needsLog) console.log(createLogString(customConfig, res.status))
 
@@ -58,36 +48,13 @@ export default class {
     return this
   }
 
-  public setRoute(route: MockRoute) {
-    route.forEach(r => {
-      const pathRegExp = createPathRegExp(r.path)
-
-      httpMethods.forEach(method => {
-        if (r.methods[method]) {
-          this.handlersSet[method] = [
-            ...(this.handlersSet[method] || []),
-            [pathRegExp, r.path, r.methods[method]]
-          ]
-        }
-      })
-    })
-
-    return this
-  }
-
   public setDelayTime(delayTime: number) {
     this.delayTime = delayTime
     return this
   }
 
-  public setBaseURL(baseURL: string) {
-    this.baseURL = baseURL
-    return this
-  }
-
   public reset() {
     this.setDelayTime(0).disableLog()
-    this.handlersSet = {}
     return this
   }
 
