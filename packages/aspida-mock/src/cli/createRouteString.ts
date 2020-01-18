@@ -4,16 +4,23 @@ const createImportPath = (filePath: string, inputDir: string) =>
     .replace(/\.ts$/, '')
 
 const createCondition = (filePath: string, inputDir: string, methods: string) => `
-  {
-    path: '${createImportPath(filePath, inputDir).replace(/(\/index)$/, '') || '/'}',
-    methods: ${methods}
-  }`
+    {
+      path: '${createImportPath(filePath, inputDir).replace(/(\/index)$/, '') || '/'}',
+      methods: ${methods}
+    }`
 
 export default (inputDir: string, pathList: string[]) =>
   `/* eslint-disable */
+import { MockClient, MockConfig } from 'aspida-mock'
+import api from './$api'
 ${pathList
   .map((filePath, i) => `import mock${i} from '.${createImportPath(filePath, inputDir)}'\n`)
   .join('')}
-export default () => [${pathList
+export default <U>(client: MockClient<U>, config?: MockConfig) => {
+  client.attachRoutes([${pathList
     .map((filePath, i) => createCondition(filePath, inputDir, `mock${i}`))
-    .join(',')}\n]\n`
+    .join(',')}
+  ], config)
+
+  return api(client)
+}\n`

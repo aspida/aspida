@@ -122,7 +122,7 @@ import api from './apis/$api.ts'
 import mock from './apis/$mock.ts'
 
 const client = api(
-  aspida().attachMock(mock(), { delayMSec: 500 })
+  aspida().attachRoutes(mock(), { delayMSec: 500 })
 )
 
 ;(async () => {
@@ -158,7 +158,7 @@ import api from './apis/$api.ts'
 import mock from './apis/$mock.ts'
 
 const client = api(
-  aspida().attachMock(mock(), { delayMSec: 500 })
+  aspida().attachRoutes(mock(), { delayMSec: 500 })
 )
 
 ;(async () => {
@@ -179,7 +179,7 @@ import api from './apis/$api.ts'
 import mock from './apis/$mock.ts'
 
 const client = api(
-  aspida().attachMock(mock(), { log: true })
+  aspida().attachRoutes(mock(), { log: true })
 )
 
 ;(async () => {
