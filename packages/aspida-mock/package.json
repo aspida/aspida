@@ -1,7 +1,7 @@
 {
   "name": "aspida-mock",
   "version": "0.0.0",
-  "description": "RESTful mock server for aspida",
+  "description": "Type safe RESTful API mock for aspida",
   "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
   "license": "MIT",
   "main": "dist/index.js",
