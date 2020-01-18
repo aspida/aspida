@@ -18,7 +18,7 @@
     "lint:fix": "npm run lint -- --fix",
     "test": "jest",
     "test:watch": "npm test -- --watch",
-    "typecheck": "npm run build:aspida && npm run build:mock && tsc --noEmit"
+    "typecheck": "npm run build:aspida && npm run build:mock && npm run build:axios && tsc --noEmit"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",

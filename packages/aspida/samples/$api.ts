@@ -109,18 +109,18 @@ const api = <U>(client: AspidaClient<U>) => {
       $get: async (option: { data: Methods7['get']['reqData'], query: Methods7['get']['query'], headers: Methods7['get']['reqHeaders'], config?: U }) =>
         (await client.fetch<Methods7['get']['resData'], Methods7['get']['resHeaders']>(prefix, '/v2.0', 'GET', option, 'FormData').json()).data
     },
-    get: (option: { query: Methods0['get']['query'], config?: U }) =>
+    get: (option?: { query?: Methods0['get']['query'], config?: U }) =>
       client.fetch<Methods0['get']['resData']>(prefix, '/', 'GET', option).formData(),
-    $get: async (option: { query: Methods0['get']['query'], config?: U }) =>
+    $get: async (option?: { query?: Methods0['get']['query'], config?: U }) =>
       (await client.fetch<Methods0['get']['resData']>(prefix, '/', 'GET', option).formData()).data,
     post: (option: { data?: Methods0['post']['reqData'], query: Methods0['post']['query'], config?: U }) =>
       client.fetch<Methods0['post']['resData']>(prefix, '/', 'POST', option).arrayBuffer(),
     $post: async (option: { data?: Methods0['post']['reqData'], query: Methods0['post']['query'], config?: U }) =>
       (await client.fetch<Methods0['post']['resData']>(prefix, '/', 'POST', option).arrayBuffer()).data,
     put: (option: { query: Methods0['put']['query'], config?: U }) =>
-      client.fetch<Methods0['put']['resData']>(prefix, '/', 'PUT', option).text(),
+      client.fetch<Methods0['put']['resData']>(prefix, '/', 'PUT', option).json(),
     $put: async (option: { query: Methods0['put']['query'], config?: U }) =>
-      (await client.fetch<Methods0['put']['resData']>(prefix, '/', 'PUT', option).text()).data,
+      (await client.fetch<Methods0['put']['resData']>(prefix, '/', 'PUT', option).json()).data,
     delete: (option: { query: Methods0['delete']['query'], config?: U }) =>
       client.fetch<Methods0['delete']['resData']>(prefix, '/', 'DELETE', option).blob(),
     $delete: async (option: { query: Methods0['delete']['query'], config?: U }) =>

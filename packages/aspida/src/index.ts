@@ -112,7 +112,7 @@ export const optionToRequest = (
 export interface AspidaMethodParams {
   query?: any
   reqHeaders?: any
-  reqType?: RequestType
+  reqType?: FormData | URLSearchParams | ArrayBuffer | Blob | string | any
   reqData?: any
   resHeaders?: any
   resData?: any

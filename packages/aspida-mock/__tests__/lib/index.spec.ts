@@ -22,16 +22,16 @@ describe('cli', () => {
   test('snapshot', () => {
     const configs = [
       {
-        input: 'packages/aspida-mock/samples',
-        resultDirPath: 'packages/aspida-mock/samples'
+        input: 'packages/aspida/samples',
+        resultDirPath: 'packages/aspida/samples'
       },
       {
-        input: './packages/aspida-mock/samples',
-        resultDirPath: 'packages/aspida-mock/samples'
+        input: './packages/aspida/samples',
+        resultDirPath: 'packages/aspida/samples'
       },
       {
-        input: 'packages/aspida-mock/samples/',
-        resultDirPath: 'packages/aspida-mock/samples'
+        input: 'packages/aspida/samples/',
+        resultDirPath: 'packages/aspida/samples'
       }
     ]
 

@@ -5,7 +5,7 @@ import callMockHandler from './callMockHandler'
 export const mockMethods = <T extends AspidaMethods>(methods: MockMethods<T>) => methods
 
 export const printLog = (config: MockRequestConfig, status: number) => {
-  const searchString = dataToURLString(config.query)
+  const searchString = dataToURLString(config.query || {})
 
   console.log(
     `[mock] ${config.method}: ${config.path}${searchString ? `?${searchString}` : ''} => ${status}`

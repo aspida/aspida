@@ -14,10 +14,19 @@ export const httpMethods: LowerHttpMethod[] = [
   'patch'
 ]
 
-export const copyData = (res: MockResponse): MockResponse => ({
-  ...res,
-  resData: typeof res.resData !== 'string' ? JSON.parse(JSON.stringify(res.resData)) : res.resData
-})
+export const copyData = (res: MockResponse): MockResponse => {
+  if (typeof res.resData !== 'object') {
+    return res
+  }
+
+  let { resData } = res
+
+  try {
+    resData = JSON.parse(JSON.stringify(res.resData))
+  } catch (e) {}
+
+  return { ...res, resData }
+}
 
 export const createValues = (path: string, relativePath: string) => {
   const values: { [key: string]: string | number } = {}
