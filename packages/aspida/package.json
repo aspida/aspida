@@ -1,6 +1,6 @@
 {
   "name": "aspida",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "Type safe HTTP client wrapper for the browser and node.js",
   "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
   "license": "MIT",

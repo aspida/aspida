@@ -10,8 +10,8 @@
 <br />
 <br />
 <div align="center">
-  <a href="https://www.npmjs.com/package/aspida">
-    <img src="https://img.shields.io/npm/v/aspida" alt="npm version" />
+  <a href="https://www.npmjs.com/package/aspida-mock">
+    <img src="https://img.shields.io/npm/v/aspida-mock" alt="npm version" />
   </a>
   <a href="https://circleci.com/gh/aspidajs/aspida">
     <img src="https://img.shields.io/circleci/build/github/aspidajs/aspida.svg?label=test" alt="CircleCI" />
@@ -25,8 +25,8 @@
   <a href="https://dependabot.com">
     <img src="https://api.dependabot.com/badges/status?host=github&repo=aspidajs/aspida" alt="Dependabot Status" />
   </a>
-  <a href="https://github.com/aspidajs/aspida/blob/master/packages/aspida/LICENSE">
-    <img src="https://img.shields.io/npm/l/aspida" alt="License" />
+  <a href="https://github.com/aspidajs/aspida/blob/master/packages/aspida-mock/LICENSE">
+    <img src="https://img.shields.io/npm/l/aspida-mock" alt="License" />
   </a>
 </div>
 <br />
