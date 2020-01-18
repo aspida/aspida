@@ -196,22 +196,19 @@ Create a configuration file at the root of the project
 `aspida.config.js`
 
 ```javascript
-module.exports = { input: 'src' }
+module.exports = { input: "src" }
 ```
 
 Specify baseURL in configuration file
 
 ```javascript
-module.exports = { input: 'apis', baseURL: 'https://example.com/api' }
+module.exports = { input: "apis", baseURL: "https://example.com/api" }
 ```
 
 If you want to define multiple API endpoints, specify them in an array
 
 ```javascript
-module.exports = [
-  { input: 'api1' },
-  { input: 'api2', baseURL: 'https://example.com/api' }
-]
+module.exports = [{ input: "api1" }, { input: "api2", baseURL: "https://example.com/api" }]
 ```
 
 ### POST with FormData
@@ -332,4 +329,4 @@ import api from "../apis/$api"
 
 ## License
 
-Aspida is licensed under a [MIT License](https://github.com/aspidajs/aspida/blob/master/packages/aspida/LICENSE).
+aspida is licensed under a [MIT License](https://github.com/aspidajs/aspida/blob/master/packages/aspida/LICENSE).

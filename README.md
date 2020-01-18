@@ -35,7 +35,7 @@
 ## Packages
 
 - [aspida](packages/aspida) - Type safe HTTP client wrapper for the browser and node.js.
+- [aspida-mock](packages/aspida-mock) - RESTful mock server for aspida.
 - [@aspida/axios](packages/aspida-axios) - [axios](https://github.com/axios/axios/) client for aspida.
 - [@aspida/ky](packages/aspida-ky) - [ky](https://github.com/sindresorhus/ky/) client for aspida.
 - [@aspida/fetch](packages/aspida-fetch) - [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) client for aspida.
-- [axios-mock-server](packages/axios-mock-server) - RESTful mock server using axios.

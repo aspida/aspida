@@ -4,7 +4,7 @@ import { MockRequestConfig } from 'aspida-mock'
 
 export default (config: AxiosRequestConfig): MockRequestConfig => ({
   path: config.url || '',
-  method: (config.method!.toUpperCase() as HttpMethod) || 'GET',
+  method: (config.method || 'get').toUpperCase() as HttpMethod,
   query: config.params,
   reqData: config.data,
   reqHeaders: config.headers

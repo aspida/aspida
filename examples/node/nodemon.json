@@ -1,4 +1,0 @@
-{
-  "exec": "node src/index.js",
-  "watch": ["src", "mocks"]
-}
