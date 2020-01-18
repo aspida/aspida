@@ -6,19 +6,19 @@
   "scripts": {
     "dev:aspida": "npm run build:aspida && cd packages/aspida && node bin/index.js --build",
     "dev:swagger": "npm run build:swagger && cd packages/aspida-swagger && node bin/index.js --build",
-    "dev:mock": "npm run build:mock && cd packages/axios-mock-server && node bin/index.js --build",
+    "dev:mock": "npm run build:mock && cd packages/aspida-mock && aspida -b && node bin/index.js --build",
     "build:aspida": "cd packages/aspida && rimraf dist && tsc --project tsconfig.build.json",
     "build:axios": "cd packages/aspida-axios && rimraf dist && tsc --project tsconfig.build.json",
     "build:fetch": "cd packages/aspida-fetch && rimraf dist && tsc --project tsconfig.build.json",
     "build:ky": "cd packages/aspida-ky && rimraf dist && tsc --project tsconfig.build.json",
     "build:swagger": "cd packages/aspida-swagger && rimraf dist && tsc --project tsconfig.build.json",
-    "build:mock": "cd packages/axios-mock-server && rimraf dist && tsc --project tsconfig.build.json",
+    "build:mock": "cd packages/aspida-mock && rimraf dist && tsc --project tsconfig.build.json",
     "release": "standard-version --skip.tag",
     "lint": "eslint --ext .js,.ts --ignore-path .gitignore .",
     "lint:fix": "npm run lint -- --fix",
     "test": "jest",
     "test:watch": "npm test -- --watch",
-    "typecheck": "npm run build:aspida && npm run build:mock && tsc --noEmit"
+    "typecheck": "npm run build:aspida && npm run build:mock && npm run build:axios && tsc --noEmit"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",

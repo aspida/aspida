@@ -1,11 +1,12 @@
 {
-  "name": "@aspida/fetch",
-  "version": "0.1.1",
-  "description": "fetch client for aspida",
+  "name": "aspida-mock",
+  "version": "0.0.0",
+  "description": "RESTful mock server for aspida",
   "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
   "license": "MIT",
   "main": "dist/index.js",
-  "homepage": "https://github.com/aspidajs/aspida/tree/master/packages/aspida-fetch#readme",
+  "bin": "bin/index.js",
+  "homepage": "https://github.com/aspidajs/aspida/tree/develop/packages/aspida-mock#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aspidajs/aspida.git"
@@ -16,14 +17,8 @@
   "files": [
     "dist"
   ],
-  "publishConfig": {
-    "access": "public"
-  },
   "keywords": [
     "aspida",
-    "fetch"
-  ],
-  "dependencies": {
-    "aspida": "^0.10.0"
-  }
+    "mock"
+  ]
 }

@@ -5,7 +5,7 @@
   "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
   "license": "MIT",
   "main": "dist/index.js",
-  "homepage": "https://github.com/aspidajs/aspida/tree/develop/packages/aspida-axios#readme",
+  "homepage": "https://github.com/aspidajs/aspida/tree/master/packages/aspida-axios#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aspidajs/aspida.git"

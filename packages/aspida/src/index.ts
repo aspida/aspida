@@ -1,24 +1,39 @@
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD' | 'PATCH' | 'OPTIONS'
+export type LowerHttpMethod = 'get' | 'post' | 'put' | 'delete' | 'head' | 'patch' | 'options'
+export type RequestType = 'FormData' | 'URLSearchParams' | 'ArrayBuffer' | 'Blob' | 'string' | 'any'
 
 type BasicHeaders = { [key: string]: string }
-export interface AspidaRequest<T = any> {
+
+export interface AspidaRequest<Config = any> {
   query?: any
   headers?: any
-  body?: T
+  body?: any
+  data?: any
+  config?: Config
 }
 
 export interface AspidaResponse<T, U> {
   status: number
   headers: U
-  body: any
+  originalResponse: any
   data: T
 }
 
-export interface AspidaClient {
+export interface AspidaParams<Config = any> {
+  query?: any
+  headers?: any
+  data?: any
+  config?: Config
+}
+
+export interface AspidaClient<Config> {
+  baseURL: string | undefined
   fetch: <T, U = BasicHeaders>(
-    url: string,
+    prefix: string,
+    path: string,
     method: HttpMethod,
-    request?: AspidaRequest
+    params?: AspidaParams<Config>,
+    type?: RequestType
   ) => {
     send(): Promise<AspidaResponse<null, U>>
     json(): Promise<AspidaResponse<T, U>>
@@ -29,11 +44,10 @@ export interface AspidaClient {
   }
 }
 
-export function headersToObject<T>(headers: Headers) {
-  return [...headers.entries()].reduce((prev, [key, val]) => ({ ...prev, [key]: val }), {} as T)
-}
+export const headersToObject = (headers: Headers): any =>
+  [...headers.entries()].reduce((prev, [key, val]) => ({ ...prev, [key]: val }), {})
 
-function dataToFormData(data: { [key: string]: any }) {
+const dataToFormData = (data: { [key: string]: any }) => {
   const formData = new FormData()
   Object.keys(data).forEach(key => {
     formData.append(key, data[key])
@@ -41,33 +55,36 @@ function dataToFormData(data: { [key: string]: any }) {
   return formData
 }
 
-export function dataToURLString(data: { [key: string]: any }) {
-  const params = new URLSearchParams()
-  Object.keys(data).forEach(key => {
-    params.append(key, data[key])
-  })
-  return params.toString()
+const replacedChars: { [key: string]: string } = {
+  '!': '%21',
+  "'": '%27',
+  '(': '%28',
+  ')': '%29',
+  '~': '%7E',
+  '%20': '+',
+  '%00': '\x00'
 }
 
-type Option<T = any> = { query?: any; headers?: any; data?: T }
+const encode = (str: Parameters<typeof encodeURIComponent>[0]) =>
+  encodeURIComponent(str).replace(/[!'()~]|%20|%00/g, match => replacedChars[match])
 
-function optionToRequest(option: Option, type: 'FormData'): AspidaRequest<FormData>
-function optionToRequest(option: Option, type: 'URLSearchParams'): AspidaRequest<URLSearchParams>
-function optionToRequest(
-  option: Option<ArrayBuffer>,
-  type: 'ArrayBuffer'
-): AspidaRequest<ArrayBuffer>
-function optionToRequest(option: Option<Blob>, type: 'Blob'): AspidaRequest<Blob>
-function optionToRequest(option: Option<string>, type: 'string'): AspidaRequest<string>
-function optionToRequest(option: Option): AspidaRequest
-function optionToRequest(
-  option: Option,
-  type?: 'FormData' | 'URLSearchParams' | 'ArrayBuffer' | 'Blob' | 'string'
-): AspidaRequest {
-  if (!option.data) return option
+export const dataToURLString = (data: { [key: string]: any }) =>
+  Object.keys(data)
+    .map(key =>
+      Array.isArray(data[key])
+        ? data[key].map((v: string) => `${encode(key)}=${encode(v)}`).join('&')
+        : `${encode(key)}=${encode(data[key])}`
+    )
+    .join('&')
+
+export const optionToRequest = (
+  option?: AspidaParams,
+  type?: RequestType
+): AspidaRequest | undefined => {
+  if (!option?.data) return option
 
   let body
-  const headers = { ...option.headers }
+  const headers: BasicHeaders = {}
 
   switch (type) {
     case 'FormData':
@@ -80,6 +97,7 @@ function optionToRequest(
     case 'ArrayBuffer':
     case 'string':
     case 'Blob':
+    case 'any':
       body = option.data
       break
     default:
@@ -88,7 +106,18 @@ function optionToRequest(
       break
   }
 
-  return { query: option.query, headers, body }
+  return { body, ...option, headers: { ...headers, ...option.headers } }
 }
 
-export { optionToRequest }
+export interface AspidaMethodParams {
+  query?: any
+  reqHeaders?: any
+  reqType?: FormData | URLSearchParams | ArrayBuffer | Blob | string | any
+  reqData?: any
+  resHeaders?: any
+  resData?: any
+}
+
+export type AspidaMethods = {
+  [method in LowerHttpMethod]?: AspidaMethodParams
+}
