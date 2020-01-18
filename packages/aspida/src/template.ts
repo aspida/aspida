@@ -1,9 +1,9 @@
 export default `/* eslint-disable */
-import { AspidaClient, optionToRequest } from 'aspida'
+import { AspidaClient } from 'aspida'
 <% types %><% utils %><% imports %>
 
-const api = (client: AspidaClient, baseURL?: string) => {
-  const prefix = (baseURL === undefined ? '<% baseURL %>' : baseURL).replace(/\\/$/, '')
+const api = <U>(client: AspidaClient<U>) => {
+  const prefix = (client.baseURL === undefined ? '<% baseURL %>' : client.baseURL).replace(/\\/$/, '')
 
   return <% api %>
 }

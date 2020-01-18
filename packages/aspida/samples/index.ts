@@ -1,6 +1,8 @@
+import { mockMethods } from 'aspida-mock'
+
 export interface Methods {
   get: {
-    query: { aa?: number }
+    query?: { aa: number }
     resData: FormData
   }
 
@@ -12,7 +14,7 @@ export interface Methods {
 
   put: {
     query: { aa: number }
-    resData: string
+    resData: { aa: number }
   }
 
   delete: {
@@ -20,3 +22,9 @@ export interface Methods {
     resData: Blob
   }
 }
+
+export default mockMethods<Methods>({
+  get: ({ query }) => (query?.aa ? { status: 200, resData: new FormData() } : { status: 403 }),
+  post: ({ reqData }) => (reqData ? { status: 200, resData: new ArrayBuffer(1) } : { status: 500 }),
+  put: ({ query }) => ({ status: 200, resData: query })
+})

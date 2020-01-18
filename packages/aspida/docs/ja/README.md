@@ -58,13 +58,13 @@
 
 ### インストール (axios ver.)
 
-- Using [npm][npm]:
+- Using [npm](https://www.npmjs.com/):
 
   ```sh
   $ npm install @aspida/axios axios
   ```
 
-- Using [Yarn][yarn]:
+- Using [Yarn](https://yarnpkg.com/):
 
   ```sh
   $ yarn add @aspida/axios axios
@@ -165,19 +165,18 @@ import api from "../apis/$api"
 ;(async () => {
   const userId = 0
   const limit = 10
-  const baseURL = "http://localhost:8080/api"
-  const client = api(aspida(), baseURL)
+  const client = api(aspida())
 
   await client.v1.users.post({ data: { name: "taro" } })
 
   const res = await client.v1.users.get({ query: { limit } })
   console.log(res)
-  // req -> GET: http://localhost:8080/api/v1/users/?limit=10
+  // req -> GET: /v1/users/?limit=10
   // res -> { status: 200, data: [{ id: 0, name: 'taro' }], headers: {...} }
 
   const user = await client.v1.users._userId(userId).$get()
   console.log(user)
-  // req -> GET: http://localhost:8080/api/v1/users/0
+  // req -> GET: /v1/users/0
   // res -> { id: 0, name: 'taro' }
 })()
 ```
@@ -197,22 +196,19 @@ import api from "../apis/$api"
 `aspida.config.js`
 
 ```javascript
-module.exports = { input: 'src' }
+module.exports = { input: "src" }
 ```
 
-baseURLを設定ファイルで指定する
+baseURL を設定ファイルで指定する
 
 ```javascript
-module.exports = { input: 'apis', baseURL: 'https://example.com/api' }
+module.exports = { input: "apis", baseURL: "https://example.com/api" }
 ```
 
 複数の API エンドポイントを型定義したい場合は配列で指定する
 
 ```javascript
-module.exports = [
-  { input: 'api1' },
-  { input: 'api2', baseURL: 'https://example.com/api' }
-]
+module.exports = [{ input: "api1" }, { input: "api2", baseURL: "https://example.com/api" }]
 ```
 
 ### FormData を POST する
@@ -245,8 +241,7 @@ import api from "../apis/$api"
 ;(async () => {
   const userId = 0
   const limit = 10
-  const baseURL = "http://localhost:8080/api"
-  const client = api(aspida(), baseURL)
+  const client = api(aspida())
   const iconImage = imageBuffer
 
   const user = await client.v1.users.$post({
@@ -256,7 +251,7 @@ import api from "../apis/$api"
     }
   })
   console.log(user)
-  // req -> POST: http://localhost:8080/api/v1/users/0
+  // req -> POST: /v1/users/0
   // res -> { id: 0, name: 'taro' }
 })()
 ```
@@ -290,12 +285,11 @@ import api from "../apis/$api"
 ;(async () => {
   const userId = 0
   const limit = 10
-  const baseURL = "http://localhost:8080/api"
-  const client = api(aspida(), baseURL)
+  const client = api(aspida())
 
   const user = await client.v1.users.$post({ data: { name: "taro" } })
   console.log(user)
-  // req -> POST: http://localhost:8080/api/v1/users/0
+  // req -> POST: /v1/users/0
   // res -> { id: 0, name: 'taro' }
 })()
 ```
@@ -324,42 +318,15 @@ import api from "../apis/$api"
 ;(async () => {
   const userId = 0
   const limit = 10
-  const baseURL = "http://localhost:8080/api"
-  const client = api(aspida(), baseURL)
+  const client = api(aspida())
 
   const user = await client.v1.users.$get({ query: { name: "taro" } })
   console.log(user)
-  // req -> POST: http://localhost:8080/api/v1/users/0
+  // req -> POST: /v1/users/0
   // res -> ArrayBuffer
 })()
 ```
 
 ## License
 
-Aspida is licensed under a [MIT License][aspida-license].
-
-<!-- URL: aspida -->
-
-[aspida-examples]: https://github.com/aspidajs/aspida/tree/develop/examples
-[aspida-license]: https://github.com/aspidajs/aspida/blob/develop/LICENSE
-
-<!-- URL: Badges -->
-
-[badge-ci-url]: https://circleci.com/gh/aspidajs/aspida
-[badge-ci]: https://img.shields.io/circleci/build/github/aspidajs/aspida.svg?label=test
-[badge-coverage-url]: https://codecov.io/gh/aspidajs/aspida
-[badge-coverage]: https://img.shields.io/codecov/c/github/aspidajs/aspida.svg
-[badge-dependabot]: https://api.dependabot.com/badges/status?host=github&repo=aspidajs/aspida
-[badge-lgtm-url]: https://lgtm.com/projects/g/aspidajs/aspida/context:javascript
-[badge-lgtm]: https://img.shields.io/lgtm/grade/javascript/g/aspidajs/aspida.svg
-[badge-license]: https://img.shields.io/npm/l/aspida
-[badge-npm-url]: https://www.npmjs.com/package/aspida
-[badge-npm]: https://img.shields.io/npm/v/aspida
-
-<!-- URL: General -->
-
-[axios-mock-server]: https://github.com/m-mitsuhide/axios-mock-server/
-[dependabot]: https://dependabot.com
-[nodejs]: https://nodejs.org/
-[npm]: https://www.npmjs.com/
-[yarn]: https://yarnpkg.com/
+aspida is licensed under a [MIT License](https://github.com/aspidajs/aspida/blob/master/packages/aspida/LICENSE).

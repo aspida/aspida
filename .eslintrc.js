@@ -12,14 +12,6 @@ module.exports = {
     'prettier/@typescript-eslint',
     'prettier/standard'
   ],
-  overrides: [
-    {
-      files: ['*.js'],
-      rules: {
-        '@typescript-eslint/no-var-requires': 'off'
-      }
-    }
-  ],
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module'

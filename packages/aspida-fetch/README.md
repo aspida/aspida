@@ -57,8 +57,8 @@
 import aspida from "@aspida/fetch"
 import api from "../apis/$api"
 
-const fetchInit = { credentials: "include" }
-const client = api(aspida(fetch, fetchInit), "https://example.com/api")
+const fetchConfig = { credentials: "include", baseURL: "https://example.com/api" }
+const client = api(aspida(fetch, fetchConfig))
 ;(async () => {
   const userId = 0
   const limit = 10

@@ -165,19 +165,18 @@ import api from "../apis/$api"
 ;(async () => {
   const userId = 0
   const limit = 10
-  const baseURL = "http://localhost:8080/api"
-  const client = api(aspida(), baseURL)
+  const client = api(aspida())
 
   await client.v1.users.post({ data: { name: "taro" } })
 
   const res = await client.v1.users.get({ query: { limit } })
   console.log(res)
-  // req -> GET: http://localhost:8080/api/v1/users/?limit=10
+  // req -> GET: /v1/users/?limit=10
   // res -> { status: 200, data: [{ id: 0, name: 'taro' }], headers: {...} }
 
   const user = await client.v1.users._userId(userId).$get()
   console.log(user)
-  // req -> GET: http://localhost:8080/api/v1/users/0
+  // req -> GET: /v1/users/0
   // res -> { id: 0, name: 'taro' }
 })()
 ```
@@ -197,22 +196,19 @@ Create a configuration file at the root of the project
 `aspida.config.js`
 
 ```javascript
-module.exports = { input: 'src' }
+module.exports = { input: "src" }
 ```
 
 Specify baseURL in configuration file
 
 ```javascript
-module.exports = { input: 'apis', baseURL: 'https://example.com/api' }
+module.exports = { input: "apis", baseURL: "https://example.com/api" }
 ```
 
 If you want to define multiple API endpoints, specify them in an array
 
 ```javascript
-module.exports = [
-  { input: 'api1' },
-  { input: 'api2', baseURL: 'https://example.com/api' }
-]
+module.exports = [{ input: "api1" }, { input: "api2", baseURL: "https://example.com/api" }]
 ```
 
 ### POST with FormData
@@ -245,8 +241,7 @@ import api from "../apis/$api"
 ;(async () => {
   const userId = 0
   const limit = 10
-  const baseURL = "http://localhost:8080/api"
-  const client = api(aspida(), baseURL)
+  const client = api(aspida())
   const iconImage = imageBuffer
 
   const user = await client.v1.users.$post({
@@ -256,7 +251,7 @@ import api from "../apis/$api"
     }
   })
   console.log(user)
-  // req -> POST: http://localhost:8080/api/v1/users/0
+  // req -> POST: h/v1/users/0
   // res -> { id: 0, name: 'taro' }
 })()
 ```
@@ -290,12 +285,11 @@ import api from "../apis/$api"
 ;(async () => {
   const userId = 0
   const limit = 10
-  const baseURL = "http://localhost:8080/api"
-  const client = api(aspida(), baseURL)
+  const client = api(aspida())
 
   const user = await client.v1.users.$post({ data: { name: "taro" } })
   console.log(user)
-  // req -> POST: http://localhost:8080/api/v1/users/0
+  // req -> POST: /v1/users/0
   // res -> { id: 0, name: 'taro' }
 })()
 ```
@@ -324,16 +318,15 @@ import api from "../apis/$api"
 ;(async () => {
   const userId = 0
   const limit = 10
-  const baseURL = "http://localhost:8080/api"
-  const client = api(aspida(), baseURL)
+  const client = api(aspida())
 
   const user = await client.v1.users.$get({ query: { name: "taro" } })
   console.log(user)
-  // req -> POST: http://localhost:8080/api/v1/users/0
+  // req -> POST: /v1/users/0
   // res -> ArrayBuffer
 })()
 ```
 
 ## License
 
-Aspida is licensed under a [MIT License](https://github.com/aspidajs/aspida/blob/master/packages/aspida/LICENSE).
+aspida is licensed under a [MIT License](https://github.com/aspidajs/aspida/blob/master/packages/aspida/LICENSE).

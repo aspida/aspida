@@ -58,8 +58,8 @@ import axios from "axios"
 import aspida from "@aspida/axios"
 import api from "../apis/$api"
 
-const axiosConfig = { timeout: 3000 }
-const client = api(aspida(axios, axiosConfig), "https://example.com/api")
+const axiosConfig = { timeout: 3000, baseURL: "https://example.com/api" }
+const client = api(aspida(axios, axiosConfig))
 ;(async () => {
   const userId = 0
   const limit = 10

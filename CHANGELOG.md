@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.11.0](https://github.com/aspidajs/aspida/compare/v0.10.0...v0.11.0) (2020-01-18)
+
+
+### Features
+
+* **axios:** update for mock ([000a6fd](https://github.com/aspidajs/aspida/commit/000a6fd343672d083f42c3bbcd0004611a545c7b))
+* **mock:** optimize for aspida ([c1dc848](https://github.com/aspidajs/aspida/commit/c1dc848864c3a02df88bfa4c2f99cf19d0bd3073))
+* remake axios-mock-server to aspida-mock ([fa99ad0](https://github.com/aspidajs/aspida/commit/fa99ad0aca3db0be1dc5f3240afaf44753c6330a))
+
+
+### Bug Fixes
+
+* update tests ([5323dd2](https://github.com/aspidajs/aspida/commit/5323dd28573b6353b5599e360b38e1cbcdafdfb2))
+
+
+### Refactors
+
+* **aspida:** delete optionToRequest ([760b1f5](https://github.com/aspidajs/aspida/commit/760b1f5ce04fb41a35a887a0a4979e30a8f22785))
+
 ## [0.10.0](https://github.com/aspidajs/aspida/compare/v0.9.0...v0.10.0) (2020-01-12)
 
 
