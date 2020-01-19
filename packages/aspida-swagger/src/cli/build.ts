@@ -31,7 +31,7 @@ interface BuildCommand {
 }
 
 export interface BuildIO {
-  write(outputDir: string, template: Template): void
+  write(outputDir: string, trailingSlash: boolean, template: Template): void
   remove(filePath: string, callback: () => void): void
   watch(input: string, callback: () => void): void
 }
@@ -40,7 +40,7 @@ export class Build implements BuildCommand {
   async run(config: Config, io: BuildIO) {
     const template = await build(config.inputFile, config.isYaml)
 
-    io.remove(config.output, () => io.write(config.output, template))
+    io.remove(config.output, () => io.write(config.output, config.trailingSlash, template))
   }
 }
 

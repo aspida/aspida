@@ -4,6 +4,7 @@ import getBaseConfig, { BaseConfig } from 'aspida/dist/getConfig'
 export interface Config {
   inputFile: string
   output: string
+  trailingSlash: boolean
   isYaml: boolean
 }
 
@@ -20,6 +21,7 @@ const createConfig = (config: ConfigFile) => {
   return {
     inputFile,
     output: config.input,
+    trailingSlash: config.trailingSlash,
     isYaml:
       config.swagger?.yaml === undefined
         ? path.extname(inputFile).slice(1) === 'yaml'

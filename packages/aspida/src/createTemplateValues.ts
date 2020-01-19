@@ -2,8 +2,14 @@ import fs from 'fs'
 import path from 'path'
 import createMethods from './createMethodsString'
 
-export default (input: string) => {
+export default (input: string, trailingSlash: boolean) => {
   const imports: string[] = []
+  const getMethodsString = (file: string, target: string, indent: string, newUrl: string) => {
+    const importName = `Methods${imports.length}`
+    imports.push(`import { Methods as ${importName} } from '${file}'`)
+    return createMethods(target, indent, importName, newUrl, trailingSlash)
+  }
+
   let valCount = 0
 
   const createApiString = (
@@ -23,24 +29,20 @@ export default (input: string) => {
       .forEach(file => {
         if (file.startsWith('$') || file.startsWith('@')) return
 
-        let valFn = `${indent}${file
-          .replace(/\.ts$/, '')
+        const basename = path.basename(file, '.ts')
+        let valFn = `${indent}${basename
           .replace(/(-|\.|!| |'|\*|\(|\))/g, '_')
-          .replace(/^(\d)/, '$$$1')}: {
-<% next %>
-${indent}}`
-        let newUrl = `${url}/${file.replace(/\.ts$/, '')}`
+          .replace(/^(\d)/, '$$$1')}: {\n<% next %>\n${indent}}`
+        let newUrl = `${url}/${basename}`
 
         if (file.startsWith('_')) {
-          let [valName, valType = 'number | string'] = file.replace(/\.ts$/, '').split('@')
+          let [valName, valType = 'number | string'] = basename.split('@')
 
-          if (/^[A-Z]/.test(valType) && valType.indexOf(valType) > -1) {
+          if (/^[A-Z]/.test(valType)) {
             valType = `ApiTypes.${valType}`
           }
 
-          valFn = `${indent}${valName}: (val${valCount}: ${valType}) => ({
-<% next %>
-${indent}})`
+          valFn = `${indent}${valName}: (val${valCount}: ${valType}) => ({\n<% next %>\n${indent}})`
 
           newUrl = `${url}/\${val${valCount}}`
           valCount += 1
@@ -48,29 +50,8 @@ ${indent}})`
 
         const target = path.posix.join(mockDir, file)
 
-        if (fs.statSync(target).isFile() && file !== 'index.ts') {
-          if (path.extname(file) !== '.ts') return
-
-          const importName = `Methods${imports.length}`
-          imports.push(
-            `import { Methods as ${importName} } from '${importBasePath}/${file.replace(
-              /\.ts$/,
-              ''
-            )}'`
-          )
-
-          props.push(valFn.replace('<% next %>', createMethods(target, indent, importName, newUrl)))
-        } else if (fs.statSync(target).isDirectory()) {
+        if (fs.statSync(target).isDirectory()) {
           const indexPath = path.posix.join(target, 'index.ts')
-          let methods
-
-          if (fs.existsSync(indexPath)) {
-            const importName = `Methods${imports.length}`
-            imports.push(
-              `import { Methods as ${importName} } from '${importBasePath}/${file}/index'`
-            )
-            methods = createMethods(indexPath, indent, importName, newUrl)
-          }
 
           props.push(
             createApiString(
@@ -79,7 +60,16 @@ ${indent}})`
               indent,
               newUrl,
               valFn.replace('<% next %>', '<% props %>'),
-              methods
+              fs.existsSync(indexPath)
+                ? getMethodsString(`${importBasePath}/${file}/index`, indexPath, indent, newUrl)
+                : undefined
+            )
+          )
+        } else if (path.extname(file) === '.ts' && file !== 'index.ts') {
+          props.push(
+            valFn.replace(
+              '<% next %>',
+              getMethodsString(`${importBasePath}/${basename}`, target, indent, newUrl)
             )
           )
         }
@@ -95,13 +85,6 @@ ${indent}})`
 
   const rootIndexPath = path.posix.join(input, 'index.ts')
   const rootIndent = '  '
-  let rootMethods
-
-  if (fs.existsSync(rootIndexPath)) {
-    const importName = 'Methods0'
-    imports.push(`import { Methods as ${importName} } from './index'`)
-    rootMethods = createMethods(rootIndexPath, rootIndent, importName, '/')
-  }
 
   return {
     api: createApiString(
@@ -109,10 +92,10 @@ ${indent}})`
       '.',
       rootIndent,
       '',
-      `{
-<% props %>
-  }`,
-      rootMethods
+      `{\n<% props %>\n  }`,
+      fs.existsSync(rootIndexPath)
+        ? getMethodsString('./index', rootIndexPath, rootIndent, '')
+        : undefined
     ),
     imports
   }
