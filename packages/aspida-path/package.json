@@ -21,5 +21,8 @@
   "keywords": [
     "aspida",
     "path"
-  ]
+  ],
+  "dependencies": {
+    "aspida": "^0.11.0"
+  }
 }

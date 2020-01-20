@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { OpenAPIV3 } from 'openapi-types'
-import { Template } from './Template'
+import { Template } from './buildTemplate'
 
 const $ref2TypeName = (ref: string) => ref.split('/').pop() || ''
-const $ref2Type = (ref: string) => `Types.${$ref2TypeName(ref)}`
+// $ref2Type: replace /Array$/ for Swagger 2.0
+const $ref2Type = (ref: string) => `Types.${$ref2TypeName(ref).replace(/Array$/, '[]')}`
 const isRefObject = (
   params:
     | OpenAPIV3.ReferenceObject

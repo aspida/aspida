@@ -22,6 +22,7 @@
   ],
   "dependencies": {
     "rimraf": "^3.0.0",
-    "swagger-parser": "^8.0.4"
+    "swagger-parser": "^8.0.4",
+    "swagger2openapi": "^5.3.2"
   }
 }

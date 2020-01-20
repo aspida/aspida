@@ -1,7 +1,7 @@
 import fs from 'fs'
 import aspidaBuild from 'aspida/dist/buildTemplate'
 import aspidaWrite from 'aspida/dist/writeRouteFile'
-import { Template } from './Template'
+import { Template } from './buildTemplate'
 
 export default (input: string, trailingSlash: boolean, { baseURL, types, files }: Template) => {
   fs.mkdirSync(input)
