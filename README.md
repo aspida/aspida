@@ -1,5 +1,5 @@
-| [aspida] | [aspida-mock] | [aspida-swagger] | [aspida-path] | [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] |
-| -------- | ------------- | ---------------- | ------------- | --------------- | ------------ | --------------- |
+| [aspida] | [aspida-mock] | [aspida-swagger] | [pathpida] | [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] |
+| -------- | ------------- | ---------------- | ---------- | --------------- | ------------ | --------------- |
 
 
 <br />
@@ -49,7 +49,7 @@
 [aspida]: packages/aspida
 [aspida-mock]: packages/aspida-mock
 [aspida-swagger]: packages/aspida-swagger
-[aspida-path]: packages/aspida-path
+[pathpida]: packages/pathpida
 [@aspida/axios]: packages/aspida-axios
 [@aspida/ky]: packages/aspida-ky
 [@aspida/fetch]: packages/aspida-fetch

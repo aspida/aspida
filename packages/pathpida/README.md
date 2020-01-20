@@ -1,7 +1,7 @@
-# aspida-path (WIP)
+# pathpida (WIP)
 
-| [aspida] | [aspida-mock] | [aspida-swagger] | aspida-path | [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] |
-| -------- | ------------- | ---------------- | ----------- | --------------- | ------------ | --------------- |
+| [aspida] | [aspida-mock] | [aspida-swagger] | pathpida | [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] |
+| -------- | ------------- | ---------------- | -------- | --------------- | ------------ | --------------- |
 
 
 <br />
@@ -16,8 +16,8 @@
 <br />
 <br />
 <div align="center">
-  <a href="https://www.npmjs.com/package/aspida-path">
-    <img src="https://img.shields.io/npm/v/aspida-path" alt="npm version" />
+  <a href="https://www.npmjs.com/package/pathpida">
+    <img src="https://img.shields.io/npm/v/pathpida" alt="npm version" />
   </a>
   <a href="https://circleci.com/gh/aspidajs/aspida">
     <img src="https://img.shields.io/circleci/build/github/aspidajs/aspida.svg?label=test" alt="CircleCI" />
@@ -31,8 +31,8 @@
   <a href="https://dependabot.com">
     <img src="https://api.dependabot.com/badges/status?host=github&repo=aspidajs/aspida" alt="Dependabot Status" />
   </a>
-  <a href="https://github.com/aspidajs/aspida/blob/master/packages/aspida-path/LICENSE">
-    <img src="https://img.shields.io/npm/l/aspida-path" alt="License" />
+  <a href="https://github.com/aspidajs/aspida/blob/master/packages/pathpida/LICENSE">
+    <img src="https://img.shields.io/npm/l/pathpida" alt="License" />
   </a>
 </div>
 <br />
@@ -42,7 +42,7 @@
 
 ## License
 
-aspida-path is licensed under a [MIT License](LICENSE).
+pathpida is licensed under a [MIT License](LICENSE).
 
 [aspida]: ../aspida
 [aspida-mock]: ../aspida-mock

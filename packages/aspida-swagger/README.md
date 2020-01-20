@@ -1,7 +1,7 @@
 # aspida-swagger (WIP)
 
-| [aspida] | [aspida-mock] | aspida-swagger | [aspida-path] | [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] |
-| -------- | ------------- | -------------- | ------------- | --------------- | ------------ | --------------- |
+| [aspida] | [aspida-mock] | aspida-swagger | [pathpida] | [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] |
+| -------- | ------------- | -------------- | ---------- | --------------- | ------------ | --------------- |
 
 
 <br />
@@ -46,7 +46,7 @@ aspida-swagger is licensed under a [MIT License](LICENSE).
 
 [aspida]: ../aspida
 [aspida-mock]: ../aspida-mock
-[aspida-path]: ../aspida-path
+[pathpida]: ../pathpida
 [@aspida/axios]: ../aspida-axios
 [@aspida/ky]: ../aspida-ky
 [@aspida/fetch]: ../aspida-fetch
