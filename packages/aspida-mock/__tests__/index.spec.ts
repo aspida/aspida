@@ -10,7 +10,7 @@ describe('initialize', () => {
   test('enabled mock', async () => {
     adapter.attachRoutes([
       {
-        path: '/',
+        path: '',
         methods: { put: ({ query }) => ({ status: 200, resData: query }) }
       }
     ])
@@ -35,7 +35,7 @@ describe('initialize', () => {
     adapter.attachRoutes(
       [
         {
-          path: '/',
+          path: '',
           methods: { put: ({ query }) => ({ status: 200, resData: query }) }
         }
       ],
@@ -50,7 +50,7 @@ describe('initialize', () => {
 
   test('enable log', async () => {
     const spyLog = jest.spyOn(console, 'log').mockImplementation(x => x)
-    const routes = [{ path: '/', methods: { get: () => ({ status: 200 }) } }]
+    const routes = [{ path: '', methods: { get: () => ({ status: 200 }) } }]
 
     adapter.attachRoutes(routes, { log: true })
     await client.get()

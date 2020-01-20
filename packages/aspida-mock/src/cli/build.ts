@@ -37,7 +37,7 @@ export interface BuildIO {
 
 export class Build implements BuildCommand {
   run(config: BaseConfig, io: BuildIO) {
-    io.write(build(config.input))
+    io.write(build(config))
   }
 }
 

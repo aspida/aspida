@@ -26,7 +26,7 @@ export default <U>(client: MockClient<U>, config?: MockConfig) => {
       methods: mock3
     },
     {
-      path: '/',
+      path: '',
       methods: mock4
     }
   ], config)
