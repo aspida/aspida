@@ -9,23 +9,23 @@ export interface Config {
 }
 
 interface ConfigFile extends BaseConfig {
-  swagger?: {
+  openapi?: {
     inputFile: string
     yaml?: boolean
   }
 }
 
 const createConfig = (config: ConfigFile) => {
-  const inputFile = config.swagger?.inputFile || 'swagger.json'
+  const inputFile = config.openapi?.inputFile || 'openapi.json'
 
   return {
     inputFile,
     output: config.input,
     trailingSlash: config.trailingSlash,
     isYaml:
-      config.swagger?.yaml === undefined
+      config.openapi?.yaml === undefined
         ? path.extname(inputFile).slice(1) === 'yaml'
-        : config.swagger?.yaml
+        : config.openapi?.yaml
   }
 }
 

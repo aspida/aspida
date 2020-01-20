@@ -4,7 +4,7 @@ import build from '../src/buildTemplate'
 import write from '../src/writeRouteFile'
 import getConfig from '../src/getConfig'
 
-const basePath = 'packages/aspida-swagger'
+const basePath = 'packages/openapi2aspida'
 
 describe('cli test', () => {
   afterAll(fn => rimraf(`${basePath}/_samples`, fn))

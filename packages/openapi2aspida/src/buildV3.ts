@@ -140,39 +140,39 @@ export interface ${defKey} ${object2value(target.properties, '')}
     })
     .join('')
 
-const resolveParamsRef = (swagger: OpenAPIV3.Document, ref: string): OpenAPIV3.ParameterObject => {
-  const target = swagger.components?.parameters![$ref2TypeName(ref)]
-  return isRefObject(target) ? resolveParamsRef(swagger, target.$ref) : target
+const resolveParamsRef = (openapi: OpenAPIV3.Document, ref: string): OpenAPIV3.ParameterObject => {
+  const target = openapi.components?.parameters![$ref2TypeName(ref)]
+  return isRefObject(target) ? resolveParamsRef(openapi, target.$ref) : target
 }
 
-const resolveResRef = (swagger: OpenAPIV3.Document, ref: string): OpenAPIV3.ResponseObject => {
-  const target = swagger.components?.responses![$ref2TypeName(ref)]
-  return isRefObject(target) ? resolveResRef(swagger, target.$ref) : target
+const resolveResRef = (openapi: OpenAPIV3.Document, ref: string): OpenAPIV3.ResponseObject => {
+  const target = openapi.components?.responses![$ref2TypeName(ref)]
+  return isRefObject(target) ? resolveResRef(openapi, target.$ref) : target
 }
 
-const resolveReqRef = (swagger: OpenAPIV3.Document, ref: string): OpenAPIV3.RequestBodyObject => {
-  const target = swagger.components?.requestBodies![$ref2TypeName(ref)]
-  return isRefObject(target) ? resolveReqRef(swagger, target.$ref) : target
+const resolveReqRef = (openapi: OpenAPIV3.Document, ref: string): OpenAPIV3.RequestBodyObject => {
+  const target = openapi.components?.requestBodies![$ref2TypeName(ref)]
+  return isRefObject(target) ? resolveReqRef(openapi, target.$ref) : target
 }
 
-export default (swagger: OpenAPIV3.Document): Template => {
+export default (openapi: OpenAPIV3.Document): Template => {
   const files: { file: string[]; methods: string }[] = []
 
-  if (swagger.paths) {
+  if (openapi.paths) {
     files.push(
-      ...Object.keys(swagger.paths).map((path, _i, pathList) => {
+      ...Object.keys(openapi.paths).map((path, _i, pathList) => {
         const isParent = pathList.some(p => new RegExp(`^${path}/.+`).test(p))
         const file = [
           ...path
             .replace(/\/$/, '')
             .split('/')
             .slice(1)
-            .map(p => getDirName(p /* , swagger.paths[path] */)),
+            .map(p => getDirName(p /* , openapi.paths[path] */)),
           ...(isParent ? ['index'] : [])
         ]
-        const methods = Object.keys(swagger.paths[path])
+        const methods = Object.keys(openapi.paths[path])
           .map(method => {
-            const target = swagger.paths[path][method as typeof methodNames[number]]
+            const target = openapi.paths[path][method as typeof methodNames[number]]
 
             if (!target) return ''
 
@@ -185,7 +185,7 @@ export default (swagger: OpenAPIV3.Document): Template => {
 
               target.parameters.forEach(p => {
                 if (isRefObject(p)) {
-                  const ref = resolveParamsRef(swagger, p.$ref)
+                  const ref = resolveParamsRef(openapi, p.$ref)
                   switch (ref.in) {
                     case 'header':
                       reqRefHeaders.push($ref2Type(p.$ref))
@@ -239,7 +239,7 @@ export default (swagger: OpenAPIV3.Document): Template => {
                 const res = target.responses[code]
 
                 if (isRefObject(res)) {
-                  const ref = resolveResRef(swagger, res.$ref)
+                  const ref = resolveResRef(openapi, res.$ref)
                   if (ref.content?.['application/json']?.schema) {
                     resData = schema2value(ref.content['application/json'].schema, '    ')
                   }
@@ -289,7 +289,7 @@ export default (swagger: OpenAPIV3.Document): Template => {
               let reqType = ''
               let reqData = ''
               if (isRefObject(target.requestBody)) {
-                const ref = resolveReqRef(swagger, target.requestBody.$ref)
+                const ref = resolveReqRef(openapi, target.requestBody.$ref)
                 if (ref.content['multipart/form-data']?.schema) {
                   reqType = 'FormData'
                 } else if (ref.content['application/x-www-form-urlencoded']?.schema) {
@@ -346,9 +346,9 @@ export default (swagger: OpenAPIV3.Document): Template => {
   }
 
   return {
-    baseURL: swagger.servers?.[0].url || '',
-    types: `/* eslint-disable */${parameters2interfaces(swagger.components?.parameters) ||
-      ''}${schemas2interfaces(swagger.components?.schemas) || ''}`.replace(/ Types\./g, ' '),
+    baseURL: openapi.servers?.[0].url || '',
+    types: `/* eslint-disable */${parameters2interfaces(openapi.components?.parameters) ||
+      ''}${schemas2interfaces(openapi.components?.schemas) || ''}`.replace(/ Types\./g, ' '),
     files
   }
 }

@@ -1,4 +1,4 @@
-| [aspida] | [aspida-mock] | [aspida-swagger] | [pathpida] | [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] |
+| [aspida] | [aspida-mock] | [openapi2aspida] | [pathpida] | [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] |
 | -------- | ------------- | ---------------- | ---------- | --------------- | ------------ | --------------- |
 
 
@@ -48,7 +48,7 @@
 
 [aspida]: packages/aspida
 [aspida-mock]: packages/aspida-mock
-[aspida-swagger]: packages/aspida-swagger
+[openapi2aspida]: packages/openapi2aspida
 [pathpida]: packages/pathpida
 [@aspida/axios]: packages/aspida-axios
 [@aspida/ky]: packages/aspida-ky

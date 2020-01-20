@@ -1,11 +1,11 @@
 {
-  "name": "aspida-swagger",
+  "name": "openapi2aspida",
   "version": "0.0.0",
-  "description": "Swagger parser for aspida",
+  "description": "OpenAPI parser for aspida",
   "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
   "license": "MIT",
   "bin": "bin/index.js",
-  "homepage": "https://github.com/aspidajs/aspida/tree/develop/packages/aspida-swagger#readme",
+  "homepage": "https://github.com/aspidajs/aspida/tree/develop/packages/openapi2aspida#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aspidajs/aspida.git"
@@ -18,7 +18,7 @@
   ],
   "keywords": [
     "aspida",
-    "swagger"
+    "openapi"
   ],
   "dependencies": {
     "rimraf": "^3.0.0",

@@ -1,6 +1,6 @@
 # pathpida (WIP)
 
-| [aspida] | [aspida-mock] | [aspida-swagger] | pathpida | [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] |
+| [aspida] | [aspida-mock] | [openapi2aspida] | pathpida | [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] |
 | -------- | ------------- | ---------------- | -------- | --------------- | ------------ | --------------- |
 
 
@@ -46,7 +46,7 @@ pathpida is licensed under a [MIT License](LICENSE).
 
 [aspida]: ../aspida
 [aspida-mock]: ../aspida-mock
-[aspida-swagger]: ../aspida-swagger
+[openapi2aspida]: ../openapi2aspida
 [@aspida/axios]: ../aspida-axios
 [@aspida/ky]: ../aspida-ky
 [@aspida/fetch]: ../aspida-fetch
