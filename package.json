@@ -44,7 +44,7 @@
     "jest": "^24.9.0",
     "ky": "^0.16.1",
     "ky-universal": "^0.3.0",
-    "lint-staged": "^9.5.0",
+    "lint-staged": "^10.0.0",
     "prettier": "^1.19.1",
     "rimraf": "^3.0.0",
     "standard-version": "^7.0.1",
