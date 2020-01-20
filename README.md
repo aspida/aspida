@@ -42,6 +42,8 @@
 
 - [aspida] - Type safe HTTP client wrapper for the browser and node.js.
 - [aspida-mock] - Type safe RESTful API mock for aspida.
+- [openapi2aspida] - Convert OpenAPI 3.0 or Swagger 2.0 definitions into aspida.
+- [pathpida] - Type safe path generator like aspida.
 - [@aspida/axios] - [axios](https://github.com/axios/axios/) client for aspida.
 - [@aspida/ky] - [ky](https://github.com/sindresorhus/ky/) client for aspida.
 - [@aspida/fetch] - [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) client for aspida.

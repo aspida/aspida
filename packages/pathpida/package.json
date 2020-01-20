@@ -15,9 +15,6 @@
   "files": [
     "dist"
   ],
-  "publishConfig": {
-    "access": "public"
-  },
   "keywords": [
     "aspida",
     "path"

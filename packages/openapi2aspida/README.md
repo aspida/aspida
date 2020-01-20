@@ -1,4 +1,4 @@
-# OpenAPI to aspida (WIP)
+# OpenAPI or Swagger to aspida
 
 | [aspida] | [aspida-mock] | openapi2aspida | [pathpida] | [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] |
 | -------- | ------------- | -------------- | ---------- | --------------- | ------------ | --------------- |
@@ -36,17 +36,63 @@
   </a>
 </div>
 <br />
-<p align="center">OpenAPI parser for aspida.</p>
+<p align="center">Convert OpenAPI 3.0 or Swagger 2.0 definitions into aspida.</p>
 <br />
 <br />
+
+## Getting Started
+
+### Installation
+
+- Using [npm](https://www.npmjs.com/):
+
+  ```sh
+  $ npm install @aspida/axios // @aspida/ky or @ aspida/fetch
+  $ npm install openapi2aspida --save-dev
+  ```
+
+- Using [Yarn](https://yarnpkg.com/):
+
+  ```sh
+  $ yarn add @aspida/axios // @aspida/ky or @ aspida/fetch
+  $ yarn add openapi2aspida --dev
+  ```
+
+### Make HTTP request from application
+
+`aspida.config.js`
+
+```js
+module.exports = {
+  input: "apis", // "input" of aspida is "output" for openapi2aspida
+  openapi: { inputFile: "assets/openapi.json" } // Compatible with yaml/json of OpenAPI3.0/Swagger2.0
+}
+```
+
+`package.json`
+
+```json
+{
+  "scripts": {
+    "build:openapi": "openapi2aspida --build"
+  }
+}
+```
+
+`tarminal`
+
+```sh
+$ npm run build:openapi
+# apis/$api.ts was built successfully.
+```
 
 ## License
 
-openapi2aspida is licensed under a [MIT License](LICENSE).
+openapi2aspida is licensed under a [MIT License](https://github.com/aspidajs/aspida/blob/master/packages/openapi2aspida/LICENSE).
 
-[aspida]: ../aspida
-[aspida-mock]: ../aspida-mock
-[pathpida]: ../pathpida
-[@aspida/axios]: ../aspida-axios
-[@aspida/ky]: ../aspida-ky
-[@aspida/fetch]: ../aspida-fetch
+[aspida]: https://github.com/aspidajs/aspida/tree/master/packages/aspida
+[aspida-mock]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-mock
+[pathpida]: https://github.com/aspidajs/aspida/tree/master/packages/pathpida
+[@aspida/axios]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-axios
+[@aspida/ky]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-ky
+[@aspida/fetch]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-fetch

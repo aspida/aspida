@@ -8,7 +8,7 @@ export interface Config {
 }
 
 interface ConfigFile extends BaseConfig {
-  path?: {
+  pathpida?: {
     input?: string
     output?: string
     baseURL?: string
@@ -21,7 +21,7 @@ const createConfig = (config: ConfigFile) => ({
   output: '',
   baseURL: '',
   trailingSlash: false,
-  ...config.path
+  ...config.pathpida
 })
 
 export default (configPath?: string): Config[] =>

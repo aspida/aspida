@@ -1,4 +1,4 @@
-# pathpida (WIP)
+# pathpida
 
 | [aspida] | [aspida-mock] | [openapi2aspida] | pathpida | [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] |
 | -------- | ------------- | ---------------- | -------- | --------------- | ------------ | --------------- |
@@ -40,13 +40,95 @@
 <br />
 <br />
 
+## Getting Started
+
+### Installation
+
+- Using [npm](https://www.npmjs.com/):
+
+  ```sh
+  $ npm install pathpida
+  ```
+
+- Using [Yarn](https://yarnpkg.com/):
+
+  ```sh
+  $ yarn add pathpida
+  ```
+
+### Make HTTP request from application
+
+`aspida.config.js`
+
+```js
+module.exports = {
+  pathpida: {
+    input: "pages",
+    output: "types",
+    baseURL: "https://example.com/api",
+    trailingSlash: false
+  }
+}
+```
+
+`package.json`
+
+```json
+{
+  "scripts": {
+    "build:pathpida": "pathpida --build"
+  }
+}
+```
+
+`pages/users/_userId.tsx`
+
+```ts
+import React from "react"
+import $path from "../types/$path"
+
+export interface Query {
+  hoge: string
+}
+
+export default () => <div>user info</div>
+```
+
+`tarminal`
+
+```sh
+$ npm run build:pathpida
+# types/$path.ts was built successfully.
+```
+
+`pages/index.tsx`
+
+```ts
+import React from "react"
+import $path from "../types/$path"
+
+export interface Query {
+  pageid: number
+}
+
+export default () => (
+  <a
+    href={$path()
+      .users._userId(0)
+      .$get({ hoge: "fuga" })}
+  >
+    Link to user page
+  </a>
+)
+```
+
 ## License
 
-pathpida is licensed under a [MIT License](LICENSE).
+pathpida is licensed under a [MIT License](https://github.com/aspidajs/aspida/blob/master/packages/pathpida/LICENSE).
 
-[aspida]: ../aspida
-[aspida-mock]: ../aspida-mock
-[openapi2aspida]: ../openapi2aspida
-[@aspida/axios]: ../aspida-axios
-[@aspida/ky]: ../aspida-ky
-[@aspida/fetch]: ../aspida-fetch
+[aspida]: https://github.com/aspidajs/aspida/tree/master/packages/aspida
+[aspida-mock]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-mock
+[openapi2aspida]: https://github.com/aspidajs/aspida/tree/master/packages/openapi2aspida
+[@aspida/axios]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-axios
+[@aspida/ky]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-ky
+[@aspida/fetch]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-fetch

@@ -6,6 +6,8 @@ import getConfig from '../src/getConfig'
 
 const basePath = 'packages/openapi2aspida'
 
+jest.setTimeout(60000)
+
 describe('cli test', () => {
   afterAll(fn => rimraf(`${basePath}/_samples`, fn))
 
