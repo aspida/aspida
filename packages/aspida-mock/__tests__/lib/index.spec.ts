@@ -38,7 +38,7 @@ describe('cli', () => {
     configs.forEach(config => {
       const resultFilePath = `${config.resultDirPath}/$mock.ts`
       const result = fs.readFileSync(resultFilePath, 'utf8')
-      const { text, filePath } = build(config.input)
+      const { text, filePath } = build({ input: config.input, baseURL: '', trailingSlash: false })
 
       expect(text).toBe(result)
       expect(filePath).toBe(resultFilePath)

@@ -1,0 +1,25 @@
+{
+  "name": "pathpida",
+  "version": "0.0.0",
+  "description": "Type safe path generator like aspida",
+  "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/aspidajs/aspida/tree/master/packages/pathpida#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aspidajs/aspida.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aspidajs/aspida/issues"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "aspida",
+    "path"
+  ],
+  "dependencies": {
+    "aspida": "^0.11.0"
+  }
+}

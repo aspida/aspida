@@ -36,7 +36,7 @@ update_configs:
           update_type: "semver:patch"
 
   - package_manager: "javascript"
-    directory: "/packages/aspida-swagger"
+    directory: "/packages/openapi2aspida"
     update_schedule: "live"
     target_branch: "develop"
     version_requirement_updates: "increase_versions"

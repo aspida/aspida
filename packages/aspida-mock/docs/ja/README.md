@@ -1,5 +1,11 @@
 # aspida-mock
 
+| [aspida] | aspida-mock | [openapi2aspida] | [pathpida] | [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] |
+| -------- | ----------- | ---------------- | ---------- | --------------- | ------------ | --------------- |
+
+
+<br />
+<br />
 <br />
 <br />
 <br />
@@ -117,13 +123,11 @@ $ npm run build
 
 <!-- prettier-ignore -->
 ```ts
-import aspida from '@aspida/axios'
-import api from './apis/$api.ts'
-import mock from './apis/$mock.ts'
+import aspidaClient, { mockClient } from '@aspida/axios'
+import api from './apis/$api'
+import mock from './apis/$mock'
 
-const client = api(
-  aspida().attachMock(mock(), { delayMSec: 500 })
-)
+const client = process.env.NODE_ENV === 'development' ? mock(mockClient()) : api(aspidaClient())
 
 ;(async () => {
   const res = await client.users.get({
@@ -154,12 +158,9 @@ aspida-mock ではいくつかのオプションを利用することができ�
 <!-- prettier-ignore -->
 ```ts
 import aspida from '@aspida/axios'
-import api from './apis/$api.ts'
-import mock from './apis/$mock.ts'
+import mock from './apis/$mock'
 
-const client = api(
-  aspida().attachMock(mock(), { delayMSec: 500 })
-)
+const client = mock(mockClient(), { delayMSec: 500 })
 
 ;(async () => {
   console.time()
@@ -175,12 +176,9 @@ const client = api(
 <!-- prettier-ignore -->
 ```ts
 import aspida from '@aspida/axios'
-import api from './apis/$api.ts'
-import mock from './apis/$mock.ts'
+import mock from './apis/$mock'
 
-const client = api(
-  aspida().attachMock(mock(), { log: true })
-)
+const client = mock(mockClient(), { log: true })
 
 ;(async () => {
   await client.users.$get({ query: { bar: 'baz' }})
@@ -258,3 +256,10 @@ aspida-mock は aspida の設定ファイル `aspida.config.js` の項目のう�
 ## License
 
 aspida-mock is licensed under a [MIT License](https://github.com/aspidajs/aspida/blob/master/packages/aspida-mock/LICENSE).
+
+[aspida]: https://github.com/aspidajs/aspida/tree/master/packages/aspida
+[openapi2aspida]: https://github.com/aspidajs/aspida/tree/master/packages/openapi2aspida
+[pathpida]: https://github.com/aspidajs/aspida/tree/master/packages/pathpida
+[@aspida/axios]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-axios
+[@aspida/ky]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-ky
+[@aspida/fetch]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-fetch
