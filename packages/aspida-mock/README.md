@@ -52,7 +52,7 @@
 
 ## Usage
 
-### Installation (2020/01/18: @aspida/axios only mock compatible)
+### Installation (v0.1.0: @aspida/axios v0.2.2~ only mock compatible)
 
 - Using [npm](https://www.npmjs.com/):
 
@@ -123,7 +123,8 @@ $ npm run build
 
 <!-- prettier-ignore -->
 ```ts
-import aspidaClient, { mockClient } from '@aspida/axios'
+import aspidaClient from '@aspida/axios'
+import mockClient from '@aspida/axios/dist/mockClient'
 import api from './apis/$api'
 import mock from './apis/$mock'
 
@@ -157,7 +158,7 @@ Simulate response delay.
 
 <!-- prettier-ignore -->
 ```ts
-import aspida from '@aspida/axios'
+import mockClient from '@aspida/axios/dist/mockClient'
 import mock from './apis/$mock'
 
 const client = mock(mockClient(), { delayMSec: 500 })
@@ -175,7 +176,7 @@ Switch request log output.
 
 <!-- prettier-ignore -->
 ```ts
-import aspida from '@aspida/axios'
+import mockClient from '@aspida/axios/dist/mockClient'
 import mock from './apis/$mock'
 
 const client = mock(mockClient(), { log: true })

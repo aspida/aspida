@@ -13,7 +13,7 @@ import aspidaClientFactory from './'
 import toMockConfig from './toMockConfig'
 import toAxiosResponse from './toAxiosResponse'
 
-export const mockClient = (
+export default (
   client: AxiosInstance = axios,
   config?: AxiosRequestConfig
 ): MockClient<AxiosRequestConfig> => {
