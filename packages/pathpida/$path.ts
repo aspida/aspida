@@ -2,13 +2,13 @@
 import { dataToURLString } from 'aspida'
 
 interface Query0 {
-  hoge: number
-  fuga: string[]
+  id: number
+  name: string[]
 }
 
 interface Query1 {
-  id: number
-  name: string[]
+  hoge: number
+  fuga: string[]
 }
 
 const path = (baseURL?: string) => {
@@ -16,18 +16,18 @@ const path = (baseURL?: string) => {
 
   return {
     _contentId: (val0: number | string) => ({
-      $get: (query?: Query1) => `${prefix}/${val0}/${query ? `?${dataToURLString(query)}` : ''}`
+      $get: (query: Query0) => `${prefix}/${val0}/?${dataToURLString(query)}`
     }),
     _userId: (val1: number | string) => ({
       _testVal: (val2: number | string) => ({
         $get: () => `${prefix}/${val1}/${val2}/`
       }),
       test: {
-        $get: () => `${prefix}/${val1}/test/`
+        $get: (query: Query1) => `${prefix}/${val1}/test/?${dataToURLString(query)}`
       },
       $get: () => `${prefix}/${val1}/`
     }),
-    $get: (query?: Query0) => `${prefix}/${query ? `?${dataToURLString(query)}` : ''}`
+    $get: () => `${prefix}/`
   }
 }
 
