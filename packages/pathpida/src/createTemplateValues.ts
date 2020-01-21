@@ -23,7 +23,7 @@ export default (input: string, trailingSlash: boolean) => {
   let valCount = 0
 
   const createQueryString = (
-    mockDir: string,
+    targetDir: string,
     importBasePath: string,
     indent: string,
     url: string,
@@ -34,7 +34,7 @@ export default (input: string, trailingSlash: boolean) => {
 
     indent += '  '
 
-    fs.readdirSync(mockDir)
+    fs.readdirSync(targetDir)
       .sort()
       .forEach(file => {
         const basename = path.basename(file, path.extname(file))
@@ -50,7 +50,7 @@ export default (input: string, trailingSlash: boolean) => {
           valCount += 1
         }
 
-        const target = path.posix.join(mockDir, file)
+        const target = path.posix.join(targetDir, file)
 
         if (fs.statSync(target).isFile() && basename !== 'index') {
           props.push(

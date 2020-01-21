@@ -1,13 +1,13 @@
 import fs from 'fs'
 import path from 'path'
 
-const listFiles = (mockDir: string) => {
+const listFiles = (targetDir: string) => {
   const list: string[] = []
 
-  fs.readdirSync(mockDir).forEach(file => {
+  fs.readdirSync(targetDir).forEach(file => {
     if (file.startsWith('$') || file.startsWith('@')) return
 
-    const target = path.posix.join(mockDir, file)
+    const target = path.posix.join(targetDir, file)
 
     if (fs.statSync(target).isFile()) {
       if (/(\n|^)export default/.test(fs.readFileSync(target, 'utf8'))) {
