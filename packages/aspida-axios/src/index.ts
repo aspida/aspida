@@ -5,7 +5,7 @@ export default (
   client: AxiosInstance = axios,
   config?: AxiosRequestConfig
 ): AspidaClient<AxiosRequestConfig> => ({
-  baseURL: config?.baseURL || axios.defaults.baseURL,
+  baseURL: config?.baseURL || client.defaults.baseURL,
   fetch(
     baseURL: string,
     url: string,
