@@ -52,7 +52,7 @@
 
 ## Usage
 
-### Installation (v0.1.0: @aspida/axios v0.2.2~ only mock compatible)
+### Installation (v0.1.0: @aspida/axios v0.2.3~ only mock compatible)
 
 - Using [npm](https://www.npmjs.com/):
 
