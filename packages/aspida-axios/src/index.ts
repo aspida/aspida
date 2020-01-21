@@ -1,8 +1,6 @@
 import { AspidaClient, optionToRequest, HttpMethod, AspidaParams, RequestType } from 'aspida'
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 
-export { mockClient } from './mockClient'
-
 export default (
   client: AxiosInstance = axios,
   config?: AxiosRequestConfig

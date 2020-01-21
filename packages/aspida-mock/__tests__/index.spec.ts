@@ -1,4 +1,4 @@
-import { mockClient } from '@aspida/axios'
+import mockClient from '@aspida/axios/dist/mockClient'
 import api from '../../aspida/samples/$api'
 
 describe('initialize', () => {
