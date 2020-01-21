@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.12.0](https://github.com/aspidajs/aspida/compare/v0.11.0...v0.12.0) (2020-01-20)
+
+
+### Features
+
+* **swagger:** integrate openapi 3.0 ([642c7a4](https://github.com/aspidajs/aspida/commit/642c7a4e7e3886bc2ea87ecda5feb1358ce6c647))
+* add aspida-path ([d798eba](https://github.com/aspidajs/aspida/commit/d798eba851e962703c91ae54b7a0710ab06e2b12))
+* add trailingSlash and refactor files ([5afb85c](https://github.com/aspidajs/aspida/commit/5afb85ca53418b80867895e94a281714fdad48d3))
+
+
+### Bug Fixes
+
+* **mock:** add trailingSlash ([8b90f83](https://github.com/aspidajs/aspida/commit/8b90f8337a8f69340e38284eb428d999df05eb79))
+* **mock:** separate mock client ([954ac8f](https://github.com/aspidajs/aspida/commit/954ac8f3855034d7ef6da76cf4f56fa43bc04c6a))
+
 ## [0.11.0](https://github.com/aspidajs/aspida/compare/v0.10.0...v0.11.0) (2020-01-18)
 
 

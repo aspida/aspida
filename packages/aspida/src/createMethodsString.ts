@@ -4,7 +4,13 @@ import { LowerHttpMethod, AspidaMethodParams } from './'
 
 type MethodsProperties = keyof AspidaMethodParams
 
-export default (target: string, indent: string, importName: string, newUrl: string) => {
+export default (
+  target: string,
+  indent: string,
+  importName: string,
+  newUrl: string,
+  trailingSlash: boolean
+) => {
   const source = new Project().addSourceFileAtPath(target)
   const chanks: string[] = []
   const methodsInterface = source.getInterface('Methods')
@@ -66,13 +72,12 @@ export default (target: string, indent: string, importName: string, newUrl: stri
             [key: string]: string
           })[typeInfo.resData.value] || 'json'
 
+    const quotation = newUrl.includes('${') ? '`' : "'"
     const tmpChanks = [
       `(${option(methodName)}) =>`,
-      `client.fetch<${resData(methodName)}${resHeaders(methodName)}>(prefix, ${
-        newUrl.includes('${') ? '`' : "'"
-      }${newUrl}${
-        newUrl.includes('${') ? '`' : "'"
-      }, '${methodName.toUpperCase()}'${request()}).${resMethodName()}()`
+      `client.fetch<${resData(methodName)}${resHeaders(methodName)}>(prefix, ${quotation}${newUrl}${
+        trailingSlash ? '/' : ''
+      }${quotation}, '${methodName.toUpperCase()}'${request()}).${resMethodName()}()`
     ]
 
     chanks.push(`${indent}  ${methodName}: ${tmpChanks[0]}

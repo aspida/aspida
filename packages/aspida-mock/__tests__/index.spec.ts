@@ -1,31 +1,46 @@
-import axiosClient from '@aspida/axios'
+import { mockClient } from '@aspida/axios'
 import api from '../../aspida/samples/$api'
-import mock from '../../aspida/samples/$mock'
 
 describe('initialize', () => {
-  const adapter = axiosClient()
+  const adapter = mockClient()
   const client = api(adapter)
 
-  afterEach(() => adapter.detachMock())
+  afterEach(() => adapter.detachRoutes())
 
   test('enabled mock', async () => {
+    adapter.attachRoutes([
+      {
+        path: '',
+        methods: { put: ({ query }) => ({ status: 200, resData: query }) }
+      }
+    ])
+
     const query = { aa: 1 }
-    adapter.attachMock(mock())
     const res = await client.$put({ query })
     expect(res).not.toBe(query)
     expect(res).toEqual(query)
   })
 
   test('get path through', async () => {
-    adapter.attachMock([])
-    await expect(client.$put({ query: { aa: 1 } })).rejects.toHaveProperty('response.status', 404)
+    adapter.attachRoutes([])
+    await expect(
+      client.get({ config: { baseURL: 'https://www.google.com/' } })
+    ).resolves.toHaveProperty('status', 200)
   })
 
   test('set delayTime', async () => {
     const delayMSec = 500
     const startTime = Date.now()
 
-    adapter.attachMock(mock(), { delayMSec })
+    adapter.attachRoutes(
+      [
+        {
+          path: '',
+          methods: { put: ({ query }) => ({ status: 200, resData: query }) }
+        }
+      ],
+      { delayMSec }
+    )
     await client.$put({ query: { aa: 1 } })
 
     const elapsedTime = Date.now() - startTime
@@ -35,15 +50,16 @@ describe('initialize', () => {
 
   test('enable log', async () => {
     const spyLog = jest.spyOn(console, 'log').mockImplementation(x => x)
+    const routes = [{ path: '', methods: { get: () => ({ status: 200 }) } }]
 
-    adapter.attachMock(mock(), { log: true })
+    adapter.attachRoutes(routes, { log: true })
     await client.get()
 
     expect(console.log).toHaveBeenCalled()
 
     spyLog.mockReset()
-    adapter.detachMock()
-    adapter.attachMock(mock())
+    adapter.detachRoutes()
+    adapter.attachRoutes(routes)
     await client.get()
     expect(console.log).not.toHaveBeenCalled()
 

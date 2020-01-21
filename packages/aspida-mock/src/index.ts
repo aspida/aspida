@@ -1,6 +1,6 @@
-import { AspidaMethods, HttpMethod, dataToURLString } from 'aspida'
+import { AspidaClient, AspidaMethods, HttpMethod, dataToURLString } from 'aspida'
 import { MockMethods, MockResponse } from './types'
-import callMockHandler from './callMockHandler'
+import callMockHandler, { hasMockHandler } from './callMockHandler'
 
 export const mockMethods = <T extends AspidaMethods>(methods: MockMethods<T>) => methods
 
@@ -22,9 +22,9 @@ export interface MockConfig {
   delayMSec?: number
 }
 
-export interface MockClient {
-  attachMock<T>(this: T, route: MockRoute[], config?: MockConfig): T
-  detachMock<T>(this: T): T
+export interface MockClient<U> extends AspidaClient<U> {
+  attachRoutes(routes: MockRoute[], config?: MockConfig): void
+  detachRoutes(): void
 }
 
 export interface MockRequestConfig {
@@ -35,4 +35,4 @@ export interface MockRequestConfig {
   query?: any
 }
 
-export { MockResponse, callMockHandler }
+export { MockResponse, callMockHandler, hasMockHandler }

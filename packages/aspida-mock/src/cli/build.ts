@@ -1,6 +1,5 @@
 import { BaseConfig } from 'aspida/dist/getConfig'
-import build from './buildRouteFile'
-import { Template } from './Template'
+import build, { Template } from './buildRouteFile'
 import { Command } from 'aspida/dist/cli/command'
 
 export class CommandToBuild implements Command {
@@ -38,7 +37,7 @@ export interface BuildIO {
 
 export class Build implements BuildCommand {
   run(config: BaseConfig, io: BuildIO) {
-    io.write(build(config.input))
+    io.write(build(config))
   }
 }
 

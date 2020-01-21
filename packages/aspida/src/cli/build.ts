@@ -1,6 +1,5 @@
 import { BaseConfig } from '../getConfig'
-import build from '../buildTemplate'
-import { Template } from '../build/template'
+import build, { Template } from '../buildTemplate'
 import { Command } from './command'
 
 export class CommandToBuild implements Command {

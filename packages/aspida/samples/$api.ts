@@ -110,21 +110,21 @@ const api = <U>(client: AspidaClient<U>) => {
         (await client.fetch<Methods7['get']['resData'], Methods7['get']['resHeaders']>(prefix, '/v2.0', 'GET', option, 'FormData').json()).data
     },
     get: (option?: { query?: Methods0['get']['query'], config?: U }) =>
-      client.fetch<Methods0['get']['resData']>(prefix, '/', 'GET', option).formData(),
+      client.fetch<Methods0['get']['resData']>(prefix, '', 'GET', option).formData(),
     $get: async (option?: { query?: Methods0['get']['query'], config?: U }) =>
-      (await client.fetch<Methods0['get']['resData']>(prefix, '/', 'GET', option).formData()).data,
+      (await client.fetch<Methods0['get']['resData']>(prefix, '', 'GET', option).formData()).data,
     post: (option: { data?: Methods0['post']['reqData'], query: Methods0['post']['query'], config?: U }) =>
-      client.fetch<Methods0['post']['resData']>(prefix, '/', 'POST', option).arrayBuffer(),
+      client.fetch<Methods0['post']['resData']>(prefix, '', 'POST', option).arrayBuffer(),
     $post: async (option: { data?: Methods0['post']['reqData'], query: Methods0['post']['query'], config?: U }) =>
-      (await client.fetch<Methods0['post']['resData']>(prefix, '/', 'POST', option).arrayBuffer()).data,
+      (await client.fetch<Methods0['post']['resData']>(prefix, '', 'POST', option).arrayBuffer()).data,
     put: (option: { query: Methods0['put']['query'], config?: U }) =>
-      client.fetch<Methods0['put']['resData']>(prefix, '/', 'PUT', option).json(),
+      client.fetch<Methods0['put']['resData']>(prefix, '', 'PUT', option).json(),
     $put: async (option: { query: Methods0['put']['query'], config?: U }) =>
-      (await client.fetch<Methods0['put']['resData']>(prefix, '/', 'PUT', option).json()).data,
+      (await client.fetch<Methods0['put']['resData']>(prefix, '', 'PUT', option).json()).data,
     delete: (option: { query: Methods0['delete']['query'], config?: U }) =>
-      client.fetch<Methods0['delete']['resData']>(prefix, '/', 'DELETE', option).blob(),
+      client.fetch<Methods0['delete']['resData']>(prefix, '', 'DELETE', option).blob(),
     $delete: async (option: { query: Methods0['delete']['query'], config?: U }) =>
-      (await client.fetch<Methods0['delete']['resData']>(prefix, '/', 'DELETE', option).blob()).data
+      (await client.fetch<Methods0['delete']['resData']>(prefix, '', 'DELETE', option).blob()).data
   }
 }
 

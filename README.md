@@ -1,3 +1,9 @@
+| [aspida] | [aspida-mock] | [openapi2aspida] | [pathpida] | [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] |
+| -------- | ------------- | ---------------- | ---------- | --------------- | ------------ | --------------- |
+
+
+<br />
+<br />
 <br />
 <br />
 <br />
@@ -28,14 +34,24 @@
   </a>
 </div>
 <br />
-<div align="center">Monorepo for <a href="https://github.com/aspidajs/aspida/">aspida</a> and related projects.</div>
+<div align="center">Monorepo for aspida and related projects.</div>
 <br />
 <br />
 
 ## Packages
 
-- [aspida](packages/aspida) - Type safe HTTP client wrapper for the browser and node.js.
-- [aspida-mock](packages/aspida-mock) - Type safe RESTful API mock for aspida.
-- [@aspida/axios](packages/aspida-axios) - [axios](https://github.com/axios/axios/) client for aspida.
-- [@aspida/ky](packages/aspida-ky) - [ky](https://github.com/sindresorhus/ky/) client for aspida.
-- [@aspida/fetch](packages/aspida-fetch) - [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) client for aspida.
+- [aspida] - Type safe HTTP client wrapper for the browser and node.js.
+- [aspida-mock] - Type safe RESTful API mock for aspida.
+- [openapi2aspida] - Convert OpenAPI 3.0 or Swagger 2.0 definitions into aspida.
+- [pathpida] - Type safe path generator like aspida.
+- [@aspida/axios] - [axios](https://github.com/axios/axios/) client for aspida.
+- [@aspida/ky] - [ky](https://github.com/sindresorhus/ky/) client for aspida.
+- [@aspida/fetch] - [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) client for aspida.
+
+[aspida]: packages/aspida
+[aspida-mock]: packages/aspida-mock
+[openapi2aspida]: packages/openapi2aspida
+[pathpida]: packages/pathpida
+[@aspida/axios]: packages/aspida-axios
+[@aspida/ky]: packages/aspida-ky
+[@aspida/fetch]: packages/aspida-fetch
