@@ -9,19 +9,22 @@ interface Query1 {
   fuga: string[]
 }
 
-
 const encode = (str: Parameters<typeof encodeURIComponent>[0]) =>
-  encodeURIComponent(str).replace(/[!'()~]|%20|%00/g, match => ({
-    '!': '%21',
-    "'": '%27',
-    '(': '%28',
-    ')': '%29',
-    '~': '%7E',
-    '%20': '+',
-    '%00': '\x00'
-  } as Record<string, string>)[match])
+  encodeURIComponent(str).replace(
+    /[!'()~]|%20|%00/g,
+    match =>
+      (({
+        '!': '%21',
+        "'": '%27',
+        '(': '%28',
+        ')': '%29',
+        '~': '%7E',
+        '%20': '+',
+        '%00': '\x00'
+      } as Record<string, string>)[match])
+  )
 
-const dataToURLString = (data: { [key: string]: any }) =>
+const dataToURLString = (data: Record<string, any>) =>
   Object.keys(data)
     .map(key =>
       Array.isArray(data[key])

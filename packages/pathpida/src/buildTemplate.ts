@@ -19,8 +19,9 @@ export default ({ input, baseURL, output, trailingSlash }: Config): Template => 
   const { api, imports } = createTemplateValues(input, trailingSlash)
 
   const text = `/* eslint-disable */
-${imports.map(i => i.replace(input, '.')).join('\n')}
-${api.includes('dataToURLString') ? dataToURLString : ''}
+${imports.map(i => i.replace(input, '.')).join('\n')}${
+    api.includes('dataToURLString') ? dataToURLString : ''
+  }
 const path = (baseURL?: string) => {
   const prefix = (baseURL === undefined ? '${baseURL}' : baseURL).replace(/\\/$/, '')
 
