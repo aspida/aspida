@@ -2,7 +2,7 @@ export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD' | 'PATCH' | 
 export type LowerHttpMethod = 'get' | 'post' | 'put' | 'delete' | 'head' | 'patch' | 'options'
 export type RequestType = 'FormData' | 'URLSearchParams' | 'ArrayBuffer' | 'Blob' | 'string' | 'any'
 
-type BasicHeaders = { [key: string]: string }
+type BasicHeaders = Record<string, string>
 
 export interface AspidaRequest<Config = any> {
   query?: any
@@ -47,7 +47,7 @@ export interface AspidaClient<Config> {
 export const headersToObject = (headers: Headers): any =>
   [...headers.entries()].reduce((prev, [key, val]) => ({ ...prev, [key]: val }), {})
 
-const dataToFormData = (data: { [key: string]: any }) => {
+const dataToFormData = (data: Record<string, any>) => {
   const formData = new FormData()
   Object.keys(data).forEach(key => {
     formData.append(key, data[key])
@@ -55,20 +55,23 @@ const dataToFormData = (data: { [key: string]: any }) => {
   return formData
 }
 
-const replacedChars: { [key: string]: string } = {
-  '!': '%21',
-  "'": '%27',
-  '(': '%28',
-  ')': '%29',
-  '~': '%7E',
-  '%20': '+',
-  '%00': '\x00'
-}
-
+// pathpida:dataToURLString ->
 const encode = (str: Parameters<typeof encodeURIComponent>[0]) =>
-  encodeURIComponent(str).replace(/[!'()~]|%20|%00/g, match => replacedChars[match])
+  encodeURIComponent(str).replace(
+    /[!'()~]|%20|%00/g,
+    match =>
+      (({
+        '!': '%21',
+        "'": '%27',
+        '(': '%28',
+        ')': '%29',
+        '~': '%7E',
+        '%20': '+',
+        '%00': '\x00'
+      } as Record<string, string>)[match])
+  )
 
-export const dataToURLString = (data: { [key: string]: any }) =>
+export const dataToURLString = (data: Record<string, any>) =>
   Object.keys(data)
     .map(key =>
       Array.isArray(data[key])
@@ -76,6 +79,7 @@ export const dataToURLString = (data: { [key: string]: any }) =>
         : `${encode(key)}=${encode(data[key])}`
     )
     .join('&')
+// <- pathpida:dataToURLString
 
 export const optionToRequest = (
   option?: AspidaParams,
