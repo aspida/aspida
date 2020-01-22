@@ -8,12 +8,12 @@ export interface BaseConfig {
 }
 
 interface ConfigFile {
-  input: string
+  input?: string
   baseURL?: string
   trailingSlash?: boolean
 }
 
-const defaultConfig = { input: 'apis', baseURL: '', trailingSlash: false }
+const defaultConfig: BaseConfig = { input: 'apis', baseURL: '', trailingSlash: false }
 
 export default (configPath = 'aspida.config.js'): BaseConfig[] => {
   if (fs.existsSync(configPath)) {
