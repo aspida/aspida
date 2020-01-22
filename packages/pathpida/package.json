@@ -1,6 +1,6 @@
 {
   "name": "pathpida",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Type safe path generator like aspida",
   "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
   "license": "MIT",
