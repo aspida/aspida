@@ -11,10 +11,7 @@ export default (input: string, trailingSlash: boolean) => {
     if (queryRegExp.test(fileData)) {
       importName = `Query${imports.length}`
       imports.push(
-        fileData
-          .match(queryRegExp)![0]
-          .replace('export ', '')
-          .replace('Query', importName)
+        (fileData.match(queryRegExp) || [])[0].replace('export ', '').replace('Query', importName)
       )
     }
     return importName
