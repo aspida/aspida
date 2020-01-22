@@ -47,27 +47,25 @@
 - Using [npm](https://www.npmjs.com/):
 
   ```sh
-  $ npm install pathpida
+  $ npm install pathpida --save-dev
   ```
 
 - Using [Yarn](https://yarnpkg.com/):
 
   ```sh
-  $ yarn add pathpida
+  $ yarn add pathpida --dev
   ```
 
 ### Make HTTP request from application
 
-`aspida.config.js`
+`pathpida.config.js`
 
 ```js
 module.exports = {
-  pathpida: {
-    input: "pages",
-    output: "types",
-    baseURL: "https://example.com/api",
-    trailingSlash: false
-  }
+  input: "pages",
+  output: "types",
+  baseURL: "https://example.com/api",
+  trailingSlash: false
 }
 ```
 
