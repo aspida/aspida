@@ -8,7 +8,7 @@ const basePath = 'packages/pathpida'
 describe('cli test', () => {
   test('main', () => {
     const spyLog = jest.spyOn(fs, 'writeFileSync').mockImplementation(x => x)
-    const { input, output, baseURL, trailingSlash } = getConfig(`${basePath}/aspida.config.js`)[0]
+    const { input, output, baseURL, trailingSlash } = getConfig(`${basePath}/pathpida.config.js`)[0]
     const inputDir = `${basePath}/${input}`
     const outputDir = `${basePath}/${output}`
 
