@@ -2,12 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.12.1](https://github.com/aspidajs/aspida/compare/v0.12.0...v0.12.1) (2020-01-22)
+
+
+### Features
+
+* **pathpida:** delete import from $path.ts ([0ae29a7](https://github.com/aspidajs/aspida/commit/0ae29a75587898eb7085d4429a6372134850ff1d))
+* **pathpida:** delete question from query ([3388adf](https://github.com/aspidajs/aspida/commit/3388adfe482d6b82fcb0fb0c55b037cee5688823))
+
+
+### Bug Fixes
+
+* **mock:** fix baseURL and release v0.2.3 ([c32c932](https://github.com/aspidajs/aspida/commit/c32c9329afb77ef553d4125a209a449dae7d9967))
+* **mock:** release v0.2.2 ([cb97a53](https://github.com/aspidajs/aspida/commit/cb97a5368101c458255db538462ae4082a1eeb60))
+
 ## [0.12.0](https://github.com/aspidajs/aspida/compare/v0.11.0...v0.12.0) (2020-01-20)
 
 
 ### Features
 
-* **swagger:** integrate openapi 3.0 ([642c7a4](https://github.com/aspidajs/aspida/commit/642c7a4e7e3886bc2ea87ecda5feb1358ce6c647))
+* **openapi:** integrate openapi 3.0 ([642c7a4](https://github.com/aspidajs/aspida/commit/642c7a4e7e3886bc2ea87ecda5feb1358ce6c647))
 * add aspida-path ([d798eba](https://github.com/aspidajs/aspida/commit/d798eba851e962703c91ae54b7a0710ab06e2b12))
 * add trailingSlash and refactor files ([5afb85c](https://github.com/aspidajs/aspida/commit/5afb85ca53418b80867895e94a281714fdad48d3))
 
