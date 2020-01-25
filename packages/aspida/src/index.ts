@@ -55,7 +55,6 @@ const dataToFormData = (data: Record<string, any>) => {
   return formData
 }
 
-// pathpida:dataToURLString ->
 const encode = (str: Parameters<typeof encodeURIComponent>[0]) =>
   encodeURIComponent(str).replace(
     /[!'()~]|%20|%00/g,
@@ -79,7 +78,6 @@ export const dataToURLString = (data: Record<string, any>) =>
         : `${encode(key)}=${encode(data[key])}`
     )
     .join('&')
-// <- pathpida:dataToURLString
 
 export const optionToRequest = (
   option?: AspidaParams,

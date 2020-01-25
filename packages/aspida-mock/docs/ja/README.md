@@ -52,7 +52,7 @@
 
 ## 使い方
 
-### インストール (2020/01/18: @aspida/axios のみモック対応)
+### インストール (@aspida/axios のみモック対応)
 
 - [npm](https://www.npmjs.com/) を使ってインストール:
 
@@ -79,7 +79,7 @@ aspida の型定義ファイルで mockMethods を export する
 import { mockMethods } from 'aspida-mock'
 
 export interface Methods {
-  get: {
+  post: {
     query: { id: number }
     reqHeaders: { val: string }
     reqData: { name: string }
@@ -92,7 +92,7 @@ export interface Methods {
 }
 
 export default mockMethods<Methods>({
-  get: ({ query, reqHeaders, reqData }) => ({
+  post: ({ query, reqHeaders, reqData }) => ({
     status: 200,
     resHeaders: { token: reqHeaders.val },
     resData: {
@@ -123,14 +123,15 @@ $ npm run build
 
 <!-- prettier-ignore -->
 ```ts
-import aspidaClient, { mockClient } from '@aspida/axios'
+import aspidaClient from '@aspida/axios'
+import mockClient from '@aspida/axios/dist/mockClient'
 import api from './apis/$api'
 import mock from './apis/$mock'
 
 const client = process.env.NODE_ENV === 'development' ? mock(mockClient()) : api(aspidaClient())
 
 ;(async () => {
-  const res = await client.users.get({
+  const res = await client.users.post({
     query: { id: 0 },
     headers: { val: 'hoge' },
     data: { name: 'fuga' }
@@ -147,6 +148,70 @@ const client = process.env.NODE_ENV === 'development' ? mock(mockClient()) : api
 })()
 ```
 
+### ミドルウェア
+
+全てのリクエストについて、mockMethods に到達する前に処理を挿入することができます。
+
+`apis/@middleware.ts`
+
+```ts
+export default [
+  (req, _res, next) => {
+    next({ ...req, query: { hoge: req.query.hoge + 1 } })
+  },
+  (req, res) => {
+    res({ status: 200, resData: { fuga: req.query.hoge + 2 } })
+  }
+]
+```
+
+`apis/users.ts`
+
+<!-- prettier-ignore -->
+```ts
+import { mockMethods } from 'aspida-mock'
+
+export interface Methods {
+  get: {
+    query: { hoge: number }
+    resData: {
+      fuga: number
+    }
+  }
+}
+
+export default mockMethods<Methods>({
+  get: ({ query }) => ({
+    status: 200,
+    resData: { fuga: query.hoge + 4 }
+  })
+})
+```
+
+`index.ts`
+
+<!-- prettier-ignore -->
+```ts
+import mockClient from '@aspida/axios/dist/mockClient'
+import mock from './apis/$mock'
+
+const client = mock(mockClient())
+
+;(async () => {
+  const res = await client.users.get({
+    query: { hoge: 0 }
+  })
+
+  console.log(res)
+  /*
+  {
+    status: 200,
+    data: { fuga: 3 }
+  }
+  */
+})()
+```
+
 ### オプション
 
 aspida-mock ではいくつかのオプションを利用することができます。
@@ -157,7 +222,7 @@ aspida-mock ではいくつかのオプションを利用することができ�
 
 <!-- prettier-ignore -->
 ```ts
-import aspida from '@aspida/axios'
+import mockClient from '@aspida/axios/dist/mockClient'
 import mock from './apis/$mock'
 
 const client = mock(mockClient(), { delayMSec: 500 })
@@ -175,7 +240,7 @@ const client = mock(mockClient(), { delayMSec: 500 })
 
 <!-- prettier-ignore -->
 ```ts
-import aspida from '@aspida/axios'
+import mockClient from '@aspida/axios/dist/mockClient'
 import mock from './apis/$mock'
 
 const client = mock(mockClient(), { log: true })

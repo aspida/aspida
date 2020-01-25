@@ -52,7 +52,7 @@
 
 ## Usage
 
-### Installation (v0.1.0: @aspida/axios v0.2.3~ only mock compatible)
+### Installation (@aspida/axios only mock compatible)
 
 - Using [npm](https://www.npmjs.com/):
 
@@ -79,7 +79,7 @@ Export mockMethods in aspida type definition file.
 import { mockMethods } from 'aspida-mock'
 
 export interface Methods {
-  get: {
+  post: {
     query: { id: number }
     reqHeaders: { val: string }
     reqData: { name: string }
@@ -92,7 +92,7 @@ export interface Methods {
 }
 
 export default mockMethods<Methods>({
-  get: ({ query, reqHeaders, reqData }) => ({
+  post: ({ query, reqHeaders, reqData }) => ({
     status: 200,
     resHeaders: { token: reqHeaders.val },
     resData: {
@@ -131,7 +131,7 @@ import mock from './apis/$mock'
 const client = process.env.NODE_ENV === 'development' ? mock(mockClient()) : api(aspidaClient())
 
 ;(async () => {
-  const res = await client.users.get({
+  const res = await client.users.post({
     query: { id: 0 },
     headers: { val: 'hoge' },
     data: { name: 'fuga' }
@@ -143,6 +143,70 @@ const client = process.env.NODE_ENV === 'development' ? mock(mockClient()) : api
     status: 200,
     headers: { token: 'hoge' },
     data: { id: 0, name: 'fuga' }
+  }
+  */
+})()
+```
+
+### Middleware
+
+For every request, you can insert processing before reaching mockMethods.
+
+`apis/@middleware.ts`
+
+```ts
+export default [
+  (req, _res, next) => {
+    next({ ...req, query: { hoge: req.query.hoge + 1 } })
+  },
+  (req, res) => {
+    res({ status: 200, resData: { fuga: req.query.hoge + 2 } })
+  }
+]
+```
+
+`apis/users.ts`
+
+<!-- prettier-ignore -->
+```ts
+import { mockMethods } from 'aspida-mock'
+
+export interface Methods {
+  get: {
+    query: { hoge: number }
+    resData: {
+      fuga: number
+    }
+  }
+}
+
+export default mockMethods<Methods>({
+  get: ({ query }) => ({
+    status: 200,
+    resData: { fuga: query.hoge + 4 }
+  })
+})
+```
+
+`index.ts`
+
+<!-- prettier-ignore -->
+```ts
+import mockClient from '@aspida/axios/dist/mockClient'
+import mock from './apis/$mock'
+
+const client = mock(mockClient())
+
+;(async () => {
+  const res = await client.users.get({
+    query: { hoge: 0 }
+  })
+
+  console.log(res)
+  /*
+  {
+    status: 200,
+    data: { fuga: 3 }
   }
   */
 })()
