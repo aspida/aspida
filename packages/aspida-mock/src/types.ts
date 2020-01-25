@@ -2,7 +2,8 @@ import { LowerHttpMethod, AspidaMethods, AspidaMethodParams } from 'aspida'
 
 type RequestParams<T extends AspidaMethods[LowerHttpMethod]> = T extends AspidaMethodParams
   ? {
-      values: { [key: string]: string | number }
+      path: string
+      values: Record<string, string | number>
       query: T['query'] extends Record<string, any> | undefined ? T['query'] : undefined
       reqData: T['reqData'] extends Record<string, any> | undefined ? T['reqData'] : undefined
       reqHeaders: T['reqHeaders'] extends Record<string, any> | undefined
@@ -10,6 +11,7 @@ type RequestParams<T extends AspidaMethods[LowerHttpMethod]> = T extends AspidaM
         : undefined
     }
   : {
+      path: string
       values: undefined
       query: undefined
       reqData: undefined
@@ -47,6 +49,14 @@ type ErrorResponse = {
   resHeaders?: any
 }
 
+export type PartialResponse =
+  | {
+      status: Status['ok']
+      resData?: any
+      resHeaders?: any
+    }
+  | ErrorResponse
+
 export type MockResponse<
   K extends AspidaMethods[LowerHttpMethod] = { resHeaders: {}; resData: {} }
 > = K extends AspidaMethodParams
@@ -65,6 +75,7 @@ export type MockMethods<T extends AspidaMethods> = {
   [K in keyof T]?: T[K] extends undefined
     ? undefined
     : ({
+        path,
         values,
         query,
         reqData,

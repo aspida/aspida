@@ -48,6 +48,64 @@ describe('initialize', () => {
     expect(elapsedTime).toBeLessThan(delayMSec + 20)
   })
 
+  test('middleware path through', async () => {
+    const spyLog = jest.spyOn(console, 'log').mockImplementation(x => x)
+    adapter.attachRoutes(
+      [
+        {
+          path: '',
+          methods: { get: ({ query }) => ({ status: 200, resData: query }) }
+        }
+      ],
+      {
+        middleware: [
+          (_req, _res, next) => {
+            console.log('a')
+            next()
+          },
+          (_req, _res, next) => {
+            console.log('b')
+            next()
+          }
+        ]
+      }
+    )
+
+    await client.$get()
+
+    expect(console.log).toHaveBeenNthCalledWith(1, 'a')
+    expect(console.log).toHaveBeenNthCalledWith(2, 'b')
+
+    spyLog.mockReset()
+    spyLog.mockRestore()
+  })
+
+  test('intercept the response with middleware', async () => {
+    adapter.attachRoutes(
+      [
+        {
+          path: '',
+          methods: { put: ({ query }) => ({ status: 200, resData: query }) }
+        }
+      ],
+      {
+        middleware: [
+          (req, _res, next) => {
+            next({ ...req, query: { aa: req.query.aa + 2 } })
+          },
+          (req, res) => {
+            res({ status: 200, resData: { aa: req.query.aa + 4 } })
+          },
+          (req, res) => {
+            res({ status: 200, resData: { aa: req.query.aa + 8 } })
+          }
+        ]
+      }
+    )
+
+    expect(await client.$put({ query: { aa: 1 } })).toEqual({ aa: 7 })
+  })
+
   test('enable log', async () => {
     const spyLog = jest.spyOn(console, 'log').mockImplementation(x => x)
     const routes = [{ path: '', methods: { get: () => ({ status: 200 }) } }]
