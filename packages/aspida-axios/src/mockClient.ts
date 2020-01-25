@@ -49,7 +49,7 @@ export default (
           const customConfig = toMockConfig(config)
 
           try {
-            const result = await callMockHandler(customConfig, routes)
+            const result = await callMockHandler(customConfig, routes, mockConfig?.middleware)
 
             if (!result && originalAdapter) {
               originalAdapter(config).then(resolve, reject)
