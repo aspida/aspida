@@ -10,7 +10,7 @@
 <br />
 <br />
 <div align="center">
-  <img src="https://aspidajs.github.io/aspida/logos/svg/black.svg" alt="aspida" title="aspida" width="600" />
+  <img src="https://aspidajs.github.io/aspida/logos/svg/pathpida_black.svg" alt="pathpida" title="pathpida" width="600" />
 </div>
 <br />
 <br />
