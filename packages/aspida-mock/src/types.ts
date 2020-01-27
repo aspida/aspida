@@ -1,8 +1,9 @@
-import { LowerHttpMethod, AspidaMethods, AspidaMethodParams } from 'aspida'
+import { HttpMethod, LowerHttpMethod, AspidaMethods, AspidaMethodParams } from 'aspida'
 
 type RequestParams<T extends AspidaMethods[LowerHttpMethod]> = T extends AspidaMethodParams
   ? {
       path: string
+      method: HttpMethod
       values: Record<string, string | number>
       query: T['query'] extends Record<string, any> | undefined ? T['query'] : undefined
       reqData: T['reqData'] extends Record<string, any> | undefined ? T['reqData'] : undefined
@@ -12,7 +13,8 @@ type RequestParams<T extends AspidaMethods[LowerHttpMethod]> = T extends AspidaM
     }
   : {
       path: string
-      values: undefined
+      method: HttpMethod
+      values: Record<string, string | number>
       query: undefined
       reqData: undefined
       reqHeaders: undefined
@@ -76,6 +78,7 @@ export type MockMethods<T extends AspidaMethods> = {
     ? undefined
     : ({
         path,
+        method,
         values,
         query,
         reqData,

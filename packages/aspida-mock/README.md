@@ -155,14 +155,16 @@ For every request, you can insert processing before reaching mockMethods.
 `apis/@middleware.ts`
 
 ```ts
-export default [
+import { mockMiddleware } from "aspida-mock"
+
+export default mockMiddleware([
   (req, _res, next) => {
     next({ ...req, query: { hoge: req.query.hoge + 1 } })
   },
   (req, res) => {
     res({ status: 200, resData: { fuga: req.query.hoge + 2 } })
   }
-]
+])
 ```
 
 `apis/users.ts`
