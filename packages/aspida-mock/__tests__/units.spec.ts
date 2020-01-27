@@ -1,6 +1,6 @@
 import { HttpMethod } from 'aspida'
 import { createValues } from '../src/utils'
-import { printLog } from '../src/'
+import { printLog, MockRequestConfigAndValues } from '../src/'
 
 describe('unit tests', () => {
   test('createValues', () => {
@@ -66,7 +66,7 @@ describe('unit tests', () => {
     ]
 
     configs.forEach(c => {
-      printLog(c.config, c.status)
+      printLog(c.config as MockRequestConfigAndValues, c.status)
       expect(console.log).toHaveBeenLastCalledWith(c.result)
     })
 

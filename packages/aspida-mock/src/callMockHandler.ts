@@ -1,5 +1,5 @@
 import { LowerHttpMethod, HttpMethod } from 'aspida'
-import { MockRequestConfig, MockRoute, MiddlewareHandler } from './'
+import { MockRequestConfig, MockRequestConfigAndValues, MockRoute, MiddlewareHandler } from './'
 import { MockResponse, PartialResponse } from './types'
 import { createPathRegExp, copyData, createValues } from './utils'
 
@@ -22,12 +22,9 @@ export default async (
 
   if (!route) return
 
-  let params: any = {
-    path: config.path,
-    values: createValues(route.path, config.path),
-    query: config.query,
-    reqHeaders: config.reqHeaders,
-    reqData: config.reqData
+  let params: MockRequestConfigAndValues = {
+    ...config,
+    values: createValues(route.path, config.path)
   }
 
   if (middleware) {
@@ -39,7 +36,7 @@ export default async (
       }: {
         isNext: boolean
         response?: PartialResponse
-        config?: MockRequestConfig
+        config?: MockRequestConfigAndValues
       } = await new Promise(resolve => {
         middleware[i](
           params,
