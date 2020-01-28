@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.12.2](https://github.com/aspidajs/aspida/compare/v0.12.1...v0.12.2) (2020-01-28)
+
+
+### Features
+
+* **mock:** add middleware ([de47b61](https://github.com/aspidajs/aspida/commit/de47b61131aa31beba744d814f412681712971df))
+* **openapi:** support openapi.json of strapi ([3d18e16](https://github.com/aspidajs/aspida/commit/3d18e1662bdf895b752d4535b480c041bc100c53))
+
+
+### Bug Fixes
+
+* **aspida:** support files with the same name ([d2a8ca4](https://github.com/aspidajs/aspida/commit/d2a8ca4b137234ca79d1590dd36e943d1d87fad9))
+* **deps:** bump rimraf from 3.0.0 to 3.0.1 ([8ac2c61](https://github.com/aspidajs/aspida/commit/8ac2c613ca131b804c57549287243063362805a9))
+* **mock:** add method param and mockMiddleware ([2ff522b](https://github.com/aspidajs/aspida/commit/2ff522bbd1c246521136fb2273ce3c4dd3438391))
+
 ### [0.12.1](https://github.com/aspidajs/aspida/compare/v0.12.0...v0.12.1) (2020-01-22)
 
 
