@@ -26,12 +26,12 @@ export default (input: string, trailingSlash: boolean) => {
 
     fs.readdirSync(targetDir)
       .sort()
-      .forEach(file => {
+      .forEach((file, _, dirList) => {
         if (file.startsWith('$') || file.startsWith('@')) return
 
         const basename = path.basename(file, '.ts')
         let valFn = `${indent}${basename
-          .replace(/(-|\.|!| |'|\*|\(|\))/g, '_')
+          .replace(/[^a-zA-Z0-9$_]/g, '_')
           .replace(/^(\d)/, '$$$1')}: {\n<% next %>\n${indent}}`
         let newUrl = `${url}/${basename}`
 
@@ -60,12 +60,18 @@ export default (input: string, trailingSlash: boolean) => {
               indent,
               newUrl,
               valFn.replace('<% next %>', '<% props %>'),
-              fs.existsSync(indexPath)
+              dirList.includes(`${file}.ts`)
+                ? getMethodsString(`${importBasePath}/${file}`, `${target}.ts`, indent, newUrl)
+                : fs.existsSync(indexPath)
                 ? getMethodsString(`${importBasePath}/${file}/index`, indexPath, indent, newUrl)
                 : undefined
             )
           )
-        } else if (path.extname(file) === '.ts' && file !== 'index.ts') {
+        } else if (
+          path.extname(file) === '.ts' &&
+          file !== 'index.ts' &&
+          !dirList.includes(basename)
+        ) {
           props.push(
             valFn.replace(
               '<% next %>',

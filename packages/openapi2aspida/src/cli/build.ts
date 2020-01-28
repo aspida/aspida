@@ -1,6 +1,7 @@
+import { OpenAPI } from 'openapi-types'
 import { Config } from '../getConfig'
 import build, { Template } from '../buildTemplate'
-import { Command } from 'aspida/dist/cli/command'
+import { Command } from './command'
 
 export class CommandToBuild implements Command {
   static getFactory(configs: Config[], io: BuildIO) {
@@ -18,10 +19,8 @@ export class CommandToBuild implements Command {
     private readonly io: BuildIO
   ) {}
 
-  exec() {
-    this.configs.forEach(config => {
-      this.command.run(config, this.io)
-    })
+  async exec() {
+    await Promise.all(this.configs.map(config => this.command.run(config, this.io)))
   }
 }
 
@@ -31,15 +30,15 @@ interface BuildCommand {
 
 export interface BuildIO {
   write(outputDir: string, trailingSlash: boolean, template: Template): void
-  remove(filePath: string, callback: () => void): void
-  watch(input: string, callback: () => void): void
+  remove(filePath: string): Promise<void>
+  watch(input: string | OpenAPI.Document, callback: () => void): void
 }
 
 export class Build implements BuildCommand {
   async run(config: Config, io: BuildIO) {
-    const template = await build(config.inputFile, config.isYaml)
-
-    io.remove(config.output, () => io.write(config.output, config.trailingSlash, template))
+    const template = await build(config.input, config.isYaml)
+    await io.remove(config.output)
+    io.write(config.output, config.trailingSlash, template)
   }
 }
 
@@ -49,6 +48,6 @@ export class Watch implements BuildCommand {
 
   async run(config: Config, io: BuildIO) {
     await this.build.run(config, io)
-    io.watch(config.inputFile, () => this.build.run(config, io))
+    io.watch(config.input, () => this.build.run(config, io))
   }
 }

@@ -2,9 +2,11 @@
 import { OpenAPIV3 } from 'openapi-types'
 import { Template } from './buildTemplate'
 
+const defKey2defName = (key: string) => key.replace(/[^a-zA-Z0-9$_]/g, '_')
 const $ref2TypeName = (ref: string) => ref.split('/').pop() || ''
 // $ref2Type: replace /Array$/ for Swagger 2.0
-const $ref2Type = (ref: string) => `Types.${$ref2TypeName(ref).replace(/Array$/, '[]')}`
+const $ref2Type = (ref: string) =>
+  `Types.${defKey2defName($ref2TypeName(ref)).replace(/Array$/, '[]')}`
 const isRefObject = (
   params:
     | OpenAPIV3.ReferenceObject
@@ -82,6 +84,7 @@ const schema2value = (
 
 const methodNames = ['get', 'post', 'put', 'delete', 'head', 'options', 'patch'] as const
 const getDirName = (text: string /* , methods: OpenAPIV3.PathItemObject */) => {
+  if (text === '*') return '_any'
   if (!/^{/.test(text)) return text
 
   const valName = text.slice(1, -1)
@@ -95,12 +98,14 @@ const parameters2interfaces = (params: OpenAPIV3.ComponentsObject['parameters'])
   Object.keys(params)
     .map(defKey => {
       const target = params[defKey]
+      const defName = defKey2defName(defKey)
+
       return isRefObject(target)
         ? `
-export interface ${defKey} extends ${$ref2Type(target.$ref)} {}
+export interface ${defName} extends ${$ref2Type(target.$ref)} {}
 `
         : `
-export interface ${defKey} {
+export interface ${defName} {
   ${getPropertyName(target.name)}: ${target.schema ? schema2value(target.schema, '') : 'null'}
 }
 `
@@ -112,21 +117,23 @@ const schemas2interfaces = (schemas: OpenAPIV3.ComponentsObject['schemas']) =>
   Object.keys(schemas)
     .map(defKey => {
       const target = schemas[defKey]
+      const defName = defKey2defName(defKey)
+
       return isRefObject(target)
         ? `
-export interface ${defKey} extends ${$ref2Type(target.$ref)} {}
+export interface ${defName} extends ${$ref2Type(target.$ref)} {}
 `
         : isArraySchema(target)
         ? `
-export type ${defKey} = ${array2value(target, '')}
+export type ${defName} = ${array2value(target, '')}
 `
         : target.enum
         ? `
-export type ${defKey} = ${enum2value(target.enum)}
+export type ${defName} = ${enum2value(target.enum)}
 `
         : target.allOf
         ? `
-export interface ${defKey} extends ${target.allOf
+export interface ${defName} extends ${target.allOf
             .filter(s => isRefObject(s))
             .map(s => isRefObject(s) && $ref2Type(s.$ref))
             .join(', ')} ${target.allOf
@@ -135,7 +142,7 @@ export interface ${defKey} extends ${target.allOf
             .join('')}
 `
         : `
-export interface ${defKey} ${object2value(target.properties, '')}
+export interface ${defName} ${object2value(target.properties, '')}
 `
     })
     .join('')

@@ -6,7 +6,8 @@ import mock0 from './v2.0/index'
 import mock1 from './v1.1/users/_userId@number'
 import mock2 from './v1.1/3.1'
 import mock3 from './v1.1/2/_hogeId@HogeId/test-4/_fugaId'
-import mock4 from './index'
+import mock4 from './v1.1'
+import mock5 from './index'
 
 export const mockRoutes = () => [
   {
@@ -26,8 +27,12 @@ export const mockRoutes = () => [
     methods: mock3
   },
   {
-    path: '',
+    path: '/v1.1',
     methods: mock4
+  },
+  {
+    path: '',
+    methods: mock5
   }
 ]
 
