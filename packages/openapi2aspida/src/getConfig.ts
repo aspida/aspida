@@ -1,8 +1,9 @@
 import path from 'path'
+import { OpenAPI } from 'openapi-types'
 import getBaseConfig, { BaseConfig } from 'aspida/dist/getConfig'
 
 export interface Config {
-  inputFile: string
+  input: string | OpenAPI.Document
   output: string
   trailingSlash: boolean
   isYaml: boolean
@@ -16,15 +17,15 @@ interface ConfigFile extends BaseConfig {
 }
 
 const createConfig = (config: ConfigFile) => {
-  const inputFile = config.openapi?.inputFile || 'openapi.json'
+  const input = config.openapi?.inputFile || 'openapi.json'
 
   return {
-    inputFile,
+    input,
     output: config.input,
     trailingSlash: config.trailingSlash,
     isYaml:
       config.openapi?.yaml === undefined
-        ? path.extname(inputFile).slice(1) === 'yaml'
+        ? path.extname(input).slice(1) === 'yaml'
         : config.openapi?.yaml
   }
 }
