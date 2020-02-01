@@ -100,7 +100,6 @@ export interface BaseMixModel {
   previewUrl: string
   includeInNewsFeed: boolean
   displayItemUpdatedTime?: string
-  image?: ImageModel
 }
 
 export interface ModelMixV3 extends BaseMixModel {
@@ -130,7 +129,6 @@ export interface AudioModel {
 
 export interface ModelCard {
   id: number
-  type: CardEnumModel
   createdByLabel?: string
   created: string
   postedTime: string
@@ -145,17 +143,12 @@ export interface ModelCard {
   sourceName?: string
   url?: string
   abstract?: string
-  image?: ImageModel
-  audio?: AudioModel
-  styles?: CardStyleModel
-  author?: CardAuthorModel
 }
 
 export interface CardAuthorModel {
   type: 'curate-backend' | 'api'
   name: string
   email?: string
-  image?: ImageModel
 }
 
 export type ReactionEnumModel = 'like' | 'love' | 'haha' | 'wow' | 'sad' | 'angry'

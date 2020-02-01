@@ -6,7 +6,6 @@ export interface Category {
 
 export interface Pet {
   id?: number
-  category?: Category
   name: string
   photoUrls: string[]
   tags?: Tag[]

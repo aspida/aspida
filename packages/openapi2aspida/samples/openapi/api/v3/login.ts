@@ -7,7 +7,6 @@ export interface Methods {
 
     resData: Types.UserInfo & {
       token: string
-      settings?: Types.UserSettings
     }
 
     reqData: {

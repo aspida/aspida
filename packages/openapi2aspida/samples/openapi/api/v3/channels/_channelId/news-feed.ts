@@ -18,11 +18,10 @@ export interface Methods {
         author?: {
           type?: string
           name?: string
-          image?: Types.ImageModel
         }
         storyId?: number
         reactions?: Types.ReactionCountModel & {
-          myReaction?: Types.ReactionEnumModel
+
         }
       }[]
     }

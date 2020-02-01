@@ -8,14 +8,13 @@ export interface Methods {
     resData: {
       action?: 'add' | 'remove' | 'replace'
       reactions?: Types.ReactionCountModel & {
-        myReaction?: Types.ReactionEnumModel
+
       }
-      previousStatus?: Types.ReactionEnumModel
       userType?: 'anonymous' | 'unique'
     }
 
     reqData: {
-      reaction?: Types.ReactionEnumModel
+
     }
   }
 }

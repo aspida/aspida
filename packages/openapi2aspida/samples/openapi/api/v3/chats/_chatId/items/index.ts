@@ -25,7 +25,6 @@ export interface Methods {
     }
 
     reqData: {
-      type: Types.CardEnumModel
       title?: string
       abstract?: string
       sourceName?: string

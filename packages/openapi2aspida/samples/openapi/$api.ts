@@ -44,15 +44,14 @@ import { Methods as Methods40 } from './api/v3/info'
 import { Methods as Methods41 } from './api/v3/login'
 import { Methods as Methods42 } from './api/v3/logout'
 import { Methods as Methods43 } from './api/v3/me'
-import { Methods as Methods44 } from './api/v3/mixes'
-import { Methods as Methods45 } from './api/v3/organisation/index'
-import { Methods as Methods46 } from './api/v3/organisation/users'
-import { Methods as Methods47 } from './api/v3/stories/_storyId/items/index'
-import { Methods as Methods48 } from './api/v3/stories/_storyId/items/_itemId/index'
-import { Methods as Methods49 } from './api/v3/stories/_storyId/items/_itemId/reaction'
-import { Methods as Methods50 } from './api/v3/user/index'
-import { Methods as Methods51 } from './api/v3/user/_userId'
-import { Methods as Methods52 } from './api/v3/user/profile'
+import { Methods as Methods44 } from './api/v3/organisation/index'
+import { Methods as Methods45 } from './api/v3/organisation/users'
+import { Methods as Methods46 } from './api/v3/stories/_storyId/items/index'
+import { Methods as Methods47 } from './api/v3/stories/_storyId/items/_itemId/index'
+import { Methods as Methods48 } from './api/v3/stories/_storyId/items/_itemId/reaction'
+import { Methods as Methods49 } from './api/v3/user/index'
+import { Methods as Methods50 } from './api/v3/user/_userId'
+import { Methods as Methods51 } from './api/v3/user/profile'
 
 const api = <T>(client: AspidaClient<T>) => {
   const prefix = (client.baseURL === undefined ? 'https://tchop-staging.com' : client.baseURL).replace(/\/$/, '')
@@ -376,63 +375,57 @@ const api = <T>(client: AspidaClient<T>) => {
           $get: async (option?: { headers?: Methods43['get']['reqHeaders'], config?: T }) =>
             (await client.fetch<Methods43['get']['resData']>(prefix, '/api/v3/me', 'GET', option).json()).data
         },
-        mixes: {
-          get: (option: { query: Methods44['get']['query'], config?: T }) =>
-            client.fetch<Methods44['get']['resData']>(prefix, '/api/v3/mixes', 'GET', option).json(),
-          $get: async (option: { query: Methods44['get']['query'], config?: T }) =>
-            (await client.fetch<Methods44['get']['resData']>(prefix, '/api/v3/mixes', 'GET', option).json()).data
-        },
         organisation: {
           users: {
-            get: (option: { query: Methods46['get']['query'], headers?: Methods46['get']['reqHeaders'], config?: T }) =>
-              client.fetch<Methods46['get']['resData']>(prefix, '/api/v3/organisation/users', 'GET', option).json(),
-            $get: async (option: { query: Methods46['get']['query'], headers?: Methods46['get']['reqHeaders'], config?: T }) =>
-              (await client.fetch<Methods46['get']['resData']>(prefix, '/api/v3/organisation/users', 'GET', option).json()).data
+            get: (option: { query: Methods45['get']['query'], headers?: Methods45['get']['reqHeaders'], config?: T }) =>
+              client.fetch<Methods45['get']['resData']>(prefix, '/api/v3/organisation/users', 'GET', option).json(),
+            $get: async (option: { query: Methods45['get']['query'], headers?: Methods45['get']['reqHeaders'], config?: T }) =>
+              (await client.fetch<Methods45['get']['resData']>(prefix, '/api/v3/organisation/users', 'GET', option).json()).data
           },
-          get: (option?: { headers?: Methods45['get']['reqHeaders'], config?: T }) =>
-            client.fetch<Methods45['get']['resData']>(prefix, '/api/v3/organisation', 'GET', option).json(),
-          $get: async (option?: { headers?: Methods45['get']['reqHeaders'], config?: T }) =>
-            (await client.fetch<Methods45['get']['resData']>(prefix, '/api/v3/organisation', 'GET', option).json()).data
+          get: (option?: { headers?: Methods44['get']['reqHeaders'], config?: T }) =>
+            client.fetch<Methods44['get']['resData']>(prefix, '/api/v3/organisation', 'GET', option).json(),
+          $get: async (option?: { headers?: Methods44['get']['reqHeaders'], config?: T }) =>
+            (await client.fetch<Methods44['get']['resData']>(prefix, '/api/v3/organisation', 'GET', option).json()).data
         },
         stories: {
           _storyId: (val9: number | string) => ({
             items: {
               _itemId: (val10: number | string) => ({
                 reaction: {
-                  post: (option: { data: Methods49['post']['reqData'], headers?: Methods49['post']['reqHeaders'], config?: T }) =>
-                    client.fetch<Methods49['post']['resData']>(prefix, `/api/v3/stories/${val9}/items/${val10}/reaction`, 'POST', option).json(),
-                  $post: async (option: { data: Methods49['post']['reqData'], headers?: Methods49['post']['reqHeaders'], config?: T }) =>
-                    (await client.fetch<Methods49['post']['resData']>(prefix, `/api/v3/stories/${val9}/items/${val10}/reaction`, 'POST', option).json()).data
+                  post: (option: { data: Methods48['post']['reqData'], headers?: Methods48['post']['reqHeaders'], config?: T }) =>
+                    client.fetch<Methods48['post']['resData']>(prefix, `/api/v3/stories/${val9}/items/${val10}/reaction`, 'POST', option).json(),
+                  $post: async (option: { data: Methods48['post']['reqData'], headers?: Methods48['post']['reqHeaders'], config?: T }) =>
+                    (await client.fetch<Methods48['post']['resData']>(prefix, `/api/v3/stories/${val9}/items/${val10}/reaction`, 'POST', option).json()).data
                 },
-                get: (option?: { headers?: Methods48['get']['reqHeaders'], config?: T }) =>
-                  client.fetch<Methods48['get']['resData']>(prefix, `/api/v3/stories/${val9}/items/${val10}`, 'GET', option).json(),
-                $get: async (option?: { headers?: Methods48['get']['reqHeaders'], config?: T }) =>
-                  (await client.fetch<Methods48['get']['resData']>(prefix, `/api/v3/stories/${val9}/items/${val10}`, 'GET', option).json()).data
+                get: (option?: { headers?: Methods47['get']['reqHeaders'], config?: T }) =>
+                  client.fetch<Methods47['get']['resData']>(prefix, `/api/v3/stories/${val9}/items/${val10}`, 'GET', option).json(),
+                $get: async (option?: { headers?: Methods47['get']['reqHeaders'], config?: T }) =>
+                  (await client.fetch<Methods47['get']['resData']>(prefix, `/api/v3/stories/${val9}/items/${val10}`, 'GET', option).json()).data
               }),
-              get: (option?: { query?: Methods47['get']['query'], headers?: Methods47['get']['reqHeaders'], config?: T }) =>
-                client.fetch<Methods47['get']['resData']>(prefix, `/api/v3/stories/${val9}/items`, 'GET', option).json(),
-              $get: async (option?: { query?: Methods47['get']['query'], headers?: Methods47['get']['reqHeaders'], config?: T }) =>
-                (await client.fetch<Methods47['get']['resData']>(prefix, `/api/v3/stories/${val9}/items`, 'GET', option).json()).data
+              get: (option?: { query?: Methods46['get']['query'], headers?: Methods46['get']['reqHeaders'], config?: T }) =>
+                client.fetch<Methods46['get']['resData']>(prefix, `/api/v3/stories/${val9}/items`, 'GET', option).json(),
+              $get: async (option?: { query?: Methods46['get']['query'], headers?: Methods46['get']['reqHeaders'], config?: T }) =>
+                (await client.fetch<Methods46['get']['resData']>(prefix, `/api/v3/stories/${val9}/items`, 'GET', option).json()).data
             }
           })
         },
         user: {
           _userId: (val11: number | string) => ({
-            get: (option?: { headers?: Methods51['get']['reqHeaders'], config?: T }) =>
-              client.fetch<Methods51['get']['resData']>(prefix, `/api/v3/user/${val11}`, 'GET', option).json(),
-            $get: async (option?: { headers?: Methods51['get']['reqHeaders'], config?: T }) =>
-              (await client.fetch<Methods51['get']['resData']>(prefix, `/api/v3/user/${val11}`, 'GET', option).json()).data
+            get: (option?: { headers?: Methods50['get']['reqHeaders'], config?: T }) =>
+              client.fetch<Methods50['get']['resData']>(prefix, `/api/v3/user/${val11}`, 'GET', option).json(),
+            $get: async (option?: { headers?: Methods50['get']['reqHeaders'], config?: T }) =>
+              (await client.fetch<Methods50['get']['resData']>(prefix, `/api/v3/user/${val11}`, 'GET', option).json()).data
           }),
           profile: {
-            put: (option?: { data?: Methods52['put']['reqData'], headers?: Methods52['put']['reqHeaders'], config?: T }) =>
+            put: (option?: { data?: Methods51['put']['reqData'], headers?: Methods51['put']['reqHeaders'], config?: T }) =>
               client.fetch<void>(prefix, '/api/v3/user/profile', 'PUT', option, 'FormData').send(),
-            $put: async (option?: { data?: Methods52['put']['reqData'], headers?: Methods52['put']['reqHeaders'], config?: T }) =>
+            $put: async (option?: { data?: Methods51['put']['reqData'], headers?: Methods51['put']['reqHeaders'], config?: T }) =>
               (await client.fetch<void>(prefix, '/api/v3/user/profile', 'PUT', option, 'FormData').send()).data
           },
-          get: (option?: { headers?: Methods50['get']['reqHeaders'], config?: T }) =>
-            client.fetch<Methods50['get']['resData']>(prefix, '/api/v3/user', 'GET', option).json(),
-          $get: async (option?: { headers?: Methods50['get']['reqHeaders'], config?: T }) =>
-            (await client.fetch<Methods50['get']['resData']>(prefix, '/api/v3/user', 'GET', option).json()).data
+          get: (option?: { headers?: Methods49['get']['reqHeaders'], config?: T }) =>
+            client.fetch<Methods49['get']['resData']>(prefix, '/api/v3/user', 'GET', option).json(),
+          $get: async (option?: { headers?: Methods49['get']['reqHeaders'], config?: T }) =>
+            (await client.fetch<Methods49['get']['resData']>(prefix, '/api/v3/user', 'GET', option).json()).data
         }
       }
     }
