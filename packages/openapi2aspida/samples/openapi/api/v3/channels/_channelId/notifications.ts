@@ -3,17 +3,17 @@ import * as Types from '../../../../@types'
 
 export interface Methods {
   get: {
-    reqHeaders: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
+    reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
 
-    query: {
-      published: boolean
-      offset: number
+    query?: {
+      published?: boolean
+      offset?: number
     }
 
     resData: {
-      count: number
-      limit: number
-      data: {
+      count?: number
+      limit?: number
+      data?: {
         id: number
         message: string
         title: string

@@ -36,8 +36,8 @@ export interface BuildIO {
 
 export class Build implements BuildCommand {
   async run(config: Config, io: BuildIO) {
-    const template = await build(config.input, config.isYaml)
     await io.remove(config.output)
+    const template = await build(config.input, config.isYaml)
     io.write(config.output, config.trailingSlash, template)
   }
 }

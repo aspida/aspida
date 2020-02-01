@@ -3,11 +3,11 @@ import * as Types from '../../../@types'
 
 export interface Methods {
   get: {
-    reqHeaders: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
+    reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
 
-    query: {
-      unpublished: boolean
-      'read-only': boolean
+    query?: {
+      unpublished?: boolean
+      'read-only'?: boolean
     }
 
     resData: {
@@ -19,10 +19,10 @@ export interface Methods {
       url: string
       ownerEmail: string
       ownerName: string
-      organisationName: string
+      organisationName?: string
       ownerId: number
       organisationId: number
-      pinnedStoryId: number
+      pinnedStoryId?: number
       stories: {
         id: number
         title: number

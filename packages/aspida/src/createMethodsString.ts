@@ -52,7 +52,7 @@ export default (
     const option = (method: LowerHttpMethod) =>
       `option${isOptionRequired ? '' : '?'}: {${reqData(method)}${query(method)}${reqHeaders(
         method
-      )} config?: U }`
+      )} config?: T }`
     const request = () =>
       `, option${
         !typeInfo.reqData

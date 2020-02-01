@@ -3,17 +3,17 @@ import * as Types from '../../../@types'
 
 export interface Methods {
   post: {
-    reqHeaders: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
+    reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
 
     resData: {
       id: string
-      width: number
-      height: number
+      width?: number
+      height?: number
     }
 
     reqType: FormData
 
-    reqData: {
+    reqData?: {
       file: ArrayBuffer
     }
   }

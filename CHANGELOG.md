@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.13.0](https://github.com/aspidajs/aspida/compare/v0.12.2...v0.13.0) (2020-02-01)
+
+
+### Features
+
+* **aspida:** delete option exports ([9ff50b3](https://github.com/aspidajs/aspida/commit/9ff50b392b4337eb662d47ad282129b3516646fc))
+* **openapi:** support deprecated option ([67cf07b](https://github.com/aspidajs/aspida/commit/67cf07bc33648274679e0aeef3ecfbdc3ec788e5))
+* **openapi:** support required option ([d24d694](https://github.com/aspidajs/aspida/commit/d24d6943c7345f9c8fc13f1d738091804fff7e0e))
+
+
+### Bug Fixes
+
+* **openapi:** remove dir before build ([c1689f4](https://github.com/aspidajs/aspida/commit/c1689f47a8c70811e75a692abbe6399ceb6f57a9))
+
 ### [0.12.2](https://github.com/aspidajs/aspida/compare/v0.12.1...v0.12.2) (2020-01-28)
 
 

@@ -16,15 +16,15 @@ export interface UserTokenHeader {
 }
 
 export interface AppOrganisationToken {
-  'x-tchop-app-organisation-token': string
+  'x-tchop-app-organisation-token'?: string
 }
 
 export interface UserPublicKey {
-  'x-tchop-user-public-key': string
+  'x-tchop-user-public-key'?: string
 }
 
 export interface UserSignedChallenge {
-  'x-tchop-user-signed-challenge': string
+  'x-tchop-user-signed-challenge'?: string
 }
 
 export interface AppOrganisationTokenRequired {
@@ -32,13 +32,13 @@ export interface AppOrganisationTokenRequired {
 }
 
 export interface UserInstanceIdHeader {
-  'x-tchop-firebase-instance-id': string
+  'x-tchop-firebase-instance-id'?: string
 }
 
 export interface ErrorModel {
   code: string
   message: string
-  messageCode: string
+  messageCode?: string
 }
 
 export interface ErrorValidationModel {
@@ -55,7 +55,7 @@ export interface UserInfo {
   id: number
   username: string
   email: string
-  avatar: string
+  avatar?: string
   url: string
 }
 
@@ -67,15 +67,15 @@ export interface OrganisationModel {
   name: string
   subdomain: string
   locale: string
-  androidStoreLink: string
-  androidAppId: string
-  androidHokeyStoreLink: string
-  androidAppHokeyId: string
-  iosStoreLink: string
-  iosAppId: string
-  iosHokeyStoreLink: string
-  iosAppHokeyId: string
-  fcmServerKeyId: number
+  androidStoreLink?: string
+  androidAppId?: string
+  androidHokeyStoreLink?: string
+  androidAppHokeyId?: string
+  iosStoreLink?: string
+  iosAppId?: string
+  iosHokeyStoreLink?: string
+  iosAppHokeyId?: string
+  fcmServerKeyId?: number
   allowToStoreOriginalImageFile: string
   twoFactorForce: string
   sessionExpirationTime: string
@@ -99,8 +99,7 @@ export interface BaseMixModel {
   shareUrl: string
   previewUrl: string
   includeInNewsFeed: boolean
-  displayItemUpdatedTime: string
-  image: ImageModel
+  displayItemUpdatedTime?: string
 }
 
 export interface ModelMixV3 extends BaseMixModel {
@@ -114,48 +113,42 @@ export interface ImageModel {
   rightholder: string
   thumb: string
   status: 'ok' | 'processing' | 'error'
-  url: string
+  url?: string
 }
 
 export interface AudioModel {
   id: number
-  url: string
+  url?: string
   thumb: string
-  originalThumb: string
+  originalThumb?: string
   status: string
-  duration: number
-  width: number
-  height: number
+  duration?: number
+  width?: number
+  height?: number
 }
 
 export interface ModelCard {
   id: number
-  type: CardEnumModel
-  createdByLabel: string
+  createdByLabel?: string
   created: string
   postedTime: string
   updated: string
   published: boolean
-  position: number
-  headline: string
-  quotePerson: string
-  quotePersonHandle: string
-  quote: string
-  title: string
-  sourceName: string
-  url: string
-  abstract: string
-  image: ImageModel
-  audio: AudioModel
-  styles: CardStyleModel
-  author: CardAuthorModel
+  position?: number
+  headline?: string
+  quotePerson?: string
+  quotePersonHandle?: string
+  quote?: string
+  title?: string
+  sourceName?: string
+  url?: string
+  abstract?: string
 }
 
 export interface CardAuthorModel {
   type: 'curate-backend' | 'api'
   name: string
-  email: string
-  image: ImageModel
+  email?: string
 }
 
 export type ReactionEnumModel = 'like' | 'love' | 'haha' | 'wow' | 'sad' | 'angry'
@@ -163,39 +156,39 @@ export type ReactionEnumModel = 'like' | 'love' | 'haha' | 'wow' | 'sad' | 'angr
 export type CardEnumModel = 'article' | 'image' | 'video' | 'quote' | 'editorial' | 'audio'
 
 export interface ReactionCountModel {
-  like: number
-  love: number
-  haha: number
-  wow: number
-  sad: number
-  angry: number
+  like?: number
+  love?: number
+  haha?: number
+  wow?: number
+  sad?: number
+  angry?: number
 }
 
 export interface MediaEXIFModel {
-  gps: {
+  gps?: {
     x: number
     y: number
   }
 }
 
 export interface CardStyleModel {
-  showAuthor: boolean
-  teaserStyle: 'standard' | 'small_with_text' | 'small_without_text' | 'big_without_text'
+  showAuthor?: boolean
+  teaserStyle?: 'standard' | 'small_with_text' | 'small_without_text' | 'big_without_text'
 }
 
 export interface QuoteModel {
-  quotePerson: string
-  quotePersonHandle: string
-  quote: string
-  quoteSource: string
-  image: string
-  quotePersonImage: string
-  quoteCreated: string
+  quotePerson?: string
+  quotePersonHandle?: string
+  quote?: string
+  quoteSource?: string
+  image?: string
+  quotePersonImage?: string
+  quoteCreated?: string
 }
 
 export interface ArticleModel {
-  title: string
-  abstract: string
-  sourceName: string
-  image: string
+  title?: string
+  abstract?: string
+  sourceName?: string
+  image?: string
 }
