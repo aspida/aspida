@@ -1,9 +1,9 @@
 /* eslint-disable */
 export interface Methods {
   put: {
-    reqData: {
+    reqData?: {
       name: string
-      title: string
+      title?: string
     }
   }
 }

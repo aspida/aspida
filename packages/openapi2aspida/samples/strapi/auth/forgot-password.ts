@@ -2,11 +2,11 @@
 export interface Methods {
   post: {
     resData: {
-      foo: string
+      foo?: string
     }
 
     reqData: {
-      foo: string
+      foo?: string
     }
   }
 }

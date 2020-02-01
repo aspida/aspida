@@ -9,7 +9,4 @@ export interface Methods {
   put: {
     reqData: Types.User
   }
-
-  delete: {
-  }
 }

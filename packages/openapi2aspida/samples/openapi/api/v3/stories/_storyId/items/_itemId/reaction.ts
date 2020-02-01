@@ -3,19 +3,18 @@ import * as Types from '../../../../../../@types'
 
 export interface Methods {
   post: {
-    reqHeaders: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken & Types.UserInstanceIdHeader
+    reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken & Types.UserInstanceIdHeader
 
     resData: {
-      action: 'add' | 'remove' | 'replace'
-      reactions: Types.ReactionCountModel & {
-        myReaction: Types.ReactionEnumModel
+      action?: 'add' | 'remove' | 'replace'
+      reactions?: Types.ReactionCountModel & {
+
       }
-      previousStatus: Types.ReactionEnumModel
-      userType: 'anonymous' | 'unique'
+      userType?: 'anonymous' | 'unique'
     }
 
     reqData: {
-      reaction: Types.ReactionEnumModel
+
     }
   }
 }

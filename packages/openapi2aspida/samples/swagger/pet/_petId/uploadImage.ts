@@ -7,9 +7,9 @@ export interface Methods {
 
     reqType: FormData
 
-    reqData: {
-      additionalMetadata: string
-      file: ArrayBuffer
+    reqData?: {
+      additionalMetadata?: string
+      file?: ArrayBuffer
     }
   }
 }

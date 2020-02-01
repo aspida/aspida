@@ -2,13 +2,13 @@
 export interface Methods {
   get: {
     resData: {
-      foo: string
+      foo?: string
     }
   }
 
   delete: {
     resData: {
-      foo: string
+      foo?: string
     }
   }
 }

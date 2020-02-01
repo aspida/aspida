@@ -3,7 +3,7 @@ import * as Types from '../../../../../@types'
 
 export interface Methods {
   post: {
-    reqHeaders: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
+    reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
 
     resData: {
       id: string
@@ -11,12 +11,12 @@ export interface Methods {
 
     reqType: FormData
 
-    reqData: {
+    reqData?: {
       file: ArrayBuffer
-      caption: string
-      headline: string
-      text: string
-      published: boolean
+      caption?: string
+      headline?: string
+      text?: string
+      published?: boolean
     }
   }
 }

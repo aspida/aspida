@@ -5,7 +5,7 @@ export interface Methods {
       token: string
     }
 
-    reqData: {
+    reqData?: {
       organisationSubdomain: string
       channelSubdomain: string
       userId: number

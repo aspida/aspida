@@ -7,10 +7,10 @@ export interface Methods {
 
     reqType: FormData
 
-    reqData: {
+    reqData?: {
       file: ArrayBuffer
-      rightholder: string
-      statusCopyright: 'unknown' | 'cc' | 'licensed' | 'sublicensed'
+      rightholder?: string
+      statusCopyright?: 'unknown' | 'cc' | 'licensed' | 'sublicensed'
     }
   }
 }

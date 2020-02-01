@@ -6,9 +6,9 @@ export interface Methods {
       screenName: string
       email: string
       isStaff: boolean
-      channelName: string
-      channelId: number
-      url: string
+      channelName?: string
+      channelId?: number
+      url?: string
     }
   }
 }

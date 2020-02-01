@@ -2,7 +2,7 @@
 export interface Methods {
   get: {
     resData: {
-      foo: string
+      foo?: string
     }
   }
 }

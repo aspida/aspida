@@ -5,7 +5,4 @@ export interface Methods {
   get: {
     resData: Types.Order
   }
-
-  delete: {
-  }
 }

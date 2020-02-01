@@ -1,10 +1,10 @@
 /* eslint-disable */
 export interface Methods {
   post: {
-    reqData: {
+    reqData?: {
       url: string
-      published: boolean
-      enableImage: boolean
+      published?: boolean
+      enableImage?: boolean
     }
   }
 }
