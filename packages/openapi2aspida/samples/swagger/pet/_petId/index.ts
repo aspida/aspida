@@ -9,15 +9,15 @@ export interface Methods {
   post: {
     reqType: URLSearchParams
 
-    reqData: {
-      name: string
-      status: string
+    reqData?: {
+      name?: string
+      status?: string
     }
   }
 
   delete: {
-    reqHeaders: {
-      api_key: string
+    reqHeaders?: {
+      api_key?: string
     }
   }
 }

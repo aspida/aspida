@@ -13,9 +13,9 @@ export interface Methods {
       id: number
     }
 
-    reqData: {
+    reqData?: {
       name: string
-      title: string
+      title?: string
     }
   }
 }

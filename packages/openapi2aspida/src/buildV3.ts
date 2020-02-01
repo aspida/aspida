@@ -27,12 +27,16 @@ const enum2value = (en: any[]) => `'${en.join("' | '")}'`
 const array2value = (schema: OpenAPIV3.ArraySchemaObject, indent: string) =>
   // eslint-disable-next-line @typescript-eslint/no-use-before-define
   `${schema2value(schema.items, indent)}[]`
-const object2value = (properties: OpenAPIV3.NonArraySchemaObject['properties'], indent: string) => {
-  return properties
+const object2value = (obj: OpenAPIV3.NonArraySchemaObject, indent: string) => {
+  return obj.properties
     ? `{
-${Object.keys(properties).map(
-  // eslint-disable-next-line @typescript-eslint/no-use-before-define
-  name => `${indent}  ${getPropertyName(name)}: ${schema2value(properties![name], `${indent}  `)}`
+${Object.keys(obj.properties).map(
+  name =>
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    `${indent}  ${getPropertyName(name)}${obj?.required?.includes(name) ? '' : '?'}: ${schema2value(
+      obj.properties![name],
+      `${indent}  `
+    )}`
 ).join(`
 `)}
 ${indent}}`
@@ -59,14 +63,14 @@ const schema2value = (
         : ''
     }${schema.allOf
       .filter(s => isObjectSchema(s))
-      .map(s => isObjectSchema(s) && object2value(s.properties, indent))
+      .map(s => isObjectSchema(s) && object2value(s, indent))
       .join(' & ')}`
   } else if (schema.enum) {
     value = enum2value(schema.enum)
   } else if (isArraySchema(schema)) {
     value = array2value(schema, indent)
   } else if (schema.properties) {
-    value = object2value(schema.properties, indent)
+    value = object2value(schema, indent)
   } else if (schema.format === 'binary') {
     value = 'ArrayBuffer'
   } else if (schema.type !== 'object') {
@@ -106,7 +110,9 @@ export interface ${defName} extends ${$ref2Type(target.$ref)} {}
 `
         : `
 export interface ${defName} {
-  ${getPropertyName(target.name)}: ${target.schema ? schema2value(target.schema, '') : 'null'}
+  ${getPropertyName(target.name)}${target.required ? '' : '?'}: ${
+            target.schema ? schema2value(target.schema, '') : 'null'
+          }
 }
 `
     })
@@ -138,11 +144,11 @@ export interface ${defName} extends ${target.allOf
             .map(s => isRefObject(s) && $ref2Type(s.$ref))
             .join(', ')} ${target.allOf
             .filter(s => isObjectSchema(s))
-            .map(s => isObjectSchema(s) && object2value(s.properties, ''))
+            .map(s => isObjectSchema(s) && object2value(s, ''))
             .join('')}
 `
         : `
-export interface ${defName} ${object2value(target.properties, '')}
+export interface ${defName} ${object2value(target, '')}
 `
     })
     .join('')
@@ -189,6 +195,7 @@ export default (openapi: OpenAPIV3.Document): Template => {
               const reqRefHeaders: string[] = []
               const reqHeaders: string[] = []
               const query: string[] = []
+              let queryRequired = false
 
               target.parameters.forEach(p => {
                 if (isRefObject(p)) {
@@ -198,7 +205,12 @@ export default (openapi: OpenAPIV3.Document): Template => {
                       reqRefHeaders.push($ref2Type(p.$ref))
                       break
                     case 'query':
-                      query.push(`${getPropertyName(ref.name)}: ${$ref2Type(p.$ref)}`)
+                      query.push(
+                        `${getPropertyName(ref.name)}${ref.required ? '' : '?'}: ${$ref2Type(
+                          p.$ref
+                        )}`
+                      )
+                      if (ref.required) queryRequired = true
                       break
                     default:
                       break
@@ -207,17 +219,18 @@ export default (openapi: OpenAPIV3.Document): Template => {
                   switch (p.in) {
                     case 'header':
                       reqHeaders.push(
-                        `${getPropertyName(p.name)}: ${
+                        `${getPropertyName(p.name)}${p.required ? '' : '?'}: ${
                           p.schema ? schema2value(p.schema, '  ') : 'null'
                         }`
                       )
                       break
                     case 'query':
                       query.push(
-                        `${getPropertyName(p.name)}: ${
+                        `${getPropertyName(p.name)}${p.required ? '' : '?'}: ${
                           p.schema ? schema2value(p.schema, '  ') : 'null'
                         }`
                       )
+                      if (p.required) queryRequired = true
                       break
                     default:
                       break
@@ -227,14 +240,18 @@ export default (openapi: OpenAPIV3.Document): Template => {
 
               if (reqHeaders.length || reqRefHeaders.length) {
                 params.push(
-                  `    reqHeaders: ${reqRefHeaders.join(' & ')}${
+                  `    reqHeaders?: ${reqRefHeaders.join(' & ')}${
                     reqRefHeaders.length && reqHeaders.length ? ' & ' : ''
                   }${reqHeaders.length ? `{\n      ${reqHeaders.join('\n      ')}\n    }` : ''}\n`
                 )
               }
 
               if (query.length) {
-                params.push(`    query: {\n      ${query.join('\n      ')}\n    }\n`)
+                params.push(
+                  `    query${queryRequired ? '' : '?'}: {\n      ${query.join(
+                    '\n      '
+                  )}\n    }\n`
+                )
               }
             }
 
@@ -295,6 +312,8 @@ export default (openapi: OpenAPIV3.Document): Template => {
             if (target.requestBody) {
               let reqType = ''
               let reqData = ''
+              let required = false
+
               if (isRefObject(target.requestBody)) {
                 const ref = resolveReqRef(openapi, target.requestBody.$ref)
                 if (ref.content['multipart/form-data']?.schema) {
@@ -304,26 +323,25 @@ export default (openapi: OpenAPIV3.Document): Template => {
                 }
 
                 reqData = $ref2Type(target.requestBody.$ref)
+                required = !!ref.required
               } else {
-                if (target.requestBody.content['multipart/form-data']?.schema) {
-                  reqType = 'FormData'
-                  reqData = schema2value(
-                    target.requestBody.content['multipart/form-data'].schema,
-                    '    '
-                  )
-                } else if (
-                  target.requestBody.content['application/x-www-form-urlencoded']?.schema
-                ) {
-                  reqType = 'URLSearchParams'
-                  reqData = schema2value(
-                    target.requestBody.content['application/x-www-form-urlencoded'].schema,
-                    '    '
-                  )
-                } else if (target.requestBody.content['application/json']?.schema) {
-                  reqData = schema2value(
-                    target.requestBody.content['application/json'].schema,
-                    '    '
-                  )
+                const typeSet = [
+                  ['multipart/form-data', 'FormData'],
+                  ['application/x-www-form-urlencoded', 'URLSearchParams'],
+                  ['application/json', '']
+                ]
+
+                for (let i = 0; i < typeSet.length; i += 1) {
+                  if (target.requestBody.content[typeSet[i][0]]?.schema) {
+                    reqType = typeSet[i][1]
+                    reqData = schema2value(
+                      target.requestBody.content[typeSet[i][0]].schema!,
+                      '    '
+                    )
+                    required = !!target.requestBody.required
+
+                    break
+                  }
                 }
               }
 
@@ -332,7 +350,7 @@ export default (openapi: OpenAPIV3.Document): Template => {
               }
 
               if (reqData) {
-                params.push(`    reqData: ${reqData}\n`)
+                params.push(`    reqData${required ? '' : '?'}: ${reqData}\n`)
               }
             }
 

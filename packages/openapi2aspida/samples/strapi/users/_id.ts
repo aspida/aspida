@@ -14,7 +14,7 @@ export interface Methods {
 
   delete: {
     resData: {
-      foo: string
+      foo?: string
     }
   }
 }
