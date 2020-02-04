@@ -8,7 +8,7 @@ export interface Methods {
 
   post: {
     query: { aa: number }
-    reqData?: { name: string }
+    reqData: { val: number }
     resData: ArrayBuffer
   }
 

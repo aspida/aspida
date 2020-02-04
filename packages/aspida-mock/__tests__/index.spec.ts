@@ -48,6 +48,19 @@ describe('initialize', () => {
     expect(elapsedTime).toBeLessThan(delayMSec + 20)
   })
 
+  test('post json data', async () => {
+    adapter.attachRoutes([
+      {
+        path: '',
+        methods: {
+          post: ({ query, reqData }) => ({ status: 200, resData: query.aa * reqData.val })
+        }
+      }
+    ])
+
+    expect(await client.$post({ query: { aa: 2 }, data: { val: 3 } })).toEqual(6)
+  })
+
   test('middleware path through', async () => {
     const spyLog = jest.spyOn(console, 'log').mockImplementation(x => x)
     adapter.attachRoutes(
