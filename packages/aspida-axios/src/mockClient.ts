@@ -19,6 +19,7 @@ export default (
 ): MockClient<AxiosRequestConfig> => {
   const aspidaClient = aspidaClientFactory(client, config)
   let originalAdapter: AxiosAdapter | undefined
+  let originalTransformRequest: AxiosRequestConfig['transformRequest'] | undefined
   let mockRoutes: MockRoute[] | undefined
 
   return {
@@ -41,6 +42,7 @@ export default (
 
     attachRoutes(routes: MockRoute[], mockConfig?: MockConfig) {
       originalAdapter = client.defaults.adapter
+      originalTransformRequest = client.defaults.transformRequest
       mockRoutes = routes
 
       client.defaults.adapter = config =>
@@ -65,10 +67,13 @@ export default (
             reject(e)
           }
         })
+
+      client.defaults.transformRequest = data => data
     },
 
     detachRoutes() {
       client.defaults.adapter = originalAdapter
+      client.defaults.transformRequest = originalTransformRequest
       originalAdapter = undefined
       mockRoutes = undefined
     }
