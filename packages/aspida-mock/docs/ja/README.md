@@ -36,7 +36,7 @@
   </a>
 </div>
 <br />
-<p align="center">Type safe RESTful API mock for aspida.</p>
+<p align="center">TypeScript friendly RESTful API mock for aspida.</p>
 <div align="center">
   <a href="https://github.com/aspidajs/aspida/tree/master/packages/aspida-mock#readme">🇺🇸English</a> |
   <a href="https://github.com/aspidajs/aspida/tree/master/packages/aspida-mock/docs/ja#readme">🇯🇵日本語</a>
@@ -46,7 +46,7 @@
 
 ## 特徴
 
-- [aspida](https://github.com/aspidajs/aspida/tree/master/packages/aspida)の型定義を利用して型安全を実現した TypeScript 専用 API モック
+- [aspida](https://github.com/aspidajs/aspida/tree/master/packages/aspida)の型定義を利用する TypeScript 専用 API モック
 - `GET`/`POST`/`PUT`/`DELETE` など全ての HTTP メソッドに数行で対応
 - サーバー不要、ブラウザのみで動作
 

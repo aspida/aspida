@@ -44,8 +44,8 @@
 
 ## 特徴
 
-- パス・URL クエリ・ヘッダー・ボディ・レスポンス全てを型安全に扱える
-- FormData / URLSearchParams の内容も型安全に扱える
+- パス・URL クエリ・ヘッダー・ボディ・レスポンス全てに型を指定できる
+- FormData / URLSearchParams の内容にも型を指定できる
 - HTTP クライアントは axios / ky / ky-universal / fetch に対応
 - パス定義は Nuxt.js の pages と同じ命名規則
 

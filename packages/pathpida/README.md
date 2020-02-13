@@ -36,7 +36,7 @@
   </a>
 </div>
 <br />
-<p align="center">Type safe path generator like aspida.</p>
+<p align="center">TypeScript friendly path generator for nextjs or nuxt.js.</p>
 <br />
 <br />
 

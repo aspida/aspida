@@ -1,7 +1,7 @@
 {
   "name": "pathpida",
   "version": "0.2.3",
-  "description": "Type safe path generator like aspida",
+  "description": "TypeScript friendly path generator for nextjs or nuxt.js",
   "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
   "license": "MIT",
   "bin": "bin/index.js",
