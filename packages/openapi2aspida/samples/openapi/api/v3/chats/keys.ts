@@ -5,7 +5,7 @@ export interface Methods {
   get: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken & Types.UserPublicKey & Types.UserSignedChallenge
 
-    resData: {
+    resBody: {
       token?: string
       publishKey?: string
       subscribeKey?: string

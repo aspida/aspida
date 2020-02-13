@@ -12,7 +12,7 @@ export interface Methods {
       reverse?: boolean
     }
 
-    resData: {
+    resBody: {
       count: number
       data: Types.ModelCard & {
         author?: {

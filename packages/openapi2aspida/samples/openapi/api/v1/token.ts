@@ -1,11 +1,11 @@
 /* eslint-disable */
 export interface Methods {
   post: {
-    resData: {
+    resBody: {
       token: string
     }
 
-    reqData?: {
+    reqBody?: {
       organisationSubdomain: string
       channelSubdomain: string
       userId: number

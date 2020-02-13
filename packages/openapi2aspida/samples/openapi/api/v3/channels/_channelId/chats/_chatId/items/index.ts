@@ -9,7 +9,7 @@ export interface Methods {
       offset?: number
     }
 
-    resData: {
+    resBody: {
       limit: number
       offset: number
       data: []
@@ -19,11 +19,11 @@ export interface Methods {
   post: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
 
-    resData: {
+    resBody: {
       id: string
     }
 
-    reqData: {
+    reqBody: {
       title?: string
       abstract?: string
       sourceName?: string

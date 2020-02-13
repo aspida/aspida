@@ -5,7 +5,7 @@ export interface Methods {
   get: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
 
-    resData: {
+    resBody: {
       chatId?: number
       chatDescriptor?: string
       channelId?: number
@@ -36,7 +36,7 @@ export interface Methods {
   put: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
 
-    reqData: {
+    reqBody: {
       name?: string
       accessType?: 'private' | 'publicWrite' | 'publicRead'
       payload?: string

@@ -5,9 +5,9 @@ export interface Methods {
   put: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader
 
-    reqType: FormData
+    reqFormat: FormData
 
-    reqData?: {
+    reqBody?: {
       screenName?: string
       url?: string
       image?: ArrayBuffer

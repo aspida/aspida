@@ -1,7 +1,7 @@
 /* eslint-disable */
 export interface Methods {
   post: {
-    reqData?: {
+    reqBody?: {
       url: string
     }
   }

@@ -5,7 +5,7 @@ export interface Methods {
   get: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader
 
-    resData: {
+    resBody: {
       state?: 'no_update' | 'force_update'
       link?: string
     }

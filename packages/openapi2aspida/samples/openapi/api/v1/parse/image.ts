@@ -1,13 +1,13 @@
 /* eslint-disable */
 export interface Methods {
   post: {
-    resData: {
+    resBody: {
       imageId: number
     }
 
-    reqType: FormData
+    reqFormat: FormData
 
-    reqData?: {
+    reqBody?: {
       file: ArrayBuffer
       rightholder?: string
       statusCopyright?: 'unknown' | 'cc' | 'licensed' | 'sublicensed'

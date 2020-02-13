@@ -1,23 +1,23 @@
 export interface Methods {
   get: {
     query: { aa?: number }
-    resData: { id: number }
+    resBody: { id: number }
   }
 
   post: {
     query: { aa: number }
-    reqData?: { name: string }
-    resData: { id: number }
+    reqBody?: { name: string }
+    resBody: { id: number }
   }
 
   put: {
     query: { aa: number }
-    resData: { id: number }
+    resBody: { id: number }
   }
 
   delete: {
     query: { aa: number }
-    reqData: { name: string }
-    resData: { id: number }
+    reqBody: { name: string }
+    resBody: { id: number }
   }
 }

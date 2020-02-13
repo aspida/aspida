@@ -6,7 +6,7 @@ export interface Methods {
       password: string
     }
 
-    resData: string
+    resBody: string
 
     resHeaders: {
       'X-Expires-After': string

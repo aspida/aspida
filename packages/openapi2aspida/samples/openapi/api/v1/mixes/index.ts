@@ -1,7 +1,7 @@
 /* eslint-disable */
 export interface Methods {
   get: {
-    resData: {
+    resBody: {
       id: number
       title: number
       createdByCurrentClientAPI: boolean
@@ -9,11 +9,11 @@ export interface Methods {
   }
 
   post: {
-    resData: {
+    resBody: {
       id: number
     }
 
-    reqData?: {
+    reqBody?: {
       name: string
       title?: string
     }

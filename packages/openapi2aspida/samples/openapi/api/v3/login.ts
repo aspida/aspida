@@ -5,11 +5,11 @@ export interface Methods {
   post: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
 
-    resData: Types.UserInfo & {
+    resBody: Types.UserInfo & {
       token: string
     }
 
-    reqData: {
+    reqBody: {
       pwd: string
       email: string
       fcmToken?: string

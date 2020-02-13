@@ -9,7 +9,7 @@ export interface Methods {
       limit?: number
     }
 
-    resData: {
+    resBody: {
       count: number
       data: Types.ModelCard[]
     }

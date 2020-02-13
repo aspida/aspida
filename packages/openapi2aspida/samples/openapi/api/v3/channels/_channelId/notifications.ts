@@ -10,7 +10,7 @@ export interface Methods {
       offset?: number
     }
 
-    resData: {
+    resBody: {
       count?: number
       limit?: number
       data?: {

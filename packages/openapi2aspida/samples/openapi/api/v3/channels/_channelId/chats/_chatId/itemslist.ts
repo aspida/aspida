@@ -9,6 +9,6 @@ export interface Methods {
       ids: string
     }
 
-    resData: Types.ModelCard[]
+    resBody: Types.ModelCard[]
   }
 }

@@ -6,6 +6,6 @@ export default (config: AxiosRequestConfig): MockRequestConfig => ({
   path: config.url || '',
   method: (config.method || 'get').toUpperCase() as HttpMethod,
   query: config.params,
-  reqData: config.data,
+  reqBody: config.data,
   reqHeaders: config.headers
 })

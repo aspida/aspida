@@ -9,7 +9,7 @@ export interface Methods {
       offset?: number
     }
 
-    resData: {
+    resBody: {
       limit: number
       offset: number
       data: Types.ModelCard[]

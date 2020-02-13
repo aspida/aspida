@@ -1,7 +1,7 @@
 /* eslint-disable */
 export interface Methods {
   get: {
-    resData: {
+    resBody: {
       userId: number
       screenName: string
       email: string

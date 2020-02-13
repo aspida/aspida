@@ -5,13 +5,13 @@ export interface Methods {
   post: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.UserTokenHeader & Types.AppOrganisationToken
 
-    resData: {
+    resBody: {
       id: string
     }
 
-    reqType: FormData
+    reqFormat: FormData
 
-    reqData?: {
+    reqBody?: {
       file: ArrayBuffer
       caption?: string
       headline?: string

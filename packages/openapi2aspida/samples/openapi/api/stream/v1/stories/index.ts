@@ -7,6 +7,6 @@ export interface Methods {
       token: string
     }
 
-    resData: Types.ModelMixV3
+    resBody: Types.ModelMixV3
   }
 }

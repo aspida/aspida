@@ -10,7 +10,7 @@ export interface Methods {
       'read-only'?: boolean
     }
 
-    resData: {
+    resBody: {
       id: number
       name: string
       role: string

@@ -3,10 +3,10 @@ import * as Types from '../@types'
 
 export interface Methods {
   get: {
-    resData: Types.User
+    resBody: Types.User
   }
 
   put: {
-    reqData: Types.User
+    reqBody: Types.User
   }
 }

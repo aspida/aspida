@@ -5,13 +5,13 @@ export interface Methods {
   post: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationTokenRequired
 
-    resData: {
+    resBody: {
       dataUrl?: string
       otpURL?: string
       secret?: string
     }
 
-    reqData: {
+    reqBody: {
       email: string
     }
   }

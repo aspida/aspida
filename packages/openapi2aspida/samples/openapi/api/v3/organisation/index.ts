@@ -5,6 +5,6 @@ export interface Methods {
   get: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationTokenRequired
 
-    resData: Types.OrganisationModel
+    resBody: Types.OrganisationModel
   }
 }

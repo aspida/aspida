@@ -7,6 +7,6 @@ export interface Methods {
       status: 'available' | 'pending' | 'sold'[]
     }
 
-    resData: Types.Pet[]
+    resBody: Types.Pet[]
   }
 }

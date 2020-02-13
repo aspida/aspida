@@ -5,7 +5,7 @@ export interface Methods {
   get: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken & Types.UserPublicKey & Types.UserSignedChallenge
 
-    resData: {
+    resBody: {
       chats?: {
         access?: 'admin' | 'r' | 'w' | 'banned'
         chatId?: number
@@ -45,7 +45,7 @@ export interface Methods {
   post: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
 
-    resData: {
+    resBody: {
       chatId?: number
       chatDescriptor?: string
       channelId?: number
@@ -71,7 +71,7 @@ export interface Methods {
       updated?: string
     }
 
-    reqData: {
+    reqBody: {
       name: string
       type: 'p2p' | 'group'
       level: 'channel' | 'organisation'

@@ -5,11 +5,11 @@ export interface Methods {
   post: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader
 
-    resData: {
+    resBody: {
       ok: boolean
     }
 
-    reqData?: {
+    reqBody?: {
       formattedText?: string
     }
   }
@@ -17,6 +17,6 @@ export interface Methods {
   get: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken & Types.UserInstanceIdHeader
 
-    resData: Types.ModelCard
+    resBody: Types.ModelCard
   }
 }

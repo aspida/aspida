@@ -3,11 +3,11 @@ import * as Types from '../../@types'
 
 export interface Methods {
   post: {
-    resData: Types.ApiResponse
+    resBody: Types.ApiResponse
 
-    reqType: FormData
+    reqFormat: FormData
 
-    reqData?: {
+    reqBody?: {
       additionalMetadata?: string
       file?: ArrayBuffer
     }

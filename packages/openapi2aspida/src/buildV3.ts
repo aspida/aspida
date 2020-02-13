@@ -280,14 +280,14 @@ export default (openapi: OpenAPIV3.Document): Template => {
               if (target.responses) {
                 const code = Object.keys(target.responses).find(code => /^20/.test(code))
                 if (code) {
-                  let resData = ''
+                  let resBody = ''
                   const resHeaders: string[] = []
                   const res = target.responses[code]
 
                   if (isRefObject(res)) {
                     const ref = resolveResRef(openapi, res.$ref)
                     if (ref.content?.['application/json']?.schema) {
-                      resData = schema2value(ref.content['application/json'].schema, '    ')
+                      resBody = schema2value(ref.content['application/json'].schema, '    ')
                     }
 
                     if (ref.headers) {
@@ -304,7 +304,7 @@ export default (openapi: OpenAPIV3.Document): Template => {
                     }
                   } else {
                     if (res.content?.['application/json']?.schema) {
-                      resData = schema2value(res.content['application/json'].schema, '    ')
+                      resBody = schema2value(res.content['application/json'].schema, '    ')
                     }
                     res.headers &&
                       Object.keys(res.headers).forEach(header => {
@@ -321,8 +321,8 @@ export default (openapi: OpenAPIV3.Document): Template => {
                       })
                   }
 
-                  if (resData) {
-                    params.push(`    resData: ${resData}\n`)
+                  if (resBody) {
+                    params.push(`    resBody: ${resBody}\n`)
                   }
 
                   if (resHeaders.length) {
@@ -332,19 +332,19 @@ export default (openapi: OpenAPIV3.Document): Template => {
               }
 
               if (target.requestBody) {
-                let reqType = ''
-                let reqData = ''
+                let reqFormat = ''
+                let reqBody = ''
                 let required = false
 
                 if (isRefObject(target.requestBody)) {
                   const ref = resolveReqRef(openapi, target.requestBody.$ref)
                   if (ref.content['multipart/form-data']?.schema) {
-                    reqType = 'FormData'
+                    reqFormat = 'FormData'
                   } else if (ref.content['application/x-www-form-urlencoded']?.schema) {
-                    reqType = 'URLSearchParams'
+                    reqFormat = 'URLSearchParams'
                   }
 
-                  reqData = $ref2Type(target.requestBody.$ref)
+                  reqBody = $ref2Type(target.requestBody.$ref)
                   required = !!ref.required
                 } else {
                   const typeSet = [
@@ -355,8 +355,8 @@ export default (openapi: OpenAPIV3.Document): Template => {
 
                   for (let i = 0; i < typeSet.length; i += 1) {
                     if (target.requestBody.content[typeSet[i][0]]?.schema) {
-                      reqType = typeSet[i][1]
-                      reqData = schema2value(
+                      reqFormat = typeSet[i][1]
+                      reqBody = schema2value(
                         target.requestBody.content[typeSet[i][0]].schema!,
                         '    '
                       )
@@ -367,12 +367,12 @@ export default (openapi: OpenAPIV3.Document): Template => {
                   }
                 }
 
-                if (reqType) {
-                  params.push(`    reqType: ${reqType}\n`)
+                if (reqFormat) {
+                  params.push(`    reqFormat: ${reqFormat}\n`)
                 }
 
-                if (reqData) {
-                  params.push(`    reqData${required ? '' : '?'}: ${reqData}\n`)
+                if (reqBody) {
+                  params.push(`    reqBody${required ? '' : '?'}: ${reqBody}\n`)
                 }
               }
 

@@ -30,12 +30,12 @@ export default (
 
     const isOptionRequired =
       (typeInfo.query && !typeInfo.query.hasQuestion) ||
-      (typeInfo.reqData && !typeInfo.reqData.hasQuestion) ||
+      (typeInfo.reqBody && !typeInfo.reqBody.hasQuestion) ||
       (typeInfo.reqHeaders && !typeInfo.reqHeaders.hasQuestion)
 
-    const reqData = (method: LowerHttpMethod) =>
-      typeInfo.reqData
-        ? ` data${typeInfo.reqData.hasQuestion ? '?' : ''}: ${importName}['${method}']['reqData'],`
+    const reqBody = (method: LowerHttpMethod) =>
+      typeInfo.reqBody
+        ? ` data${typeInfo.reqBody.hasQuestion ? '?' : ''}: ${importName}['${method}']['reqBody'],`
         : ''
     const query = (method: LowerHttpMethod) =>
       typeInfo.query
@@ -50,32 +50,32 @@ export default (
     const resHeaders = (method: LowerHttpMethod) =>
       typeInfo.resHeaders ? `, ${importName}['${method}']['resHeaders']` : ''
     const option = (method: LowerHttpMethod) =>
-      `option${isOptionRequired ? '' : '?'}: {${reqData(method)}${query(method)}${reqHeaders(
+      `option${isOptionRequired ? '' : '?'}: {${reqBody(method)}${query(method)}${reqHeaders(
         method
       )} config?: T }`
     const request = () =>
       `, option${
-        !typeInfo.reqData
+        !typeInfo.reqBody
           ? ''
-          : typeInfo.reqType
-          ? `, '${typeInfo.reqType.value}'`
-          : typeInfo.reqData && /^(ArrayBuffer|Blob|string)$/.test(typeInfo.reqData.value)
-          ? `, '${typeInfo.reqData.value}'`
+          : typeInfo.reqFormat
+          ? `, '${typeInfo.reqFormat.value}'`
+          : typeInfo.reqBody && /^(ArrayBuffer|Blob|string)$/.test(typeInfo.reqBody.value)
+          ? `, '${typeInfo.reqBody.value}'`
           : ''
       }`
-    const resData = (method: LowerHttpMethod) =>
-      `${typeInfo.resData ? `${importName}['${method}']['resData']` : 'void'}`
+    const resBody = (method: LowerHttpMethod) =>
+      `${typeInfo.resBody ? `${importName}['${method}']['resBody']` : 'void'}`
     const resMethodName = () =>
-      !typeInfo.resData
+      !typeInfo.resBody
         ? 'send'
         : ({ ArrayBuffer: 'arrayBuffer', Blob: 'blob', string: 'text', FormData: 'formData' } as {
             [key: string]: string
-          })[typeInfo.resData.value] || 'json'
+          })[typeInfo.resBody.value] || 'json'
 
     const quotation = newUrl.includes('${') ? '`' : "'"
     const tmpChanks = [
       `(${option(methodName)}) =>`,
-      `client.fetch<${resData(methodName)}${resHeaders(methodName)}>(prefix, ${quotation}${newUrl}${
+      `client.fetch<${resBody(methodName)}${resHeaders(methodName)}>(prefix, ${quotation}${newUrl}${
         trailingSlash ? '/' : ''
       }${quotation}, '${methodName.toUpperCase()}'${request()}).${resMethodName()}()`
     ]

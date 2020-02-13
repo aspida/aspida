@@ -5,7 +5,7 @@ export interface Methods {
   post: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader
 
-    resData: {
+    resBody: {
       url: string
       sourceName?: string
       abstract?: string
@@ -16,7 +16,7 @@ export interface Methods {
       quoteCreated?: string
     }
 
-    reqData: {
+    reqBody: {
       url: string
     }
   }

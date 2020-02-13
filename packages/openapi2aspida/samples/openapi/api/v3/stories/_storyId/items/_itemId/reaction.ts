@@ -5,7 +5,7 @@ export interface Methods {
   post: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken & Types.UserInstanceIdHeader
 
-    resData: {
+    resBody: {
       action?: 'add' | 'remove' | 'replace'
       reactions?: Types.ReactionCountModel & {
 
@@ -13,7 +13,7 @@ export interface Methods {
       userType?: 'anonymous' | 'unique'
     }
 
-    reqData: {
+    reqBody: {
 
     }
   }

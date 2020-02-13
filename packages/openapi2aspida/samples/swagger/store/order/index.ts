@@ -3,8 +3,8 @@ import * as Types from '../../@types'
 
 export interface Methods {
   post: {
-    resData: Types.Order
+    resBody: Types.Order
 
-    reqData: Types.Order
+    reqBody: Types.Order
   }
 }

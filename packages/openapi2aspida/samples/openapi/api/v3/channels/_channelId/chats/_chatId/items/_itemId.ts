@@ -5,11 +5,11 @@ export interface Methods {
   post: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader
 
-    resData: {
+    resBody: {
       ok: boolean
     }
 
-    reqData?: {
+    reqBody?: {
       formattedText?: string
     }
   }

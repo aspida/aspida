@@ -3,13 +3,13 @@ import * as Types from '../../@types'
 
 export interface Methods {
   get: {
-    resData: Types.Pet
+    resBody: Types.Pet
   }
 
   post: {
-    reqType: URLSearchParams
+    reqFormat: URLSearchParams
 
-    reqData?: {
+    reqBody?: {
       name?: string
       status?: string
     }

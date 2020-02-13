@@ -101,15 +101,15 @@ $ mkdir apis
         limit: number
       }
 
-      resData: User[]
+      resBody: User[]
     }
 
     post: {
-      reqData: {
+      reqBody: {
         name: string
       }
 
-      resData: User
+      resBody: User
     }
   }
   ```
@@ -130,15 +130,15 @@ $ mkdir apis
 
   export interface Methods {
     get: {
-      resData: User
+      resBody: User
     }
 
     put: {
-      reqData: {
+      reqBody: {
         name: string
       }
 
-      resData: User
+      resBody: User
     }
   }
   ```
@@ -224,14 +224,14 @@ module.exports = [{ input: "api1" }, { input: "api2", baseURL: "https://example.
 ```typescript
 export interface Methods {
   post: {
-    reqType: FormData
+    reqFormat: FormData
 
-    reqData: {
+    reqBody: {
       name: string
       icon: ArrayBuffer
     }
 
-    resData: {
+    resBody: {
       id: number
       name: string
     }
@@ -269,13 +269,13 @@ import api from "../apis/$api"
 ```typescript
 export interface Methods {
   post: {
-    reqType: URLSearchParams
+    reqFormat: URLSearchParams
 
-    reqData: {
+    reqBody: {
       name: string
     }
 
-    resData: {
+    resBody: {
       id: number
       name: string
     }
@@ -311,7 +311,7 @@ export interface Methods {
       name: string
     }
 
-    resData: ArrayBuffer
+    resBody: ArrayBuffer
   }
 }
 ```
