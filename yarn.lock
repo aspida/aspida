@@ -3905,10 +3905,10 @@ kleur@^3.0.3:
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
-ky-universal@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/ky-universal/-/ky-universal-0.4.0.tgz#c764e0a5dfffe8552840cd796e2dc4d84e991c4c"
-  integrity sha512-nKKjiRq88tvs6BLHN2O6lfydsLSP4mKoPLITxfchCl/Z1kNGUMedCZ8sxxljeXG3XhUGF5a4dKwv+bHcZ/oDHA==
+ky-universal@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/ky-universal/-/ky-universal-0.5.0.tgz#16d5fe881fb98e54732a4f0b7d531d44cbf701cb"
+  integrity sha512-O+0wjCua5i45lYBZrBy8TyRDRVodtsmzVC/MlE5FN7ZMFu/Icz7ekbZ85sdFw0F/JwGhXZTaKjXq9IgUGwGedQ==
   dependencies:
     abort-controller "^3.0.0"
     node-fetch "^2.6.0"
