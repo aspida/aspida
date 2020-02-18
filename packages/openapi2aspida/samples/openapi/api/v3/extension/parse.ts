@@ -6,6 +6,7 @@ export interface Methods {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader
 
     resBody: {
+      type: Types.CardEnumModel
       url: string
       sourceName?: string
       abstract?: string

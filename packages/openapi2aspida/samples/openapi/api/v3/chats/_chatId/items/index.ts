@@ -13,7 +13,6 @@ export interface Methods {
     resBody: {
       limit: number
       offset: number
-      data: []
     }
   }
 
@@ -25,6 +24,7 @@ export interface Methods {
     }
 
     reqBody: {
+      type: Types.CardEnumModel
       title?: string
       abstract?: string
       sourceName?: string

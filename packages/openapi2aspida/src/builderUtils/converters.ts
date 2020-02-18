@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { OpenAPIV3 } from 'openapi-types'
+import { Prop, PropValue } from './props2String'
 
 export const defKey2defName = (key: string) => key.replace(/[^a-zA-Z0-9$_]/g, '_')
 
@@ -19,9 +20,8 @@ export const isRefObject = (
     | OpenAPIV3.SchemaObject
 ): params is OpenAPIV3.ReferenceObject => '$ref' in params
 
-export const isArraySchema = (
-  schema: OpenAPIV3.SchemaObject
-): schema is OpenAPIV3.ArraySchemaObject => schema.type === 'array'
+const isArraySchema = (schema: OpenAPIV3.SchemaObject): schema is OpenAPIV3.ArraySchemaObject =>
+  schema.type === 'array'
 
 export const isObjectSchema = (
   schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject
@@ -30,59 +30,62 @@ export const isObjectSchema = (
 export const getPropertyName = (name: string) =>
   /^[a-zA-Z_$][0-9a-zA-Z_$]*$/.test(name) ? name : `'${name}'`
 
-export const enum2value = (en: any[]) => `'${en.join("' | '")}'`
+const of2Values = (obj: OpenAPIV3.SchemaObject): PropValue[] | null => {
+  const values = (obj.oneOf || obj.allOf || [])
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    .map(p => schema2value(p))
+    .filter(v => v) as PropValue[]
+  return values.length ? values : null
+}
 
-export const array2value = (schema: OpenAPIV3.ArraySchemaObject, indent: string) =>
-  // eslint-disable-next-line @typescript-eslint/no-use-before-define
-  `${schema2value(schema.items, indent)}[]`
+const object2value = (obj: OpenAPIV3.NonArraySchemaObject): Prop[] | null => {
+  if (!obj.properties) return null
 
-export const object2value = (obj: OpenAPIV3.NonArraySchemaObject, indent: string) => {
-  return obj.properties
-    ? `{\n${Object.keys(obj.properties)
-        .filter(name => {
-          const target = obj.properties![name]
-          return !isRefObject(target) && !target.deprecated
-        })
-        .map(
-          name =>
-            `${indent}  ${getPropertyName(name)}${
-              obj?.required?.includes(name) ? '' : '?'
-              // eslint-disable-next-line @typescript-eslint/no-use-before-define
-            }: ${schema2value(obj.properties![name], `${indent}  `)}`
-        )
-        .join('\n')}\n${indent}}`
-    : '{}'
+  const value = Object.keys(obj.properties)
+    .filter(name => {
+      const target = obj.properties![name]
+      return isRefObject(target) || !target.deprecated
+    })
+    .map<Prop | null>(name => {
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
+      const val = schema2value(obj.properties![name])
+      if (!val) return null
+
+      return {
+        name: getPropertyName(name),
+        required: !!obj.required?.includes(name),
+        isOneOf: false,
+        values: [val]
+      }
+    })
+    .filter(v => v) as Prop[]
+
+  return value.length ? value : null
 }
 
 export const schema2value = (
-  schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject,
-  indent: string
-) => {
+  schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined
+): PropValue | null => {
+  if (!schema) return null
+
+  let isArray = false
+  let isEnum = false
+  let isOneOf
+  let value: PropValue['value'] | null = null
+
   if (isRefObject(schema)) {
-    return $ref2Type(schema.$ref)
-  }
-
-  let value = ''
-
-  if (schema.allOf) {
-    value = `${schema.allOf
-      .filter(s => isRefObject(s))
-      .map(s => isRefObject(s) && $ref2Type(s.$ref))
-      .join(' & ')}${
-      schema.allOf.filter(s => isRefObject(s)).length &&
-      schema.allOf.filter(s => isObjectSchema(s)).length
-        ? ' & '
-        : ''
-    }${schema.allOf
-      .filter(s => isObjectSchema(s))
-      .map(s => isObjectSchema(s) && object2value(s, indent))
-      .join(' & ')}`
+    value = $ref2Type(schema.$ref)
+  } else if (schema.oneOf || schema.allOf) {
+    isOneOf = !!schema.oneOf
+    value = of2Values(schema)
   } else if (schema.enum) {
-    value = enum2value(schema.enum)
+    isEnum = true
+    value = schema.enum
   } else if (isArraySchema(schema)) {
-    value = array2value(schema, indent)
+    isArray = true
+    value = schema2value(schema.items)
   } else if (schema.properties) {
-    value = object2value(schema, indent)
+    value = object2value(schema)
   } else if (schema.format === 'binary') {
     value = 'ArrayBuffer'
   } else if (schema.type !== 'object') {
@@ -95,5 +98,5 @@ export const schema2value = (
     }[schema.type]
   }
 
-  return value
+  return value ? { isArray, isEnum, isOneOf, value } : null
 }

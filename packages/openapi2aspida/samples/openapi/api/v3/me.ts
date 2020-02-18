@@ -6,7 +6,7 @@ export interface Methods {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
 
     resBody: Types.UserInfo & {
-
+      settings?: Types.UserSettings
     }
   }
 }

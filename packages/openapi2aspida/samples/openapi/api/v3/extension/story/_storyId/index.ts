@@ -12,6 +12,7 @@ export interface Methods {
     reqFormat: FormData
 
     reqBody: {
+      type: Types.CardEnumModel
       caption?: string
       title?: string
       abstract?: string

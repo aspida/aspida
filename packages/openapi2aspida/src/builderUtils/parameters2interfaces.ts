@@ -1,5 +1,6 @@
 import { OpenAPIV3 } from 'openapi-types'
-import { isRefObject, defKey2defName, $ref2Type, schema2value, getPropertyName } from './converters'
+import { isRefObject, defKey2defName, $ref2Type, getPropertyName, schema2value } from './converters'
+import { props2String } from './props2String'
 import { resolveParamsRef } from './resolvers'
 
 export default (params: OpenAPIV3.ComponentsObject['parameters'], openapi: OpenAPIV3.Document) =>
@@ -12,11 +13,28 @@ export default (params: OpenAPIV3.ComponentsObject['parameters'], openapi: OpenA
     .map(defKey => {
       const target = params[defKey]
       const defName = defKey2defName(defKey)
+      let typeString: string
 
-      return isRefObject(target)
-        ? `\nexport interface ${defName} extends ${$ref2Type(target.$ref)} {}\n`
-        : `\nexport interface ${defName} {\n  ${getPropertyName(target.name)}${
-            target.required ? '' : '?'
-          }: ${target.schema ? schema2value(target.schema, '') : 'null'}\n}\n`
+      if (isRefObject(target)) {
+        typeString = $ref2Type(target.$ref)
+      } else {
+        const value = schema2value(target.schema)
+        if (!value) return null
+
+        typeString = props2String(
+          [
+            {
+              name: getPropertyName(target.name),
+              required: !!target.required,
+              isOneOf: false,
+              values: [value]
+            }
+          ],
+          ''
+        )
+      }
+
+      return `\nexport type ${defName} = ${typeString}\n`
     })
+    .filter(v => v)
     .join('')

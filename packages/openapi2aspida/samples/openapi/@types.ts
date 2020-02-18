@@ -1,47 +1,47 @@
 /* eslint-disable */
-export interface AppIdHeader {
+export type AppIdHeader = {
   'x-tchop-app-id': string
 }
 
-export interface AppPlatformHeader {
+export type AppPlatformHeader = {
   'x-tchop-app-platform': 'android' | 'ios' | 'android-hockey' | 'ios-hockey'
 }
 
-export interface AppVersionHeader {
+export type AppVersionHeader = {
   'x-tchop-app-version': string
 }
 
-export interface UserTokenHeader {
+export type UserTokenHeader = {
   'x-tchop-token': string
 }
 
-export interface AppOrganisationToken {
+export type AppOrganisationToken = {
   'x-tchop-app-organisation-token'?: string
 }
 
-export interface UserPublicKey {
+export type UserPublicKey = {
   'x-tchop-user-public-key'?: string
 }
 
-export interface UserSignedChallenge {
+export type UserSignedChallenge = {
   'x-tchop-user-signed-challenge'?: string
 }
 
-export interface AppOrganisationTokenRequired {
+export type AppOrganisationTokenRequired = {
   'x-tchop-app-organisation-token': string
 }
 
-export interface UserInstanceIdHeader {
+export type UserInstanceIdHeader = {
   'x-tchop-firebase-instance-id'?: string
 }
 
-export interface ErrorModel {
+export type ErrorModel = {
   code: string
   message: string
   messageCode?: string
 }
 
-export interface ErrorValidationModel {
+export type ErrorValidationModel = {
   code: string
   errors: {
     code: string
@@ -51,7 +51,7 @@ export interface ErrorValidationModel {
   message: string
 }
 
-export interface UserInfo {
+export type UserInfo = {
   id: number
   username: string
   email: string
@@ -59,11 +59,11 @@ export interface UserInfo {
   url: string
 }
 
-export interface UserSettings {
+export type UserSettings = {
   isAppLocked: boolean
 }
 
-export interface OrganisationModel {
+export type OrganisationModel = {
   name: string
   subdomain: string
   locale: string
@@ -88,7 +88,7 @@ export interface OrganisationModel {
   hasPinnedMixes: boolean
 }
 
-export interface BaseMixModel {
+export type BaseMixModel = {
   id: number
   title: string
   subtitle: string
@@ -100,14 +100,15 @@ export interface BaseMixModel {
   previewUrl: string
   includeInNewsFeed: boolean
   displayItemUpdatedTime?: string
+  image?: ImageModel
 }
 
-export interface ModelMixV3 extends BaseMixModel {
+export type ModelMixV3 = BaseMixModel & {
   cards: ModelCard[]
   itemsNum: number
 }
 
-export interface ImageModel {
+export type ImageModel = {
   id: number
   statusCopyright: number
   rightholder: string
@@ -116,7 +117,7 @@ export interface ImageModel {
   url?: string
 }
 
-export interface AudioModel {
+export type AudioModel = {
   id: number
   url?: string
   thumb: string
@@ -127,8 +128,9 @@ export interface AudioModel {
   height?: number
 }
 
-export interface ModelCard {
+export type ModelCard = {
   id: number
+  type: CardEnumModel
   createdByLabel?: string
   created: string
   postedTime: string
@@ -143,19 +145,24 @@ export interface ModelCard {
   sourceName?: string
   url?: string
   abstract?: string
+  image?: ImageModel
+  audio?: AudioModel
+  styles?: CardStyleModel
+  author?: CardAuthorModel
 }
 
-export interface CardAuthorModel {
+export type CardAuthorModel = {
   type: 'curate-backend' | 'api'
   name: string
   email?: string
+  image?: ImageModel
 }
 
 export type ReactionEnumModel = 'like' | 'love' | 'haha' | 'wow' | 'sad' | 'angry'
 
 export type CardEnumModel = 'article' | 'image' | 'video' | 'quote' | 'editorial' | 'audio'
 
-export interface ReactionCountModel {
+export type ReactionCountModel = {
   like?: number
   love?: number
   haha?: number
@@ -164,19 +171,19 @@ export interface ReactionCountModel {
   angry?: number
 }
 
-export interface MediaEXIFModel {
+export type MediaEXIFModel = {
   gps?: {
     x: number
     y: number
   }
 }
 
-export interface CardStyleModel {
+export type CardStyleModel = {
   showAuthor?: boolean
   teaserStyle?: 'standard' | 'small_with_text' | 'small_without_text' | 'big_without_text'
 }
 
-export interface QuoteModel {
+export type QuoteModel = {
   quotePerson?: string
   quotePersonHandle?: string
   quote?: string
@@ -186,7 +193,7 @@ export interface QuoteModel {
   quoteCreated?: string
 }
 
-export interface ArticleModel {
+export type ArticleModel = {
   title?: string
   abstract?: string
   sourceName?: string

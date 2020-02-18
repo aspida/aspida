@@ -8,7 +8,6 @@ export interface Methods {
 
   put: {
     resBody: Types.Users_PermissionsUser
-
     reqBody: Types.NewUsers_PermissionsUser
   }
 

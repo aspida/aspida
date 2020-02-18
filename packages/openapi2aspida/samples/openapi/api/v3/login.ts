@@ -7,6 +7,7 @@ export interface Methods {
 
     resBody: Types.UserInfo & {
       token: string
+      settings?: Types.UserSettings
     }
 
     reqBody: {

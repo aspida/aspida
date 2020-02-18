@@ -10,6 +10,7 @@ export interface Methods {
       publishKey?: string
       subscribeKey?: string
       cipherKey?: string
+
       senderDevice?: {
         ios?: string[]
         android?: string[]

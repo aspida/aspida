@@ -24,7 +24,6 @@ export interface Methods {
 
   post: {
     resBody: Types.Users_PermissionsRole
-
     reqBody: Types.NewUsers_PermissionsRole
   }
 }

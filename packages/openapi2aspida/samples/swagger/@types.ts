@@ -1,29 +1,30 @@
 /* eslint-disable */
-export interface Category {
+export type Category = {
   id?: number
   name?: string
 }
 
-export interface Pet {
+export type Pet = {
   id?: number
+  category?: Category
   name: string
   photoUrls: string[]
   tags?: Tag[]
   status?: 'available' | 'pending' | 'sold'
 }
 
-export interface Tag {
+export type Tag = {
   id?: number
   name?: string
 }
 
-export interface ApiResponse {
+export type ApiResponse = {
   code?: number
   type?: string
   message?: string
 }
 
-export interface Order {
+export type Order = {
   id?: number
   petId?: number
   quantity?: number
@@ -32,7 +33,7 @@ export interface Order {
   complete?: boolean
 }
 
-export interface User {
+export type User = {
   id?: number
   username?: string
   firstName?: string

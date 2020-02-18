@@ -119,9 +119,9 @@ const api = <T>(client: AspidaClient<T>) => {
               (await client.fetch<Methods8['post']['resBody']>(prefix, '/api/v1/parse/image', 'POST', option, 'FormData').json()).data
           },
           post: (option?: { data?: Methods7['post']['reqBody'], config?: T }) =>
-            client.fetch<void>(prefix, '/api/v1/parse', 'POST', option).send(),
+            client.fetch<Methods7['post']['resBody']>(prefix, '/api/v1/parse', 'POST', option).json(),
           $post: async (option?: { data?: Methods7['post']['reqBody'], config?: T }) =>
-            (await client.fetch<void>(prefix, '/api/v1/parse', 'POST', option).send()).data
+            (await client.fetch<Methods7['post']['resBody']>(prefix, '/api/v1/parse', 'POST', option).json()).data
         },
         token: {
           post: (option?: { data?: Methods9['post']['reqBody'], config?: T }) =>

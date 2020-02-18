@@ -12,9 +12,11 @@ export interface Methods {
       organisationId?: number
       storyId?: number
       itemId?: number
+
       pinnedContent?: {
         pinType?: 'mix' | 'card'
       }
+
       storyIdPinned?: number
       type?: 'group' | 'p2p'
       accessType?: 'private' | 'publicRead' | 'publicWrite'

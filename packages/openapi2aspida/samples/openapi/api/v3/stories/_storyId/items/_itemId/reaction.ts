@@ -7,14 +7,17 @@ export interface Methods {
 
     resBody: {
       action?: 'add' | 'remove' | 'replace'
-      reactions?: Types.ReactionCountModel & {
 
+      reactions?: Types.ReactionCountModel & {
+        myReaction?: Types.ReactionEnumModel
       }
+
+      previousStatus?: Types.ReactionEnumModel
       userType?: 'anonymous' | 'unique'
     }
 
     reqBody: {
-
+      reaction?: Types.ReactionEnumModel
     }
   }
 }

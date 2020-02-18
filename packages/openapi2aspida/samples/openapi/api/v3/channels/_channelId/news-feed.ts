@@ -14,16 +14,19 @@ export interface Methods {
 
     resBody: {
       count: number
-      data: Types.ModelCard & {
+      data: (Types.ModelCard & {
         author?: {
           type?: string
           name?: string
+          image?: Types.ImageModel
         }
-        storyId?: number
-        reactions?: Types.ReactionCountModel & {
 
+        storyId?: number
+
+        reactions?: Types.ReactionCountModel & {
+          myReaction?: Types.ReactionEnumModel
         }
-      }[]
+      })[]
     }
   }
 }
