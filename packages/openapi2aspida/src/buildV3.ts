@@ -2,16 +2,18 @@
 import { OpenAPIV3 } from 'openapi-types'
 import { Template } from './buildTemplate'
 import { isRefObject, $ref2Type, getPropertyName, schema2value } from './builderUtils/converters'
-import { props2String, Prop, PropValue } from './builderUtils/props2String'
+import { props2String, Prop, PropValue, value2String } from './builderUtils/props2String'
 import { resolveParamsRef, resolveResRef, resolveReqRef } from './builderUtils/resolvers'
 import getDirName from './builderUtils/getDirName'
-import schemas2interfaces from './builderUtils/schemas2interfaces'
-import parameters2interfaces from './builderUtils/parameters2interfaces'
+import schemas2Props from './builderUtils/schemas2Props'
+import parameters2Props from './builderUtils/parameters2Props'
 
 const methodNames = ['get', 'post', 'put', 'delete', 'head', 'options', 'patch'] as const
 
 export default (openapi: OpenAPIV3.Document): Template => {
   const files: { file: string[]; methods: string }[] = []
+  const schemas = schemas2Props(openapi.components?.schemas, openapi) || []
+  const parameters = parameters2Props(openapi.components?.parameters, openapi) || []
 
   if (openapi.paths) {
     files.push(
@@ -242,10 +244,7 @@ export default (openapi: OpenAPIV3.Document): Template => {
               }export interface Methods ${methodsText}\n`
             }
           } else {
-            return {
-              file,
-              methods: ''
-            }
+            return { file, methods: '' }
           }
         })
         .filter(file => file.methods)
@@ -254,11 +253,18 @@ export default (openapi: OpenAPIV3.Document): Template => {
 
   return {
     baseURL: openapi.servers?.[0].url || '',
-    types: `/* eslint-disable */${parameters2interfaces(openapi.components?.parameters, openapi) ||
-      ''}${schemas2interfaces(openapi.components?.schemas, openapi) || ''}`.replace(
-      / Types\./g,
-      ' '
-    ),
+    types: `/* eslint-disable */${[
+      ...parameters.map(p => ({
+        name: p.name,
+        text: typeof p.props === 'string' ? p.props : props2String(p.props, '')
+      })),
+      ...schemas.map(s => ({
+        name: s.name,
+        text: value2String(s.value, '').replace(/\n {2}/g, '\n')
+      }))
+    ]
+      .map(p => `\nexport type ${p.name} = ${p.text}\n`)
+      .join('')}`.replace(/ Types\./g, ' '),
     files
   }
 }
