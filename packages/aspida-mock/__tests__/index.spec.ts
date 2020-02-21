@@ -11,7 +11,7 @@ describe('initialize', () => {
     adapter.attachRoutes([
       {
         path: '',
-        methods: { put: ({ query }) => ({ status: 200, resData: query }) }
+        methods: { put: ({ query }) => ({ status: 200, resBody: query }) }
       }
     ])
 
@@ -36,7 +36,7 @@ describe('initialize', () => {
       [
         {
           path: '',
-          methods: { put: ({ query }) => ({ status: 200, resData: query }) }
+          methods: { put: ({ query }) => ({ status: 200, resBody: query }) }
         }
       ],
       { delayMSec }
@@ -48,13 +48,26 @@ describe('initialize', () => {
     expect(elapsedTime).toBeLessThan(delayMSec + 20)
   })
 
+  test('post json data', async () => {
+    adapter.attachRoutes([
+      {
+        path: '',
+        methods: {
+          post: ({ query, reqBody }) => ({ status: 200, resBody: query.aa * reqBody.val })
+        }
+      }
+    ])
+
+    expect(await client.$post({ query: { aa: 2 }, data: { val: 3 } })).toEqual(6)
+  })
+
   test('middleware path through', async () => {
     const spyLog = jest.spyOn(console, 'log').mockImplementation(x => x)
     adapter.attachRoutes(
       [
         {
           path: '',
-          methods: { get: ({ query }) => ({ status: 200, resData: query }) }
+          methods: { get: ({ query }) => ({ status: 200, resBody: query }) }
         }
       ],
       {
@@ -85,7 +98,7 @@ describe('initialize', () => {
       [
         {
           path: '',
-          methods: { put: ({ query }) => ({ status: 200, resData: query }) }
+          methods: { put: ({ query }) => ({ status: 200, resBody: query }) }
         }
       ],
       {
@@ -94,10 +107,10 @@ describe('initialize', () => {
             next({ ...req, query: { aa: req.query.aa + 2 } })
           },
           (req, res) => {
-            res({ status: 200, resData: { aa: req.query.aa + 4 } })
+            res({ status: 200, resBody: { aa: req.query.aa + 4 } })
           },
           (req, res) => {
-            res({ status: 200, resData: { aa: req.query.aa + 8 } })
+            res({ status: 200, resBody: { aa: req.query.aa + 8 } })
           }
         ]
       }

@@ -19,6 +19,6 @@ export interface Methods {
       _nin?: string[]
     }
 
-    resData: Types.Users_PermissionsUser[]
+    resBody: Types.Users_PermissionsUser[]
   }
 }

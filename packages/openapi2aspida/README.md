@@ -58,6 +58,13 @@
   $ yarn add openapi2aspida --dev
   ```
 
+- Using [npm](https://www.npmjs.com/) with aspida-mock:
+
+  ```sh
+  $ npm install @aspida/axios
+  $ npm install openapi2aspida aspida-mock --save-dev
+  ```
+
 ### Make HTTP request from application
 
 `aspida.config.js`
@@ -66,6 +73,15 @@
 module.exports = {
   input: "apis", // "input" of aspida is "output" for openapi2aspida
   openapi: { inputFile: "assets/openapi.json" } // Compatible with yaml/json of OpenAPI3.0/Swagger2.0
+}
+```
+
+`aspida.config.js` (enable mock)
+
+```js
+module.exports = {
+  input: "apis",
+  openapi: { inputFile: "assets/openapi.json", mock: true }
 }
 ```
 
@@ -84,6 +100,7 @@ module.exports = {
 ```sh
 $ npm run build:openapi
 # apis/$api.ts was built successfully.
+# (apis/$mock.ts was built successfully.)
 ```
 
 ## License

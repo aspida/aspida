@@ -9,21 +9,21 @@ export interface Methods {
       offset?: number
     }
 
-    resData: {
+    resBody: {
       limit: number
       offset: number
-      data: []
     }
   }
 
   post: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
 
-    resData: {
+    resBody: {
       id: string
     }
 
-    reqData: {
+    reqBody: {
+      type: Types.CardEnumModel
       title?: string
       abstract?: string
       sourceName?: string
@@ -44,4 +44,9 @@ export interface Methods {
       formattedText?: string
     }
   }
+}
+
+export default {
+  get: () => ({ status: 200, resBody: { limit: 1, offset: 1 } }),
+  post: () => ({ status: 200, resBody: { id: 'a' } })
 }

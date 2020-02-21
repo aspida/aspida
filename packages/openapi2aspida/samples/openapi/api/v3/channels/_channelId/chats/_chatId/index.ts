@@ -5,16 +5,18 @@ export interface Methods {
   get: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
 
-    resData: {
+    resBody: {
       chatId?: number
       chatDescriptor?: string
       channelId?: number
       organisationId?: number
       storyId?: number
       itemId?: number
+
       pinnedContent?: {
         pinType?: 'mix' | 'card'
       }
+
       storyIdPinned?: number
       type?: 'group' | 'p2p'
       accessType?: 'private' | 'publicRead' | 'publicWrite'
@@ -36,7 +38,7 @@ export interface Methods {
   put: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
 
-    reqData: {
+    reqBody: {
       name?: string
       accessType?: 'private' | 'publicWrite' | 'publicRead'
       payload?: string
@@ -49,4 +51,10 @@ export interface Methods {
   delete: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
   }
+}
+
+export default {
+  get: () => ({ status: 200, resBody: { chatId: 1, chatDescriptor: 'a', channelId: 1, organisationId: 1, storyId: 1, itemId: 1, pinnedContent: { pinType: 'mix' }, storyIdPinned: 1, type: 'group', accessType: 'private', usersCount: 1, name: 'a', payload: 'a', access: 'admin', thumbnails: [{ image: 'a', initials: 'a' }], level: 'channel', recipientId: 1, created: 'a', updated: 'a' } }),
+  put: () => ({ status: 200 }),
+  delete: () => ({ status: 200 })
 }

@@ -19,12 +19,11 @@ export interface Methods {
       _nin?: string[]
     }
 
-    resData: Types.Users_PermissionsRole[]
+    resBody: Types.Users_PermissionsRole[]
   }
 
   post: {
-    resData: Types.Users_PermissionsRole
-
-    reqData: Types.NewUsers_PermissionsRole
+    resBody: Types.Users_PermissionsRole
+    reqBody: Types.NewUsers_PermissionsRole
   }
 }

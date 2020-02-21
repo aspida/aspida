@@ -40,8 +40,12 @@ export default (input: string, trailingSlash: boolean) => {
           .replace(/^(\d)/, '$$$1')}: {\n<% next %>\n${indent}}`
         let newUrl = `${url}/${basename}`
 
-        if (file.startsWith('_')) {
-          valFn = `${indent}${basename}: (val${valCount}: number | string) => ({\n<% next %>\n${indent}})`
+        const isNuxtLikeDynamicPath = basename.startsWith('_')
+
+        if (isNuxtLikeDynamicPath || (basename.startsWith('[') && basename.endsWith(']'))) {
+          valFn = `${indent}${
+            isNuxtLikeDynamicPath ? basename : `_${basename.slice(1, -1)}`
+          }: (val${valCount}: number | string) => ({\n<% next %>\n${indent}})`
 
           newUrl = `${url}/\${val${valCount}}`
           valCount += 1

@@ -5,9 +5,13 @@ export interface Methods {
   post: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
 
-    reqData: {
+    reqBody: {
       fcmToken: string
       deviceToken?: string
     }
   }
+}
+
+export default {
+  post: () => ({ status: 200 })
 }

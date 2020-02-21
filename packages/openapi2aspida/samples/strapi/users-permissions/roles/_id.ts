@@ -3,6 +3,6 @@ import * as Types from '../../@types'
 
 export interface Methods {
   get: {
-    resData: Types.Users_PermissionsRole
+    resBody: Types.Users_PermissionsRole
   }
 }

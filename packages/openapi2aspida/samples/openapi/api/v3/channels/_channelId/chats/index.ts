@@ -5,7 +5,7 @@ export interface Methods {
   get: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken & Types.UserPublicKey & Types.UserSignedChallenge
 
-    resData: {
+    resBody: {
       chats?: {
         access?: 'admin' | 'r' | 'w' | 'banned'
         chatId?: number
@@ -35,6 +35,7 @@ export interface Methods {
       publishKey?: string
       subscribeKey?: string
       cipherKey?: string
+
       senderDevice?: {
         ios?: string[]
         android?: string[]
@@ -45,16 +46,18 @@ export interface Methods {
   post: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
 
-    resData: {
+    resBody: {
       chatId?: number
       chatDescriptor?: string
       channelId?: number
       organisationId?: number
       storyId?: number
       itemId?: number
+
       pinnedContent?: {
         pinType?: 'mix' | 'card'
       }
+
       type?: 'group' | 'p2p'
       accessType?: 'private' | 'publicRead' | 'publicWrite'
       usersCount?: number
@@ -71,7 +74,7 @@ export interface Methods {
       updated?: string
     }
 
-    reqData: {
+    reqBody: {
       name: string
       type: 'p2p' | 'group'
       level: 'channel' | 'organisation'
@@ -82,4 +85,9 @@ export interface Methods {
       users?: number[]
     }
   }
+}
+
+export default {
+  get: () => ({ status: 200, resBody: { chats: [{ access: 'admin', chatId: 1, chatDescriptor: 'a', channelId: 1, organisationId: 1, name: 'a', payload: 'a', type: 'group', accessType: 'private', storyId: 1, itemId: 1, storyIdPinned: 1, storyPinnedEmpty: true, usersCount: 1, publicToJoin: true, thumbnails: [{ image: 'a', initials: 'a' }], level: 'channel', recipientId: 1, created: 'a', updated: 'a' }], token: 'a', publishKey: 'a', subscribeKey: 'a', cipherKey: 'a', senderDevice: { ios: ['a'], android: ['a'] } } }),
+  post: () => ({ status: 200, resBody: { chatId: 1, chatDescriptor: 'a', channelId: 1, organisationId: 1, storyId: 1, itemId: 1, pinnedContent: { pinType: 'mix' }, type: 'group', accessType: 'private', usersCount: 1, name: 'a', payload: 'a', access: 'admin', thumbnails: [{ image: 'a', initials: 'a' }], level: 'channel', recipientId: 1, created: 'a', updated: 'a' } })
 }

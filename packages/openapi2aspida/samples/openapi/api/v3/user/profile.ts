@@ -4,14 +4,17 @@ import * as Types from '../../../@types'
 export interface Methods {
   put: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader
+    reqFormat: FormData
 
-    reqType: FormData
-
-    reqData?: {
+    reqBody?: {
       screenName?: string
       url?: string
       image?: ArrayBuffer
       imageId?: string
     }
   }
+}
+
+export default {
+  put: () => ({ status: 200 })
 }

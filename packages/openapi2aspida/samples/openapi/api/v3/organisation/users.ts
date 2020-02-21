@@ -10,7 +10,7 @@ export interface Methods {
       offset?: number
     }
 
-    resData: {
+    resBody: {
       count: number
       offset?: number
       data: {
@@ -23,4 +23,8 @@ export interface Methods {
       }[]
     }
   }
+}
+
+export default {
+  get: () => ({ status: 200, resBody: { count: 1, offset: 1, data: [{ email: 'a', id: 1, initials: 'a', role: 'a', roleScope: 'a', screenName: 'a' }] } })
 }

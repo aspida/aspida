@@ -29,7 +29,7 @@ interface BuildCommand {
 }
 
 export interface BuildIO {
-  write(outputDir: string, trailingSlash: boolean, template: Template): void
+  write(outputDir: string, needsMock: boolean, trailingSlash: boolean, template: Template): void
   remove(filePath: string): Promise<void>
   watch(input: string | OpenAPI.Document, callback: () => void): void
 }
@@ -37,8 +37,13 @@ export interface BuildIO {
 export class Build implements BuildCommand {
   async run(config: Config, io: BuildIO) {
     await io.remove(config.output)
-    const template = await build(config.input, config.isYaml)
-    io.write(config.output, config.trailingSlash, template)
+    const template = await build(
+      config.input,
+      config.isYaml,
+      config.needsMock,
+      config.needsMockType
+    )
+    io.write(config.output, config.needsMock, config.trailingSlash, template)
   }
 }
 

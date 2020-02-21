@@ -26,7 +26,7 @@ export interface MockClient<U> extends AspidaClient<U> {
 export interface MockRequestConfig {
   path: string
   method: HttpMethod
-  reqData: any | undefined
+  reqBody: any | undefined
   reqHeaders: any | undefined
   query: any | undefined
 }

@@ -5,16 +5,16 @@ export interface Methods {
 
   post: {
     query?: { aa: number }
-    reqData?: { name: string }
+    reqBody?: { name: string }
   }
 
   put: {
     query?: { aa: number }
-    resData: { id: number }
+    resBody: { id: number }
   }
 
   delete: {
     query: { aa: number }
-    resData: { id: number }
+    resBody: { id: number }
   }
 }

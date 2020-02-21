@@ -36,7 +36,7 @@
   </a>
 </div>
 <br />
-<p align="center">Type safe RESTful API mock for aspida.</p>
+<p align="center">TypeScript friendly RESTful API mock for aspida.</p>
 <div align="center">
   <a href="https://github.com/aspidajs/aspida/tree/master/packages/aspida-mock#readme">🇺🇸English</a> |
   <a href="https://github.com/aspidajs/aspida/tree/master/packages/aspida-mock/docs/ja#readme">🇯🇵日本語</a>
@@ -46,7 +46,7 @@
 
 ## Features
 
-- API mock dedicated to TypeScript that achieves type safety using the type definition of [aspida](https://github.com/aspidajs/aspida/tree/master/packages/aspida).
+- API mock dedicated to TypeScript using the type definition of [aspida](https://github.com/aspidajs/aspida/tree/master/packages/aspida).
 - Supports all HTTP methods such as `GET`/`POST`/`PUT`/`DELETE` in a few lines.
 - No server required, works only with browser.
 
@@ -82,9 +82,9 @@ export interface Methods {
   post: {
     query: { id: number }
     reqHeaders: { val: string }
-    reqData: { name: string }
+    reqBody: { name: string }
     resHeaders: { token: string }
-    resData: {
+    resBody: {
       id: number
       name: string
     }
@@ -92,12 +92,12 @@ export interface Methods {
 }
 
 export default mockMethods<Methods>({
-  post: ({ query, reqHeaders, reqData }) => ({
+  post: ({ query, reqHeaders, reqBody }) => ({
     status: 200,
     resHeaders: { token: reqHeaders.val },
-    resData: {
+    resBody: {
       id: query.id,
-      name: reqData.name
+      name: reqBody.name
     }
   })
 })
@@ -162,7 +162,7 @@ export default mockMiddleware([
     next({ ...req, query: { hoge: req.query.hoge + 1 } })
   },
   (req, res) => {
-    res({ status: 200, resData: { fuga: req.query.hoge + 2 } })
+    res({ status: 200, resBody: { fuga: req.query.hoge + 2 } })
   }
 ])
 ```
@@ -176,7 +176,7 @@ import { mockMethods } from 'aspida-mock'
 export interface Methods {
   get: {
     query: { hoge: number }
-    resData: {
+    resBody: {
       fuga: number
     }
   }
@@ -185,7 +185,7 @@ export interface Methods {
 export default mockMethods<Methods>({
   get: ({ query }) => ({
     status: 200,
-    resData: { fuga: query.hoge + 4 }
+    resBody: { fuga: query.hoge + 4 }
   })
 })
 ```

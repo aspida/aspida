@@ -1,9 +1,13 @@
 /* eslint-disable */
 export interface Methods {
   put: {
-    reqData?: {
+    reqBody?: {
       name: string
       title?: string
     }
   }
+}
+
+export default {
+  put: () => ({ status: 200 })
 }
