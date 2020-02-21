@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.14.0](https://github.com/aspidajs/aspida/compare/v0.13.0...v0.14.0) (2020-02-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* rename reqData/resData to reqBody/resBody
+
+### Features
+
+* **openapi:** support mock ([4ee8936](https://github.com/aspidajs/aspida/commit/4ee893625162db5b140fb468debd94615a322342))
+* **pathpida:** support next.js dynamic routing ([dbb5bb4](https://github.com/aspidajs/aspida/commit/dbb5bb4fb6c0863293114e843a99e2bf6cae71d2))
+
+
+### Bug Fixes
+
+* **aspida:** untransform data when mocking ([121c3e9](https://github.com/aspidajs/aspida/commit/121c3e9ecdfa469835496161be2f0cff2a8dec93))
+* **openapi:** parse allOf/oneOf option ([53fb0f3](https://github.com/aspidajs/aspida/commit/53fb0f3143755d214828f7f9266adc7d57f19b91))
+
+
+* rename reqData/resData to reqBody/resBody ([b22da5c](https://github.com/aspidajs/aspida/commit/b22da5c56bce7946b7e1f294c9b789fe2eef9500))
+
+
+### Refactors
+
+* **openapi:** buildV3.ts ([fb97adf](https://github.com/aspidajs/aspida/commit/fb97adfb99ce1384746e3ab8bf99bf8d9474777d))
+* **openapi:** for mock ([c6fb3ce](https://github.com/aspidajs/aspida/commit/c6fb3cefeac296eeb1849358006bfc8c70acbe8d))
+
 ## [0.13.0](https://github.com/aspidajs/aspida/compare/v0.12.2...v0.13.0) (2020-02-01)
 
 
