@@ -45,3 +45,8 @@ export interface Methods {
     }
   }
 }
+
+export default {
+  get: () => ({ status: 200, resBody: { limit: 1, offset: 1 } }),
+  post: () => ({ status: 200, resBody: { id: 'a' } })
+}

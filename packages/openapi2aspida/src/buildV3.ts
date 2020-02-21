@@ -7,10 +7,15 @@ import { resolveParamsRef, resolveResRef, resolveReqRef } from './builderUtils/r
 import getDirName from './builderUtils/getDirName'
 import schemas2Props from './builderUtils/schemas2Props'
 import parameters2Props from './builderUtils/parameters2Props'
+import methods2MockString from './builderUtils/methods2MockString'
 
 const methodNames = ['get', 'post', 'put', 'delete', 'head', 'options', 'patch'] as const
 
-export default (openapi: OpenAPIV3.Document): Template => {
+export default (
+  openapi: OpenAPIV3.Document,
+  needsMock: boolean,
+  needsMockType: boolean
+): Template => {
   const files: { file: string[]; methods: string }[] = []
   const schemas = schemas2Props(openapi.components?.schemas, openapi) || []
   const parameters = parameters2Props(openapi.components?.parameters, openapi) || []
@@ -234,14 +239,19 @@ export default (openapi: OpenAPIV3.Document): Template => {
 
           if (methods.length) {
             const methodsText = props2String(methods, '')
+            const mockText = needsMock
+              ? methods2MockString(methods, needsMockType, parameters, schemas)
+              : ''
 
             return {
               file,
-              methods: `/* eslint-disable */\n${
+              methods: `/* eslint-disable */${
+                needsMock && needsMockType ? "\nimport { mockMethods } from 'aspida-mock'" : ''
+              }\n${
                 / Types\./.test(methodsText)
                   ? `import * as Types from '${file.map(() => '').join('../')}@types'\n\n`
                   : ''
-              }export interface Methods ${methodsText}\n`
+              }export interface Methods ${methodsText}\n${mockText}`
             }
           } else {
             return { file, methods: '' }

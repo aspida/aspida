@@ -18,3 +18,7 @@ export interface Methods {
     }
   }
 }
+
+export default {
+  get: () => ({ status: 200, resBody: { token: 'a', publishKey: 'a', subscribeKey: 'a', cipherKey: 'a', senderDevice: { ios: ['a'], android: ['a'] } } })
+}

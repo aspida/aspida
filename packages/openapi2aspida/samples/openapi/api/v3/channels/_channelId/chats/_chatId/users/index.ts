@@ -37,3 +37,9 @@ export interface Methods {
     }
   }
 }
+
+export default {
+  get: () => ({ status: 200, resBody: [{ id: 1, email: 'a', screenName: 'a', access: 'admin', isDeleted: 1, imageUrl: 'a', initials: 'a' }] }),
+  post: () => ({ status: 200 }),
+  put: () => ({ status: 200 })
+}

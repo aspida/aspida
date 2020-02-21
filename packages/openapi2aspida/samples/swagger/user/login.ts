@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { mockMethods } from 'aspida-mock'
 export interface Methods {
   get: {
     query: {
@@ -14,3 +15,7 @@ export interface Methods {
     }
   }
 }
+
+export default mockMethods<Methods>({
+  get: () => ({ status: 200, resBody: 'a', resHeaders: { 'X-Expires-After': 'a', 'X-Rate-Limit': 1 } })
+})

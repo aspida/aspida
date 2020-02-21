@@ -26,6 +26,12 @@ describe('cli test', () => {
         expect(fs.readFileSync(`${outputDir}/$api.ts`, 'utf8')).toBe(
           fs.readFileSync(`${basePath}/${config.output}/$api.ts`, 'utf8')
         )
+
+        if (config.needsMock) {
+          expect(fs.readFileSync(`${outputDir}/$mock.ts`, 'utf8')).toBe(
+            fs.readFileSync(`${basePath}/${config.output}/$mock.ts`, 'utf8')
+          )
+        }
       })
     )
   })

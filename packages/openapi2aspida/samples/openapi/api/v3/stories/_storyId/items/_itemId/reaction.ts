@@ -21,3 +21,7 @@ export interface Methods {
     }
   }
 }
+
+export default {
+  post: () => ({ status: 200, resBody: { action: 'add', reactions: { like: 1, love: 1, haha: 1, wow: 1, sad: 1, angry: 1, ...{ myReaction: 'like' } }, previousStatus: 'like', userType: 'anonymous' } })
+}

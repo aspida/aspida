@@ -7,12 +7,16 @@ export interface Config {
   output: string
   trailingSlash: boolean
   isYaml: boolean
+  needsMock: boolean
+  needsMockType: boolean
 }
 
 interface ConfigFile extends BaseConfig {
   openapi?: {
     inputFile: string
     yaml?: boolean
+    mock?: boolean
+    noMockType?: boolean
   }
 }
 
@@ -26,7 +30,9 @@ const createConfig = (config: ConfigFile) => {
     isYaml:
       config.openapi?.yaml === undefined
         ? path.extname(input).slice(1) === 'yaml'
-        : config.openapi?.yaml
+        : config.openapi?.yaml,
+    needsMock: !!config.openapi?.mock,
+    needsMockType: !config.openapi?.noMockType
   }
 }
 

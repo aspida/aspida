@@ -21,3 +21,7 @@ export interface Methods {
     }
   }
 }
+
+export default {
+  post: () => ({ status: 200, resBody: { id: 'a' } })
+}

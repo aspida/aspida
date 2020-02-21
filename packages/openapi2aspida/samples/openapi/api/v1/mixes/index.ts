@@ -19,3 +19,8 @@ export interface Methods {
     }
   }
 }
+
+export default {
+  get: () => ({ status: 200, resBody: [{ id: 1, title: 1, createdByCurrentClientAPI: true }] }),
+  post: () => ({ status: 200, resBody: { id: 1 } })
+}

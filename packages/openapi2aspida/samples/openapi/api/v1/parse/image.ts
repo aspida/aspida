@@ -14,3 +14,7 @@ export interface Methods {
     }
   }
 }
+
+export default {
+  post: () => ({ status: 200, resBody: { imageId: 1 } })
+}

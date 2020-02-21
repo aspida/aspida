@@ -10,3 +10,7 @@ export interface Methods {
     }
   }
 }
+
+export default {
+  get: () => ({ status: 200, resBody: { id: 1, username: 'a', email: 'a', avatar: 'a', url: 'a', ...{ settings: { isAppLocked: true } } } })
+}

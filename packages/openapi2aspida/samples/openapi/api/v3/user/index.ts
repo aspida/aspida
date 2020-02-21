@@ -7,3 +7,7 @@ export interface Methods {
     resBody: Types.UserInfo[]
   }
 }
+
+export default {
+  get: () => ({ status: 200, resBody: [{ id: 1, username: 'a', email: 'a', avatar: 'a', url: 'a' }] })
+}

@@ -28,3 +28,7 @@ export interface Methods {
     }
   }
 }
+
+export default {
+  get: () => ({ status: 200, resBody: { count: 1, limit: 1, data: [{ id: 1, message: 'a', title: 'a', priority: 'normal', isSent: true, ownerId: 'a', organisationId: 1, deliveringTime: 'a', expirationTime: 'a', created: 'a' }] } })
+}

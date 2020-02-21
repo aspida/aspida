@@ -10,3 +10,7 @@ export interface Methods {
     }
   }
 }
+
+export default {
+  post: () => ({ status: 200, resBody: { title: 'a', abstract: 'a', sourceName: 'a', image: 'a' } })
+}

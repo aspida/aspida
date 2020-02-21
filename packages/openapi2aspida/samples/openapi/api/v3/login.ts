@@ -19,3 +19,7 @@ export interface Methods {
     }
   }
 }
+
+export default {
+  post: () => ({ status: 200, resBody: { id: 1, username: 'a', email: 'a', avatar: 'a', url: 'a', ...{ token: 'a', settings: { isAppLocked: true } } } })
+}
