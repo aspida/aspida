@@ -1,13 +1,13 @@
 /* eslint-disable */
 export interface Methods {
   get: {
-    resData: {
+    resBody: {
       foo?: string
     }
   }
 
   delete: {
-    resData: {
+    resBody: {
       foo?: string
     }
   }

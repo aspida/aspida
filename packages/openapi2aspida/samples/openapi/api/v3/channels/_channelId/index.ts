@@ -11,3 +11,7 @@ export interface Methods {
     }
   }
 }
+
+export default {
+  get: () => ({ status: 200 })
+}

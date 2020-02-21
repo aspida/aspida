@@ -6,7 +6,7 @@ type RequestParams<T extends AspidaMethods[LowerHttpMethod]> = T extends AspidaM
       method: HttpMethod
       values: Record<string, string | number>
       query: T['query'] extends Record<string, any> | undefined ? T['query'] : undefined
-      reqData: T['reqData'] extends Record<string, any> | undefined ? T['reqData'] : undefined
+      reqBody: T['reqBody'] extends Record<string, any> | undefined ? T['reqBody'] : undefined
       reqHeaders: T['reqHeaders'] extends Record<string, any> | undefined
         ? T['reqHeaders']
         : undefined
@@ -16,7 +16,7 @@ type RequestParams<T extends AspidaMethods[LowerHttpMethod]> = T extends AspidaM
       method: HttpMethod
       values: Record<string, string | number>
       query: undefined
-      reqData: undefined
+      reqBody: undefined
       reqHeaders: undefined
     }
 
@@ -31,7 +31,7 @@ type StatusResponse = {
 
 type DataResponse<T> = {
   status: Status['ok']
-  resData: T
+  resBody: T
 }
 
 type HeadersResponse<T> = {
@@ -41,32 +41,32 @@ type HeadersResponse<T> = {
 
 type AllResponse<T, U> = {
   status: Status['ok']
-  resData: T
+  resBody: T
   resHeaders: U
 }
 
 type ErrorResponse = {
   status: Status['err']
-  resData?: any
+  resBody?: any
   resHeaders?: any
 }
 
 export type PartialResponse =
   | {
       status: Status['ok']
-      resData?: any
+      resBody?: any
       resHeaders?: any
     }
   | ErrorResponse
 
 export type MockResponse<
-  K extends AspidaMethods[LowerHttpMethod] = { resHeaders: {}; resData: {} }
+  K extends AspidaMethods[LowerHttpMethod] = { resHeaders: {}; resBody: {} }
 > = K extends AspidaMethodParams
   ?
-      | (K['resData'] extends Record<string, any> | undefined
+      | (K['resBody'] extends Record<string, any> | undefined
           ? K['resHeaders'] extends Record<string, any> | undefined
-            ? AllResponse<K['resData'], K['resHeaders']>
-            : DataResponse<K['resData']>
+            ? AllResponse<K['resBody'], K['resHeaders']>
+            : DataResponse<K['resBody']>
           : K['resHeaders'] extends Record<string, any> | undefined
           ? HeadersResponse<K['resHeaders']>
           : StatusResponse)
@@ -81,7 +81,7 @@ export type MockMethods<T extends AspidaMethods> = {
         method,
         values,
         query,
-        reqData,
+        reqBody,
         reqHeaders
       }: RequestParams<T[K]>) => MockResponse<T[K]> | Promise<MockResponse<T[K]>>
 }

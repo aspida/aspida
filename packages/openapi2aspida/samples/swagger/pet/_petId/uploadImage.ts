@@ -1,15 +1,19 @@
 /* eslint-disable */
+import { mockMethods } from 'aspida-mock'
 import * as Types from '../../@types'
 
 export interface Methods {
   post: {
-    resData: Types.ApiResponse
+    resBody: Types.ApiResponse
+    reqFormat: FormData
 
-    reqType: FormData
-
-    reqData?: {
+    reqBody?: {
       additionalMetadata?: string
       file?: ArrayBuffer
     }
   }
 }
+
+export default mockMethods<Methods>({
+  post: () => ({ status: 200, resBody: { code: 1, type: 'a', message: 'a' } })
+})

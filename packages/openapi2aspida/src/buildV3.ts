@@ -1,196 +1,24 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { OpenAPIV3 } from 'openapi-types'
 import { Template } from './buildTemplate'
-
-const defKey2defName = (key: string) => key.replace(/[^a-zA-Z0-9$_]/g, '_')
-const $ref2TypeName = (ref: string) => ref.split('/').pop() || ''
-// $ref2Type: replace /Array$/ for Swagger 2.0
-const $ref2Type = (ref: string) =>
-  `Types.${defKey2defName($ref2TypeName(ref)).replace(/Array$/, '[]')}`
-const isRefObject = (
-  params:
-    | OpenAPIV3.ReferenceObject
-    | OpenAPIV3.ResponseObject
-    | OpenAPIV3.RequestBodyObject
-    | OpenAPIV3.HeaderObject
-    | OpenAPIV3.ParameterObject
-    | OpenAPIV3.SchemaObject
-): params is OpenAPIV3.ReferenceObject => '$ref' in params
-const isArraySchema = (schema: OpenAPIV3.SchemaObject): schema is OpenAPIV3.ArraySchemaObject =>
-  schema.type === 'array'
-const isObjectSchema = (
-  schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject
-): schema is OpenAPIV3.NonArraySchemaObject => !isRefObject(schema) && schema.type !== 'array'
-const getPropertyName = (name: string) =>
-  /^[a-zA-Z_$][0-9a-zA-Z_$]*$/.test(name) ? name : `'${name}'`
-const enum2value = (en: any[]) => `'${en.join("' | '")}'`
-const array2value = (schema: OpenAPIV3.ArraySchemaObject, indent: string) =>
-  // eslint-disable-next-line @typescript-eslint/no-use-before-define
-  `${schema2value(schema.items, indent)}[]`
-const object2value = (obj: OpenAPIV3.NonArraySchemaObject, indent: string) => {
-  return obj.properties
-    ? `{\n${Object.keys(obj.properties)
-        .filter(name => {
-          const target = obj.properties![name]
-          return !isRefObject(target) && !target.deprecated
-        })
-        .map(
-          name =>
-            `${indent}  ${getPropertyName(name)}${
-              obj?.required?.includes(name) ? '' : '?'
-              // eslint-disable-next-line @typescript-eslint/no-use-before-define
-            }: ${schema2value(obj.properties![name], `${indent}  `)}`
-        )
-        .join('\n')}\n${indent}}`
-    : '{}'
-}
-const schema2value = (
-  schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject,
-  indent: string
-) => {
-  if (isRefObject(schema)) {
-    return $ref2Type(schema.$ref)
-  }
-
-  let value = ''
-
-  if (schema.allOf) {
-    value = `${schema.allOf
-      .filter(s => isRefObject(s))
-      .map(s => isRefObject(s) && $ref2Type(s.$ref))
-      .join(' & ')}${
-      schema.allOf.filter(s => isRefObject(s)).length &&
-      schema.allOf.filter(s => isObjectSchema(s)).length
-        ? ' & '
-        : ''
-    }${schema.allOf
-      .filter(s => isObjectSchema(s))
-      .map(s => isObjectSchema(s) && object2value(s, indent))
-      .join(' & ')}`
-  } else if (schema.enum) {
-    value = enum2value(schema.enum)
-  } else if (isArraySchema(schema)) {
-    value = array2value(schema, indent)
-  } else if (schema.properties) {
-    value = object2value(schema, indent)
-  } else if (schema.format === 'binary') {
-    value = 'ArrayBuffer'
-  } else if (schema.type !== 'object') {
-    value = {
-      integer: 'number',
-      number: 'number',
-      null: 'null',
-      string: 'string',
-      boolean: 'boolean'
-    }[schema.type]
-  }
-
-  return value
-}
+import { isRefObject, $ref2Type, getPropertyName, schema2value } from './builderUtils/converters'
+import { props2String, Prop, PropValue, value2String } from './builderUtils/props2String'
+import { resolveParamsRef, resolveResRef, resolveReqRef } from './builderUtils/resolvers'
+import getDirName from './builderUtils/getDirName'
+import schemas2Props from './builderUtils/schemas2Props'
+import parameters2Props from './builderUtils/parameters2Props'
+import methods2MockString from './builderUtils/methods2MockString'
 
 const methodNames = ['get', 'post', 'put', 'delete', 'head', 'options', 'patch'] as const
-const getDirName = (text: string /* , methods: OpenAPIV3.PathItemObject */) => {
-  if (text === '*') return '_any'
-  if (!/^{/.test(text)) return text
 
-  const valName = text.slice(1, -1)
-  // const method = methodNames.find(name => methods[name]?.parameters?.find((param) => !isRefObject(param) && param.name === valName && param.in === 'path'))
-  // return `_${valName}${method ? `@${type2value(methods[method]!.parameters!.filter((param) => !isRefObject(param) && param.name === valName && param.in === 'path')[0], '')}` : ''}`
-  return `_${valName}`
-}
-
-const resolveParamsRef = (openapi: OpenAPIV3.Document, ref: string): OpenAPIV3.ParameterObject => {
-  const target = openapi.components?.parameters![$ref2TypeName(ref)]
-  return isRefObject(target) ? resolveParamsRef(openapi, target.$ref) : target
-}
-
-const resolveSchemasRef = (openapi: OpenAPIV3.Document, ref: string): OpenAPIV3.SchemaObject => {
-  const target = openapi.components?.schemas![$ref2TypeName(ref)]
-  return isRefObject(target) ? resolveSchemasRef(openapi, target.$ref) : target
-}
-
-const resolveResRef = (openapi: OpenAPIV3.Document, ref: string): OpenAPIV3.ResponseObject => {
-  const target = openapi.components?.responses![$ref2TypeName(ref)]
-  return isRefObject(target) ? resolveResRef(openapi, target.$ref) : target
-}
-
-const resolveReqRef = (openapi: OpenAPIV3.Document, ref: string): OpenAPIV3.RequestBodyObject => {
-  const target = openapi.components?.requestBodies![$ref2TypeName(ref)]
-  return isRefObject(target) ? resolveReqRef(openapi, target.$ref) : target
-}
-
-const parameters2interfaces = (
-  params: OpenAPIV3.ComponentsObject['parameters'],
-  openapi: OpenAPIV3.Document
-) =>
-  params &&
-  Object.keys(params)
-    .filter(defKey => {
-      const target = params[defKey]
-      return !(isRefObject(target) ? resolveParamsRef(openapi, target.$ref) : target).deprecated
-    })
-    .map(defKey => {
-      const target = params[defKey]
-      const defName = defKey2defName(defKey)
-
-      return isRefObject(target)
-        ? `
-export interface ${defName} extends ${$ref2Type(target.$ref)} {}
-`
-        : `
-export interface ${defName} {
-  ${getPropertyName(target.name)}${target.required ? '' : '?'}: ${
-            target.schema ? schema2value(target.schema, '') : 'null'
-          }
-}
-`
-    })
-    .join('')
-
-const schemas2interfaces = (
-  schemas: OpenAPIV3.ComponentsObject['schemas'],
-  openapi: OpenAPIV3.Document
-) =>
-  schemas &&
-  Object.keys(schemas)
-    .filter(defKey => {
-      const target = schemas[defKey]
-      return !(isRefObject(target) ? resolveSchemasRef(openapi, target.$ref) : target).deprecated
-    })
-    .map(defKey => {
-      const target = schemas[defKey]
-      const defName = defKey2defName(defKey)
-
-      return isRefObject(target)
-        ? `
-export interface ${defName} extends ${$ref2Type(target.$ref)} {}
-`
-        : isArraySchema(target)
-        ? `
-export type ${defName} = ${array2value(target, '')}
-`
-        : target.enum
-        ? `
-export type ${defName} = ${enum2value(target.enum)}
-`
-        : target.allOf
-        ? `
-export interface ${defName} extends ${target.allOf
-            .filter(s => isRefObject(s))
-            .map(s => isRefObject(s) && $ref2Type(s.$ref))
-            .join(', ')} ${target.allOf
-            .filter(s => isObjectSchema(s))
-            .map(s => isObjectSchema(s) && object2value(s, ''))
-            .join('')}
-`
-        : `
-export interface ${defName} ${object2value(target, '')}
-`
-    })
-    .join('')
-
-export default (openapi: OpenAPIV3.Document): Template => {
+export default (
+  openapi: OpenAPIV3.Document,
+  needsMock: boolean,
+  needsMockType: boolean
+): Template => {
   const files: { file: string[]; methods: string }[] = []
+  const schemas = schemas2Props(openapi.components?.schemas, openapi) || []
+  const parameters = parameters2Props(openapi.components?.parameters, openapi) || []
 
   if (openapi.paths) {
     files.push(
@@ -206,52 +34,53 @@ export default (openapi: OpenAPIV3.Document): Template => {
             ...(isParent ? ['index'] : [])
           ]
           const methods = Object.keys(openapi.paths[path])
-            .map(method => {
+            .map<Prop | null>(method => {
               const target = openapi.paths[path][method as typeof methodNames[number]]
 
-              if (!target || target.deprecated) return ''
+              if (!target || target.deprecated) return null
 
-              const params: string[] = []
+              const params: Prop[] = []
 
               if (target.parameters) {
-                const reqRefHeaders: string[] = []
-                const reqHeaders: string[] = []
-                const query: string[] = []
+                const reqRefHeaders: PropValue[] = []
+                const reqHeaders: Prop[] = []
+                const refQuery: PropValue[] = []
+                const query: Prop[] = []
                 let queryRequired = false
 
                 target.parameters.forEach(p => {
                   if (isRefObject(p)) {
                     const ref = resolveParamsRef(openapi, p.$ref)
+                    const val = { isArray: false, isEnum: false, value: $ref2Type(p.$ref) }
+
                     switch (ref.in) {
                       case 'header':
-                        reqRefHeaders.push($ref2Type(p.$ref))
+                        reqRefHeaders.push(val)
                         break
                       case 'query':
-                        query.push(
-                          `${getPropertyName(ref.name)}${ref.required ? '' : '?'}: ${$ref2Type(
-                            p.$ref
-                          )}`
-                        )
+                        refQuery.push(val)
                         if (ref.required) queryRequired = true
                         break
                       default:
                         break
                     }
                   } else {
+                    const value = schema2value(p.schema)
+                    if (!value) return
+
+                    const prop = {
+                      name: getPropertyName(p.name),
+                      required: !!p.required,
+                      isOneOf: false,
+                      values: [value]
+                    }
+
                     switch (p.in) {
                       case 'header':
-                        reqHeaders.push(
-                          `${getPropertyName(p.name)}${p.required ? '' : '?'}: ${
-                            p.schema ? schema2value(p.schema, '  ') : 'null'
-                          }`
-                        )
+                        reqHeaders.push(prop)
                         break
                       case 'query':
-                        query.push(
-                          `${getPropertyName(p.name)}${p.required ? '' : '?'}: ${
-                            p.schema ? schema2value(p.schema, '  ') : 'null'
-                          }`
-                        )
+                        query.push(prop)
                         if (p.required) queryRequired = true
                         break
                       default:
@@ -261,90 +90,104 @@ export default (openapi: OpenAPIV3.Document): Template => {
                 })
 
                 if (reqHeaders.length || reqRefHeaders.length) {
-                  params.push(
-                    `    reqHeaders?: ${reqRefHeaders.join(' & ')}${
-                      reqRefHeaders.length && reqHeaders.length ? ' & ' : ''
-                    }${reqHeaders.length ? `{\n      ${reqHeaders.join('\n      ')}\n    }` : ''}\n`
-                  )
+                  params.push({
+                    name: 'reqHeaders',
+                    required: false,
+                    isOneOf: false,
+                    values: [
+                      ...reqRefHeaders,
+                      ...(reqHeaders.length
+                        ? [{ isArray: false, isEnum: false, value: reqHeaders }]
+                        : [])
+                    ]
+                  })
                 }
 
-                if (query.length) {
-                  params.push(
-                    `    query${queryRequired ? '' : '?'}: {\n      ${query.join(
-                      '\n      '
-                    )}\n    }\n`
-                  )
+                if (refQuery.length || query.length) {
+                  params.push({
+                    name: 'query',
+                    required: queryRequired,
+                    isOneOf: false,
+                    values: [
+                      ...refQuery,
+                      ...(query.length ? [{ isArray: false, isEnum: false, value: query }] : [])
+                    ]
+                  })
                 }
               }
 
               if (target.responses) {
                 const code = Object.keys(target.responses).find(code => /^20/.test(code))
                 if (code) {
-                  let resData = ''
-                  const resHeaders: string[] = []
                   const res = target.responses[code]
+                  const ref = isRefObject(res) ? resolveResRef(openapi, res.$ref) : res
 
-                  if (isRefObject(res)) {
-                    const ref = resolveResRef(openapi, res.$ref)
-                    if (ref.content?.['application/json']?.schema) {
-                      resData = schema2value(ref.content['application/json'].schema, '    ')
-                    }
-
-                    if (ref.headers) {
-                      Object.keys(ref.headers).forEach(header => {
-                        const headerData = ref.headers![header]
-                        resHeaders.push(
-                          `${getPropertyName(header)}: ${
-                            !isRefObject(headerData) && headerData.schema
-                              ? schema2value(headerData.schema, '    ')
-                              : 'null'
-                          }`
-                        )
-                      })
-                    }
-                  } else {
-                    if (res.content?.['application/json']?.schema) {
-                      resData = schema2value(res.content['application/json'].schema, '    ')
-                    }
-                    res.headers &&
-                      Object.keys(res.headers).forEach(header => {
-                        const headerData = res.headers![header]
-                        resHeaders.push(
-                          `${getPropertyName(header)}: ${
-                            isRefObject(headerData)
-                              ? $ref2Type(headerData.$ref)
-                              : headerData.schema
-                              ? schema2value(headerData.schema, '    ')
-                              : 'null'
-                          }`
-                        )
+                  if (ref.content?.['application/json']?.schema) {
+                    const val = schema2value(ref.content['application/json'].schema)
+                    val &&
+                      params.push({
+                        name: 'resBody',
+                        required: true,
+                        isOneOf: false,
+                        values: [val]
                       })
                   }
 
-                  if (resData) {
-                    params.push(`    resData: ${resData}\n`)
-                  }
+                  if (ref.headers) {
+                    params.push({
+                      name: 'resHeaders',
+                      required: true,
+                      isOneOf: false,
+                      values: [
+                        {
+                          isArray: false,
+                          isEnum: false,
+                          value: Object.keys(ref.headers)
+                            .map(header => {
+                              const headerData = ref.headers![header]
+                              const val = isRefObject(headerData)
+                                ? {
+                                    isArray: false,
+                                    isEnum: false,
+                                    value: $ref2Type(headerData.$ref)
+                                  }
+                                : schema2value(headerData.schema)
 
-                  if (resHeaders.length) {
-                    params.push(`    resHeaders: {\n      ${resHeaders.join('\n      ')}\n    }\n`)
+                              return (
+                                val && {
+                                  name: getPropertyName(header),
+                                  required: true,
+                                  isOneOf: false,
+                                  values: [val]
+                                }
+                              )
+                            })
+                            .filter(v => v) as Prop[]
+                        }
+                      ]
+                    })
                   }
                 }
               }
 
               if (target.requestBody) {
-                let reqType = ''
-                let reqData = ''
+                let reqFormat = ''
+                let reqBody: PropValue | null = null
                 let required = false
 
                 if (isRefObject(target.requestBody)) {
                   const ref = resolveReqRef(openapi, target.requestBody.$ref)
                   if (ref.content['multipart/form-data']?.schema) {
-                    reqType = 'FormData'
+                    reqFormat = 'FormData'
                   } else if (ref.content['application/x-www-form-urlencoded']?.schema) {
-                    reqType = 'URLSearchParams'
+                    reqFormat = 'URLSearchParams'
                   }
 
-                  reqData = $ref2Type(target.requestBody.$ref)
+                  reqBody = {
+                    isArray: false,
+                    isEnum: false,
+                    value: $ref2Type(target.requestBody.$ref)
+                  }
                   required = !!ref.required
                 } else {
                   const typeSet = [
@@ -355,11 +198,8 @@ export default (openapi: OpenAPIV3.Document): Template => {
 
                   for (let i = 0; i < typeSet.length; i += 1) {
                     if (target.requestBody.content[typeSet[i][0]]?.schema) {
-                      reqType = typeSet[i][1]
-                      reqData = schema2value(
-                        target.requestBody.content[typeSet[i][0]].schema!,
-                        '    '
-                      )
+                      reqFormat = typeSet[i][1]
+                      reqBody = schema2value(target.requestBody.content[typeSet[i][0]].schema!)
                       required = !!target.requestBody.required
 
                       break
@@ -367,35 +207,54 @@ export default (openapi: OpenAPIV3.Document): Template => {
                   }
                 }
 
-                if (reqType) {
-                  params.push(`    reqType: ${reqType}\n`)
+                if (reqFormat) {
+                  params.push({
+                    name: 'reqFormat',
+                    required: true,
+                    isOneOf: false,
+                    values: [{ isArray: false, isEnum: false, value: reqFormat }]
+                  })
                 }
 
-                if (reqData) {
-                  params.push(`    reqData${required ? '' : '?'}: ${reqData}\n`)
+                if (reqBody) {
+                  params.push({
+                    name: 'reqBody',
+                    required,
+                    isOneOf: false,
+                    values: [reqBody]
+                  })
                 }
               }
 
-              return params.length ? `  ${method}: {\n${params.join('\n')}  }` : ''
+              return params.length
+                ? {
+                    name: method,
+                    required: true,
+                    isOneOf: false,
+                    values: [{ isArray: false, isEnum: false, value: params }]
+                  }
+                : null
             })
-            .filter(method => method)
+            .filter(method => method) as Prop[]
 
           if (methods.length) {
-            const methodsText = methods.join('\n\n')
+            const methodsText = props2String(methods, '')
+            const mockText = needsMock
+              ? methods2MockString(methods, needsMockType, parameters, schemas)
+              : ''
 
             return {
               file,
-              methods: `/* eslint-disable */\n${
+              methods: `/* eslint-disable */${
+                needsMock && needsMockType ? "\nimport { mockMethods } from 'aspida-mock'" : ''
+              }\n${
                 / Types\./.test(methodsText)
                   ? `import * as Types from '${file.map(() => '').join('../')}@types'\n\n`
                   : ''
-              }export interface Methods {\n${methodsText}\n}\n`
+              }export interface Methods ${methodsText}\n${mockText}`
             }
           } else {
-            return {
-              file,
-              methods: ''
-            }
+            return { file, methods: '' }
           }
         })
         .filter(file => file.methods)
@@ -404,11 +263,18 @@ export default (openapi: OpenAPIV3.Document): Template => {
 
   return {
     baseURL: openapi.servers?.[0].url || '',
-    types: `/* eslint-disable */${parameters2interfaces(openapi.components?.parameters, openapi) ||
-      ''}${schemas2interfaces(openapi.components?.schemas, openapi) || ''}`.replace(
-      / Types\./g,
-      ' '
-    ),
+    types: `/* eslint-disable */${[
+      ...parameters.map(p => ({
+        name: p.name,
+        text: typeof p.props === 'string' ? p.props : props2String(p.props, '')
+      })),
+      ...schemas.map(s => ({
+        name: s.name,
+        text: value2String(s.value, '').replace(/\n {2}/g, '\n')
+      }))
+    ]
+      .map(p => `\nexport type ${p.name} = ${p.text}\n`)
+      .join('')}`.replace(/ Types\./g, ' '),
     files
   }
 }

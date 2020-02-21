@@ -1,14 +1,18 @@
 /* eslint-disable */
 export interface Methods {
   post: {
-    resData: {
+    resBody: {
       token: string
     }
 
-    reqData?: {
+    reqBody?: {
       organisationSubdomain: string
       channelSubdomain: string
       userId: number
     }
   }
+}
+
+export default {
+  post: () => ({ status: 200, resBody: { token: 'a' } })
 }

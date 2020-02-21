@@ -19,18 +19,18 @@ const api = <T>(client: AspidaClient<T>) => {
     pet: {
       _petId: (val0: number | string) => ({
         uploadImage: {
-          post: (option?: { data?: Methods2['post']['reqData'], config?: T }) =>
-            client.fetch<Methods2['post']['resData']>(prefix, `/pet/${val0}/uploadImage`, 'POST', option, 'FormData').json(),
-          $post: async (option?: { data?: Methods2['post']['reqData'], config?: T }) =>
-            (await client.fetch<Methods2['post']['resData']>(prefix, `/pet/${val0}/uploadImage`, 'POST', option, 'FormData').json()).data
+          post: (option?: { data?: Methods2['post']['reqBody'], config?: T }) =>
+            client.fetch<Methods2['post']['resBody']>(prefix, `/pet/${val0}/uploadImage`, 'POST', option, 'FormData').json(),
+          $post: async (option?: { data?: Methods2['post']['reqBody'], config?: T }) =>
+            (await client.fetch<Methods2['post']['resBody']>(prefix, `/pet/${val0}/uploadImage`, 'POST', option, 'FormData').json()).data
         },
         get: (option?: { config?: T }) =>
-          client.fetch<Methods1['get']['resData']>(prefix, `/pet/${val0}`, 'GET', option).json(),
+          client.fetch<Methods1['get']['resBody']>(prefix, `/pet/${val0}`, 'GET', option).json(),
         $get: async (option?: { config?: T }) =>
-          (await client.fetch<Methods1['get']['resData']>(prefix, `/pet/${val0}`, 'GET', option).json()).data,
-        post: (option?: { data?: Methods1['post']['reqData'], config?: T }) =>
+          (await client.fetch<Methods1['get']['resBody']>(prefix, `/pet/${val0}`, 'GET', option).json()).data,
+        post: (option?: { data?: Methods1['post']['reqBody'], config?: T }) =>
           client.fetch<void>(prefix, `/pet/${val0}`, 'POST', option, 'URLSearchParams').send(),
-        $post: async (option?: { data?: Methods1['post']['reqData'], config?: T }) =>
+        $post: async (option?: { data?: Methods1['post']['reqBody'], config?: T }) =>
           (await client.fetch<void>(prefix, `/pet/${val0}`, 'POST', option, 'URLSearchParams').send()).data,
         delete: (option?: { headers?: Methods1['delete']['reqHeaders'], config?: T }) =>
           client.fetch<void>(prefix, `/pet/${val0}`, 'DELETE', option).send(),
@@ -39,65 +39,65 @@ const api = <T>(client: AspidaClient<T>) => {
       }),
       findByStatus: {
         get: (option: { query: Methods3['get']['query'], config?: T }) =>
-          client.fetch<Methods3['get']['resData']>(prefix, '/pet/findByStatus', 'GET', option).json(),
+          client.fetch<Methods3['get']['resBody']>(prefix, '/pet/findByStatus', 'GET', option).json(),
         $get: async (option: { query: Methods3['get']['query'], config?: T }) =>
-          (await client.fetch<Methods3['get']['resData']>(prefix, '/pet/findByStatus', 'GET', option).json()).data
+          (await client.fetch<Methods3['get']['resBody']>(prefix, '/pet/findByStatus', 'GET', option).json()).data
       },
-      post: (option: { data: Methods0['post']['reqData'], config?: T }) =>
+      post: (option: { data: Methods0['post']['reqBody'], config?: T }) =>
         client.fetch<void>(prefix, '/pet', 'POST', option).send(),
-      $post: async (option: { data: Methods0['post']['reqData'], config?: T }) =>
+      $post: async (option: { data: Methods0['post']['reqBody'], config?: T }) =>
         (await client.fetch<void>(prefix, '/pet', 'POST', option).send()).data,
-      put: (option: { data: Methods0['put']['reqData'], config?: T }) =>
+      put: (option: { data: Methods0['put']['reqBody'], config?: T }) =>
         client.fetch<void>(prefix, '/pet', 'PUT', option).send(),
-      $put: async (option: { data: Methods0['put']['reqData'], config?: T }) =>
+      $put: async (option: { data: Methods0['put']['reqBody'], config?: T }) =>
         (await client.fetch<void>(prefix, '/pet', 'PUT', option).send()).data
     },
     store: {
       order: {
         _orderId: (val1: number | string) => ({
           get: (option?: { config?: T }) =>
-            client.fetch<Methods5['get']['resData']>(prefix, `/store/order/${val1}`, 'GET', option).json(),
+            client.fetch<Methods5['get']['resBody']>(prefix, `/store/order/${val1}`, 'GET', option).json(),
           $get: async (option?: { config?: T }) =>
-            (await client.fetch<Methods5['get']['resData']>(prefix, `/store/order/${val1}`, 'GET', option).json()).data
+            (await client.fetch<Methods5['get']['resBody']>(prefix, `/store/order/${val1}`, 'GET', option).json()).data
         }),
-        post: (option: { data: Methods4['post']['reqData'], config?: T }) =>
-          client.fetch<Methods4['post']['resData']>(prefix, '/store/order', 'POST', option).json(),
-        $post: async (option: { data: Methods4['post']['reqData'], config?: T }) =>
-          (await client.fetch<Methods4['post']['resData']>(prefix, '/store/order', 'POST', option).json()).data
+        post: (option: { data: Methods4['post']['reqBody'], config?: T }) =>
+          client.fetch<Methods4['post']['resBody']>(prefix, '/store/order', 'POST', option).json(),
+        $post: async (option: { data: Methods4['post']['reqBody'], config?: T }) =>
+          (await client.fetch<Methods4['post']['resBody']>(prefix, '/store/order', 'POST', option).json()).data
       }
     },
     user: {
       _username: (val2: number | string) => ({
         get: (option?: { config?: T }) =>
-          client.fetch<Methods7['get']['resData']>(prefix, `/user/${val2}`, 'GET', option).json(),
+          client.fetch<Methods7['get']['resBody']>(prefix, `/user/${val2}`, 'GET', option).json(),
         $get: async (option?: { config?: T }) =>
-          (await client.fetch<Methods7['get']['resData']>(prefix, `/user/${val2}`, 'GET', option).json()).data,
-        put: (option: { data: Methods7['put']['reqData'], config?: T }) =>
+          (await client.fetch<Methods7['get']['resBody']>(prefix, `/user/${val2}`, 'GET', option).json()).data,
+        put: (option: { data: Methods7['put']['reqBody'], config?: T }) =>
           client.fetch<void>(prefix, `/user/${val2}`, 'PUT', option).send(),
-        $put: async (option: { data: Methods7['put']['reqData'], config?: T }) =>
+        $put: async (option: { data: Methods7['put']['reqBody'], config?: T }) =>
           (await client.fetch<void>(prefix, `/user/${val2}`, 'PUT', option).send()).data
       }),
       createWithArray: {
-        post: (option: { data: Methods8['post']['reqData'], config?: T }) =>
+        post: (option: { data: Methods8['post']['reqBody'], config?: T }) =>
           client.fetch<void>(prefix, '/user/createWithArray', 'POST', option).send(),
-        $post: async (option: { data: Methods8['post']['reqData'], config?: T }) =>
+        $post: async (option: { data: Methods8['post']['reqBody'], config?: T }) =>
           (await client.fetch<void>(prefix, '/user/createWithArray', 'POST', option).send()).data
       },
       createWithList: {
-        post: (option: { data: Methods9['post']['reqData'], config?: T }) =>
+        post: (option: { data: Methods9['post']['reqBody'], config?: T }) =>
           client.fetch<void>(prefix, '/user/createWithList', 'POST', option).send(),
-        $post: async (option: { data: Methods9['post']['reqData'], config?: T }) =>
+        $post: async (option: { data: Methods9['post']['reqBody'], config?: T }) =>
           (await client.fetch<void>(prefix, '/user/createWithList', 'POST', option).send()).data
       },
       login: {
         get: (option: { query: Methods10['get']['query'], config?: T }) =>
-          client.fetch<Methods10['get']['resData'], Methods10['get']['resHeaders']>(prefix, '/user/login', 'GET', option).text(),
+          client.fetch<Methods10['get']['resBody'], Methods10['get']['resHeaders']>(prefix, '/user/login', 'GET', option).text(),
         $get: async (option: { query: Methods10['get']['query'], config?: T }) =>
-          (await client.fetch<Methods10['get']['resData'], Methods10['get']['resHeaders']>(prefix, '/user/login', 'GET', option).text()).data
+          (await client.fetch<Methods10['get']['resBody'], Methods10['get']['resHeaders']>(prefix, '/user/login', 'GET', option).text()).data
       },
-      post: (option: { data: Methods6['post']['reqData'], config?: T }) =>
+      post: (option: { data: Methods6['post']['reqBody'], config?: T }) =>
         client.fetch<void>(prefix, '/user', 'POST', option).send(),
-      $post: async (option: { data: Methods6['post']['reqData'], config?: T }) =>
+      $post: async (option: { data: Methods6['post']['reqBody'], config?: T }) =>
         (await client.fetch<void>(prefix, '/user', 'POST', option).send()).data
     }
   }

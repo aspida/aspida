@@ -5,14 +5,18 @@ export interface Methods {
   post: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
 
-    resData: {
+    resBody: {
       id: string
     }
 
-    reqType: FormData
+    reqFormat: FormData
 
-    reqData?: {
+    reqBody?: {
       file: ArrayBuffer
     }
   }
+}
+
+export default {
+  post: () => ({ status: 200, resBody: { id: 'a' } })
 }

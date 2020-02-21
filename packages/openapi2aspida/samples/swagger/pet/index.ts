@@ -1,12 +1,18 @@
 /* eslint-disable */
+import { mockMethods } from 'aspida-mock'
 import * as Types from '../@types'
 
 export interface Methods {
   post: {
-    reqData: Types.Pet
+    reqBody: Types.Pet
   }
 
   put: {
-    reqData: Types.Pet
+    reqBody: Types.Pet
   }
 }
+
+export default mockMethods<Methods>({
+  post: () => ({ status: 200 }),
+  put: () => ({ status: 200 })
+})

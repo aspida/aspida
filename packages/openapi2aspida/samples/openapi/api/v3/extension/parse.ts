@@ -5,7 +5,8 @@ export interface Methods {
   post: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader
 
-    resData: {
+    resBody: {
+      type: Types.CardEnumModel
       url: string
       sourceName?: string
       abstract?: string
@@ -16,8 +17,12 @@ export interface Methods {
       quoteCreated?: string
     }
 
-    reqData: {
+    reqBody: {
       url: string
     }
   }
+}
+
+export default {
+  post: () => ({ status: 200, resBody: { type: 'article', url: 'a', sourceName: 'a', abstract: 'a', quotePerson: 'a', quotePersonHandle: 'a', quote: 'a', quoteSource: 'a', quoteCreated: 'a' } })
 }

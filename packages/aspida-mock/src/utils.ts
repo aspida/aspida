@@ -15,17 +15,17 @@ export const httpMethods: LowerHttpMethod[] = [
 ]
 
 export const copyData = (res: MockResponse): MockResponse => {
-  if (typeof res.resData !== 'object') {
+  if (typeof res.resBody !== 'object') {
     return res
   }
 
-  let { resData } = res
+  let { resBody } = res
 
   try {
-    resData = JSON.parse(JSON.stringify(res.resData))
+    resBody = JSON.parse(JSON.stringify(res.resBody))
   } catch (e) {}
 
-  return { ...res, resData }
+  return { ...res, resBody }
 }
 
 export const createValues = (path: string, relativePath: string) => {

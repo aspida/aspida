@@ -1,5 +1,5 @@
 /* eslint-disable */
-export interface Users_PermissionsRole {
+export type Users_PermissionsRole = {
   id: string
   name: string
   description?: string
@@ -26,7 +26,7 @@ export interface Users_PermissionsRole {
   }[]
 }
 
-export interface NewUsers_PermissionsRole {
+export type NewUsers_PermissionsRole = {
   name: string
   description?: string
   type?: string
@@ -34,13 +34,14 @@ export interface NewUsers_PermissionsRole {
   users?: string[]
 }
 
-export interface Users_PermissionsUser {
+export type Users_PermissionsUser = {
   id: string
   username: string
   email: string
   provider?: string
   confirmed?: boolean
   blocked?: boolean
+
   role?: {
     id: string
     name: string
@@ -51,7 +52,7 @@ export interface Users_PermissionsUser {
   }
 }
 
-export interface NewUsers_PermissionsUser {
+export type NewUsers_PermissionsUser = {
   username: string
   email: string
   provider?: string
@@ -62,7 +63,7 @@ export interface NewUsers_PermissionsUser {
   role?: string
 }
 
-export interface Error {
+export type Error = {
   code: number
   message: string
 }

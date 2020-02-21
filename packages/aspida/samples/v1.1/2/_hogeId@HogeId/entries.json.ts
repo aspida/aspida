@@ -1,6 +1,6 @@
 export interface Methods {
   get: {
-    resData: {
+    resBody: {
       id: number
       title: string
     }[]

@@ -1,7 +1,7 @@
 /* eslint-disable */
 export interface Methods {
   get: {
-    resData: {
+    resBody: {
       userId: number
       screenName: string
       email: string
@@ -11,4 +11,8 @@ export interface Methods {
       url?: string
     }
   }
+}
+
+export default {
+  get: () => ({ status: 200, resBody: { userId: 1, screenName: 'a', email: 'a', isStaff: true, channelName: 'a', channelId: 1, url: 'a' } })
 }

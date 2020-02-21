@@ -3,13 +3,12 @@ import * as Types from '../../@types'
 
 export interface Methods {
   put: {
-    resData: Types.Users_PermissionsRole
-
-    reqData: Types.NewUsers_PermissionsRole
+    resBody: Types.Users_PermissionsRole
+    reqBody: Types.NewUsers_PermissionsRole
   }
 
   delete: {
-    resData: {
+    resBody: {
       foo?: string
     }
   }

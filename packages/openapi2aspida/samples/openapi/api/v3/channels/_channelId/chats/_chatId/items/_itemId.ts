@@ -5,12 +5,16 @@ export interface Methods {
   post: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader
 
-    resData: {
+    resBody: {
       ok: boolean
     }
 
-    reqData?: {
+    reqBody?: {
       formattedText?: string
     }
   }
+}
+
+export default {
+  post: () => ({ status: 200, resBody: { ok: true } })
 }

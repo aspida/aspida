@@ -44,8 +44,8 @@
 
 ## 特徴
 
-- パス・URL クエリ・ヘッダー・ボディ・レスポンス全てを型安全に扱える
-- FormData / URLSearchParams の内容も型安全に扱える
+- パス・URL クエリ・ヘッダー・ボディ・レスポンス全てに型を指定できる
+- FormData / URLSearchParams の内容にも型を指定できる
 - HTTP クライアントは axios / ky / ky-universal / fetch に対応
 - パス定義は Nuxt.js の pages と同じ命名規則
 
@@ -101,15 +101,15 @@ $ mkdir apis
         limit: number
       }
 
-      resData: User[]
+      resBody: User[]
     }
 
     post: {
-      reqData: {
+      reqBody: {
         name: string
       }
 
-      resData: User
+      resBody: User
     }
   }
   ```
@@ -130,15 +130,15 @@ $ mkdir apis
 
   export interface Methods {
     get: {
-      resData: User
+      resBody: User
     }
 
     put: {
-      reqData: {
+      reqBody: {
         name: string
       }
 
-      resData: User
+      resBody: User
     }
   }
   ```
@@ -224,14 +224,14 @@ module.exports = [{ input: "api1" }, { input: "api2", baseURL: "https://example.
 ```typescript
 export interface Methods {
   post: {
-    reqType: FormData
+    reqFormat: FormData
 
-    reqData: {
+    reqBody: {
       name: string
       icon: ArrayBuffer
     }
 
-    resData: {
+    resBody: {
       id: number
       name: string
     }
@@ -269,13 +269,13 @@ import api from "../apis/$api"
 ```typescript
 export interface Methods {
   post: {
-    reqType: URLSearchParams
+    reqFormat: URLSearchParams
 
-    reqData: {
+    reqBody: {
       name: string
     }
 
-    resData: {
+    resBody: {
       id: number
       name: string
     }
@@ -311,7 +311,7 @@ export interface Methods {
       name: string
     }
 
-    resData: ArrayBuffer
+    resBody: ArrayBuffer
   }
 }
 ```

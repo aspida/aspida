@@ -34,7 +34,7 @@
   </a>
 </div>
 <br />
-<p align="center">Type safe HTTP client wrapper for the browser and node.js.</p>
+<p align="center">TypeScript friendly HTTP client wrapper for the browser and node.js.</p>
 <div align="center">
   <a href="https://github.com/aspidajs/aspida/tree/master/packages/aspida#readme">🇺🇸English</a> |
   <a href="https://github.com/aspidajs/aspida/tree/master/packages/aspida/docs/ja#readme">🇯🇵日本語</a>
@@ -44,8 +44,8 @@
 
 ## Fetures
 
-- Path, URL query, header, body, and response can all be type safe
-- FormData / URLSearchParams content can also be type safe
+- Path, URL query, header, body, and response can all specify the type
+- FormData / URLSearchParams content can also specify the type
 - HTTP client supports axios / ky / ky-universal / fetch
 - Path definition is the same naming convention as Nuxt.js pages
 
@@ -101,15 +101,15 @@ $ mkdir apis
         limit: number
       }
 
-      resData: User[]
+      resBody: User[]
     }
 
     post: {
-      reqData: {
+      reqBody: {
         name: string
       }
 
-      resData: User
+      resBody: User
     }
   }
   ```
@@ -130,15 +130,15 @@ $ mkdir apis
 
   export interface Methods {
     get: {
-      resData: User
+      resBody: User
     }
 
     put: {
-      reqData: {
+      reqBody: {
         name: string
       }
 
-      resData: User
+      resBody: User
     }
   }
   ```
@@ -224,14 +224,14 @@ module.exports = [{ input: "api1" }, { input: "api2", baseURL: "https://example.
 ```typescript
 export interface Methods {
   post: {
-    reqType: FormData
+    reqFormat: FormData
 
-    reqData: {
+    reqBody: {
       name: string
       icon: ArrayBuffer
     }
 
-    resData: {
+    resBody: {
       id: number
       name: string
     }
@@ -269,13 +269,13 @@ import api from "../apis/$api"
 ```typescript
 export interface Methods {
   post: {
-    reqType: URLSearchParams
+    reqFormat: URLSearchParams
 
-    reqData: {
+    reqBody: {
       name: string
     }
 
-    resData: {
+    resBody: {
       id: number
       name: string
     }
@@ -311,7 +311,7 @@ export interface Methods {
       name: string
     }
 
-    resData: ArrayBuffer
+    resBody: ArrayBuffer
   }
 }
 ```

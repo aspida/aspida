@@ -1,11 +1,11 @@
 /* eslint-disable */
 export interface Methods {
   post: {
-    resData: {
+    resBody: {
       foo?: string
     }
 
-    reqData: {
+    reqBody: {
       foo?: string
     }
   }
