@@ -36,7 +36,7 @@
   </a>
 </div>
 <br />
-<p align="center">TypeScript friendly path generator for nextjs or nuxt.js.</p>
+<p align="center">TypeScript friendly path generator for Next.js or Nuxt.js.</p>
 <br />
 <br />
 
@@ -79,7 +79,7 @@ module.exports = {
 }
 ```
 
-`pages/users/_userId.tsx`
+`pages/users/[userId].tsx`
 
 ```ts
 import React from "react"
