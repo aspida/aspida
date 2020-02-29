@@ -1,13 +1,21 @@
 import fs from 'fs'
 import path from 'path'
+import { Project } from 'ts-morph'
 import createMethods from './createMethodsString'
 
 export default (input: string, trailingSlash: boolean) => {
+  const project = new Project()
+  project.addSourceFilesAtPaths(`${input.replace(/\/$/, '')}/**/*.ts`)
+  project.resolveSourceFileDependencies()
+
   const imports: string[] = []
   const getMethodsString = (file: string, target: string, indent: string, newUrl: string) => {
+    const methodsInterface = project.getSourceFile(target)?.getInterface('Methods')
+    if (!methodsInterface) return ''
+
     const importName = `Methods${imports.length}`
     imports.push(`import { Methods as ${importName} } from '${file}'`)
-    return createMethods(target, indent, importName, newUrl, trailingSlash)
+    return createMethods(methodsInterface, indent, importName, newUrl, trailingSlash)
   }
 
   let valCount = 0
@@ -19,14 +27,13 @@ export default (input: string, trailingSlash: boolean) => {
     url: string,
     text: string,
     methodsOfIndexTsFile?: string
-  ) => {
-    const props: string[] = []
-
+  ): string => {
     indent += '  '
 
-    fs.readdirSync(targetDir)
+    const props = fs
+      .readdirSync(targetDir)
       .sort()
-      .forEach((file, _, dirList) => {
+      .map((file, _, dirList) => {
         if (file.startsWith('$') || file.startsWith('@')) return
 
         const basename = path.basename(file, '.ts')
@@ -53,33 +60,30 @@ export default (input: string, trailingSlash: boolean) => {
         if (fs.statSync(target).isDirectory()) {
           const indexPath = path.posix.join(target, 'index.ts')
 
-          props.push(
-            createApiString(
-              target,
-              `${importBasePath}/${file}`,
-              indent,
-              newUrl,
-              valFn.replace('<% next %>', '<% props %>'),
-              dirList.includes(`${file}.ts`)
-                ? getMethodsString(`${importBasePath}/${file}`, `${target}.ts`, indent, newUrl)
-                : fs.existsSync(indexPath)
-                ? getMethodsString(`${importBasePath}/${file}/index`, indexPath, indent, newUrl)
-                : undefined
-            )
+          return createApiString(
+            target,
+            `${importBasePath}/${file}`,
+            indent,
+            newUrl,
+            valFn.replace('<% next %>', '<% props %>'),
+            dirList.includes(`${file}.ts`)
+              ? getMethodsString(`${importBasePath}/${file}`, `${target}.ts`, indent, newUrl)
+              : fs.existsSync(indexPath)
+              ? getMethodsString(`${importBasePath}/${file}/index`, indexPath, indent, newUrl)
+              : undefined
           )
         } else if (
           path.extname(file) === '.ts' &&
           file !== 'index.ts' &&
           !dirList.includes(basename)
         ) {
-          props.push(
-            valFn.replace(
-              '<% next %>',
-              getMethodsString(`${importBasePath}/${basename}`, target, indent, newUrl)
-            )
+          return valFn.replace(
+            '<% next %>',
+            getMethodsString(`${importBasePath}/${basename}`, target, indent, newUrl)
           )
         }
       })
+      .filter((p): p is string => !!p)
 
     return text.replace(
       '<% props %>',
