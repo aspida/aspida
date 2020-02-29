@@ -1,6 +1,6 @@
 {
   "name": "@aspida/axios",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "axios client for aspida",
   "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
   "license": "MIT",
@@ -24,6 +24,6 @@
     "axios"
   ],
   "dependencies": {
-    "aspida": "^0.14.0"
+    "aspida": "^0.14.1"
   }
 }
