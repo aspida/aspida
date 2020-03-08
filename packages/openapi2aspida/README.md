@@ -42,63 +42,30 @@
 
 ## Getting Started
 
-### Installation
-
-- Using [npm](https://www.npmjs.com/):
-
-  ```sh
-  $ npm install @aspida/axios // @aspida/ky or @ aspida/fetch
-  $ npm install openapi2aspida --save-dev
-  ```
-
-- Using [Yarn](https://yarnpkg.com/):
-
-  ```sh
-  $ yarn add @aspida/axios // @aspida/ky or @ aspida/fetch
-  $ yarn add openapi2aspida --dev
-  ```
-
-- Using [npm](https://www.npmjs.com/) with aspida-mock:
-
-  ```sh
-  $ npm install @aspida/axios
-  $ npm install openapi2aspida aspida-mock --save-dev
-  ```
-
-### Make HTTP request from application
+### Create config file in project root
 
 `aspida.config.js`
 
 ```js
 module.exports = {
   input: "apis", // "input" of aspida is "output" for openapi2aspida
-  openapi: { inputFile: "assets/openapi.json" } // Compatible with yaml/json of OpenAPI3.0/Swagger2.0
+  openapi: { inputFile: "https://petstore.swagger.io/v2/swagger.json" } // Compatible with yaml/json of OpenAPI3.0/Swagger2.0
 }
 ```
 
-`aspida.config.js` (enable mock)
+`aspida.config.js` (enable aspida-mock)
 
 ```js
 module.exports = {
   input: "apis",
-  openapi: { inputFile: "assets/openapi.json", mock: true }
-}
-```
-
-`package.json`
-
-```json
-{
-  "scripts": {
-    "build:openapi": "openapi2aspida --build"
-  }
+  openapi: { inputFile: "https://petstore.swagger.io/v2/swagger.json", mock: true }
 }
 ```
 
 `tarminal`
 
 ```sh
-$ npm run build:openapi
+$ npx openapi2aspida --build
 # apis/$api.ts was built successfully.
 # (apis/$mock.ts was built successfully.)
 ```
