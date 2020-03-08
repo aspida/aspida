@@ -42,7 +42,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "husky": "^4.2.3",
     "jest": "^25.1.0",
-    "ky": "^0.18.0",
+    "ky": "^0.19.0",
     "ky-universal": "^0.5.0",
     "lint-staged": "^10.0.8",
     "prettier": "^1.19.1",
