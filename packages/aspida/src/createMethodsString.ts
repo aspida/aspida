@@ -1,89 +1,70 @@
-import { InterfaceDeclaration } from 'ts-morph'
-import { SyntaxKind } from 'typescript'
-import { LowerHttpMethod, AspidaMethodParams } from './'
-
-type MethodsProperties = keyof AspidaMethodParams
+import { LowerHttpMethod } from './'
+import { Method } from './parseInterface'
 
 export default (
-  methodsInterface: InterfaceDeclaration,
+  methods: Method[],
   indent: string,
   importName: string,
   newUrl: string,
   trailingSlash: boolean
 ) =>
-  methodsInterface
-    .getProperties()
-    .map(method => {
-      const methodName = method.getName() as LowerHttpMethod
-      const typeInfo: { [key in MethodsProperties]?: { value: string; hasQuestion: boolean } } = {}
-      method.getChildrenOfKind(SyntaxKind.TypeLiteral).forEach(n =>
-        n.getProperties().forEach(p => {
-          typeInfo[p.getName() as MethodsProperties] = {
-            value: p.getType() ? p.getType().getText() : '',
-            hasQuestion: p.hasQuestionToken()
-          }
-        })
-      )
-
+  methods
+    .map(({ name, props }) => {
       const isOptionRequired =
-        (typeInfo.query && !typeInfo.query.hasQuestion) ||
-        (typeInfo.reqBody && !typeInfo.reqBody.hasQuestion) ||
-        (typeInfo.reqHeaders && !typeInfo.reqHeaders.hasQuestion)
+        (props.query && !props.query.hasQuestion) ||
+        (props.reqBody && !props.reqBody.hasQuestion) ||
+        (props.reqHeaders && !props.reqHeaders.hasQuestion)
 
       const reqBody = (method: LowerHttpMethod) =>
-        typeInfo.reqBody
-          ? ` data${
-              typeInfo.reqBody.hasQuestion ? '?' : ''
-            }: ${importName}['${method}']['reqBody'],`
+        props.reqBody
+          ? ` data${props.reqBody.hasQuestion ? '?' : ''}: ${importName}['${method}']['reqBody'],`
           : ''
       const query = (method: LowerHttpMethod) =>
-        typeInfo.query
-          ? ` query${typeInfo.query.hasQuestion ? '?' : ''}: ${importName}['${method}']['query'],`
+        props.query
+          ? ` query${props.query.hasQuestion ? '?' : ''}: ${importName}['${method}']['query'],`
           : ''
       const reqHeaders = (method: LowerHttpMethod) =>
-        typeInfo.reqHeaders
+        props.reqHeaders
           ? ` headers${
-              typeInfo.reqHeaders.hasQuestion ? '?' : ''
+              props.reqHeaders.hasQuestion ? '?' : ''
             }: ${importName}['${method}']['reqHeaders'],`
           : ''
       const resHeaders = (method: LowerHttpMethod) =>
-        typeInfo.resHeaders ? `, ${importName}['${method}']['resHeaders']` : ''
+        props.resHeaders ? `, ${importName}['${method}']['resHeaders']` : ''
       const option = (method: LowerHttpMethod) =>
         `option${isOptionRequired ? '' : '?'}: {${reqBody(method)}${query(method)}${reqHeaders(
           method
         )} config?: T }`
       const request = () =>
         `, option${
-          !typeInfo.reqBody
+          !props.reqBody
             ? ''
-            : typeInfo.reqFormat
-            ? `, '${typeInfo.reqFormat.value}'`
-            : typeInfo.reqBody && /^(ArrayBuffer|Blob|string)$/.test(typeInfo.reqBody.value)
-            ? `, '${typeInfo.reqBody.value}'`
+            : props.reqFormat
+            ? `, '${props.reqFormat.value}'`
+            : props.reqBody && /^(ArrayBuffer|Blob|string)$/.test(props.reqBody.value)
+            ? `, '${props.reqBody.value}'`
             : ''
         }`
       const resBody = (method: LowerHttpMethod) =>
-        `${typeInfo.resBody ? `${importName}['${method}']['resBody']` : 'void'}`
+        `${props.resBody ? `${importName}['${method}']['resBody']` : 'void'}`
       const resMethodName = () =>
-        !typeInfo.resBody
+        !props.resBody
           ? 'send'
           : ({ ArrayBuffer: 'arrayBuffer', Blob: 'blob', string: 'text', FormData: 'formData' } as {
               [key: string]: string
-            })[typeInfo.resBody.value] || 'json'
+            })[props.resBody.value] || 'json'
 
       const quotation = newUrl.includes('${') ? '`' : "'"
       const tmpChanks = [
-        `(${option(methodName)}) =>`,
-        `client.fetch<${resBody(methodName)}${resHeaders(
-          methodName
-        )}>(prefix, ${quotation}${newUrl}${
+        `(${option(name)}) =>`,
+        `client.fetch<${resBody(name)}${resHeaders(name)}>(prefix, ${quotation}${newUrl}${
           trailingSlash ? '/' : ''
-        }${quotation}, '${methodName.toUpperCase()}'${request()}).${resMethodName()}()`
+        }${quotation}, '${name.toUpperCase()}'${request()}).${resMethodName()}()`
       ]
 
-      return `${indent}  ${methodName}: ${tmpChanks[0]}
+      return `${indent}  ${name}: ${tmpChanks[0]}
 ${indent}    ${tmpChanks[1]},
-${indent}  $${methodName}: async ${tmpChanks[0]}
+${indent}  $${name}: async ${tmpChanks[0]}
 ${indent}    (await ${tmpChanks[1]}).data`
     })
     .join(',\n')

@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.14.2](https://github.com/aspidajs/aspida/compare/v0.14.0...v0.14.2) (2020-03-10)
+
+
+### Features
+
+* **openapi:** add aspida and mock to dependencies ([5d2a38a](https://github.com/aspidajs/aspida/commit/5d2a38ab9dc6a6edaa500f131b2d841f2e6bb1ff))
+
+
+### Bug Fixes
+
+* **deps:** bump minimist from 1.2.0 to 1.2.1 ([8f3b098](https://github.com/aspidajs/aspida/commit/8f3b09861ba52f3539704dfcf805b5be14f4834b))
+* **deps:** bump minimist from 1.2.1 to 1.2.2 ([b59db7a](https://github.com/aspidajs/aspida/commit/b59db7a32cd1b1ab7372e431d43309d246c34778))
+* **deps:** bump minimist from 1.2.2 to 1.2.3 ([e2ffb17](https://github.com/aspidajs/aspida/commit/e2ffb1705579b4b619d9ca9241f95584b9ce17a2))
+* **deps:** bump swagger2openapi from 5.3.3 to 5.3.4 ([96e048f](https://github.com/aspidajs/aspida/commit/96e048f1d7fee500aeee7d354ce1d7350633f756))
+
+
+### Refactors
+
+* **aspida:** delete ts-morph ([396fba7](https://github.com/aspidajs/aspida/commit/396fba7e22bdcd90db4f08b9fdf0bf0597a25200))
+
 ### [0.14.1](https://github.com/aspidajs/aspida/compare/v0.14.0...v0.14.1) (2020-02-29)
 
 
