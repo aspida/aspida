@@ -1,16 +1,12 @@
 import fs from 'fs'
 import path from 'path'
-import { Project } from 'ts-morph'
 import createMethods from './createMethodsString'
+import parseInterface from './parseInterface'
 
 export default (input: string, trailingSlash: boolean) => {
-  const project = new Project()
-  project.addSourceFilesAtPaths(`${input.replace(/\/$/, '')}/**/*.ts`)
-  project.resolveSourceFileDependencies()
-
   const imports: string[] = []
   const getMethodsString = (file: string, target: string, indent: string, newUrl: string) => {
-    const methodsInterface = project.getSourceFile(target)?.getInterface('Methods')
+    const methodsInterface = parseInterface(fs.readFileSync(target, 'utf8'), 'Methods')
     if (!methodsInterface) return ''
 
     const importName = `Methods${imports.length}`
