@@ -2,6 +2,7 @@ import { LowerHttpMethod, AspidaMethodParams } from './'
 
 type MethodsProperties = keyof AspidaMethodParams
 type Prop = { value: string; hasQuestion: boolean }
+
 export interface Method {
   name: LowerHttpMethod
   props: Partial<Record<MethodsProperties, Prop>>
@@ -9,9 +10,9 @@ export interface Method {
 
 const quoteRegExp = /['"]/
 
-const getStringValue = (text: string): { value: string; length: number } => {
+const parseString = (text: string): { value: string; length: number } => {
   const textLength = text.length
-  let value = ''
+  let value = text[0]
   let cursor = 1
   let isEscapingQuote = false
 
@@ -25,6 +26,7 @@ const getStringValue = (text: string): { value: string; length: number } => {
     } else if (char === '\\' && text.startsWith(text[cursor])) {
       isEscapingQuote = true
     } else if (text.startsWith(char)) {
+      value += char
       break
     } else {
       value += char
@@ -34,14 +36,14 @@ const getStringValue = (text: string): { value: string; length: number } => {
   return { value, length: cursor }
 }
 
-const getName = (text: string): { value: string; hasQuestion: boolean; length: number } => {
+const parseName = (text: string): { value: string; hasQuestion: boolean; length: number } => {
   let value = ''
   let hasQuestion = false
   let length = 0
 
   if (quoteRegExp.test(text[0])) {
-    const stringValue = getStringValue(text)
-    value = stringValue.value
+    const stringValue = parseString(text)
+    value = stringValue.value.slice(1, -1)
     hasQuestion = text[stringValue.length] === '?'
     length = stringValue.length + +hasQuestion
   } else {
@@ -54,72 +56,138 @@ const getName = (text: string): { value: string; hasQuestion: boolean; length: n
   return { value, hasQuestion, length: length + 1 }
 }
 
-const getProp = (text: string): { name: MethodsProperties; value: Prop; length: number } => {
-  const textLength = text.length
-  const name = getName(text)
-  const value: Prop = { value: '', hasQuestion: name.hasQuestion }
-  let cursor = name.length
-  let indentLevel = 0
+const countIgnored = (text: string): number => {
+  const { length } = text
+  let cursor = 0
+  let isLineComment = false
+  let isMultiComment = false
 
-  while (cursor < textLength) {
-    const char = text[cursor]
-    if (quoteRegExp.test(char)) {
-      const stringValue = getStringValue(text.slice(cursor))
-      cursor += stringValue.length
-      value.value += stringValue.value
-    } else {
-      cursor += 1
+  while (cursor < length) {
+    const [first, second] = text.slice(cursor)
 
-      if (char === '{') {
-        indentLevel += 1
-      } else if (char === '}') {
-        indentLevel -= 1
-      } else if (indentLevel === 0 && char === ';' && /[^|&]/.test(text[cursor])) {
-        break
+    if (isLineComment) {
+      if (first === '\n') {
+        isLineComment = false
+      }
+    } else if (isMultiComment) {
+      if (first === '*' && second === '/') {
+        cursor += 1
+        isMultiComment = false
+      }
+    } else if (first === '/') {
+      if (second === '/') {
+        isLineComment = true
+      } else {
+        isMultiComment = true
       }
 
-      value.value += char
+      cursor += 1
+    } else if (/[^ \n]/.test(first)) {
+      break
     }
+
+    cursor += 1
   }
 
-  return { name: name.value as MethodsProperties, value, length: cursor }
+  return cursor
 }
 
-const getMethod = (targetText: string): { method: Method | null; length: number } => {
-  const textLength = targetText.length
+const parseValue = (text: string): { value: string; length: number } => {
+  const { length } = text
+  let value = ''
+  let cursor = 0
 
-  if (targetText.startsWith('}')) return { method: null, length: textLength }
+  while (!countIgnored(text.slice(cursor)) && cursor < length) {
+    value += text[cursor]
+    cursor += 1
+  }
 
-  const methodName = getName(targetText)
+  return { value, length: cursor }
+}
+
+const parseProp = (text: string): { name: MethodsProperties; value: Prop; length: number } => {
+  const { length } = text
+  const name = parseName(text)
+  const prop: Prop = { value: '', hasQuestion: name.hasQuestion }
+  let cursor = name.length
+
+  while (cursor < length) {
+    cursor += countIgnored(text.slice(cursor))
+
+    if (/[|&]/.test(text[cursor])) {
+      prop.value += text[cursor]
+      cursor += 1
+      cursor += countIgnored(text.slice(cursor))
+    }
+
+    if (text[cursor] === '{') {
+      let indentLevel = 1
+      prop.value += text[cursor]
+      cursor += 1
+
+      while (indentLevel && cursor < length) {
+        cursor += countIgnored(text.slice(cursor))
+        const c = text[cursor]
+
+        if (quoteRegExp.test(c)) {
+          const val = parseString(text.slice(cursor))
+          prop.value += val.value
+          cursor += val.length
+        } else {
+          if (c === '{') indentLevel += 1
+          else if (c === '}') indentLevel -= 1
+
+          prop.value += c
+          cursor += 1
+        }
+      }
+    } else {
+      cursor += countIgnored(text.slice(cursor))
+      const val = parseValue(text.slice(cursor))
+      prop.value += val.value
+      cursor += val.length
+    }
+
+    cursor += countIgnored(text.slice(cursor))
+    if (/[^|&]/.test(text[cursor])) break
+  }
+
+  return { name: name.value as MethodsProperties, value: prop, length: cursor }
+}
+
+const parseMethod = (text: string): { value: Method; length: number } => {
+  const { length } = text
+  const methodName = parseName(text)
   let cursor = methodName.length
   const props: Method['props'] = {}
 
-  while (cursor < textLength) {
-    const text = targetText.slice(cursor)
+  cursor += countIgnored(text.slice(cursor)) + 1 // '{'
+  cursor += countIgnored(text.slice(cursor))
 
-    if (text.startsWith('}')) {
-      cursor += text[1] === ';' ? 2 : 1
-      break
-    } else {
-      const prop = getProp(text.replace(/^{;?/, ''))
+  while (text[cursor] !== '}' && cursor < length) {
+    const prop = parseProp(text.slice(cursor))
 
-      cursor += prop.length + (text.startsWith('{;') ? 2 : text.startsWith(';') ? 1 : 0)
-      props[prop.name] = prop.value
-    }
+    cursor += prop.length 
+    props[prop.name] = prop.value
   }
 
-  return { method: { name: methodName.value as LowerHttpMethod, props }, length: cursor }
+  cursor += 1 // '}'
+
+  return { value: { name: methodName.value as LowerHttpMethod, props }, length: cursor }
 }
 
-const getMethods = (targetText: string): Method[] => {
-  const textLength = targetText.length
+const parseMethods = (text: string): Method[] => {
+  const { length } = text
   const methods: Method[] = []
   let cursor = 0
 
-  while (cursor < textLength) {
-    const { method, length } = getMethod(targetText.slice(cursor).replace(/^{;?/, ''))
-    cursor += length + (targetText.startsWith('{;') ? 2 : targetText.startsWith(';') ? 1 : 0)
-    if (method) methods.push(method)
+  while (cursor < length) {
+    cursor += countIgnored(text.slice(cursor))
+    if (text[cursor] === '}') break
+
+    const method = parseMethod(text.slice(cursor))
+    cursor += method.length
+    methods.push(method.value)
   }
 
   return methods
@@ -129,12 +197,7 @@ export default (text: string, name: string): Method[] | null => {
   const interfaceRegExp = new RegExp(`(^|\n)export interface ${name} ?{`)
   if (!interfaceRegExp.test(text)) return null
 
-  return getMethods(
-    text
-      .split(interfaceRegExp)[2]
-      .replace(/\n/g, ';')
-      .replace(/ /g, '')
-      .replace(';', '')
-      .replace(/;+/g, ';')
-  )
+  const methods = parseMethods(text.split(interfaceRegExp)[2])
+
+  return methods.length ? methods : null
 }

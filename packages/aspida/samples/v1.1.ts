@@ -1,8 +1,10 @@
 import { mockMethods } from 'aspida-mock'
 
 export interface Methods {
-  get: {
-    query?: { aa: number }
+  get: {// test
+    query?: { aa: number/*
+    test { aa }
+    */}
     resBody: { aa: number }
   }
 }
