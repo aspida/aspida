@@ -74,7 +74,7 @@ const getProp = (text: string): { name: MethodsProperties; value: Prop; length: 
         indentLevel += 1
       } else if (char === '}') {
         indentLevel -= 1
-      } else if (char === ';' && indentLevel === 0) {
+      } else if (indentLevel === 0 && char === ';' && /[^|&]/.test(text[cursor])) {
         break
       }
 
