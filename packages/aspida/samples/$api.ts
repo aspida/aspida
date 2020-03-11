@@ -113,13 +113,13 @@ const api = <T>(client: AspidaClient<T>) => {
       $get: async (option: { data: Methods8['get']['reqBody'], query: Methods8['get']['query'], headers: Methods8['get']['reqHeaders'], config?: T }) =>
         (await client.fetch<Methods8['get']['resBody'], Methods8['get']['resHeaders']>(prefix, '/v2.0', 'GET', option, 'FormData').json()).data
     },
-    get: (option?: { query?: Methods0['get']['query'], config?: T }) =>
+    get: (option?: { query?: Methods0['get']['query'], headers?: Methods0['get']['reqHeaders'], config?: T }) =>
       client.fetch<Methods0['get']['resBody']>(prefix, '', 'GET', option).formData(),
-    $get: async (option?: { query?: Methods0['get']['query'], config?: T }) =>
+    $get: async (option?: { query?: Methods0['get']['query'], headers?: Methods0['get']['reqHeaders'], config?: T }) =>
       (await client.fetch<Methods0['get']['resBody']>(prefix, '', 'GET', option).formData()).data,
-    post: (option: { data: Methods0['post']['reqBody'], query: Methods0['post']['query'], config?: T }) =>
+    post: (option: { data: Methods0['post']['reqBody'], query: Methods0['post']['query'], headers?: Methods0['post']['reqHeaders'], config?: T }) =>
       client.fetch<Methods0['post']['resBody']>(prefix, '', 'POST', option).arrayBuffer(),
-    $post: async (option: { data: Methods0['post']['reqBody'], query: Methods0['post']['query'], config?: T }) =>
+    $post: async (option: { data: Methods0['post']['reqBody'], query: Methods0['post']['query'], headers?: Methods0['post']['reqHeaders'], config?: T }) =>
       (await client.fetch<Methods0['post']['resBody']>(prefix, '', 'POST', option).arrayBuffer()).data,
     put: (option: { query: Methods0['put']['query'], config?: T }) =>
       client.fetch<Methods0['put']['resBody']>(prefix, '', 'PUT', option).json(),

@@ -1,12 +1,27 @@
+/* eslint-disable */
 import { mockMethods } from 'aspida-mock'
 
 export interface Methods {
   get: {
+    reqHeaders?:
+      | {
+          'access-token': string
+        }
+      | {
+          'x-auth-token': string
+        }
     query?: { aa: number }
     resBody: FormData
   }
 
   post: {
+    'reqHeaders'?:
+      & {
+          'access-token': string
+        }
+      & {
+          'x-auth-token': string
+        }
     query: { aa: number }
     reqBody: { val: number }
     resBody: ArrayBuffer
