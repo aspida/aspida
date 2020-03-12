@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.14.4](https://github.com/aspidajs/aspida/compare/v0.14.3...v0.14.4) (2020-03-12)
+
+
+### Bug Fixes
+
+* **deps:** bump minimist from 1.2.3 to 1.2.4 ([d59b8b1](https://github.com/aspidajs/aspida/commit/d59b8b1d6292cb7fb250af860d9e943d94c38040))
+
+
+### Refactors
+
+* **aspida:** parse Array type ([c40a333](https://github.com/aspidajs/aspida/commit/c40a333668e4b20f2e07c282dd920f4b7a8529f7))
+* **aspida:** parse comment ([d239153](https://github.com/aspidajs/aspida/commit/d23915362050112552b757853296a6878ee0fed8))
+* **pathpida:** remove aspida from module ([782f917](https://github.com/aspidajs/aspida/commit/782f917951b19943b55184ccd78bbd31a1bfedc1))
+
+
+### Documentation
+
+* **aspida:** add tips of serializing params ([0d505f6](https://github.com/aspidajs/aspida/commit/0d505f681ed9dc7c8ce30c8b653c57eb3f834d2f))
+
 ### [0.14.3](https://github.com/aspidajs/aspida/compare/v0.14.2...v0.14.3) (2020-03-11)
 
 
