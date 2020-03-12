@@ -9,6 +9,9 @@ export interface Method {
 }
 
 const quoteRegExp = /['"]/
+const openRegExp = /[(<{]/
+const closeRegExp = /[)>}]/
+const operatorRegExp = /[|&]/
 
 const parseString = (text: string): { value: string; length: number } => {
   const textLength = text.length
@@ -92,14 +95,43 @@ const countIgnored = (text: string): number => {
   return cursor
 }
 
-const parseValue = (text: string): { value: string; length: number } => {
+const parseTypeName = (text: string): { value: string; length: number } => {
   const { length } = text
   let value = ''
   let cursor = 0
 
-  while (!countIgnored(text.slice(cursor)) && cursor < length) {
+  while (!countIgnored(text.slice(cursor)) && !openRegExp.test(text[cursor]) && cursor < length) {
     value += text[cursor]
     cursor += 1
+  }
+
+  return { value, length: cursor }
+}
+
+const parseObject = (text: string): { value: string; length: number } => {
+  const { length } = text
+  let value = ''
+  let cursor = 0
+  let indentLevel = 0
+
+  while (cursor < length) {
+    const char = text[cursor]
+
+    if (quoteRegExp.test(char)) {
+      const val = parseString(text.slice(cursor))
+      value += val.value
+      cursor += val.length
+    } else {
+      if (openRegExp.test(char)) indentLevel += 1
+      else if (closeRegExp.test(char)) indentLevel -= 1
+
+      value += char
+      cursor += 1
+    }
+
+    cursor += countIgnored(text.slice(cursor))
+
+    if (!indentLevel) break
   }
 
   return { value, length: cursor }
@@ -114,42 +146,37 @@ const parseProp = (text: string): { name: MethodsProperties; value: Prop; length
   while (cursor < length) {
     cursor += countIgnored(text.slice(cursor))
 
-    if (/[|&]/.test(text[cursor])) {
+    if (operatorRegExp.test(text[cursor])) {
       prop.value += text[cursor]
       cursor += 1
       cursor += countIgnored(text.slice(cursor))
     }
 
-    if (text[cursor] === '{') {
-      let indentLevel = 1
-      prop.value += text[cursor]
-      cursor += 1
+    const char = text[cursor]
 
-      while (indentLevel && cursor < length) {
-        cursor += countIgnored(text.slice(cursor))
-        const c = text[cursor]
-
-        if (quoteRegExp.test(c)) {
-          const val = parseString(text.slice(cursor))
-          prop.value += val.value
-          cursor += val.length
-        } else {
-          if (c === '{') indentLevel += 1
-          else if (c === '}') indentLevel -= 1
-
-          prop.value += c
-          cursor += 1
-        }
-      }
-    } else {
-      cursor += countIgnored(text.slice(cursor))
-      const val = parseValue(text.slice(cursor))
+    if (quoteRegExp.test(char)) {
+      const val = parseString(text.slice(cursor))
       prop.value += val.value
       cursor += val.length
+    } else {
+      const typeName = parseTypeName(text.slice(cursor))
+      prop.value += typeName.value
+      cursor += typeName.length
+
+      if (openRegExp.test(text[cursor])) {
+        const val = parseObject(text.slice(cursor))
+        prop.value += val.value
+        cursor += val.length
+      }
     }
 
     cursor += countIgnored(text.slice(cursor))
-    if (/[^|&]/.test(text[cursor])) break
+    if (text.slice(cursor, cursor + 2) === '[]') {
+      cursor += 2
+      cursor += countIgnored(text.slice(cursor))
+    }
+
+    if (!operatorRegExp.test(text[cursor])) break
   }
 
   return { name: name.value as MethodsProperties, value: prop, length: cursor }
@@ -167,7 +194,7 @@ const parseMethod = (text: string): { value: Method; length: number } => {
   while (text[cursor] !== '}' && cursor < length) {
     const prop = parseProp(text.slice(cursor))
 
-    cursor += prop.length 
+    cursor += prop.length
     props[prop.name] = prop.value
   }
 
