@@ -10,9 +10,9 @@ export interface Methods {
       | {
           'x-auth-token': string
         }
-    query?: { aa: number }
+    query?: { aa: number };
     resBody: FormData
-  }
+  };
 
   post: {
     'reqHeaders'?:
@@ -24,7 +24,7 @@ export interface Methods {
         }
     query: { aa: number }
     reqBody: { val: number }
-    resBody: ArrayBuffer
+    resBody: ArrayBuffer;
   }
 
   put: {
