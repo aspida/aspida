@@ -85,7 +85,7 @@ const countIgnored = (text: string): number => {
       }
 
       cursor += 1
-    } else if (/[^ \n]/.test(first)) {
+    } else if (/[^ \n;]/.test(first)) {
       break
     }
 
