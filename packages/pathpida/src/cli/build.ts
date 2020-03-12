@@ -1,6 +1,6 @@
-import { Config } from './getConfig'
-import build, { Template } from './buildTemplate'
-import { Command } from 'aspida/dist/cli/command'
+import { Config } from '../getConfig'
+import build, { Template } from '../buildTemplate'
+import { Command } from './command'
 
 export class CommandToBuild implements Command {
   static getFactory(configs: Config[], io: BuildIO) {
