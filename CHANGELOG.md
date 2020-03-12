@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.14.5](https://github.com/aspidajs/aspida/compare/v0.14.4...v0.14.5) (2020-03-12)
+
+
+### Refactors
+
+* **aspida:** parse semicolon ([329b99f](https://github.com/aspidajs/aspida/commit/329b99fa7a1bf9278ec273249656fcf75aa92a08))
+
 ### [0.14.4](https://github.com/aspidajs/aspida/compare/v0.14.3...v0.14.4) (2020-03-12)
 
 
