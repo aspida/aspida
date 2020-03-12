@@ -217,6 +217,31 @@ If you want to define multiple API endpoints, specify them in an array
 module.exports = [{ input: "api1" }, { input: "api2", baseURL: "https://example.com/api" }]
 ```
 
+### Serialize GET parameters manually
+
+aspida leaves GET parameter serialization to standard HTTP client behavior
+If you want to serialize manually, you can use config object of HTTP client
+
+`src/index.ts`
+
+```typescript
+import axios from 'axios'
+import qs from 'qs'
+import aspida from "@aspida/axios"
+import api from "../apis/$api"
+;(async () => {
+  const client = api(aspida(axios, { paramsSerializer: (params) => qs.stringify(params, { indices: false }) }))
+
+  const users = await client.v1.users.$get({
+    // config: { paramsSerializer: (params) => qs.stringify(params, { indices: false }) },
+    query: { ids: [1, 2, 3] }
+  })
+  console.log(users)
+  // req -> GET: /v1/users/?ids=1&ids=2&ids=3
+  // res -> [{ id: 1, name: 'taro1' }, { id: 2, name: 'taro2' }, { id: 3, name: 'taro3' }]
+})()
+```
+
 ### POST with FormData
 
 `apis/v1/users/index.ts`
@@ -245,19 +270,16 @@ export interface Methods {
 import aspida from "@aspida/axios"
 import api from "../apis/$api"
 ;(async () => {
-  const userId = 0
-  const limit = 10
   const client = api(aspida())
-  const iconImage = imageBuffer
 
   const user = await client.v1.users.$post({
     data: {
       name: "taro",
-      icon: iconImage
+      icon: imageBuffer
     }
   })
   console.log(user)
-  // req -> POST: h/v1/users/0
+  // req -> POST: h/v1/users
   // res -> { id: 0, name: 'taro' }
 })()
 ```
@@ -289,13 +311,11 @@ export interface Methods {
 import aspida from "@aspida/axios"
 import api from "../apis/$api"
 ;(async () => {
-  const userId = 0
-  const limit = 10
   const client = api(aspida())
 
   const user = await client.v1.users.$post({ data: { name: "taro" } })
   console.log(user)
-  // req -> POST: /v1/users/0
+  // req -> POST: /v1/users
   // res -> { id: 0, name: 'taro' }
 })()
 ```
@@ -322,13 +342,11 @@ export interface Methods {
 import aspida from "@aspida/axios"
 import api from "../apis/$api"
 ;(async () => {
-  const userId = 0
-  const limit = 10
   const client = api(aspida())
 
   const user = await client.v1.users.$get({ query: { name: "taro" } })
   console.log(user)
-  // req -> POST: /v1/users/0
+  // req -> GET: /v1/users/?name=taro
   // res -> ArrayBuffer
 })()
 ```
