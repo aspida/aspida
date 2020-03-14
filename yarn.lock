@@ -2,6 +2,38 @@
 # yarn lockfile v1
 
 
+"@apidevtools/json-schema-ref-parser@^8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@apidevtools/json-schema-ref-parser/-/json-schema-ref-parser-8.0.0.tgz#9eb749499b3f8d919e90bb141e4b6f67aee4692d"
+  integrity sha512-n4YBtwQhdpLto1BaUCyAeflizmIbaloGShsPyRtFf5qdFJxfssj+GgLavczgKJFa3Bq+3St2CKcpRJdjtB4EBw==
+  dependencies:
+    "@jsdevtools/ono" "^7.1.0"
+    call-me-maybe "^1.0.1"
+    js-yaml "^3.13.1"
+
+"@apidevtools/openapi-schemas@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@apidevtools/openapi-schemas/-/openapi-schemas-2.0.2.tgz#321f3cadce1e8bb2c05c59c4175b0ca89426e1d2"
+  integrity sha512-dXJuDftHGwh1ZvNtFVCFUCRyW1+h7jcQ3fU9K+zAB2dqCuFFd9ybT7Qm7CduUJ9B3jn0rIg0+f1m/Lwo2nkLJg==
+
+"@apidevtools/swagger-methods@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@apidevtools/swagger-methods/-/swagger-methods-3.0.0.tgz#90904b0ceab0dae795985a92917b3aac419f7114"
+  integrity sha512-wjuzOG44EqZ++dmxOmfpNJPHrdtyBdQ8mpwi+ZYH7agiJT2nF7ex8cQMFTw9g2WAm8KoO+GtytEXDNwQR4zG4Q==
+
+"@apidevtools/swagger-parser@9.0.0":
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/@apidevtools/swagger-parser/-/swagger-parser-9.0.0.tgz#a15223b0c03aa3c5df6f2a97bb1ea0095fa32d7b"
+  integrity sha512-y01MGRts9bx5DyhG+TELKaR1tr+CaPtuxnSloIgO0EEczxY6fm1uhcJtP/SEsWncFXu3HXxOK85XfnDGrBFlFg==
+  dependencies:
+    "@apidevtools/json-schema-ref-parser" "^8.0.0"
+    "@apidevtools/openapi-schemas" "^2.0.2"
+    "@apidevtools/swagger-methods" "^3.0.0"
+    "@jsdevtools/ono" "^7.1.0"
+    call-me-maybe "^1.0.1"
+    openapi-types "^1.3.5"
+    z-schema "^4.2.2"
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.5.5":
   version "7.5.5"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.5.5.tgz#bc0782f6d69f7b7d49531219699b988f669a8f9d"
@@ -589,6 +621,11 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
+
+"@jsdevtools/ono@^7.1.0":
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/@jsdevtools/ono/-/ono-7.1.0.tgz#f4704197ed4ce4964ae8931f45c81d11e97742e5"
+  integrity sha512-VRKOYangbsWt11BcmDkscOJifWeu+tmHKKHonhkIkg4vKEE+EKDoAZeQ5dOir3kfIDEheNblm5oDJX9t7V/cDQ==
 
 "@marionebl/sander@^0.6.0":
   version "0.6.1"
@@ -3675,15 +3712,6 @@ json-parse-better-errors@^1.0.1:
   resolved "https://registry.yarnpkg.com/json-parse-better-errors/-/json-parse-better-errors-1.0.2.tgz#bb867cfb3450e69107c131d1c514bab3dc8bcaa9"
   integrity sha512-mrqyZKfX5EhL7hvqcV6WG1yYjnjeuYDzDhhcAAUrq8Po85NBQBJP+ZDUT75qZQ98IkUoBqdkExkukOU7Ts2wrw==
 
-json-schema-ref-parser@^7.1.3:
-  version "7.1.3"
-  resolved "https://registry.yarnpkg.com/json-schema-ref-parser/-/json-schema-ref-parser-7.1.3.tgz#21468cd180b2f1939ce93fe291f743b441e97d49"
-  integrity sha512-/Lmyl0PW27dOmCO03PI339+1gs4Z2PlqIyUgzIOtoRp08zkkMCB30TRbdppbPO7WWzZX0uT98HqkDiZSujkmbA==
-  dependencies:
-    call-me-maybe "^1.0.1"
-    js-yaml "^3.13.1"
-    ono "^6.0.0"
-
 json-schema-traverse@^0.3.0:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/json-schema-traverse/-/json-schema-traverse-0.3.1.tgz#349a6d44c53a51de89b40805c5d5e59b417d3340"
@@ -4499,16 +4527,6 @@ onetime@^5.1.0:
   integrity sha512-5NcSkPHhwTVFIQN+TUqXoS5+dlElHXdpAWu9I0HP20YOtIi+aZ0Ct82jdlILDxjLEAWwvm+qj1m6aEtsDVmm6Q==
   dependencies:
     mimic-fn "^2.1.0"
-
-ono@^6.0.0:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/ono/-/ono-6.0.1.tgz#1bc14ffb8af1e5db3f7397f75b88e4a2d64bbd71"
-  integrity sha512-5rdYW/106kHqLeG22GE2MHKq+FlsxMERZev9DCzQX1zwkxnFwBivSn5i17a5O/rDmOJOdf4Wyt80UZljzx9+DA==
-
-openapi-schemas@^1.0.2:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/openapi-schemas/-/openapi-schemas-1.0.3.tgz#0fa2f19e44ce8a1cdab9c9f616df4babe1aa026b"
-  integrity sha512-KtMWcK2VtOS+nD8RKSIyScJsj8JrmVWcIX7Kjx4xEHijFYuvMTDON8WfeKOgeSb4uNG6UsqLj5Na7nKbSav9RQ==
 
 openapi-types@^1.3.5:
   version "1.3.5"
@@ -5788,23 +5806,12 @@ supports-hyperlinks@^2.0.0:
     has-flag "^4.0.0"
     supports-color "^7.0.0"
 
-swagger-methods@^2.0.1:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/swagger-methods/-/swagger-methods-2.0.2.tgz#5891d5536e54d5ba8e7ae1007acc9170f41c9590"
-  integrity sha512-/RNqvBZkH8+3S/FqBPejHxJxZenaYq3MrpeXnzi06aDIS39Mqf5YCUNb/ZBjsvFFt8h9FxfKs8EXPtcYdfLiRg==
-
-swagger-parser@^8.0.4:
-  version "8.0.4"
-  resolved "https://registry.yarnpkg.com/swagger-parser/-/swagger-parser-8.0.4.tgz#ddec68723d13ee3748dd08fd5b7ba579327595da"
-  integrity sha512-KGRdAaMJogSEB7sPKI31ptKIWX8lydEDAwWgB4pBMU7zys5cd54XNhoPSVlTxG/A3LphjX47EBn9j0dOGyzWbA==
+swagger-parser@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/swagger-parser/-/swagger-parser-9.0.0.tgz#e5df6bf61702c9f24916fcbb7064198c2d2e7949"
+  integrity sha512-nYyptqF+1dMUicQYO12ma1+Vp6L+fBat9nUR54QomTFp0HIZRbjQ6/LATbNIh4Q2jhKmwUj6nXHaZxk7Pot0Xg==
   dependencies:
-    call-me-maybe "^1.0.1"
-    json-schema-ref-parser "^7.1.3"
-    ono "^6.0.0"
-    openapi-schemas "^1.0.2"
-    openapi-types "^1.3.5"
-    swagger-methods "^2.0.1"
-    z-schema "^4.2.2"
+    "@apidevtools/swagger-parser" "9.0.0"
 
 swagger2openapi@^5.3.4:
   version "5.3.4"
