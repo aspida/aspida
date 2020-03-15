@@ -55,214 +55,58 @@ import mock50 from './api/stream/v1/stories/index'
 import mock51 from './api/stream/v1/stories/_storyId'
 
 export const mockRoutes = () => [
-  {
-    path: '/api/v3/user/profile',
-    methods: mock0
-  },
-  {
-    path: '/api/v3/user',
-    methods: mock1
-  },
-  {
-    path: '/api/v3/user/_userId',
-    methods: mock2
-  },
-  {
-    path: '/api/v3/stories/_storyId/items',
-    methods: mock3
-  },
-  {
-    path: '/api/v3/stories/_storyId/items/_itemId/reaction',
-    methods: mock4
-  },
-  {
-    path: '/api/v3/stories/_storyId/items/_itemId',
-    methods: mock5
-  },
-  {
-    path: '/api/v3/organisation/users',
-    methods: mock6
-  },
-  {
-    path: '/api/v3/organisation',
-    methods: mock7
-  },
-  {
-    path: '/api/v3/me',
-    methods: mock8
-  },
-  {
-    path: '/api/v3/logout',
-    methods: mock9
-  },
-  {
-    path: '/api/v3/login',
-    methods: mock10
-  },
-  {
-    path: '/api/v3/info',
-    methods: mock11
-  },
-  {
-    path: '/api/v3/fcm_token',
-    methods: mock12
-  },
-  {
-    path: '/api/v3/extension/video',
-    methods: mock13
-  },
-  {
-    path: '/api/v3/extension/story/_storyId/video',
-    methods: mock14
-  },
-  {
-    path: '/api/v3/extension/story/_storyId',
-    methods: mock15
-  },
-  {
-    path: '/api/v3/extension/story/_storyId/image',
-    methods: mock16
-  },
-  {
-    path: '/api/v3/extension/story/_storyId/audio',
-    methods: mock17
-  },
-  {
-    path: '/api/v3/extension/parse',
-    methods: mock18
-  },
-  {
-    path: '/api/v3/extension/image',
-    methods: mock19
-  },
-  {
-    path: '/api/v3/extension/audio',
-    methods: mock20
-  },
-  {
-    path: '/api/v3/chats/keys',
-    methods: mock21
-  },
-  {
-    path: '/api/v3/chats/_chatId/items/video',
-    methods: mock22
-  },
-  {
-    path: '/api/v3/chats/_chatId/items',
-    methods: mock23
-  },
-  {
-    path: '/api/v3/chats/_chatId/items/image',
-    methods: mock24
-  },
-  {
-    path: '/api/v3/chats/_chatId/items/audio',
-    methods: mock25
-  },
-  {
-    path: '/api/v3/chats/_chatId/items/_itemId',
-    methods: mock26
-  },
-  {
-    path: '/api/v3/channels',
-    methods: mock27
-  },
-  {
-    path: '/api/v3/channels/_channelId/notifications',
-    methods: mock28
-  },
-  {
-    path: '/api/v3/channels/_channelId/news-feed',
-    methods: mock29
-  },
-  {
-    path: '/api/v3/channels/_channelId',
-    methods: mock30
-  },
-  {
-    path: '/api/v3/channels/_channelId/chats',
-    methods: mock31
-  },
-  {
-    path: '/api/v3/channels/_channelId/chats/_chatId/users/remove',
-    methods: mock32
-  },
-  {
-    path: '/api/v3/channels/_channelId/chats/_chatId/users',
-    methods: mock33
-  },
-  {
-    path: '/api/v3/channels/_channelId/chats/_chatId/itemslist',
-    methods: mock34
-  },
-  {
-    path: '/api/v3/channels/_channelId/chats/_chatId/items/video',
-    methods: mock35
-  },
-  {
-    path: '/api/v3/channels/_channelId/chats/_chatId/items',
-    methods: mock36
-  },
-  {
-    path: '/api/v3/channels/_channelId/chats/_chatId/items/image',
-    methods: mock37
-  },
-  {
-    path: '/api/v3/channels/_channelId/chats/_chatId/items/audio',
-    methods: mock38
-  },
-  {
-    path: '/api/v3/channels/_channelId/chats/_chatId/items/_itemId',
-    methods: mock39
-  },
-  {
-    path: '/api/v3/channels/_channelId/chats/_chatId',
-    methods: mock40
-  },
-  {
-    path: '/api/v3/2fa',
-    methods: mock41
-  },
-  {
-    path: '/api/v1/token',
-    methods: mock42
-  },
-  {
-    path: '/api/v1/parse',
-    methods: mock43
-  },
-  {
-    path: '/api/v1/parse/image',
-    methods: mock44
-  },
-  {
-    path: '/api/v1/mixes',
-    methods: mock45
-  },
-  {
-    path: '/api/v1/mixes/_mixId/url',
-    methods: mock46
-  },
-  {
-    path: '/api/v1/mixes/_mixId/cards',
-    methods: mock47
-  },
-  {
-    path: '/api/v1/mixes/_id',
-    methods: mock48
-  },
-  {
-    path: '/api/v1/me',
-    methods: mock49
-  },
-  {
-    path: '/api/stream/v1/stories',
-    methods: mock50
-  },
-  {
-    path: '/api/stream/v1/stories/_storyId',
-    methods: mock51
-  }
+  { path: '/api/v3/user/profile', methods: mock0 },
+  { path: '/api/v3/user', methods: mock1 },
+  { path: '/api/v3/user/_userId', methods: mock2 },
+  { path: '/api/v3/stories/_storyId/items', methods: mock3 },
+  { path: '/api/v3/stories/_storyId/items/_itemId/reaction', methods: mock4 },
+  { path: '/api/v3/stories/_storyId/items/_itemId', methods: mock5 },
+  { path: '/api/v3/organisation/users', methods: mock6 },
+  { path: '/api/v3/organisation', methods: mock7 },
+  { path: '/api/v3/me', methods: mock8 },
+  { path: '/api/v3/logout', methods: mock9 },
+  { path: '/api/v3/login', methods: mock10 },
+  { path: '/api/v3/info', methods: mock11 },
+  { path: '/api/v3/fcm_token', methods: mock12 },
+  { path: '/api/v3/extension/video', methods: mock13 },
+  { path: '/api/v3/extension/story/_storyId/video', methods: mock14 },
+  { path: '/api/v3/extension/story/_storyId', methods: mock15 },
+  { path: '/api/v3/extension/story/_storyId/image', methods: mock16 },
+  { path: '/api/v3/extension/story/_storyId/audio', methods: mock17 },
+  { path: '/api/v3/extension/parse', methods: mock18 },
+  { path: '/api/v3/extension/image', methods: mock19 },
+  { path: '/api/v3/extension/audio', methods: mock20 },
+  { path: '/api/v3/chats/keys', methods: mock21 },
+  { path: '/api/v3/chats/_chatId/items/video', methods: mock22 },
+  { path: '/api/v3/chats/_chatId/items', methods: mock23 },
+  { path: '/api/v3/chats/_chatId/items/image', methods: mock24 },
+  { path: '/api/v3/chats/_chatId/items/audio', methods: mock25 },
+  { path: '/api/v3/chats/_chatId/items/_itemId', methods: mock26 },
+  { path: '/api/v3/channels', methods: mock27 },
+  { path: '/api/v3/channels/_channelId/notifications', methods: mock28 },
+  { path: '/api/v3/channels/_channelId/news-feed', methods: mock29 },
+  { path: '/api/v3/channels/_channelId', methods: mock30 },
+  { path: '/api/v3/channels/_channelId/chats', methods: mock31 },
+  { path: '/api/v3/channels/_channelId/chats/_chatId/users/remove', methods: mock32 },
+  { path: '/api/v3/channels/_channelId/chats/_chatId/users', methods: mock33 },
+  { path: '/api/v3/channels/_channelId/chats/_chatId/itemslist', methods: mock34 },
+  { path: '/api/v3/channels/_channelId/chats/_chatId/items/video', methods: mock35 },
+  { path: '/api/v3/channels/_channelId/chats/_chatId/items', methods: mock36 },
+  { path: '/api/v3/channels/_channelId/chats/_chatId/items/image', methods: mock37 },
+  { path: '/api/v3/channels/_channelId/chats/_chatId/items/audio', methods: mock38 },
+  { path: '/api/v3/channels/_channelId/chats/_chatId/items/_itemId', methods: mock39 },
+  { path: '/api/v3/channels/_channelId/chats/_chatId', methods: mock40 },
+  { path: '/api/v3/2fa', methods: mock41 },
+  { path: '/api/v1/token', methods: mock42 },
+  { path: '/api/v1/parse', methods: mock43 },
+  { path: '/api/v1/parse/image', methods: mock44 },
+  { path: '/api/v1/mixes', methods: mock45 },
+  { path: '/api/v1/mixes/_mixId/url', methods: mock46 },
+  { path: '/api/v1/mixes/_mixId/cards', methods: mock47 },
+  { path: '/api/v1/mixes/_id', methods: mock48 },
+  { path: '/api/v1/me', methods: mock49 },
+  { path: '/api/stream/v1/stories', methods: mock50 },
+  { path: '/api/stream/v1/stories/_storyId', methods: mock51 }
 ]
 
 export default <U>(client: MockClient<U>, config?: MockConfig) => {

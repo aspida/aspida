@@ -14,50 +14,17 @@ import mock9 from './pet/_petId/uploadImage'
 import mock10 from './pet/_petId/index'
 
 export const mockRoutes = () => [
-  {
-    path: '/user/login',
-    methods: mock0
-  },
-  {
-    path: '/user',
-    methods: mock1
-  },
-  {
-    path: '/user/createWithList',
-    methods: mock2
-  },
-  {
-    path: '/user/createWithArray',
-    methods: mock3
-  },
-  {
-    path: '/user/_username',
-    methods: mock4
-  },
-  {
-    path: '/store/order',
-    methods: mock5
-  },
-  {
-    path: '/store/order/_orderId',
-    methods: mock6
-  },
-  {
-    path: '/pet',
-    methods: mock7
-  },
-  {
-    path: '/pet/findByStatus',
-    methods: mock8
-  },
-  {
-    path: '/pet/_petId/uploadImage',
-    methods: mock9
-  },
-  {
-    path: '/pet/_petId',
-    methods: mock10
-  }
+  { path: '/user/login', methods: mock0 },
+  { path: '/user', methods: mock1 },
+  { path: '/user/createWithList', methods: mock2 },
+  { path: '/user/createWithArray', methods: mock3 },
+  { path: '/user/_username', methods: mock4 },
+  { path: '/store/order', methods: mock5 },
+  { path: '/store/order/_orderId', methods: mock6 },
+  { path: '/pet', methods: mock7 },
+  { path: '/pet/findByStatus', methods: mock8 },
+  { path: '/pet/_petId/uploadImage', methods: mock9 },
+  { path: '/pet/_petId', methods: mock10 }
 ]
 
 export default <U>(client: MockClient<U>, config?: MockConfig) => {
