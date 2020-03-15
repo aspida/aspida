@@ -26,7 +26,7 @@
     "aspida": "^0.14.5",
     "aspida-mock": "^0.4.0",
     "rimraf": "^3.0.2",
-    "swagger-parser": "^9.0.0",
+    "swagger-parser": "^9.0.1",
     "swagger2openapi": "^5.3.4"
   }
 }
