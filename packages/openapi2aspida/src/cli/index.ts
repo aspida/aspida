@@ -1,12 +1,12 @@
 import { promisify } from 'util'
 import minimist from 'minimist'
 import rimraf from 'rimraf'
-import getConfig, { Config } from './getConfig'
-import write from './writeRouteFile'
+import getConfig, { Config } from '../getConfig'
+import write from '../writeRouteFile'
 import watch from 'aspida/dist/cli/watchInputDir'
 import { options } from 'aspida/dist/cli'
-import { Build, Watch, CommandToBuild } from './cli/build'
-import { Command, nullCommand } from './cli/command'
+import { Build, Watch, CommandToBuild } from './build'
+import { Command, nullCommand } from './command'
 import { version as versionCommand } from 'aspida/dist/cli/version'
 
 const getBuildCommandFactory = (configs: Config[]) =>
