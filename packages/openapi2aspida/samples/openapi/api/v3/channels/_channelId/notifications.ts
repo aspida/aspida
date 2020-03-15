@@ -1,9 +1,11 @@
-/* eslint-disable */
 import * as Types from '../../../../@types'
 
 export interface Methods {
   get: {
-    reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
+    reqHeaders?: Types.AppIdHeader &
+      Types.AppPlatformHeader &
+      Types.AppVersionHeader &
+      Types.AppOrganisationToken
 
     query?: {
       published?: boolean
@@ -30,5 +32,25 @@ export interface Methods {
 }
 
 export default {
-  get: () => ({ status: 200, resBody: { count: 1, limit: 1, data: [{ id: 1, message: 'a', title: 'a', priority: 'normal', isSent: true, ownerId: 'a', organisationId: 1, deliveringTime: 'a', expirationTime: 'a', created: 'a' }] } })
+  get: () => ({
+    status: 200,
+    resBody: {
+      count: 1,
+      limit: 1,
+      data: [
+        {
+          id: 1,
+          message: 'a',
+          title: 'a',
+          priority: 'normal',
+          isSent: true,
+          ownerId: 'a',
+          organisationId: 1,
+          deliveringTime: 'a',
+          expirationTime: 'a',
+          created: 'a'
+        }
+      ]
+    }
+  })
 }

@@ -1,4 +1,3 @@
-/* eslint-disable */
 export type Users_PermissionsRole = {
   id: string
   name: string

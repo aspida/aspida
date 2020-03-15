@@ -1,4 +1,3 @@
-/* eslint-disable */
 export interface Methods {
   put: {
     reqBody?: {

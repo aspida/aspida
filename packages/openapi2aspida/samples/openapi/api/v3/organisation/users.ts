@@ -1,9 +1,11 @@
-/* eslint-disable */
 import * as Types from '../../../@types'
 
 export interface Methods {
   get: {
-    reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationTokenRequired
+    reqHeaders?: Types.AppIdHeader &
+      Types.AppPlatformHeader &
+      Types.AppVersionHeader &
+      Types.AppOrganisationTokenRequired
 
     query: {
       search: string
@@ -26,5 +28,12 @@ export interface Methods {
 }
 
 export default {
-  get: () => ({ status: 200, resBody: { count: 1, offset: 1, data: [{ email: 'a', id: 1, initials: 'a', role: 'a', roleScope: 'a', screenName: 'a' }] } })
+  get: () => ({
+    status: 200,
+    resBody: {
+      count: 1,
+      offset: 1,
+      data: [{ email: 'a', id: 1, initials: 'a', role: 'a', roleScope: 'a', screenName: 'a' }]
+    }
+  })
 }
