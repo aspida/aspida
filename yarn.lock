@@ -21,10 +21,10 @@
   resolved "https://registry.yarnpkg.com/@apidevtools/swagger-methods/-/swagger-methods-3.0.0.tgz#90904b0ceab0dae795985a92917b3aac419f7114"
   integrity sha512-wjuzOG44EqZ++dmxOmfpNJPHrdtyBdQ8mpwi+ZYH7agiJT2nF7ex8cQMFTw9g2WAm8KoO+GtytEXDNwQR4zG4Q==
 
-"@apidevtools/swagger-parser@9.0.0":
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/@apidevtools/swagger-parser/-/swagger-parser-9.0.0.tgz#a15223b0c03aa3c5df6f2a97bb1ea0095fa32d7b"
-  integrity sha512-y01MGRts9bx5DyhG+TELKaR1tr+CaPtuxnSloIgO0EEczxY6fm1uhcJtP/SEsWncFXu3HXxOK85XfnDGrBFlFg==
+"@apidevtools/swagger-parser@9.0.1":
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/@apidevtools/swagger-parser/-/swagger-parser-9.0.1.tgz#592e39dc412452ac4b34507a765e4d74ff6eda14"
+  integrity sha512-Irqybg4dQrcHhZcxJc/UM4vO7Ksoj1Id5e+K94XUOzllqX1n47HEA50EKiXTCQbykxuJ4cYGIivjx/MRSTC5OA==
   dependencies:
     "@apidevtools/json-schema-ref-parser" "^8.0.0"
     "@apidevtools/openapi-schemas" "^2.0.2"
@@ -5806,12 +5806,12 @@ supports-hyperlinks@^2.0.0:
     has-flag "^4.0.0"
     supports-color "^7.0.0"
 
-swagger-parser@^9.0.0:
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/swagger-parser/-/swagger-parser-9.0.0.tgz#e5df6bf61702c9f24916fcbb7064198c2d2e7949"
-  integrity sha512-nYyptqF+1dMUicQYO12ma1+Vp6L+fBat9nUR54QomTFp0HIZRbjQ6/LATbNIh4Q2jhKmwUj6nXHaZxk7Pot0Xg==
+swagger-parser@^9.0.1:
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/swagger-parser/-/swagger-parser-9.0.1.tgz#338e7e1ec10699069741535a7ef227a6efccbcd4"
+  integrity sha512-oxOHUaeNetO9ChhTJm2fD+48DbGbLD09ZEOwPOWEqcW8J6zmjWxutXtSuOiXsoRgDWvORYlImbwM21Pn+EiuvQ==
   dependencies:
-    "@apidevtools/swagger-parser" "9.0.0"
+    "@apidevtools/swagger-parser" "9.0.1"
 
 swagger2openapi@^5.3.4:
   version "5.3.4"
