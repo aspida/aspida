@@ -1,5 +1,4 @@
 import minimist from 'minimist'
-import rimraf from 'rimraf'
 import getBaseConfig, { BaseConfig } from 'aspida/dist/getConfig'
 import write from './writeRouteFile'
 import watch from 'aspida/dist/cli/watchInputDir'
@@ -9,13 +8,7 @@ import { Command, nullCommand } from 'aspida/dist/cli/command'
 import { version as versionCommand } from 'aspida/dist/cli/version'
 
 const getBuildCommandFactory = (configs: BaseConfig[]) =>
-  CommandToBuild.getFactory(configs, {
-    write,
-    watch,
-    remove(outputPath: string, callback: () => void) {
-      rimraf(outputPath, callback)
-    }
-  })
+  CommandToBuild.getFactory(configs, { write, watch })
 
 export const run = (args: string[]) => {
   const argv = minimist(args, options)

@@ -42,7 +42,7 @@
 
 ## Getting Started
 
-### Create config file in project root
+Create config file in project root
 
 `aspida.config.js`
 
@@ -53,11 +53,45 @@ module.exports = {
 }
 ```
 
-`aspida.config.js` (enable aspida-mock)
+`tarminal`
+
+```sh
+$ npx openapi2aspida --build
+# apis/$api.ts was built successfully.
+```
+
+## Getting Started with aspida-mock
+
+Installation (@aspida/axios only mock compatible)
+
+- Using [npm](https://www.npmjs.com/):
+
+  ```sh
+  $ npm install @aspida/axios axios
+  $ npm install aspida-mock --save-dev
+  ```
+
+- Using [Yarn](https://yarnpkg.com/):
+
+  ```sh
+  $ yarn add @aspida/axios axios
+  $ yarn add aspida-mock --dev
+  ```
+
+`package.json`
+
+```json
+{
+  "scripts": {
+    "build": "aspida-mock --build"
+  }
+}
+```
+
+`aspida.config.js`
 
 ```js
 module.exports = {
-  input: "apis",
   openapi: { inputFile: "https://petstore.swagger.io/v2/swagger.json", mock: true }
 }
 ```
@@ -67,7 +101,8 @@ module.exports = {
 ```sh
 $ npx openapi2aspida --build
 # apis/$api.ts was built successfully.
-# (apis/$mock.ts was built successfully.)
+$ npm run build
+# apis/$mock.ts was built successfully.
 ```
 
 ## License

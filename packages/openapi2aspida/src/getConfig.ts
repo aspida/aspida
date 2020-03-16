@@ -21,20 +21,23 @@ interface ConfigFile extends BaseConfig {
 }
 
 const createConfig = (config: ConfigFile) => {
-  const input = config.openapi?.inputFile || 'openapi.json'
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const openapi = config.openapi!
 
   return {
-    input,
+    input: openapi.inputFile,
     output: config.input,
     trailingSlash: config.trailingSlash,
     isYaml:
-      config.openapi?.yaml === undefined
-        ? path.extname(input).slice(1) === 'yaml'
-        : config.openapi?.yaml,
-    needsMock: !!config.openapi?.mock,
-    needsMockType: !config.openapi?.noMockType
+      openapi.yaml === undefined
+        ? path.extname(openapi.inputFile).slice(1) === 'yaml'
+        : openapi.yaml,
+    needsMock: !!openapi.mock,
+    needsMockType: !openapi.noMockType
   }
 }
 
 export default (configPath?: string): Config[] =>
-  getBaseConfig(configPath).map(c => createConfig(c))
+  getBaseConfig(configPath)
+    .filter((c: ConfigFile) => c.openapi)
+    .map(c => createConfig(c))

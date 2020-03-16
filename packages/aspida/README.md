@@ -219,7 +219,7 @@ module.exports = [{ input: "api1" }, { input: "api2", baseURL: "https://example.
 
 ### Serialize GET parameters manually
 
-aspida leaves GET parameter serialization to standard HTTP client behavior
+aspida leaves GET parameter serialization to standard HTTP client behavior  
 If you want to serialize manually, you can use config object of HTTP client
 
 `src/index.ts`

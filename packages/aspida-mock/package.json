@@ -1,6 +1,6 @@
 {
   "name": "aspida-mock",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "TypeScript friendly RESTful API mock for aspida",
   "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
   "license": "MIT",

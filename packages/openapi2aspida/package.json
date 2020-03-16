@@ -1,6 +1,6 @@
 {
   "name": "openapi2aspida",
-  "version": "0.3.5",
+  "version": "0.4.0",
   "description": "Convert OpenAPI 3.0 or Swagger 2.0 definitions into aspida",
   "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
   "license": "MIT",
@@ -24,8 +24,6 @@
   ],
   "dependencies": {
     "aspida": "^0.14.5",
-    "aspida-mock": "^0.4.0",
-    "rimraf": "^3.0.2",
     "swagger-parser": "^9.0.1",
     "swagger2openapi": "^5.3.4"
   }

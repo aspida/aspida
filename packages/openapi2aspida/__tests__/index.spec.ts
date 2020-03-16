@@ -5,8 +5,6 @@ import buildFromScript from '../src'
 
 const basePath = 'packages/openapi2aspida'
 
-jest.setTimeout(60000)
-
 describe('cli test', () => {
   beforeAll(() => fs.mkdirSync(`${basePath}/_samples`))
   afterAll(fn => rimraf(`${basePath}/_samples`, fn))
@@ -26,12 +24,6 @@ describe('cli test', () => {
         expect(fs.readFileSync(`${outputDir}/$api.ts`, 'utf8')).toBe(
           fs.readFileSync(`${basePath}/${config.output}/$api.ts`, 'utf8')
         )
-
-        if (config.needsMock) {
-          expect(fs.readFileSync(`${outputDir}/$mock.ts`, 'utf8')).toBe(
-            fs.readFileSync(`${basePath}/${config.output}/$mock.ts`, 'utf8')
-          )
-        }
       })
     )
   })
