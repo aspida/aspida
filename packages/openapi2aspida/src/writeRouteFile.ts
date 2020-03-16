@@ -1,18 +1,9 @@
 import fs from 'fs'
 import aspidaBuild from 'aspida/dist/buildTemplate'
 import aspidaWrite from 'aspida/dist/writeRouteFile'
-import mockBuild from 'aspida-mock/dist/cli/buildRouteFile'
-import mockWrite from 'aspida-mock/dist/cli/writeRouteFile'
 import { Template } from './buildTemplate'
 
-export default (
-  input: string,
-  needsMock: boolean,
-  trailingSlash: boolean,
-  { baseURL, types, files }: Template
-) => {
-  fs.mkdirSync(input)
-
+export default (input: string, trailingSlash: boolean, { baseURL, types, files }: Template) => {
   if (types) {
     fs.writeFileSync(`${input}/@types.ts`, types, 'utf8')
   }
@@ -31,5 +22,4 @@ export default (
 
   const config = { input, baseURL, trailingSlash }
   aspidaWrite(aspidaBuild(config))
-  if (needsMock) mockWrite(mockBuild(config))
 }

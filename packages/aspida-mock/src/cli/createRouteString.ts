@@ -9,12 +9,9 @@ const createCondition = (
   methods: string,
   trailingSlash: boolean
 ) => `
-  {
-    path: '${createImportPath(filePath, inputDir).replace(/(\/index)$/, '') || ''}${
+  { path: '${createImportPath(filePath, inputDir).replace(/(\/index)$/, '') || ''}${
   trailingSlash ? '/' : ''
-}',
-    methods: ${methods}
-  }`
+}', methods: ${methods} }`
 
 export default (
   inputDir: string,

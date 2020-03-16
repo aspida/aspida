@@ -1,4 +1,4 @@
-import { OpenAPI } from 'openapi-types'
+import fs from 'fs'
 import { Config } from '../getConfig'
 import build, { Template } from '../buildTemplate'
 import { Command } from './command'
@@ -29,30 +29,24 @@ interface BuildCommand {
 }
 
 export interface BuildIO {
-  write(outputDir: string, needsMock: boolean, trailingSlash: boolean, template: Template): void
-  remove(filePath: string): Promise<void>
-  watch(input: string | OpenAPI.Document, callback: () => void): void
+  write(outputDir: string, trailingSlash: boolean, template: Template): void
 }
 
 export class Build implements BuildCommand {
   async run(config: Config, io: BuildIO) {
-    await io.remove(config.output)
-    const template = await build(
-      config.input,
-      config.isYaml,
-      config.needsMock,
-      config.needsMockType
+    if (!fs.existsSync(config.output)) {
+      fs.mkdirSync(config.output)
+    } else if (fs.readdirSync(config.output).length) {
+      console.log(
+        `fatal: destination path '${config.output}' already exists and is not an empty directory.`
+      )
+      return
+    }
+
+    io.write(
+      config.output,
+      config.trailingSlash,
+      await build(config.input, config.isYaml, config.needsMock, config.needsMockType)
     )
-    io.write(config.output, config.needsMock, config.trailingSlash, template)
-  }
-}
-
-export class Watch implements BuildCommand {
-  // eslint-disable-next-line no-useless-constructor
-  constructor(private readonly build = new Build()) {}
-
-  async run(config: Config, io: BuildIO) {
-    await this.build.run(config, io)
-    io.watch(config.input, () => this.build.run(config, io))
   }
 }

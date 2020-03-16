@@ -1,4 +1,3 @@
-import fs from 'fs'
 import minimist from 'minimist'
 import getConfig, { Config } from '../getConfig'
 import write from '../writeRouteFile'
@@ -13,11 +12,7 @@ export const options: minimist.Opts = {
 }
 
 const getBuildCommandFactory = (configs: Config[]) =>
-  CommandToBuild.getFactory(configs, {
-    write,
-    watch,
-    remove: (filePath: string, callback: () => void) => fs.unlink(filePath, callback)
-  })
+  CommandToBuild.getFactory(configs, { write, watch })
 
 export const run = (args: string[]) => {
   const argv = minimist(args, options)

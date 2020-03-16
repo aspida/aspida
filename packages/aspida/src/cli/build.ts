@@ -31,15 +31,12 @@ interface BuildCommand {
 
 export interface BuildIO {
   write(template: Template): void
-  remove(filePath: string, callback: () => void): void
   watch(input: string, callback: () => void): void
 }
 
 export class Build implements BuildCommand {
   run(config: BaseConfig, io: BuildIO): void {
-    const template = build(config)
-
-    io.remove(template.filePath, () => io.write(template))
+    io.write(build(config))
   }
 }
 

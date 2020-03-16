@@ -10,30 +10,12 @@ import mock4 from './v1.1'
 import mock5 from './index'
 
 export const mockRoutes = () => [
-  {
-    path: '/v2.0',
-    methods: mock0
-  },
-  {
-    path: '/v1.1/users/_userId@number',
-    methods: mock1
-  },
-  {
-    path: '/v1.1/3.1',
-    methods: mock2
-  },
-  {
-    path: '/v1.1/2/_hogeId@HogeId/test-4/_fugaId',
-    methods: mock3
-  },
-  {
-    path: '/v1.1',
-    methods: mock4
-  },
-  {
-    path: '',
-    methods: mock5
-  }
+  { path: '/v2.0', methods: mock0 },
+  { path: '/v1.1/users/_userId@number', methods: mock1 },
+  { path: '/v1.1/3.1', methods: mock2 },
+  { path: '/v1.1/2/_hogeId@HogeId/test-4/_fugaId', methods: mock3 },
+  { path: '/v1.1', methods: mock4 },
+  { path: '', methods: mock5 }
 ]
 
 export default <U>(client: MockClient<U>, config?: MockConfig) => {

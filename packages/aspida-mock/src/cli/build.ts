@@ -31,7 +31,6 @@ interface BuildCommand {
 
 export interface BuildIO {
   write(template: Template): void
-  remove(filePath: string, callback: () => void): void
   watch(input: string, callback: () => void): void
 }
 
