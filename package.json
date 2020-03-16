@@ -5,7 +5,7 @@
   ],
   "scripts": {
     "dev:aspida": "npm run build:aspida && cd packages/aspida && node bin/index.js --build",
-    "dev:openapi": "npm run build:openapi && cd packages/openapi2aspida && node bin/index.js --build",
+    "dev:openapi": "npm run build:openapi && cd packages/openapi2aspida && rimraf \"samples/*/*\" && node bin/index.js --build",
     "dev:mock": "npm run build:mock && cd packages/aspida-mock && aspida -b && node bin/index.js --build",
     "dev:path": "npm run build:path && cd packages/pathpida && node bin/index.js --build",
     "build:aspida": "cd packages/aspida && rimraf dist && tsc --project tsconfig.build.json",
