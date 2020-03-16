@@ -1,11 +1,9 @@
+/* eslint-disable */
 import * as Types from '../../../../../../../@types'
 
 export interface Methods {
   get: {
-    reqHeaders?: Types.AppIdHeader &
-      Types.AppPlatformHeader &
-      Types.AppVersionHeader &
-      Types.AppOrganisationToken
+    reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
     resBody: {
       id?: number
       email?: string
@@ -18,10 +16,7 @@ export interface Methods {
   }
 
   post: {
-    reqHeaders?: Types.AppIdHeader &
-      Types.AppPlatformHeader &
-      Types.AppVersionHeader &
-      Types.AppOrganisationToken
+    reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
 
     reqBody: {
       users?: number[]
@@ -31,10 +26,7 @@ export interface Methods {
   }
 
   put: {
-    reqHeaders?: Types.AppIdHeader &
-      Types.AppPlatformHeader &
-      Types.AppVersionHeader &
-      Types.AppOrganisationToken
+    reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
 
     reqBody: {
       users: {
@@ -47,20 +39,7 @@ export interface Methods {
 }
 
 export default {
-  get: () => ({
-    status: 200,
-    resBody: [
-      {
-        id: 1,
-        email: 'a',
-        screenName: 'a',
-        access: 'admin',
-        isDeleted: 1,
-        imageUrl: 'a',
-        initials: 'a'
-      }
-    ]
-  }),
+  get: () => ({ status: 200, resBody: [{ id: 1, email: 'a', screenName: 'a', access: 'admin', isDeleted: 1, imageUrl: 'a', initials: 'a' }] }),
   post: () => ({ status: 200 }),
   put: () => ({ status: 200 })
 }

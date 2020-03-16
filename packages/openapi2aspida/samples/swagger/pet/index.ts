@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { mockMethods } from 'aspida-mock'
 import * as Types from '../@types'
 

@@ -1,12 +1,9 @@
+/* eslint-disable */
 import * as Types from '../../../../../@types'
 
 export interface Methods {
   get: {
-    reqHeaders?: Types.AppIdHeader &
-      Types.AppPlatformHeader &
-      Types.AppVersionHeader &
-      Types.AppOrganisationToken &
-      Types.UserInstanceIdHeader
+    reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken & Types.UserInstanceIdHeader
 
     query?: {
       offset?: number
@@ -20,10 +17,7 @@ export interface Methods {
   }
 
   post: {
-    reqHeaders?: Types.AppIdHeader &
-      Types.AppPlatformHeader &
-      Types.AppVersionHeader &
-      Types.AppOrganisationToken
+    reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
 
     resBody: {
       id: string

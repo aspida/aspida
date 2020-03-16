@@ -1,13 +1,9 @@
+/* eslint-disable */
 import * as Types from '../../../@types'
 
 export interface Methods {
   get: {
-    reqHeaders?: Types.AppIdHeader &
-      Types.AppPlatformHeader &
-      Types.AppVersionHeader &
-      Types.AppOrganisationToken &
-      Types.UserPublicKey &
-      Types.UserSignedChallenge
+    reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken & Types.UserPublicKey & Types.UserSignedChallenge
 
     resBody: {
       token?: string
@@ -24,14 +20,5 @@ export interface Methods {
 }
 
 export default {
-  get: () => ({
-    status: 200,
-    resBody: {
-      token: 'a',
-      publishKey: 'a',
-      subscribeKey: 'a',
-      cipherKey: 'a',
-      senderDevice: { ios: ['a'], android: ['a'] }
-    }
-  })
+  get: () => ({ status: 200, resBody: { token: 'a', publishKey: 'a', subscribeKey: 'a', cipherKey: 'a', senderDevice: { ios: ['a'], android: ['a'] } } })
 }

@@ -219,7 +219,7 @@ module.exports = [{ input: "api1" }, { input: "api2", baseURL: "https://example.
 
 ### GET パラメータを手動でシリアライズする
 
-aspida は GET パラメータのシリアライズを HTTP クライアントの標準動作に任せている
+aspida は GET パラメータのシリアライズを HTTP クライアントの標準動作に任せている  
 手動でシリアライズを行いたい場合は HTTP クライアントの Config オブジェクトを利用できる
 
 `src/index.ts`

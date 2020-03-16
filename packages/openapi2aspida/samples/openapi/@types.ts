@@ -1,3 +1,4 @@
+/* eslint-disable */
 export type AppIdHeader = {
   'x-tchop-app-id': string
 }

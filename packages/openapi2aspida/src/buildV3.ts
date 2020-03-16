@@ -245,9 +245,9 @@ export default (
 
             return {
               file,
-              methods: `${
-                needsMock && needsMockType ? "import { mockMethods } from 'aspida-mock'\n" : ''
-              }${
+              methods: `/* eslint-disable */${
+                needsMock && needsMockType ? "\nimport { mockMethods } from 'aspida-mock'" : ''
+              }\n${
                 / Types\./.test(methodsText)
                   ? `import * as Types from '${file.map(() => '').join('../')}@types'\n\n`
                   : ''
@@ -263,7 +263,7 @@ export default (
 
   return {
     baseURL: openapi.servers?.[0].url || '',
-    types: `${[
+    types: `/* eslint-disable */${[
       ...parameters.map(p => ({
         name: p.name,
         text: typeof p.props === 'string' ? p.props : props2String(p.props, '')
@@ -273,8 +273,8 @@ export default (
         text: value2String(s.value, '').replace(/\n {2}/g, '\n')
       }))
     ]
-      .map(p => `export type ${p.name} = ${p.text}\n`)
-      .join('\n')}`.replace(/ Types\./g, ' '),
+      .map(p => `\nexport type ${p.name} = ${p.text}\n`)
+      .join('')}`.replace(/ Types\./g, ' '),
     files
   }
 }
