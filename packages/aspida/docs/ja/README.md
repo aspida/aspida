@@ -34,7 +34,7 @@
   </a>
 </div>
 <br />
-<p align="center">ブラウザと node.js のための型安全な HTTP クライアントラッパー</p>
+<p align="center">ブラウザと node.js のためのTypeScriptフレンドリーな HTTP クライアントラッパー</p>
 <div align="center">
   <a href="https://github.com/aspidajs/aspida/tree/master/packages/aspida#readme">🇺🇸English</a> |
   <a href="https://github.com/aspidajs/aspida/tree/master/packages/aspida/docs/ja#readme">🇯🇵日本語</a>
@@ -217,20 +217,22 @@ module.exports = { input: "apis", baseURL: "https://example.com/api" }
 module.exports = [{ input: "api1" }, { input: "api2", baseURL: "https://example.com/api" }]
 ```
 
-### GETパラメータを手動でシリアライズする
+### GET パラメータを手動でシリアライズする
 
-aspidaはGETパラメータのシリアライズをHTTPクライアントの標準動作に任せている
-手動でシリアライズを行いたい場合はHTTPクライアントのConfigオブジェクトを利用できる
+aspida は GET パラメータのシリアライズを HTTP クライアントの標準動作に任せている
+手動でシリアライズを行いたい場合は HTTP クライアントの Config オブジェクトを利用できる
 
 `src/index.ts`
 
 ```typescript
-import axios from 'axios'
-import qs from 'qs'
+import axios from "axios"
+import qs from "qs"
 import aspida from "@aspida/axios"
 import api from "../apis/$api"
 ;(async () => {
-  const client = api(aspida(axios, { paramsSerializer: (params) => qs.stringify(params, { indices: false }) }))
+  const client = api(
+    aspida(axios, { paramsSerializer: params => qs.stringify(params, { indices: false }) })
+  )
 
   const users = await client.v1.users.$get({
     // config: { paramsSerializer: (params) => qs.stringify(params, { indices: false }) },
