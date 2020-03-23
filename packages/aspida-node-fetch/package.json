@@ -1,0 +1,29 @@
+{
+  "name": "@aspida/node-fetch",
+  "version": "0.1.0",
+  "description": "node-fetch client for aspida",
+  "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "homepage": "https://github.com/aspidajs/aspida/tree/master/packages/aspida-node-fetch#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aspidajs/aspida.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aspidajs/aspida/issues"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "aspida",
+    "node-fetch"
+  ],
+  "dependencies": {
+    "aspida": "^0.14.5"
+  }
+}

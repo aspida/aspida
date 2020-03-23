@@ -1,5 +1,9 @@
-| aspida | [aspida-mock] | [openapi2aspida] | [pathpida] | [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] |
-| ------ | ------------- | ---------------- | ---------- | --------------- | ------------ | --------------- |
+| aspida | [aspida-mock] | [openapi2aspida] | [pathpida] |
+| ------ | ------------- | ---------------- | ---------- |
+
+
+| [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] | [@aspida/node-fetch] |
+| --------------- | ------------ | --------------- | -------------------- |
 
 
 <br />
@@ -46,7 +50,7 @@
 
 - パス・URL クエリ・ヘッダー・ボディ・レスポンス全てに型を指定できる
 - FormData / URLSearchParams の内容にも型を指定できる
-- HTTP クライアントは axios / ky / ky-universal / fetch に対応
+- HTTP クライアントは axios / ky / ky-universal / fetch / node-fetch に対応
 - パス定義は Nuxt.js の pages と同じ命名規則
 
 <br />
@@ -192,6 +196,7 @@ import api from "../apis/$api"
 - **[aspida-axios](https://github.com/aspidajs/aspida/tree/develop/packages/aspida-axios#readme)**
 - **[aspida-ky](https://github.com/aspidajs/aspida/tree/develop/packages/aspida-ky#readme)**
 - **[aspida-fetch](https://github.com/aspidajs/aspida/tree/develop/packages/aspida-fetch#readme)**
+- **[aspida-node-fetch](https://github.com/aspidajs/aspida/tree/develop/packages/aspida-node-fetch#readme)**
 
 ## Tips
 
@@ -363,3 +368,4 @@ aspida is licensed under a [MIT License](https://github.com/aspidajs/aspida/blob
 [@aspida/axios]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-axios
 [@aspida/ky]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-ky
 [@aspida/fetch]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-fetch
+[@aspida/node-fetch]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-node-fetch
