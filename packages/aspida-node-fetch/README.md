@@ -1,7 +1,7 @@
 # @aspida/fetch
 
-| [aspida] | [aspida-mock] | [openapi2aspida] | [pathpida] | [@aspida/axios] | [@aspida/ky] | @aspida/fetch | [@aspida/node-fetch] |
-| -------- | ------------- | ---------------- | ---------- | --------------- | ------------ | ------------- | -------------------- |
+| [aspida] | [aspida-mock] | [openapi2aspida] | [pathpida] | [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] | @aspida/node-fetch |
+| -------- | ------------- | ---------------- | ---------- | --------------- | ------------ | --------------- | ------------------ |
 
 
 <br />
@@ -36,7 +36,7 @@
   </a>
 </div>
 <br />
-<div align="center"><a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API">fetch</a> client for <a href="https://github.com/aspidajs/aspida/">aspida</a>.</div>
+<div align="center"><a href="https://www.npmjs.com/package/node-fetch">node-fetch</a> client for <a href="https://github.com/aspidajs/aspida/">aspida</a>.</div>
 <br />
 <br />
 
@@ -47,13 +47,15 @@
 - Using [npm](https://www.npmjs.com/):
 
   ```sh
-  $ npm install @aspida/fetch
+  $ npm install node-fetch @aspida/node-fetch
+  $ npm install @types/node-fetch --save-dev
   ```
 
 - Using [Yarn](https://yarnpkg.com/):
 
   ```sh
-  $ yarn add @aspida/fetch
+  $ yarn add node-fetch @aspida/node-fetch
+  $ yarn add @types/node-fetch --dev
   ```
 
 ### Make HTTP request from application
@@ -61,10 +63,11 @@
 `src/index.ts`
 
 ```typescript
+import fetch from "node-fetch"
 import aspida from "@aspida/fetch"
 import api from "../apis/$api"
 
-const fetchConfig = { credentials: "include", baseURL: "https://example.com/api" }
+const fetchConfig = { baseURL: "https://example.com/api" }
 const client = api(aspida(fetch, fetchConfig))
 ;(async () => {
   const userId = 0
@@ -94,4 +97,4 @@ aspida-fetch is licensed under a [MIT License](https://github.com/aspidajs/aspid
 [pathpida]: https://github.com/aspidajs/aspida/tree/master/packages/pathpida
 [@aspida/axios]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-axios
 [@aspida/ky]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-ky
-[@aspida/node-fetch]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-node-fetch
+[@aspida/fetch]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-fetch
