@@ -1,7 +1,7 @@
 # pathpida
 
-| [aspida] | [aspida-mock] | [openapi2aspida] | pathpida | [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] |
-| -------- | ------------- | ---------------- | -------- | --------------- | ------------ | --------------- |
+| [aspida] | [aspida-mock] | [openapi2aspida] | pathpida | [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] | [@aspida/node-fetch] |
+| -------- | ------------- | ---------------- | -------- | --------------- | ------------ | --------------- | -------------------- |
 
 
 <br />
@@ -130,3 +130,4 @@ pathpida is licensed under a [MIT License](https://github.com/aspidajs/aspida/bl
 [@aspida/axios]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-axios
 [@aspida/ky]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-ky
 [@aspida/fetch]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-fetch
+[@aspida/node-fetch]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-node-fetch
