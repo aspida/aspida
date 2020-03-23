@@ -1,5 +1,9 @@
-| aspida | [aspida-mock] | [openapi2aspida] | [pathpida] | [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] |
-| ------ | ------------- | ---------------- | ---------- | --------------- | ------------ | --------------- |
+| aspida | [aspida-mock] | [openapi2aspida] | [pathpida] |
+| ------ | ------------- | ---------------- | ---------- |
+
+
+| [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] | [@aspida/node-fetch] |
+| --------------- | ------------ | --------------- | -------------------- |
 
 
 <br />
@@ -46,7 +50,7 @@
 
 - Path, URL query, header, body, and response can all specify the type
 - FormData / URLSearchParams content can also specify the type
-- HTTP client supports axios / ky / ky-universal / fetch
+- HTTP client supports axios / ky / ky-universal / fetch / node-fetch
 - Path definition is the same naming convention as Nuxt.js pages
 
 <br />
@@ -192,6 +196,7 @@ import api from "../apis/$api"
 - **[aspida-axios](https://github.com/aspidajs/aspida/tree/develop/packages/aspida-axios#readme)**
 - **[aspida-ky](https://github.com/aspidajs/aspida/tree/develop/packages/aspida-ky#readme)**
 - **[aspida-fetch](https://github.com/aspidajs/aspida/tree/develop/packages/aspida-fetch#readme)**
+- **[aspida-node-fetch](https://github.com/aspidajs/aspida/tree/develop/packages/aspida-node-fetch#readme)**
 
 ## Tips
 
@@ -225,12 +230,14 @@ If you want to serialize manually, you can use config object of HTTP client
 `src/index.ts`
 
 ```typescript
-import axios from 'axios'
-import qs from 'qs'
+import axios from "axios"
+import qs from "qs"
 import aspida from "@aspida/axios"
 import api from "../apis/$api"
 ;(async () => {
-  const client = api(aspida(axios, { paramsSerializer: (params) => qs.stringify(params, { indices: false }) }))
+  const client = api(
+    aspida(axios, { paramsSerializer: params => qs.stringify(params, { indices: false }) })
+  )
 
   const users = await client.v1.users.$get({
     // config: { paramsSerializer: (params) => qs.stringify(params, { indices: false }) },
@@ -361,3 +368,4 @@ aspida is licensed under a [MIT License](https://github.com/aspidajs/aspida/blob
 [@aspida/axios]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-axios
 [@aspida/ky]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-ky
 [@aspida/fetch]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-fetch
+[@aspida/node-fetch]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-node-fetch

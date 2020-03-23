@@ -1,11 +1,11 @@
-# @aspida/ky
+# @aspida/node-fetch
 
 | [aspida] | [aspida-mock] | [openapi2aspida] | [pathpida] |
 | -------- | ------------- | ---------------- | ---------- |
 
 
-| [@aspida/axios] | @aspida/ky | [@aspida/fetch] | [@aspida/node-fetch] |
-| --------------- | ---------- | --------------- | -------------------- |
+| [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] | @aspida/node-fetch |
+| --------------- | ------------ | --------------- | ------------------ |
 
 
 <br />
@@ -20,8 +20,8 @@
 <br />
 <br />
 <div align="center">
-  <a href="https://www.npmjs.com/package/@aspida/ky">
-    <img src="https://img.shields.io/npm/v/@aspida/ky" alt="npm version" />
+  <a href="https://www.npmjs.com/package/@aspida/fetch">
+    <img src="https://img.shields.io/npm/v/@aspida/fetch" alt="npm version" />
   </a>
   <a href="https://circleci.com/gh/aspidajs/aspida">
     <img src="https://img.shields.io/circleci/build/github/aspidajs/aspida.svg?label=test" alt="CircleCI" />
@@ -35,12 +35,12 @@
   <a href="https://dependabot.com">
     <img src="https://api.dependabot.com/badges/status?host=github&repo=aspidajs/aspida" alt="Dependabot Status" />
   </a>
-  <a href="https://github.com/aspidajs/aspida/blob/master/packages/aspida-ky/LICENSE">
-    <img src="https://img.shields.io/npm/l/@aspida/ky" alt="License" />
+  <a href="https://github.com/aspidajs/aspida/blob/master/packages/aspida-fetch/LICENSE">
+    <img src="https://img.shields.io/npm/l/@aspida/fetch" alt="License" />
   </a>
 </div>
 <br />
-<div align="center"><a href="https://github.com/sindresorhus/ky/">ky</a> client for <a href="https://github.com/aspidajs/aspida/">aspida</a>.</div>
+<div align="center"><a href="https://www.npmjs.com/package/node-fetch">node-fetch</a> client for <a href="https://github.com/aspidajs/aspida/">aspida</a>.</div>
 <br />
 <br />
 
@@ -51,13 +51,15 @@
 - Using [npm](https://www.npmjs.com/):
 
   ```sh
-  $ npm install @aspida/ky ky
+  $ npm install node-fetch @aspida/node-fetch
+  $ npm install @types/node-fetch --save-dev
   ```
 
 - Using [Yarn](https://yarnpkg.com/):
 
   ```sh
-  $ yarn add @aspida/ky ky
+  $ yarn add node-fetch @aspida/node-fetch
+  $ yarn add @types/node-fetch --dev
   ```
 
 ### Make HTTP request from application
@@ -65,12 +67,12 @@
 `src/index.ts`
 
 ```typescript
-import ky from "ky"
-import aspida from "@aspida/ky"
+import fetch from "node-fetch"
+import aspida from "@aspida/fetch"
 import api from "../apis/$api"
 
-const kyConfig = { timeout: 3000, prefixUrl: "https://example.com/api" }
-const client = api(aspida(ky, kyConfig))
+const fetchConfig = { baseURL: "https://example.com/api" }
+const client = api(aspida(fetch, fetchConfig))
 ;(async () => {
   const userId = 0
   const limit = 10
@@ -91,12 +93,12 @@ const client = api(aspida(ky, kyConfig))
 
 ## License
 
-aspida-ky is licensed under a [MIT License](https://github.com/aspidajs/aspida/blob/master/packages/aspida-ky/LICENSE).
+aspida-fetch is licensed under a [MIT License](https://github.com/aspidajs/aspida/blob/master/packages/aspida-fetch/LICENSE).
 
 [aspida]: https://github.com/aspidajs/aspida/tree/master/packages/aspida
 [aspida-mock]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-mock
 [openapi2aspida]: https://github.com/aspidajs/aspida/tree/master/packages/openapi2aspida
 [pathpida]: https://github.com/aspidajs/aspida/tree/master/packages/pathpida
 [@aspida/axios]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-axios
+[@aspida/ky]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-ky
 [@aspida/fetch]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-fetch
-[@aspida/node-fetch]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-node-fetch

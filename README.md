@@ -1,5 +1,9 @@
-| [aspida] | [aspida-mock] | [openapi2aspida] | [pathpida] | [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] |
-| -------- | ------------- | ---------------- | ---------- | --------------- | ------------ | --------------- |
+| [aspida] | [aspida-mock] | [openapi2aspida] | [pathpida] |
+| -------- | ------------- | ---------------- | ---------- |
+
+
+| [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] | [@aspida/node-fetch] |
+| --------------- | ------------ | --------------- | -------------------- |
 
 
 <br />
@@ -47,6 +51,7 @@
 - [@aspida/axios] - [axios](https://github.com/axios/axios/) client for aspida.
 - [@aspida/ky] - [ky](https://github.com/sindresorhus/ky/) client for aspida.
 - [@aspida/fetch] - [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) client for aspida.
+- [@aspida/node-fetch] - [node-fetch](https://www.npmjs.com/package/node-fetch) client for aspida.
 
 [aspida]: packages/aspida
 [aspida-mock]: packages/aspida-mock
@@ -55,3 +60,4 @@
 [@aspida/axios]: packages/aspida-axios
 [@aspida/ky]: packages/aspida-ky
 [@aspida/fetch]: packages/aspida-fetch
+[@aspida/node-fetch]: packages/aspida-node-fetch
