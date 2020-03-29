@@ -262,7 +262,7 @@ export default (
   }
 
   return {
-    baseURL: openapi.servers?.[0].url || '',
+    baseURL: openapi.servers?.[0]?.url || '',
     types: `/* eslint-disable */${[
       ...parameters.map(p => ({
         name: p.name,

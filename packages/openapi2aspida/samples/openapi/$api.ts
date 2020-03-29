@@ -54,7 +54,7 @@ import { Methods as Methods50 } from './api/v3/user/_userId'
 import { Methods as Methods51 } from './api/v3/user/profile'
 
 const api = <T>(client: AspidaClient<T>) => {
-  const prefix = (client.baseURL === undefined ? 'https://tchop-staging.com' : client.baseURL).replace(/\/$/, '')
+  const prefix = (client.baseURL === undefined ? '' : client.baseURL).replace(/\/$/, '')
 
   return {
     api: {
