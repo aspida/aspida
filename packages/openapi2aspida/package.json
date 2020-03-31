@@ -25,6 +25,6 @@
   "dependencies": {
     "aspida": "^0.14.5",
     "swagger-parser": "^9.0.1",
-    "swagger2openapi": "^6.0.1"
+    "swagger2openapi": "^6.0.2"
   }
 }
