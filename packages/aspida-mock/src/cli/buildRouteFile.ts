@@ -18,9 +18,7 @@ export default ({ input, trailingSlash }: BaseConfig): Template => ({
     input,
     trailingSlash,
     hasMiddleware(input),
-    listFiles(input)
-      .sort()
-      .reverse()
+    listFiles(input).sort().reverse()
   ),
   filePath: path.posix.join(input, `$mock.ts`)
 })
