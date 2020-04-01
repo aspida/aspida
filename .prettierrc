@@ -1,7 +1,9 @@
 {
   "printWidth": 100,
   "semi": false,
+  "arrowParens": "avoid",
   "singleQuote": true,
+  "trailingComma": "none",
   "overrides": [
     {
       "files": ["*.md", "*.yml"],

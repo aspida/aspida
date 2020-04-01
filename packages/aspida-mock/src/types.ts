@@ -74,14 +74,12 @@ export type MockResponse<
   : {}
 
 export type MockMethods<T extends AspidaMethods> = {
-  [K in keyof T]?: T[K] extends undefined
-    ? undefined
-    : ({
-        path,
-        method,
-        values,
-        query,
-        reqBody,
-        reqHeaders
-      }: RequestParams<T[K]>) => MockResponse<T[K]> | Promise<MockResponse<T[K]>>
+  [K in keyof T]?: ({
+    path,
+    method,
+    values,
+    query,
+    reqBody,
+    reqHeaders
+  }: RequestParams<T[K]>) => MockResponse<T[K]> | Promise<MockResponse<T[K]>>
 }
