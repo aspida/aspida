@@ -1,6 +1,6 @@
 {
   "name": "@aspida/ky",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "ky client for aspida",
   "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
   "license": "MIT",
@@ -25,6 +25,6 @@
     "ky-universal"
   ],
   "dependencies": {
-    "aspida": "^0.14.5"
+    "aspida": "^0.14.6"
   }
 }

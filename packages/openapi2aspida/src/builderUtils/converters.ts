@@ -31,34 +31,36 @@ export const getPropertyName = (name: string) =>
   /^[a-zA-Z_$][0-9a-zA-Z_$]*$/.test(name) ? name : `'${name}'`
 
 const of2Values = (obj: OpenAPIV3.SchemaObject): PropValue[] | null => {
-  const values = (obj.oneOf || obj.allOf || [])
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    .map(p => schema2value(p))
-    .filter(v => v) as PropValue[]
+  const values =
+    (obj.oneOf || obj.allOf || [])
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
+      .map(p => schema2value(p))
+      .filter(v => v) as PropValue[]
   return values.length ? values : null
 }
 
 const object2value = (obj: OpenAPIV3.NonArraySchemaObject): Prop[] | null => {
   if (!obj.properties) return null
 
-  const value = Object.keys(obj.properties)
-    .filter(name => {
-      const target = obj.properties![name]
-      return isRefObject(target) || !target.deprecated
-    })
-    .map<Prop | null>(name => {
-      // eslint-disable-next-line @typescript-eslint/no-use-before-define
-      const val = schema2value(obj.properties![name])
-      if (!val) return null
+  const value =
+    Object.keys(obj.properties)
+      .filter(name => {
+        const target = obj.properties![name]
+        return isRefObject(target) || !target.deprecated
+      })
+      .map<Prop | null>(name => {
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
+        const val = schema2value(obj.properties![name])
+        if (!val) return null
 
-      return {
-        name: getPropertyName(name),
-        required: !!obj.required?.includes(name),
-        isOneOf: false,
-        values: [val]
-      }
-    })
-    .filter(v => v) as Prop[]
+        return {
+          name: getPropertyName(name),
+          required: !!obj.required?.includes(name),
+          isOneOf: false,
+          values: [val]
+        }
+      })
+      .filter(v => v) as Prop[]
 
   return value.length ? value : null
 }

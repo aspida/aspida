@@ -2,7 +2,7 @@ import { LowerHttpMethod } from 'aspida'
 import { MockResponse } from './types'
 
 export const createPathRegExp = (path: string) =>
-  new RegExp(`^${path.replace(/\/_[^/]+/g, '/[^/]+')}$`)
+  new RegExp(`^${path.replace(/\/_[^./]+/g, '/[^/]+').replace('.', '\\.')}$`)
 
 export const httpMethods: LowerHttpMethod[] = [
   'get',
@@ -36,7 +36,7 @@ export const createValues = (path: string, relativePath: string) => {
   parsedRequestUrl.forEach((dir, i) => {
     if (dirList[i].startsWith('_')) {
       const [valueName, type = 'number'] = dirList[i].slice(1).split('@')
-      values[valueName] = isNaN(+dir) || type !== 'number' ? dir : +dir
+      values[valueName.split('.')[0]] = isNaN(+dir) || type !== 'number' ? dir : +dir
     }
   })
 

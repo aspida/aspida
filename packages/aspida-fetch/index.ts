@@ -29,7 +29,7 @@ export default (client = fetch, config?: FetchConfig): AspidaClient<FetchConfig>
           method,
           ...config,
           ...request?.config,
-          body: request?.body as any,
+          body: request?.body,
           headers: { ...config?.headers, ...request?.config?.headers, ...request?.headers }
         }
       )
