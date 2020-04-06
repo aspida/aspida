@@ -45,9 +45,11 @@ export default (input: string, trailingSlash: boolean) => {
             valType = `ApiTypes.${valType}`
           }
 
-          valFn = `${indent}${valName}: (val${valCount}: ${valType}) => ({\n<% next %>\n${indent}})`
-
-          newUrl = `${url}/\${val${valCount}}`
+          valFn = `${indent}${valName.replace(
+            /\./g,
+            '_'
+          )}: (val${valCount}: ${valType}) => ({\n<% next %>\n${indent}})`
+          newUrl = `${url}/\${val${valCount}}${valName.replace(/^[^.]+/, '')}`
           valCount += 1
         }
 
