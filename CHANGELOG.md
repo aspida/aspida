@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.14.6](https://github.com/aspidajs/aspida/compare/v0.14.5...v0.14.6) (2020-04-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* **openapi:** delete aspida-mock and rimraf
+
+### Features
+
+* **node-fetch:** add node-fetch client ([7e1bd27](https://github.com/aspidajs/aspida/commit/7e1bd27c9418c42c45a41ff30047a9755dc9bb01))
+* **openapi:** delete aspida-mock and rimraf ([a59d86e](https://github.com/aspidajs/aspida/commit/a59d86e2aae350fa54833bf4fb917bc78fe870b0))
+
+
+### Bug Fixes
+
+* **aspida:** support json with path value ([4c7dff0](https://github.com/aspidajs/aspida/commit/4c7dff01685fb0df0cef40449121b40a170b94bf))
+* **deps:** [security] bump acorn from 6.4.0 to 6.4.1 ([9a6cee0](https://github.com/aspidajs/aspida/commit/9a6cee05d295fbf80f2a04f069f17ab9c98ab6ba))
+* **deps:** bump minimist from 1.2.4 to 1.2.5 ([a27445c](https://github.com/aspidajs/aspida/commit/a27445c33da203bb3941a77afa9eabb51a9bf318))
+* **deps:** bump swagger-parser from 8.0.4 to 9.0.0 ([1f2a25f](https://github.com/aspidajs/aspida/commit/1f2a25f267286378774ce1c5a44bbbdd2f706efd))
+* **deps:** bump swagger-parser from 9.0.0 to 9.0.1 ([9ac9dbe](https://github.com/aspidajs/aspida/commit/9ac9dbe8168f8439a8bcc0fd5c6e6b2dcd8ad994))
+* **deps:** bump swagger2openapi from 5.3.4 to 6.0.0 ([6fdf33a](https://github.com/aspidajs/aspida/commit/6fdf33aa1fe0abe61f9f310210612af875a5f23d))
+* **deps:** bump swagger2openapi from 6.0.0 to 6.0.1 ([3437a3b](https://github.com/aspidajs/aspida/commit/3437a3bd702ff50c255864a3ddb3afa629182733))
+* **deps:** bump swagger2openapi from 6.0.1 to 6.0.2 ([e86784f](https://github.com/aspidajs/aspida/commit/e86784fe77a0bdae3bfd41e7e7cde53f5814359e))
+* **deps:** bump swagger2openapi in /packages/openapi2aspida ([06590bf](https://github.com/aspidajs/aspida/commit/06590bf76731e9503d07fb4034b934683b63b2b2))
+* **mock:** support json with path value ([15677e2](https://github.com/aspidajs/aspida/commit/15677e21dd9a80db0237209a20269d0843ff4341))
+* **openapi:** add ? for SwaggerModule of NestJS ([1676a07](https://github.com/aspidajs/aspida/commit/1676a0796855a58b19abeb085cddd2a5102c851c))
+* **openapi:** delete default value of inputFile ([92d150e](https://github.com/aspidajs/aspida/commit/92d150e385e5d60f2911a61f71aa575ef32112e8))
+
+
+### Refactors
+
+* **mock:** clarify $mock.ts ([217c81a](https://github.com/aspidajs/aspida/commit/217c81ad259b6c4f2e37d6953daecb3e093308d7))
+* **openapi:** delete eslint-disable comment ([baeb408](https://github.com/aspidajs/aspida/commit/baeb4085f9d796c4e0913816baad93cff7aa5b3f))
+
 ### [0.14.5](https://github.com/aspidajs/aspida/compare/v0.14.4...v0.14.5) (2020-03-12)
 
 
