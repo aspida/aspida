@@ -36,7 +36,8 @@ export const createValues = (path: string, relativePath: string) => {
   parsedRequestUrl.forEach((dir, i) => {
     if (dirList[i].startsWith('_')) {
       const [valueName, type = 'number'] = dirList[i].slice(1).split('@')
-      values[valueName.split('.')[0]] = isNaN(+dir) || type !== 'number' ? dir : +dir
+      const val = dir.split('.')[0]
+      values[valueName.split('.')[0]] = isNaN(+val) || type !== 'number' ? val : +val
     }
   })
 
