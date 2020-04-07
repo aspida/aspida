@@ -50,10 +50,9 @@ export default (
       const resMethodName = () =>
         !props.resBody
           ? 'send'
-          : ({ ArrayBuffer: 'arrayBuffer', Blob: 'blob', string: 'text', FormData: 'formData' } as
-              {
-                [key: string]: string
-              })[props.resBody.value] || 'json'
+          : ({ ArrayBuffer: 'arrayBuffer', Blob: 'blob', string: 'text', FormData: 'formData' } as {
+              [key: string]: string
+            })[props.resBody.value] || 'json'
 
       const quotation = newUrl.includes('${') ? '`' : "'"
       const tmpChanks = [
