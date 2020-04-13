@@ -4412,10 +4412,10 @@ oas-kit-common@^1.0.8:
   dependencies:
     fast-safe-stringify "^2.0.7"
 
-oas-linter@^3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/oas-linter/-/oas-linter-3.1.1.tgz#66422732ebb90f03f0863c76604fe967367419c0"
-  integrity sha512-bV20TrXYG0QUYL78LGByfyeJAkxIhZBkCXotH2SnnBGYvWvtxpp2DzvBvKIPbeAVItQL6WoxNzGGFecU/A6HRg==
+oas-linter@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/oas-linter/-/oas-linter-3.1.2.tgz#ff5eae63290cd2c0ef195bae9bcf5e91b6884c19"
+  integrity sha512-mv3HBG9aQz8PLGvonewIN9Y2Ra8QL6jvotRvf7NCdZ20n5vg4dO4y61UZh6s+KRDfJaU1PO+9Oxrn3EUN4Xygw==
   dependencies:
     should "^13.2.1"
     yaml "^1.8.3"
@@ -4436,16 +4436,16 @@ oas-schema-walker@^1.1.4:
   resolved "https://registry.yarnpkg.com/oas-schema-walker/-/oas-schema-walker-1.1.4.tgz#4b9d090c3622039741334d3e138510ff38197618"
   integrity sha512-foVDDS0RJYMfhQEDh/WdBuCzydTcsCnGo9EeD8SpWq1uW10JXiz+8SfYVDA7LO87kjmlnTRZle/2gr5qxabaEA==
 
-oas-validator@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/oas-validator/-/oas-validator-4.0.2.tgz#f323be8146bcb339d537d025248b71bd25f12c87"
-  integrity sha512-wPNWl4cmZVk2t3BGLPI7/Fu/9zA6/duftZyY/UZSOqk9IOq75QYfhBPGKDcJrVTqaGhuXqK+2VlM9ZMOyCqefA==
+oas-validator@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/oas-validator/-/oas-validator-4.0.3.tgz#9c28c38c902a6deeba2c48890befe9e86f712250"
+  integrity sha512-yLS0WI0HRWajBUiPUjyPGoZorsgaPpgeObea6ZUhlRCuZZE2Bq8SYkHfhqj7+BVv+K8y+b/cbCmNLM6GVKPDcw==
   dependencies:
     ajv "^5.5.2"
     better-ajv-errors "^0.6.7"
     call-me-maybe "^1.0.1"
     oas-kit-common "^1.0.8"
-    oas-linter "^3.1.1"
+    oas-linter "^3.1.2"
     oas-resolver "^2.3.2"
     oas-schema-walker "^1.1.4"
     reftools "^1.1.1"
@@ -5803,10 +5803,10 @@ swagger-parser@^9.0.1:
   dependencies:
     "@apidevtools/swagger-parser" "9.0.1"
 
-swagger2openapi@^6.0.2:
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/swagger2openapi/-/swagger2openapi-6.0.2.tgz#46a07853f90b6dfd729ed9b617dd48db5acbbb61"
-  integrity sha512-v4a1EV//dX0XWXSheVIDiUx6Xu6v+PmnRqfuD9X9vo3RMZLP2L4bSqQeS7Q/yY2R/0S83RkfZVGmyJAceuXydA==
+swagger2openapi@^6.0.3:
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/swagger2openapi/-/swagger2openapi-6.0.3.tgz#fd255d43753620a63b337dd4a4f468719b9a8f4e"
+  integrity sha512-JF4gzVczBuLzVx4DIf+qtmsZIqVI2T3YcKKpgx00oHSDcix0ckzGPCfZ1gC87cpdfJqDcPSVngur3mRQDCm8hw==
   dependencies:
     better-ajv-errors "^0.6.1"
     call-me-maybe "^1.0.1"
@@ -5815,7 +5815,7 @@ swagger2openapi@^6.0.2:
     oas-kit-common "^1.0.8"
     oas-resolver "^2.3.2"
     oas-schema-walker "^1.1.4"
-    oas-validator "^4.0.2"
+    oas-validator "^4.0.3"
     reftools "^1.1.1"
     yaml "^1.8.3"
     yargs "^15.3.1"
