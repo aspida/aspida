@@ -33,211 +33,209 @@ export default (
               .map(p => getDirName(p /* , openapi.paths[path] */)),
             ...(isParent ? ['index'] : [])
           ]
-          const methods =
-            Object.keys(openapi.paths[path])
-              .map<Prop | null>(method => {
-                const target = openapi.paths[path][method as typeof methodNames[number]]
+          const methods = Object.keys(openapi.paths[path])
+            .map<Prop | null>(method => {
+              const target = openapi.paths[path][method as typeof methodNames[number]]
 
-                if (!target || target.deprecated) return null
+              if (!target || target.deprecated) return null
 
-                const params: Prop[] = []
+              const params: Prop[] = []
 
-                if (target.parameters) {
-                  const reqRefHeaders: PropValue[] = []
-                  const reqHeaders: Prop[] = []
-                  const refQuery: PropValue[] = []
-                  const query: Prop[] = []
-                  let queryRequired = false
+              if (target.parameters) {
+                const reqRefHeaders: PropValue[] = []
+                const reqHeaders: Prop[] = []
+                const refQuery: PropValue[] = []
+                const query: Prop[] = []
+                let queryRequired = false
 
-                  target.parameters.forEach(p => {
-                    if (isRefObject(p)) {
-                      const ref = resolveParamsRef(openapi, p.$ref)
-                      const val = { isArray: false, isEnum: false, value: $ref2Type(p.$ref) }
+                target.parameters.forEach(p => {
+                  if (isRefObject(p)) {
+                    const ref = resolveParamsRef(openapi, p.$ref)
+                    const val = { isArray: false, isEnum: false, value: $ref2Type(p.$ref) }
 
-                      switch (ref.in) {
-                        case 'header':
-                          reqRefHeaders.push(val)
-                          break
-                        case 'query':
-                          refQuery.push(val)
-                          if (ref.required) queryRequired = true
-                          break
-                        default:
-                          break
-                      }
-                    } else {
-                      const value = schema2value(p.schema)
-                      if (!value) return
-
-                      const prop = {
-                        name: getPropertyName(p.name),
-                        required: !!p.required,
-                        isOneOf: false,
-                        values: [value]
-                      }
-
-                      switch (p.in) {
-                        case 'header':
-                          reqHeaders.push(prop)
-                          break
-                        case 'query':
-                          query.push(prop)
-                          if (p.required) queryRequired = true
-                          break
-                        default:
-                          break
-                      }
+                    switch (ref.in) {
+                      case 'header':
+                        reqRefHeaders.push(val)
+                        break
+                      case 'query':
+                        refQuery.push(val)
+                        if (ref.required) queryRequired = true
+                        break
+                      default:
+                        break
                     }
+                  } else {
+                    const value = schema2value(p.schema)
+                    if (!value) return
+
+                    const prop = {
+                      name: getPropertyName(p.name),
+                      required: !!p.required,
+                      isOneOf: false,
+                      values: [value]
+                    }
+
+                    switch (p.in) {
+                      case 'header':
+                        reqHeaders.push(prop)
+                        break
+                      case 'query':
+                        query.push(prop)
+                        if (p.required) queryRequired = true
+                        break
+                      default:
+                        break
+                    }
+                  }
+                })
+
+                if (reqHeaders.length || reqRefHeaders.length) {
+                  params.push({
+                    name: 'reqHeaders',
+                    required: false,
+                    isOneOf: false,
+                    values: [
+                      ...reqRefHeaders,
+                      ...(reqHeaders.length
+                        ? [{ isArray: false, isEnum: false, value: reqHeaders }]
+                        : [])
+                    ]
                   })
-
-                  if (reqHeaders.length || reqRefHeaders.length) {
-                    params.push({
-                      name: 'reqHeaders',
-                      required: false,
-                      isOneOf: false,
-                      values: [
-                        ...reqRefHeaders,
-                        ...(reqHeaders.length
-                          ? [{ isArray: false, isEnum: false, value: reqHeaders }]
-                          : [])
-                      ]
-                    })
-                  }
-
-                  if (refQuery.length || query.length) {
-                    params.push({
-                      name: 'query',
-                      required: queryRequired,
-                      isOneOf: false,
-                      values: [
-                        ...refQuery,
-                        ...(query.length ? [{ isArray: false, isEnum: false, value: query }] : [])
-                      ]
-                    })
-                  }
                 }
 
-                if (target.responses) {
-                  const code = Object.keys(target.responses).find(code => /^20/.test(code))
-                  if (code) {
-                    const res = target.responses[code]
-                    const ref = isRefObject(res) ? resolveResRef(openapi, res.$ref) : res
+                if (refQuery.length || query.length) {
+                  params.push({
+                    name: 'query',
+                    required: queryRequired,
+                    isOneOf: false,
+                    values: [
+                      ...refQuery,
+                      ...(query.length ? [{ isArray: false, isEnum: false, value: query }] : [])
+                    ]
+                  })
+                }
+              }
 
-                    if (ref.content?.['application/json']?.schema) {
-                      const val = schema2value(ref.content['application/json'].schema)
-                      val &&
-                        params.push({
-                          name: 'resBody',
-                          required: true,
-                          isOneOf: false,
-                          values: [val]
-                        })
-                    }
+              if (target.responses) {
+                const code = Object.keys(target.responses).find(code => /^20/.test(code))
+                if (code) {
+                  const res = target.responses[code]
+                  const ref = isRefObject(res) ? resolveResRef(openapi, res.$ref) : res
 
-                    if (ref.headers) {
+                  if (ref.content?.['application/json']?.schema) {
+                    const val = schema2value(ref.content['application/json'].schema)
+                    val &&
                       params.push({
-                        name: 'resHeaders',
+                        name: 'resBody',
                         required: true,
                         isOneOf: false,
-                        values: [
-                          {
-                            isArray: false,
-                            isEnum: false,
-                            value:
-                              Object.keys(ref.headers)
-                                .map(header => {
-                                  const headerData = ref.headers![header]
-                                  const val = isRefObject(headerData)
-                                    ? {
-                                        isArray: false,
-                                        isEnum: false,
-                                        value: $ref2Type(headerData.$ref)
-                                      }
-                                    : schema2value(headerData.schema)
-
-                                  return (
-                                    val && {
-                                      name: getPropertyName(header),
-                                      required: true,
-                                      isOneOf: false,
-                                      values: [val]
-                                    }
-                                  )
-                                })
-                                .filter(v => v) as Prop[]
-                          }
-                        ]
+                        values: [val]
                       })
+                  }
+
+                  if (ref.headers) {
+                    params.push({
+                      name: 'resHeaders',
+                      required: true,
+                      isOneOf: false,
+                      values: [
+                        {
+                          isArray: false,
+                          isEnum: false,
+                          value: Object.keys(ref.headers)
+                            .map(header => {
+                              const headerData = ref.headers![header]
+                              const val = isRefObject(headerData)
+                                ? {
+                                    isArray: false,
+                                    isEnum: false,
+                                    value: $ref2Type(headerData.$ref)
+                                  }
+                                : schema2value(headerData.schema)
+
+                              return (
+                                val && {
+                                  name: getPropertyName(header),
+                                  required: true,
+                                  isOneOf: false,
+                                  values: [val]
+                                }
+                              )
+                            })
+                            .filter(v => v) as Prop[]
+                        }
+                      ]
+                    })
+                  }
+                }
+              }
+
+              if (target.requestBody) {
+                let reqFormat = ''
+                let reqBody: PropValue | null = null
+                let required = false
+
+                if (isRefObject(target.requestBody)) {
+                  const ref = resolveReqRef(openapi, target.requestBody.$ref)
+                  if (ref.content['multipart/form-data']?.schema) {
+                    reqFormat = 'FormData'
+                  } else if (ref.content['application/x-www-form-urlencoded']?.schema) {
+                    reqFormat = 'URLSearchParams'
+                  }
+
+                  reqBody = {
+                    isArray: false,
+                    isEnum: false,
+                    value: $ref2Type(target.requestBody.$ref)
+                  }
+                  required = !!ref.required
+                } else {
+                  const typeSet = [
+                    ['multipart/form-data', 'FormData'],
+                    ['application/x-www-form-urlencoded', 'URLSearchParams'],
+                    ['application/json', '']
+                  ]
+
+                  for (let i = 0; i < typeSet.length; i += 1) {
+                    if (target.requestBody.content[typeSet[i][0]]?.schema) {
+                      reqFormat = typeSet[i][1]
+                      reqBody = schema2value(target.requestBody.content[typeSet[i][0]].schema!)
+                      required = !!target.requestBody.required
+
+                      break
                     }
                   }
                 }
 
-                if (target.requestBody) {
-                  let reqFormat = ''
-                  let reqBody: PropValue | null = null
-                  let required = false
-
-                  if (isRefObject(target.requestBody)) {
-                    const ref = resolveReqRef(openapi, target.requestBody.$ref)
-                    if (ref.content['multipart/form-data']?.schema) {
-                      reqFormat = 'FormData'
-                    } else if (ref.content['application/x-www-form-urlencoded']?.schema) {
-                      reqFormat = 'URLSearchParams'
-                    }
-
-                    reqBody = {
-                      isArray: false,
-                      isEnum: false,
-                      value: $ref2Type(target.requestBody.$ref)
-                    }
-                    required = !!ref.required
-                  } else {
-                    const typeSet = [
-                      ['multipart/form-data', 'FormData'],
-                      ['application/x-www-form-urlencoded', 'URLSearchParams'],
-                      ['application/json', '']
-                    ]
-
-                    for (let i = 0; i < typeSet.length; i += 1) {
-                      if (target.requestBody.content[typeSet[i][0]]?.schema) {
-                        reqFormat = typeSet[i][1]
-                        reqBody = schema2value(target.requestBody.content[typeSet[i][0]].schema!)
-                        required = !!target.requestBody.required
-
-                        break
-                      }
-                    }
-                  }
-
-                  if (reqFormat) {
-                    params.push({
-                      name: 'reqFormat',
-                      required: true,
-                      isOneOf: false,
-                      values: [{ isArray: false, isEnum: false, value: reqFormat }]
-                    })
-                  }
-
-                  if (reqBody) {
-                    params.push({
-                      name: 'reqBody',
-                      required,
-                      isOneOf: false,
-                      values: [reqBody]
-                    })
-                  }
+                if (reqFormat) {
+                  params.push({
+                    name: 'reqFormat',
+                    required: true,
+                    isOneOf: false,
+                    values: [{ isArray: false, isEnum: false, value: reqFormat }]
+                  })
                 }
 
-                return params.length
-                  ? {
-                      name: method,
-                      required: true,
-                      isOneOf: false,
-                      values: [{ isArray: false, isEnum: false, value: params }]
-                    }
-                  : null
-              })
-              .filter(method => method) as Prop[]
+                if (reqBody) {
+                  params.push({
+                    name: 'reqBody',
+                    required,
+                    isOneOf: false,
+                    values: [reqBody]
+                  })
+                }
+              }
+
+              return params.length
+                ? {
+                    name: method,
+                    required: true,
+                    isOneOf: false,
+                    values: [{ isArray: false, isEnum: false, value: params }]
+                  }
+                : null
+            })
+            .filter(method => method) as Prop[]
 
           if (methods.length) {
             const methodsText = props2String(methods, '')

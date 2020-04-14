@@ -46,7 +46,7 @@
 <br />
 <br />
 
-## Fetures
+## Features
 
 - Path, URL query, header, body, and response can all specify the type
 - FormData / URLSearchParams content can also specify the type
