@@ -1,6 +1,7 @@
 const createImportPath = (filePath: string, inputDir: string) =>
   filePath
     .replace(new RegExp(`^(.\\/)?${inputDir.replace(/^.\//, '').replace(/\/$/, '')}`), '')
+    .replace(/'/g, "\\'")
     .replace(/\.ts$/, '')
 
 const createCondition = (
