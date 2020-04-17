@@ -10,7 +10,7 @@ import { Methods as Methods5 } from './v1.1/2/_hogeId@HogeId/test-4/_fugaId'
 import { Methods as Methods6 } from './v1.1/2/_hogeId@HogeId/test-4/fuga aa'
 import { Methods as Methods7 } from './v1.1/3.1'
 import { Methods as Methods8 } from './v1.1/_articleId.json'
-import { Methods as Methods9 } from './v1.1/users/_userId@number'
+import { Methods as Methods9 } from './v1.1/users/_userId@User[\'id\']'
 import { Methods as Methods10 } from './v2.0/index'
 
 const api = <T>(client: AspidaClient<T>) => {
@@ -105,7 +105,7 @@ const api = <T>(client: AspidaClient<T>) => {
           (await client.fetch<Methods8['get']['resBody']>(prefix, `/v1.1/${val3}.json`, 'GET', option).json()).data
       }),
       users: {
-        _userId: (val4: number) => ({
+        _userId: (val4: ApiTypes.User['id']) => ({
           get: (option: { query: Methods9['get']['query'], headers: Methods9['get']['reqHeaders'], config?: T }) =>
             client.fetch<Methods9['get']['resBody']>(prefix, `/v1.1/users/${val4}`, 'GET', option).json(),
           $get: async (option: { query: Methods9['get']['query'], headers: Methods9['get']['reqHeaders'], config?: T }) =>

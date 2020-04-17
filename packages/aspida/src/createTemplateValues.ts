@@ -10,7 +10,7 @@ export default (input: string, trailingSlash: boolean) => {
     if (!methodsInterface) return ''
 
     const importName = `Methods${imports.length}`
-    imports.push(`import { Methods as ${importName} } from '${file}'`)
+    imports.push(`import { Methods as ${importName} } from '${file.replace(/'/g, "\\'")}'`)
     return createMethods(methodsInterface, indent, importName, newUrl, trailingSlash)
   }
 
