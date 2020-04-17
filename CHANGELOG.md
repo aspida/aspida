@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.14.7](https://github.com/aspidajs/aspida/compare/v0.14.6...v0.14.7) (2020-04-17)
+
+
+### Bug Fixes
+
+* bracket notation of path value types ([082a4a8](https://github.com/aspidajs/aspida/commit/082a4a89062f1f6733da87c9a19227acbaaebfec))
+* **deps:** bump swagger2openapi from 6.0.2 to 6.0.3 ([741862d](https://github.com/aspidajs/aspida/commit/741862dc66c3a5677a84fb72facffa094dc6e4bb))
+* **mock:** parse path values ([9e8a6b7](https://github.com/aspidajs/aspida/commit/9e8a6b7fe4fef8924ee2d78e2a78f5a4415be45c))
+
 ### [0.14.6](https://github.com/aspidajs/aspida/compare/v0.14.5...v0.14.6) (2020-04-06)
 
 
