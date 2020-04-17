@@ -1,6 +1,6 @@
 {
   "name": "@aspida/fetch",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "fetch client for aspida",
   "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
   "license": "MIT",
@@ -24,6 +24,6 @@
     "fetch"
   ],
   "dependencies": {
-    "aspida": "^0.14.6"
+    "aspida": "^0.14.7"
   }
 }
