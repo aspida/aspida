@@ -34,7 +34,7 @@
     "@types/node-fetch": "^2.5.6",
     "@types/rimraf": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "2.28.0",
-    "@typescript-eslint/parser": "^2.28.0",
+    "@typescript-eslint/parser": "^2.29.0",
     "axios": "^0.19.2",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
