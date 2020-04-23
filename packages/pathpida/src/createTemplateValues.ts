@@ -33,7 +33,7 @@ export default (input: string, trailingSlash: boolean) => {
 
     fs.readdirSync(targetDir)
       .sort()
-      .forEach(file => {
+      .forEach((file, _, arr) => {
         const basename = path.basename(file, path.extname(file))
         let valFn = `${indent}${basename
           .replace(/(-|\.|!| |'|\*|\(|\))/g, '_')
@@ -53,7 +53,7 @@ export default (input: string, trailingSlash: boolean) => {
 
         const target = path.posix.join(targetDir, file)
 
-        if (fs.statSync(target).isFile() && basename !== 'index') {
+        if (fs.statSync(target).isFile() && basename !== 'index' && !arr.includes(basename)) {
           props.push(
             valFn.replace(
               '<% next %>',
