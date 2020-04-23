@@ -40,15 +40,17 @@ const path = (baseURL?: string) => {
     _contentId: (val0: number | string) => ({
       $get: (query: Query0) => `${prefix}/${val0}/?${dataToURLString(query)}`
     }),
-    _userId: (val1: number | string) => ({
-      _testVal: (val2: number | string) => ({
-        $get: () => `${prefix}/${val1}/${val2}/`
-      }),
-      test: {
-        $get: (query: Query1) => `${prefix}/${val1}/test/?${dataToURLString(query)}`
-      },
-      $get: () => `${prefix}/${val1}/`
-    }),
+    users: {
+      _userId: (val1: number | string) => ({
+        _testVal: (val2: number | string) => ({
+          $get: () => `${prefix}/users/${val1}/${val2}/`
+        }),
+        test: {
+          $get: (query: Query1) => `${prefix}/users/${val1}/test/?${dataToURLString(query)}`
+        },
+        $get: () => `${prefix}/users/${val1}/`
+      })
+    },
     $get: () => `${prefix}/`
   }
 }
