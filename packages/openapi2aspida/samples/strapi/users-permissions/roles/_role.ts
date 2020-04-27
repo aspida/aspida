@@ -1,7 +1,7 @@
 /* eslint-disable */
 import * as Types from '../../@types'
 
-export interface Methods {
+export type Methods = {
   put: {
     resBody: Types.Users_PermissionsRole
     reqBody: Types.NewUsers_PermissionsRole

@@ -3,7 +3,7 @@ import { Config } from './getConfig'
 import createTemplateValues from './createTemplateValues'
 import dataToURLString from './dataToURLString'
 
-export interface Template {
+export type Template = {
   text: string
   filePath: string
 }

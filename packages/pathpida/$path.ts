@@ -1,12 +1,18 @@
 /* eslint-disable */
 interface Query0 {
   id: number
-  name: string[]
+  values: {
+    type: string
+    index: number
+  }[]
 }
 
-interface Query1 {
-  hoge: number
+type Query1 = {
+  hoge: number // comment
   fuga: string[]
+  /*
+    comment
+  */
 }
 
 const encode = (str: Parameters<typeof encodeURIComponent>[0]) =>

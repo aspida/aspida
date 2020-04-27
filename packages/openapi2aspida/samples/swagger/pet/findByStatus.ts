@@ -2,7 +2,7 @@
 import { mockMethods } from 'aspida-mock'
 import * as Types from '../@types'
 
-export interface Methods {
+export type Methods = {
   get: {
     query: {
       status: ('available' | 'pending' | 'sold')[]

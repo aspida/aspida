@@ -60,7 +60,7 @@
 ## 手順
 
 1. エンドポイントのディレクトリ構造を apis ディレクトリに再現する
-1. TS ファイルで Methods インターフェースを export する
+1. "Methods" という名前で Type alias を export する
 1. npm scripts で aspida --build を起動
 1. API 型定義ファイル apis/\$api.ts が生成されるのでアプリケーションで import して HTTP リクエストを行う
 
@@ -94,12 +94,12 @@ $ mkdir apis
   `apis/v1/users/index.ts`
 
   ```typescript
-  interface User {
+  type User = {
     id: number
     name: string
   }
 
-  export interface Methods {
+  export type Methods = {
     get: {
       query?: {
         limit: number
@@ -127,12 +127,12 @@ $ mkdir apis
   @での指定がない場合、パス変数の型のデフォルトは「number | string」
 
   ```typescript
-  interface User {
+  type User = {
     id: number
     name: string
   }
 
-  export interface Methods {
+  export type Methods = {
     get: {
       resBody: User
     }
@@ -190,6 +190,10 @@ import api from "../apis/$api"
   // res -> { id: 0, name: 'taro' }
 })()
 ```
+
+### Qiita の投稿記事を読む
+
+**[aspida - Qiita](https://qiita.com/tags/aspida)**
 
 ### HTTP クライアントについてもっと詳しく
 
@@ -254,7 +258,7 @@ import api from "../apis/$api"
 `apis/v1/users/index.ts`
 
 ```typescript
-export interface Methods {
+export type Methods = {
   post: {
     reqFormat: FormData
 
@@ -296,7 +300,7 @@ import api from "../apis/$api"
 `apis/v1/users/index.ts`
 
 ```typescript
-export interface Methods {
+export type Methods = {
   post: {
     reqFormat: URLSearchParams
 
@@ -332,7 +336,7 @@ import api from "../apis/$api"
 `apis/v1/users/index.ts`
 
 ```typescript
-export interface Methods {
+export type Methods = {
   get: {
     query: {
       name: string

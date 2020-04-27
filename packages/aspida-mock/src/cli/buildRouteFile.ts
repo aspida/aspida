@@ -4,7 +4,7 @@ import { BaseConfig } from 'aspida/dist/getConfig'
 import listFiles from './listFiles'
 import createRouteString from './createRouteString'
 
-export interface Template {
+export type Template = {
   filePath: string
   text: string
 }

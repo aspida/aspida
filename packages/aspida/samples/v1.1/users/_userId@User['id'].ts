@@ -1,6 +1,6 @@
 import { mockMethods } from 'aspida-mock'
 
-export interface Methods {
+export type Methods = {
   get: {
     query: { aa?: number }
     reqHeaders: {}

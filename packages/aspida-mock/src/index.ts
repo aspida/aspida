@@ -13,17 +13,17 @@ export const printLog = (config: MockRequestConfig, status: number) => {
   )
 }
 
-export interface MockRoute<T extends AspidaMethods = AspidaMethods> {
+export type MockRoute<T extends AspidaMethods = AspidaMethods> = {
   path: string
   methods: MockMethods<T>
 }
 
-export interface MockClient<U> extends AspidaClient<U> {
+export type MockClient<U> = AspidaClient<U> & {
   attachRoutes(routes: MockRoute[], config?: MockConfig): void
   detachRoutes(): void
 }
 
-export interface MockRequestConfig {
+export type MockRequestConfig = {
   path: string
   method: HttpMethod
   reqBody: any | undefined
@@ -31,7 +31,7 @@ export interface MockRequestConfig {
   query: any | undefined
 }
 
-export interface MockRequestConfigAndValues extends MockRequestConfig {
+export type MockRequestConfigAndValues = MockRequestConfig & {
   values: ReturnType<typeof createValues>
 }
 
@@ -43,7 +43,7 @@ export type MiddlewareHandler = (
 
 export const mockMiddleware = (middleware: MiddlewareHandler[]) => middleware
 
-export interface MockConfig {
+export type MockConfig = {
   log?: boolean
   delayMSec?: number
   middleware?: MiddlewareHandler[]
