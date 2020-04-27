@@ -1,4 +1,7 @@
 export interface Query {
   id: number
-  name: string[]
+  values: {
+    type: string
+    index: number
+  }[]
 }

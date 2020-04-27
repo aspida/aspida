@@ -5,16 +5,29 @@ import createMethods from './createMethodsString'
 export default (input: string, trailingSlash: boolean) => {
   const imports: string[] = []
   const getImportName = (file: string) => {
-    const queryRegExp = /export (interface Query|type Query =) {[\s\S]+?\n}\n/
+    const typeName = 'Query'
+    const queryRegExp = new RegExp(`export (interface ${typeName} ?{|type ${typeName} ?= ?{)`)
     const fileData = fs.readFileSync(file, 'utf8')
-    let importName = ''
+
     if (queryRegExp.test(fileData)) {
-      importName = `Query${imports.length}`
-      imports.push(
-        (fileData.match(queryRegExp) || [])[0].replace('export ', '').replace('Query', importName)
-      )
+      const [, typeText, targetText] = fileData.split(queryRegExp)
+      let cursor = 0
+      let depth = 1
+
+      while (depth && cursor <= targetText.length) {
+        if (targetText[cursor] === '}') {
+          depth -= 1
+        } else if (targetText[cursor] === '{') {
+          depth += 1
+        }
+
+        cursor += 1
+      }
+
+      const importName = `${typeName}${imports.length}`
+      imports.push(`${typeText.replace(typeName, importName)}${targetText.slice(0, cursor)}\n`)
+      return importName
     }
-    return importName
   }
 
   let valCount = 0

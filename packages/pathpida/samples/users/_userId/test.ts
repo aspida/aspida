@@ -1,4 +1,7 @@
 export type Query = {
-  hoge: number
+  hoge: number // comment
   fuga: string[]
+  /*
+    comment
+  */
 }
