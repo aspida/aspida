@@ -1,6 +1,6 @@
 {
   "name": "@aspida/node-fetch",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "node-fetch client for aspida",
   "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
   "license": "MIT",
@@ -24,6 +24,6 @@
     "node-fetch"
   ],
   "dependencies": {
-    "aspida": "^0.14.7"
+    "aspida": "^0.15.0"
   }
 }
