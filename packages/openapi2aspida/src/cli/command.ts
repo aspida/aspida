@@ -1,4 +1,4 @@
-export interface Command {
+export type Command = {
   exec(): Promise<void> | void
 }
 

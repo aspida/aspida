@@ -1,5 +1,5 @@
 /* eslint-disable */
-export interface Methods {
+export type Methods = {
   get: {
     resBody: {
       id: number

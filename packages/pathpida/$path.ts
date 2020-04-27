@@ -4,7 +4,7 @@ interface Query0 {
   name: string[]
 }
 
-interface Query1 {
+type Query1 = {
   hoge: number
   fuga: string[]
 }

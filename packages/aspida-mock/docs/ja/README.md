@@ -82,7 +82,7 @@ aspida の型定義ファイルで mockMethods を export する
 ```ts
 import { mockMethods } from 'aspida-mock'
 
-export interface Methods {
+export type Methods = {
   post: {
     query: { id: number }
     reqHeaders: { val: string }
@@ -177,7 +177,7 @@ export default mockMiddleware([
 ```ts
 import { mockMethods } from 'aspida-mock'
 
-export interface Methods {
+export type Methods = {
   get: {
     query: { hoge: number }
     resBody: {

@@ -5,7 +5,7 @@ import createMethods from './createMethodsString'
 export default (input: string, trailingSlash: boolean) => {
   const imports: string[] = []
   const getImportName = (file: string) => {
-    const queryRegExp = /export interface Query {[\s\S]+?\n}\n/
+    const queryRegExp = /export (interface Query|type Query =) {[\s\S]+?\n}\n/
     const fileData = fs.readFileSync(file, 'utf8')
     let importName = ''
     if (queryRegExp.test(fileData)) {

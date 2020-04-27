@@ -2,7 +2,7 @@
 import { mockMethods } from 'aspida-mock'
 import * as Types from '../@types'
 
-export interface Methods {
+export type Methods = {
   post: {
     reqBody: Types.Pet
   }

@@ -24,11 +24,11 @@ export class CommandToBuild implements Command {
   }
 }
 
-interface BuildCommand {
+type BuildCommand = {
   run(config: Config, io: BuildIO): Promise<void>
 }
 
-export interface BuildIO {
+export type BuildIO = {
   write(outputDir: string, trailingSlash: boolean, template: Template): void
 }
 

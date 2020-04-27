@@ -8,7 +8,7 @@ import {
   headersToObject
 } from 'aspida'
 
-interface FetchConfig extends RequestInit {
+type FetchConfig = RequestInit & {
   baseURL?: string
 }
 

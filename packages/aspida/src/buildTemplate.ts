@@ -2,7 +2,7 @@ import path from 'path'
 import { BaseConfig } from './getConfig'
 import createTemplateValues from './createTemplateValues'
 
-export interface Template {
+export type Template = {
   text: string
   filePath: string
 }
