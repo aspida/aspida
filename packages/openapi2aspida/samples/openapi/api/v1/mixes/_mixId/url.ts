@@ -1,5 +1,5 @@
 /* eslint-disable */
-export interface Methods {
+export type Methods = {
   post: {
     reqBody?: {
       url: string

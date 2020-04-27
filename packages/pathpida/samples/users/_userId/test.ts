@@ -1,4 +1,7 @@
-export interface Query {
-  hoge: number
+export type Query = {
+  hoge: number // comment
   fuga: string[]
+  /*
+    comment
+  */
 }

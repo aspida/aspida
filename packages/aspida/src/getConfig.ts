@@ -1,13 +1,13 @@
 import fs from 'fs'
 import path from 'path'
 
-export interface BaseConfig {
+export type BaseConfig = {
   input: string
   baseURL: string
   trailingSlash: boolean
 }
 
-interface ConfigFile {
+type ConfigFile = {
   input?: string
   baseURL?: string
   trailingSlash?: boolean

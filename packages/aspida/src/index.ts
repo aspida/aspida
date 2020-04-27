@@ -4,7 +4,7 @@ export type RequestType = 'FormData' | 'URLSearchParams' | 'ArrayBuffer' | 'Blob
 
 type BasicHeaders = Record<string, string>
 
-export interface AspidaRequest<Config = any> {
+export type AspidaRequest<Config = any> = {
   query?: any
   headers?: any
   body?: any
@@ -12,21 +12,21 @@ export interface AspidaRequest<Config = any> {
   config?: Config
 }
 
-export interface AspidaResponse<T, U> {
+export type AspidaResponse<T, U> = {
   status: number
   headers: U
   originalResponse: any
   data: T
 }
 
-export interface AspidaParams<Config = any> {
+export type AspidaParams<Config = any> = {
   query?: any
   headers?: any
   data?: any
   config?: Config
 }
 
-export interface AspidaClient<Config> {
+export type AspidaClient<Config> = {
   baseURL: string | undefined
   fetch: <T, U = BasicHeaders>(
     prefix: string,
@@ -111,7 +111,7 @@ export const optionToRequest = (
   return { body, ...option, headers: { ...headers, ...option.headers } }
 }
 
-export interface AspidaMethodParams {
+export type AspidaMethodParams = {
   query?: any
   reqHeaders?: any
   reqFormat?: FormData | URLSearchParams | ArrayBuffer | Blob | string | any

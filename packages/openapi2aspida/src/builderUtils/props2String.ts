@@ -1,11 +1,11 @@
-export interface PropValue {
+export type PropValue = {
   isArray: boolean
   isEnum: boolean
   isOneOf?: boolean
   value: Prop[] | string | string[] | PropValue | PropValue[]
 }
 
-export interface Prop {
+export type Prop = {
   name: string
   required: boolean
   isOneOf: boolean

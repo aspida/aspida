@@ -251,7 +251,7 @@ export default (
                 / Types\./.test(methodsText)
                   ? `import * as Types from '${file.map(() => '').join('../')}@types'\n\n`
                   : ''
-              }export interface Methods ${methodsText}\n${mockText}`
+              }export type Methods = ${methodsText}\n${mockText}`
             }
           } else {
             return { file, methods: '' }

@@ -2,7 +2,7 @@ import { parse } from 'swagger-parser'
 import { OpenAPI, OpenAPIV3 } from 'openapi-types'
 import buildV3 from './buildV3'
 
-export interface Template {
+export type Template = {
   baseURL: string
   types?: string
   files: {

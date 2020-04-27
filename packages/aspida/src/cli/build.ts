@@ -25,11 +25,11 @@ export class CommandToBuild implements Command {
   }
 }
 
-interface BuildCommand {
+type BuildCommand = {
   run(config: BaseConfig, io: BuildIO): void
 }
 
-export interface BuildIO {
+export type BuildIO = {
   write(template: Template): void
   watch(input: string, callback: () => void): void
 }

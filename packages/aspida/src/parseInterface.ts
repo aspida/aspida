@@ -3,7 +3,7 @@ import { LowerHttpMethod, AspidaMethodParams } from './'
 type MethodsProperties = keyof AspidaMethodParams
 type Prop = { value: string; hasQuestion: boolean }
 
-export interface Method {
+export type Method = {
   name: LowerHttpMethod
   props: Partial<Record<MethodsProperties, Prop>>
 }
@@ -221,10 +221,11 @@ const parseMethods = (text: string): Method[] => {
 }
 
 export default (text: string, name: string): Method[] | null => {
-  const interfaceRegExp = new RegExp(`(^|\n)export interface ${name} ?{`)
+  const interfaceRegExp = new RegExp(`(^|\n)export (interface ${name}|type ${name} ?=) ?{`)
   if (!interfaceRegExp.test(text)) return null
 
-  const methods = parseMethods(text.split(interfaceRegExp)[2])
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const methods = parseMethods(text.split(interfaceRegExp).pop()!)
 
   return methods.length ? methods : null
 }

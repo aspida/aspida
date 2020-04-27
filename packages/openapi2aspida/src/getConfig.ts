@@ -2,7 +2,7 @@ import path from 'path'
 import { OpenAPI } from 'openapi-types'
 import getBaseConfig, { BaseConfig } from 'aspida/dist/getConfig'
 
-export interface Config {
+export type Config = {
   input: string | OpenAPI.Document
   output: string
   trailingSlash: boolean
@@ -11,7 +11,7 @@ export interface Config {
   needsMockType: boolean
 }
 
-interface ConfigFile extends BaseConfig {
+type ConfigFile = BaseConfig & {
   openapi?: {
     inputFile: string
     yaml?: boolean
@@ -28,10 +28,7 @@ const createConfig = (config: ConfigFile) => {
     input: openapi.inputFile,
     output: config.input,
     trailingSlash: config.trailingSlash,
-    isYaml:
-      openapi.yaml === undefined
-        ? path.extname(openapi.inputFile).slice(1) === 'yaml'
-        : openapi.yaml,
+    isYaml: openapi.yaml ?? path.extname(openapi.inputFile).slice(1) === 'yaml',
     needsMock: !!openapi.mock,
     needsMockType: !openapi.noMockType
   }

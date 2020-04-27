@@ -9,7 +9,7 @@ import {
 } from 'aspida'
 import fetch, { RequestInit, Response } from 'node-fetch'
 
-interface FetchConfig extends RequestInit {
+type FetchConfig = RequestInit & {
   baseURL?: string
 }
 

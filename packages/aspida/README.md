@@ -60,7 +60,7 @@
 ## Procedure
 
 1. Reproduce the endpoint directory structure in the apis directory
-1. Export Methods interface with TS file
+1. Export a Type alias named "Methods"
 1. Call 'aspida --build' with npm scripts
 1. API type definition file 'apis/\$api.ts' will be generated, so import the application and make an HTTP request
 
@@ -94,12 +94,12 @@ $ mkdir apis
   `apis/v1/users/index.ts`
 
   ```typescript
-  interface User {
+  type User = {
     id: number
     name: string
   }
 
-  export interface Methods {
+  export type Methods = {
     get: {
       query?: {
         limit: number
@@ -127,12 +127,12 @@ $ mkdir apis
   If not specified with @, the default path variable type is "number | string"
 
   ```typescript
-  interface User {
+  type User = {
     id: number
     name: string
   }
 
-  export interface Methods {
+  export type Methods = {
     get: {
       resBody: User
     }
@@ -254,7 +254,7 @@ import api from "../apis/$api"
 `apis/v1/users/index.ts`
 
 ```typescript
-export interface Methods {
+export type Methods = {
   post: {
     reqFormat: FormData
 
@@ -296,7 +296,7 @@ import api from "../apis/$api"
 `apis/v1/users/index.ts`
 
 ```typescript
-export interface Methods {
+export type Methods = {
   post: {
     reqFormat: URLSearchParams
 
@@ -332,7 +332,7 @@ import api from "../apis/$api"
 `apis/v1/users/index.ts`
 
 ```typescript
-export interface Methods {
+export type Methods = {
   get: {
     query: {
       name: string

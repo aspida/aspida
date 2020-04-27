@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.15.0](https://github.com/aspidajs/aspida/compare/v0.14.7...v0.15.0) (2020-04-27)
+
+
+### Features
+
+* support export with type alias ([e69a153](https://github.com/aspidajs/aspida/commit/e69a153328675f73c296495f0e6854363a044587))
+
+
+### Bug Fixes
+
+* **deps:** bump chokidar from 3.3.1 to 3.4.0 ([c8bc1c7](https://github.com/aspidajs/aspida/commit/c8bc1c7062216183348e273bcd26bd05be4d3a5f))
+* **pathpida:** support for duplicate filenames ([a5c4932](https://github.com/aspidajs/aspida/commit/a5c4932f18d0ba153c0eee5e48e347e863db2594))
+* **pathpida:** support query params of object type ([3a4b281](https://github.com/aspidajs/aspida/commit/3a4b28166d62ce421972531c7418d640278e5ee1))
+
 ### [0.14.7](https://github.com/aspidajs/aspida/compare/v0.14.6...v0.14.7) (2020-04-17)
 
 

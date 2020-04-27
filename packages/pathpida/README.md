@@ -89,7 +89,7 @@ module.exports = {
 import React from "react"
 import $path from "../types/$path"
 
-export interface Query {
+export type Query = {
   hoge: string
 }
 
@@ -109,19 +109,11 @@ $ npm run build:pathpida
 import React from "react"
 import $path from "../types/$path"
 
-export interface Query {
+export type Query = {
   pageid: number
 }
 
-export default () => (
-  <a
-    href={$path()
-      .users._userId(0)
-      .$get({ hoge: "fuga" })}
-  >
-    Link to user page
-  </a>
-)
+export default () => <a href={$path().users._userId(0).$get({ hoge: "fuga" })}>Link to user page</a>
 ```
 
 ## License
