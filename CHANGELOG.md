@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.15.1](https://github.com/aspidajs/aspida/compare/v0.15.0...v0.15.1) (2020-04-28)
+
+
+### Bug Fixes
+
+* **mock:** detect if resBody is pojo when copying ([cd84cbe](https://github.com/aspidajs/aspida/commit/cd84cbee811cf8e521d0bb1fd835a778eba24b8c))
+* **openapi:** output of endpoints without props ([270544e](https://github.com/aspidajs/aspida/commit/270544e5728f3258db63f8c0798bfe0c449d7351))
+
 ## [0.15.0](https://github.com/aspidajs/aspida/compare/v0.14.7...v0.15.0) (2020-04-27)
 
 
