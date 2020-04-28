@@ -6,8 +6,12 @@ export type Methods = {
   get: {
     resBody: Types.Order
   }
+
+  delete: {
+  }
 }
 
 export default mockMethods<Methods>({
-  get: () => ({ status: 200, resBody: { id: 1, petId: 1, quantity: 1, shipDate: 'a', status: 'placed', complete: true } })
+  get: () => ({ status: 200, resBody: { id: 1, petId: 1, quantity: 1, shipDate: 'a', status: 'placed', complete: true } }),
+  delete: () => ({ status: 200 })
 })
