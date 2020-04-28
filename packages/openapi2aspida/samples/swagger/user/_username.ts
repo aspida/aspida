@@ -10,9 +10,13 @@ export type Methods = {
   put: {
     reqBody: Types.User
   }
+
+  delete: {
+  }
 }
 
 export default mockMethods<Methods>({
   get: () => ({ status: 200, resBody: { id: 1, username: 'a', firstName: 'a', lastName: 'a', email: 'a', password: 'a', phone: 'a', userStatus: 1 } }),
-  put: () => ({ status: 200 })
+  put: () => ({ status: 200 }),
+  delete: () => ({ status: 200 })
 })

@@ -226,14 +226,12 @@ export default (
                 }
               }
 
-              return params.length
-                ? {
-                    name: method,
-                    required: true,
-                    isOneOf: false,
-                    values: [{ isArray: false, isEnum: false, value: params }]
-                  }
-                : null
+              return {
+                name: method,
+                required: true,
+                isOneOf: false,
+                values: [{ isArray: false, isEnum: false, value: params }]
+              }
             })
             .filter(method => method) as Prop[]
 
@@ -263,18 +261,21 @@ export default (
 
   return {
     baseURL: openapi.servers?.[0]?.url || '',
-    types: `/* eslint-disable */${[
-      ...parameters.map(p => ({
-        name: p.name,
-        text: typeof p.props === 'string' ? p.props : props2String(p.props, '')
-      })),
-      ...schemas.map(s => ({
-        name: s.name,
-        text: value2String(s.value, '').replace(/\n {2}/g, '\n')
-      }))
-    ]
-      .map(p => `\nexport type ${p.name} = ${p.text}\n`)
-      .join('')}`.replace(/ Types\./g, ' '),
+    types:
+      parameters.length + schemas.length
+        ? `/* eslint-disable */${[
+            ...parameters.map(p => ({
+              name: p.name,
+              text: typeof p.props === 'string' ? p.props : props2String(p.props, '')
+            })),
+            ...schemas.map(s => ({
+              name: s.name,
+              text: value2String(s.value, '').replace(/\n {2}/g, '\n')
+            }))
+          ]
+            .map(p => `\nexport type ${p.name} = ${p.text}\n`)
+            .join('')}`.replace(/ Types\./g, ' ')
+        : null,
     files
   }
 }

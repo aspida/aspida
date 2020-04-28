@@ -1,0 +1,53 @@
+openapi: "3.0.0"
+info:
+  title: "simple"
+  version: "1.0"
+paths:
+  /dummy/{id}/simple:
+    put:
+      summary: "simple"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "id"
+          required: true
+          schema:
+            type: "integer"
+      responses:
+        202:
+          description: "accept"
+  /dummy/{id}/query:
+    put:
+      summary: "query"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "id"
+          required: true
+          schema:
+            type: "integer"
+        - name: "q"
+          in: "query"
+          description: "query"
+          schema:
+            type: "string"
+      responses:
+        202:
+          description: "accept"
+  /dummy/{id}/content:
+    put:
+      summary: "ng"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "id"
+          required: true
+          schema:
+            type: "integer"
+      responses:
+        202:
+          description: "accept"
+          content:
+            application/json:
+              schema:
+                type: "string"
