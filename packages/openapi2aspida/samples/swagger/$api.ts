@@ -53,12 +53,22 @@ const api = <T>(client: AspidaClient<T>) => {
         (await client.fetch<void>(prefix, '/pet', 'PUT', option).send()).data
     },
     store: {
+      inventory: {
+        get: (option?: { config?: T }) =>
+          client.fetch<void>(prefix, '/store/inventory', 'GET', option).send(),
+        $get: async (option?: { config?: T }) =>
+          (await client.fetch<void>(prefix, '/store/inventory', 'GET', option).send()).data
+      },
       order: {
         _orderId: (val1: number | string) => ({
           get: (option?: { config?: T }) =>
             client.fetch<Methods5['get']['resBody']>(prefix, `/store/order/${val1}`, 'GET', option).json(),
           $get: async (option?: { config?: T }) =>
-            (await client.fetch<Methods5['get']['resBody']>(prefix, `/store/order/${val1}`, 'GET', option).json()).data
+            (await client.fetch<Methods5['get']['resBody']>(prefix, `/store/order/${val1}`, 'GET', option).json()).data,
+          delete: (option?: { config?: T }) =>
+            client.fetch<void>(prefix, `/store/order/${val1}`, 'DELETE', option).send(),
+          $delete: async (option?: { config?: T }) =>
+            (await client.fetch<void>(prefix, `/store/order/${val1}`, 'DELETE', option).send()).data
         }),
         post: (option: { data: Methods4['post']['reqBody'], config?: T }) =>
           client.fetch<Methods4['post']['resBody']>(prefix, '/store/order', 'POST', option).json(),
@@ -75,7 +85,11 @@ const api = <T>(client: AspidaClient<T>) => {
         put: (option: { data: Methods7['put']['reqBody'], config?: T }) =>
           client.fetch<void>(prefix, `/user/${val2}`, 'PUT', option).send(),
         $put: async (option: { data: Methods7['put']['reqBody'], config?: T }) =>
-          (await client.fetch<void>(prefix, `/user/${val2}`, 'PUT', option).send()).data
+          (await client.fetch<void>(prefix, `/user/${val2}`, 'PUT', option).send()).data,
+        delete: (option?: { config?: T }) =>
+          client.fetch<void>(prefix, `/user/${val2}`, 'DELETE', option).send(),
+        $delete: async (option?: { config?: T }) =>
+          (await client.fetch<void>(prefix, `/user/${val2}`, 'DELETE', option).send()).data
       }),
       createWithArray: {
         post: (option: { data: Methods8['post']['reqBody'], config?: T }) =>
@@ -94,6 +108,12 @@ const api = <T>(client: AspidaClient<T>) => {
           client.fetch<Methods10['get']['resBody'], Methods10['get']['resHeaders']>(prefix, '/user/login', 'GET', option).text(),
         $get: async (option: { query: Methods10['get']['query'], config?: T }) =>
           (await client.fetch<Methods10['get']['resBody'], Methods10['get']['resHeaders']>(prefix, '/user/login', 'GET', option).text()).data
+      },
+      logout: {
+        get: (option?: { config?: T }) =>
+          client.fetch<void>(prefix, '/user/logout', 'GET', option).send(),
+        $get: async (option?: { config?: T }) =>
+          (await client.fetch<void>(prefix, '/user/logout', 'GET', option).send()).data
       },
       post: (option: { data: Methods6['post']['reqBody'], config?: T }) =>
         client.fetch<void>(prefix, '/user', 'POST', option).send(),

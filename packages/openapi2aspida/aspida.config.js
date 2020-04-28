@@ -4,6 +4,10 @@ module.exports = [
     openapi: { inputFile: 'samples/swagger.yaml', mock: true }
   },
   {
+    input: 'samples/simple',
+    openapi: { inputFile: 'samples/simple.yaml', mock: true }
+  },
+  {
     input: 'samples/strapi',
     openapi: { inputFile: 'samples/strapi.json' }
   },

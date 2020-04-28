@@ -9,8 +9,12 @@ export default (input: string, trailingSlash: boolean) => {
     const methodsInterface = parseInterface(fs.readFileSync(target, 'utf8'), 'Methods')
     if (!methodsInterface) return ''
 
-    const importName = `Methods${imports.length}`
-    imports.push(`import { Methods as ${importName} } from '${file.replace(/'/g, "\\'")}'`)
+    let importName = ''
+    if (methodsInterface.some(({ props }) => Object.keys(props).length)) {
+      importName = `Methods${imports.length}`
+      imports.push(`import { Methods as ${importName} } from '${file.replace(/'/g, "\\'")}'`)
+    }
+
     return createMethods(methodsInterface, indent, importName, newUrl, trailingSlash)
   }
 

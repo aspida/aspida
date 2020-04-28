@@ -4,7 +4,7 @@ import buildV3 from './buildV3'
 
 export type Template = {
   baseURL: string
-  types?: string
+  types: string | null
   files: {
     file: string[]
     methods: string
