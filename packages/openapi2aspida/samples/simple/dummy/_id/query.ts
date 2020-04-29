@@ -1,5 +1,4 @@
 /* eslint-disable */
-import { mockMethods } from 'aspida-mock'
 export type Methods = {
   put: {
     query?: {
@@ -8,6 +7,6 @@ export type Methods = {
   }
 }
 
-export default mockMethods<Methods>({
+export default {
   put: () => ({ status: 200 })
-})
+}

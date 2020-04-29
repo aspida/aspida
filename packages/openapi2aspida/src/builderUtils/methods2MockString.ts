@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import { Prop, PropValue } from './props2String'
 import { Parameter } from './parameters2Props'
 import { Schema } from './schemas2Props'
@@ -10,26 +11,33 @@ const primitive2String = (p: string) =>
     boolean: 'true',
     null: 'null'
   } as Record<string, string>)[p] || 'undefined')
+
 const resolveTypes = (t: string, params: Parameter[], schemas: Schema[]): string => {
-  const p = params.find(p => p.name === t)
+  const [typeName, propName] = t.split(/\['(.+)'\]/)
+  const p = params.find(p => p.name === typeName)
+
   if (p) {
     return typeof p.props === 'string'
       ? resolveTypes(p.props, params, schemas)
-      : // eslint-disable-next-line @typescript-eslint/no-use-before-define
-        props2String(p.props, params, schemas)
+      : props2String(p.props, params, schemas)
   } else {
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    return value2String(schemas.filter(s => s.name === t)[0].value, params, schemas)
+    const { value } = schemas.filter(s => s.name === typeName)[0]
+    if (propName) {
+      const prop = (value.value as Prop[]).filter(v => v.name === propName)[0]
+      return prop.isOneOf
+        ? value2String(prop.values[0], params, schemas)
+        : allOf2String(prop.values, params, schemas)
+    } else {
+      return value2String(value, params, schemas)
+    }
   }
 }
 const props2String = (ps: Prop[], params: Parameter[], schemas: Schema[]) =>
-  // eslint-disable-next-line @typescript-eslint/no-use-before-define
   `{ ${ps.map(p => `${p.name}: ${value2String(p.values[0], params, schemas)}`).join(', ')} }`
 const allOf2String = (vs: PropValue[], params: Parameter[], schemas: Schema[]) =>
   `{ ${vs
     .map(
       (v, i) =>
-        // eslint-disable-next-line @typescript-eslint/no-use-before-define
         `${i ? '...' : ''}${value2String(v, params, schemas).slice(
           i ? undefined : 2,
           i ? undefined : -2
@@ -39,8 +47,7 @@ const allOf2String = (vs: PropValue[], params: Parameter[], schemas: Schema[]) =
 const value2String = (v: PropValue, params: Parameter[], schemas: Schema[]): string =>
   `${
     typeof v.isOneOf === 'boolean'
-      ? // eslint-disable-next-line @typescript-eslint/no-use-before-define
-        v.isOneOf
+      ? v.isOneOf
         ? value2String((v.value as PropValue[])[0], params, schemas)
         : allOf2String(v.value as PropValue[], params, schemas)
       : v.isArray

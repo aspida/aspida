@@ -2201,13 +2201,6 @@
                           { "$ref": "#/components/schemas/ModelCard" },
                           {
                             "properties": {
-                              "author": {
-                                "properties": {
-                                  "type": { "type": "string" },
-                                  "name": { "type": "string" },
-                                  "image": { "$ref": "#/components/schemas/ImageModel" }
-                                }
-                              },
                               "storyId": { "type": "number" },
                               "reactions": {
                                 "type": "object",
