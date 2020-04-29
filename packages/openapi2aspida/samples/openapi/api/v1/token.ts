@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { mockMethods } from 'aspida-mock'
 export type Methods = {
   post: {
     resBody: {
@@ -13,6 +14,6 @@ export type Methods = {
   }
 }
 
-export default {
+export default mockMethods<Methods>({
   post: () => ({ status: 200, resBody: { token: 'a' } })
-}
+})

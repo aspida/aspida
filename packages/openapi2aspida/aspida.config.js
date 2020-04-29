@@ -5,14 +5,18 @@ module.exports = [
   },
   {
     input: 'samples/simple',
-    openapi: { inputFile: 'samples/simple.yaml', mock: true }
+    openapi: { inputFile: 'samples/simple.yaml', mock: true, noMockType: true }
   },
   {
     input: 'samples/strapi',
     openapi: { inputFile: 'samples/strapi.json' }
   },
   {
+    input: 'samples/freee',
+    openapi: { inputFile: 'samples/freee.json', mock: true }
+  },
+  {
     input: 'samples/openapi',
-    openapi: { inputFile: 'samples/openapi.json', mock: true, noMockType: true, yaml: false }
+    openapi: { inputFile: 'samples/openapi.json', mock: true, yaml: false }
   }
 ]
