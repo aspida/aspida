@@ -4,11 +4,19 @@ import { Prop, PropValue } from './props2String'
 
 export const defKey2defName = (key: string) => key.replace(/[^a-zA-Z0-9$_]/g, '_')
 
-export const $ref2TypeName = (ref: string) => ref.split('/').pop() || ''
+export const $ref2TypeName = (ref: string) => {
+  const [, , , typeName, , propName] = ref.split('/')
+  return { typeName, propName: propName || null }
+}
 
 // $ref2Type: replace /Array$/ for Swagger 2.0
-export const $ref2Type = (ref: string) =>
-  `Types.${defKey2defName($ref2TypeName(ref)).replace(/Array$/, '[]')}`
+export const $ref2Type = (ref: string) => {
+  const { typeName, propName } = $ref2TypeName(ref)
+  return `Types.${defKey2defName(typeName)}${propName ? `['${propName}']` : ''}`.replace(
+    /Array$/,
+    '[]'
+  )
+}
 
 export const isRefObject = (
   params:
