@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-use-before-define */
 import { OpenAPIV3 } from 'openapi-types'
 import { Prop, PropValue } from './props2String'
 
@@ -40,23 +40,23 @@ export const getPropertyName = (name: string) =>
 
 const of2Values = (obj: OpenAPIV3.SchemaObject): PropValue[] | null => {
   const values = (obj.oneOf || obj.allOf || [])
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     .map(p => schema2value(p))
     .filter(v => v) as PropValue[]
   return values.length ? values : null
 }
 
-const object2value = (obj: OpenAPIV3.NonArraySchemaObject): Prop[] | null => {
-  if (!obj.properties) return null
+export const ADDITIONAL_NAME = '[key: string]'
 
-  const value = Object.keys(obj.properties)
+const object2value = (obj: OpenAPIV3.NonArraySchemaObject): Prop[] => {
+  const properties = obj.properties ?? {}
+
+  const value = Object.keys(properties)
     .filter(name => {
-      const target = obj.properties![name]
+      const target = properties[name]
       return isRefObject(target) || !target.deprecated
     })
     .map<Prop | null>(name => {
-      // eslint-disable-next-line @typescript-eslint/no-use-before-define
-      const val = schema2value(obj.properties![name])
+      const val = schema2value(properties[name])
       if (!val) return null
 
       return {
@@ -68,7 +68,28 @@ const object2value = (obj: OpenAPIV3.NonArraySchemaObject): Prop[] | null => {
     })
     .filter(v => v) as Prop[]
 
-  return value.length ? value : null
+  const additionalProps = obj.additionalProperties
+  if (additionalProps) {
+    const val =
+      additionalProps === true
+        ? {
+            isArray: false,
+            isEnum: false,
+            isOneOf: false,
+            value: 'any'
+          }
+        : schema2value(additionalProps)
+
+    if (val)
+      value.push({
+        name: ADDITIONAL_NAME,
+        required: true,
+        isOneOf: false,
+        values: [val]
+      })
+  }
+
+  return value
 }
 
 export const schema2value = (
@@ -92,7 +113,7 @@ export const schema2value = (
   } else if (isArraySchema(schema)) {
     isArray = true
     value = schema2value(schema.items)
-  } else if (schema.properties) {
+  } else if (schema.properties || schema.additionalProperties) {
     value = object2value(schema)
   } else if (schema.format === 'binary') {
     value = 'ArrayBuffer'

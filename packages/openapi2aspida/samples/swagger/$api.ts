@@ -4,13 +4,14 @@ import { Methods as Methods0 } from './pet/index'
 import { Methods as Methods1 } from './pet/_petId/index'
 import { Methods as Methods2 } from './pet/_petId/uploadImage'
 import { Methods as Methods3 } from './pet/findByStatus'
-import { Methods as Methods4 } from './store/order/index'
-import { Methods as Methods5 } from './store/order/_orderId'
-import { Methods as Methods6 } from './user/index'
-import { Methods as Methods7 } from './user/_username'
-import { Methods as Methods8 } from './user/createWithArray'
-import { Methods as Methods9 } from './user/createWithList'
-import { Methods as Methods10 } from './user/login'
+import { Methods as Methods4 } from './store/inventory'
+import { Methods as Methods5 } from './store/order/index'
+import { Methods as Methods6 } from './store/order/_orderId'
+import { Methods as Methods7 } from './user/index'
+import { Methods as Methods8 } from './user/_username'
+import { Methods as Methods9 } from './user/createWithArray'
+import { Methods as Methods10 } from './user/createWithList'
+import { Methods as Methods11 } from './user/login'
 
 const api = <T>(client: AspidaClient<T>) => {
   const prefix = (client.baseURL === undefined ? 'https://petstore.swagger.io/v2' : client.baseURL).replace(/\/$/, '')
@@ -55,36 +56,36 @@ const api = <T>(client: AspidaClient<T>) => {
     store: {
       inventory: {
         get: (option?: { config?: T }) =>
-          client.fetch<void>(prefix, '/store/inventory', 'GET', option).send(),
+          client.fetch<Methods4['get']['resBody']>(prefix, '/store/inventory', 'GET', option).json(),
         $get: async (option?: { config?: T }) =>
-          (await client.fetch<void>(prefix, '/store/inventory', 'GET', option).send()).data
+          (await client.fetch<Methods4['get']['resBody']>(prefix, '/store/inventory', 'GET', option).json()).data
       },
       order: {
         _orderId: (val1: number | string) => ({
           get: (option?: { config?: T }) =>
-            client.fetch<Methods5['get']['resBody']>(prefix, `/store/order/${val1}`, 'GET', option).json(),
+            client.fetch<Methods6['get']['resBody']>(prefix, `/store/order/${val1}`, 'GET', option).json(),
           $get: async (option?: { config?: T }) =>
-            (await client.fetch<Methods5['get']['resBody']>(prefix, `/store/order/${val1}`, 'GET', option).json()).data,
+            (await client.fetch<Methods6['get']['resBody']>(prefix, `/store/order/${val1}`, 'GET', option).json()).data,
           delete: (option?: { config?: T }) =>
             client.fetch<void>(prefix, `/store/order/${val1}`, 'DELETE', option).send(),
           $delete: async (option?: { config?: T }) =>
             (await client.fetch<void>(prefix, `/store/order/${val1}`, 'DELETE', option).send()).data
         }),
-        post: (option: { data: Methods4['post']['reqBody'], config?: T }) =>
-          client.fetch<Methods4['post']['resBody']>(prefix, '/store/order', 'POST', option).json(),
-        $post: async (option: { data: Methods4['post']['reqBody'], config?: T }) =>
-          (await client.fetch<Methods4['post']['resBody']>(prefix, '/store/order', 'POST', option).json()).data
+        post: (option: { data: Methods5['post']['reqBody'], config?: T }) =>
+          client.fetch<Methods5['post']['resBody']>(prefix, '/store/order', 'POST', option).json(),
+        $post: async (option: { data: Methods5['post']['reqBody'], config?: T }) =>
+          (await client.fetch<Methods5['post']['resBody']>(prefix, '/store/order', 'POST', option).json()).data
       }
     },
     user: {
       _username: (val2: number | string) => ({
         get: (option?: { config?: T }) =>
-          client.fetch<Methods7['get']['resBody']>(prefix, `/user/${val2}`, 'GET', option).json(),
+          client.fetch<Methods8['get']['resBody']>(prefix, `/user/${val2}`, 'GET', option).json(),
         $get: async (option?: { config?: T }) =>
-          (await client.fetch<Methods7['get']['resBody']>(prefix, `/user/${val2}`, 'GET', option).json()).data,
-        put: (option: { data: Methods7['put']['reqBody'], config?: T }) =>
+          (await client.fetch<Methods8['get']['resBody']>(prefix, `/user/${val2}`, 'GET', option).json()).data,
+        put: (option: { data: Methods8['put']['reqBody'], config?: T }) =>
           client.fetch<void>(prefix, `/user/${val2}`, 'PUT', option).send(),
-        $put: async (option: { data: Methods7['put']['reqBody'], config?: T }) =>
+        $put: async (option: { data: Methods8['put']['reqBody'], config?: T }) =>
           (await client.fetch<void>(prefix, `/user/${val2}`, 'PUT', option).send()).data,
         delete: (option?: { config?: T }) =>
           client.fetch<void>(prefix, `/user/${val2}`, 'DELETE', option).send(),
@@ -92,22 +93,22 @@ const api = <T>(client: AspidaClient<T>) => {
           (await client.fetch<void>(prefix, `/user/${val2}`, 'DELETE', option).send()).data
       }),
       createWithArray: {
-        post: (option: { data: Methods8['post']['reqBody'], config?: T }) =>
+        post: (option: { data: Methods9['post']['reqBody'], config?: T }) =>
           client.fetch<void>(prefix, '/user/createWithArray', 'POST', option).send(),
-        $post: async (option: { data: Methods8['post']['reqBody'], config?: T }) =>
+        $post: async (option: { data: Methods9['post']['reqBody'], config?: T }) =>
           (await client.fetch<void>(prefix, '/user/createWithArray', 'POST', option).send()).data
       },
       createWithList: {
-        post: (option: { data: Methods9['post']['reqBody'], config?: T }) =>
+        post: (option: { data: Methods10['post']['reqBody'], config?: T }) =>
           client.fetch<void>(prefix, '/user/createWithList', 'POST', option).send(),
-        $post: async (option: { data: Methods9['post']['reqBody'], config?: T }) =>
+        $post: async (option: { data: Methods10['post']['reqBody'], config?: T }) =>
           (await client.fetch<void>(prefix, '/user/createWithList', 'POST', option).send()).data
       },
       login: {
-        get: (option: { query: Methods10['get']['query'], config?: T }) =>
-          client.fetch<Methods10['get']['resBody'], Methods10['get']['resHeaders']>(prefix, '/user/login', 'GET', option).text(),
-        $get: async (option: { query: Methods10['get']['query'], config?: T }) =>
-          (await client.fetch<Methods10['get']['resBody'], Methods10['get']['resHeaders']>(prefix, '/user/login', 'GET', option).text()).data
+        get: (option: { query: Methods11['get']['query'], config?: T }) =>
+          client.fetch<Methods11['get']['resBody'], Methods11['get']['resHeaders']>(prefix, '/user/login', 'GET', option).text(),
+        $get: async (option: { query: Methods11['get']['query'], config?: T }) =>
+          (await client.fetch<Methods11['get']['resBody'], Methods11['get']['resHeaders']>(prefix, '/user/login', 'GET', option).text()).data
       },
       logout: {
         get: (option?: { config?: T }) =>
@@ -115,9 +116,9 @@ const api = <T>(client: AspidaClient<T>) => {
         $get: async (option?: { config?: T }) =>
           (await client.fetch<void>(prefix, '/user/logout', 'GET', option).send()).data
       },
-      post: (option: { data: Methods6['post']['reqBody'], config?: T }) =>
+      post: (option: { data: Methods7['post']['reqBody'], config?: T }) =>
         client.fetch<void>(prefix, '/user', 'POST', option).send(),
-      $post: async (option: { data: Methods6['post']['reqBody'], config?: T }) =>
+      $post: async (option: { data: Methods7['post']['reqBody'], config?: T }) =>
         (await client.fetch<void>(prefix, '/user', 'POST', option).send()).data
     }
   }
