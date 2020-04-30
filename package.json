@@ -48,7 +48,7 @@
     "husky": "^4.2.5",
     "jest": "^25.5.2",
     "ky": "^0.19.1",
-    "lint-staged": "^10.2.0",
+    "lint-staged": "^10.2.1",
     "node-fetch": "^2.6.0",
     "prettier": "2.0.5",
     "rimraf": "^3.0.2",
