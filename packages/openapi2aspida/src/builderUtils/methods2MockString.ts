@@ -2,9 +2,11 @@
 import { Prop, PropValue } from './props2String'
 import { Parameter } from './parameters2Props'
 import { Schema } from './schemas2Props'
+import { ADDITIONAL_NAME } from './converters'
 
 const primitive2String = (p: string) =>
   (({
+    any: "'bar'",
     ArrayBuffer: 'new ArrayBuffer(32)',
     number: '1',
     string: "'a'",
@@ -33,7 +35,16 @@ const resolveTypes = (t: string, params: Parameter[], schemas: Schema[]): string
   }
 }
 const props2String = (ps: Prop[], params: Parameter[], schemas: Schema[]) =>
-  `{ ${ps.map(p => `${p.name}: ${value2String(p.values[0], params, schemas)}`).join(', ')} }`
+  `{ ${ps
+    .map(
+      p =>
+        `${p.name === ADDITIONAL_NAME ? 'foo' : p.name}: ${value2String(
+          p.values[0],
+          params,
+          schemas
+        )}`
+    )
+    .join(', ')} }`
 const allOf2String = (vs: PropValue[], params: Parameter[], schemas: Schema[]) =>
   `{ ${vs
     .map(
