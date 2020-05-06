@@ -1,7 +1,7 @@
 /* eslint-disable */
 import controller0 from './@controller'
-import controller1 from './user/@controller'
-import controller2 from './user/_userId@number/@controller'
+import controller1 from './users/@controller'
+import controller2 from './users/_userId@number/@controller'
 import middleware0 from './@middleware'
 
 export default {
@@ -11,7 +11,7 @@ export default {
   children: {
     names: [
       {
-        name: '/user',
+        name: '/users',
         controller: controller1,
         children: {
           value: {

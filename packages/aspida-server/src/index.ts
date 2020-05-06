@@ -88,12 +88,12 @@ export const createController = <T extends AspidaMethods, U extends ServerValues
   methods: ServerMethods<T, U> | (RequestHandler | ServerMethods<T, U>)[]
 ) => methods
 
-export const createMiddleware = (middleware: RequestHandler[]) => middleware
+export const createMiddleware = (middleware: RequestHandler | RequestHandler[]) => middleware
 
 export type ControllerTree = {
   name: string
   controller?: ServerMethods<any, any> | (RequestHandler | ServerMethods<any, any>)[]
-  middleware?: RequestHandler[]
+  middleware?: RequestHandler | RequestHandler[]
   children?: {
     names?: ControllerTree[]
     value?: ControllerTree
@@ -106,7 +106,7 @@ const methodsToHandler = (methods: ServerMethods<any, any>): RequestHandler => a
     return
   }
 
-  const result: any = await methods[req.method.toLowerCase()]({
+  const result = (await methods[req.method.toLowerCase()]({
     query: req.query,
     path: req.path,
     method: req.method as HttpMethod,
@@ -114,21 +114,22 @@ const methodsToHandler = (methods: ServerMethods<any, any>): RequestHandler => a
     reqHeaders: {},
     params: req.params,
     user: (req as any).user
-  })
+  }).catch(() => ({ status: 500, resBody: 'Internal Server Error' }))) as AllResponse<any, any>
 
   Object.entries((result.resHeaders as Record<string, any>) ?? {}).forEach(([key, val]) => {
     res.setHeader(key, val)
   })
-  res.status(result.status).send(result.resBody)
+  res.status(result.status).json(result.resBody)
 }
 
-/* eslint-disable no-unused-expressions */
 export const createRouter = (ctrl: ControllerTree) => {
   const router = express.Router({ mergeParams: true })
 
-  ctrl.middleware?.forEach(handler => {
-    router.use(handler)
-  })
+  if (ctrl.middleware) {
+    ;(Array.isArray(ctrl.middleware) ? ctrl.middleware : [ctrl.middleware]).forEach(handler => {
+      router.use(handler)
+    })
+  }
 
   if (ctrl.controller) {
     const methods = (Array.isArray(ctrl.controller) ? ctrl.controller : [ctrl.controller]).map(m =>
@@ -138,12 +139,16 @@ export const createRouter = (ctrl: ControllerTree) => {
   }
 
   if (ctrl.children) {
+    // eslint-disable-next-line no-unused-expressions
     ctrl.children.names?.forEach(n => {
       router.use(n.name, createRouter(n))
     })
 
     if (ctrl.children.value) {
-      router.use(ctrl.children.value.name.replace('_', ':'), createRouter(ctrl.children.value))
+      router.use(
+        ctrl.children.value.name.replace('_', ':').split('@')[0],
+        createRouter(ctrl.children.value)
+      )
     }
   }
 
