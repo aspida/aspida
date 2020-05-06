@@ -5,10 +5,12 @@
   ],
   "scripts": {
     "dev:aspida": "npm run build:aspida && cd packages/aspida && node bin/index.js --build",
+    "dev:server": "npm run build:server && cd packages/aspida-server && node bin/index.js --build",
     "dev:openapi": "npm run build:openapi && cd packages/openapi2aspida && node samples/rimraf.js && node bin/index.js --build",
     "dev:mock": "npm run build:mock && cd packages/aspida-mock && aspida -b && node bin/index.js --build",
     "dev:path": "npm run build:path && cd packages/pathpida && node bin/index.js --build",
     "build:aspida": "npm run rimraf -- aspida && cd packages/aspida && tsc --project tsconfig.build.json",
+    "build:server": "npm run rimraf -- aspida-server && cd packages/aspida-server && tsc --project tsconfig.build.json",
     "build:axios": "npm run rimraf -- aspida-axios && cd packages/aspida-axios && tsc --project tsconfig.build.json",
     "build:fetch": "npm run rimraf -- aspida-fetch && cd packages/aspida-fetch && tsc --project tsconfig.build.json",
     "build:node-fetch": "npm run rimraf -- aspida-node-fetch && cd packages/aspida-node-fetch && tsc --project tsconfig.build.json",
@@ -25,7 +27,7 @@
     "lint:fix": "npm run lint -- --fix",
     "test": "jest",
     "test:watch": "npm test -- --watch",
-    "typecheck": "npm run build:aspida && npm run build:mock && npm run build:axios && tsc --noEmit"
+    "typecheck": "npm run build:aspida && npm run build:mock && npm run build:axios && npm run build:server && tsc --noEmit"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
