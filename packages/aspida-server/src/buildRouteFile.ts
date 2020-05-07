@@ -26,7 +26,9 @@ express()
   .use(express.json())
   .use(express.urlencoded({ extended: true }))
   .use(createRouter(controllers))
-  .listen(${port})
+  .listen(${port}, () => {
+    console.log('aspida-server runs successfully.')
+  })
 `,
     filePath: path.posix.join(input, `$server.ts`)
   }
