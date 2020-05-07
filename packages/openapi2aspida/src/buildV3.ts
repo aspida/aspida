@@ -11,6 +11,11 @@ import methods2MockString from './builderUtils/methods2MockString'
 
 const methodNames = ['get', 'post', 'put', 'delete', 'head', 'options', 'patch'] as const
 
+const getParamsList = (
+  openapi: OpenAPIV3.Document,
+  params?: (OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject)[]
+) => params?.map(p => (isRefObject(p) ? resolveParamsRef(openapi, p.$ref) : p)) || []
+
 export default (
   openapi: OpenAPIV3.Document,
   needsMock: boolean,
@@ -25,25 +30,33 @@ export default (
       ...Object.keys(openapi.paths)
         .map((path, _i, pathList) => {
           const isParent = pathList.some(p => new RegExp(`^${path}/.+`).test(p))
+          const methodProps = Object.keys(
+            openapi.paths[path]
+          ).filter((method): method is typeof methodNames[number] =>
+            methodNames.includes(method as typeof methodNames[number])
+          )
+
           const file = [
             ...path
               .replace(/\/$/, '')
               .split('/')
               .slice(1)
               .map(p =>
-                getDirName(
-                  p,
-                  openapi.paths[path].parameters?.map(p =>
-                    isRefObject(p) ? resolveParamsRef(openapi, p.$ref) : p
+                getDirName(p, [
+                  ...getParamsList(openapi, openapi.paths[path].parameters),
+                  ...methodProps.reduce(
+                    (prev, c) => [
+                      ...prev,
+                      ...getParamsList(openapi, openapi.paths[path][c]?.parameters)
+                    ],
+                    [] as OpenAPIV3.ParameterObject[]
                   )
-                )
+                ])
               ),
             ...(isParent ? ['index'] : [])
           ]
-          const methods = Object.keys(openapi.paths[path])
-            .filter((method): method is typeof methodNames[number] =>
-              methodNames.includes(method as typeof methodNames[number])
-            )
+
+          const methods = methodProps
             .map<Prop | null>(method => {
               const target = openapi.paths[path][method]!
 
@@ -51,53 +64,55 @@ export default (
 
               const params: Prop[] = []
 
-              if (target.parameters) {
+              if (target.parameters || openapi.paths[path].parameters) {
                 const reqRefHeaders: PropValue[] = []
                 const reqHeaders: Prop[] = []
                 const refQuery: PropValue[] = []
                 const query: Prop[] = []
                 let queryRequired = false
 
-                target.parameters.forEach(p => {
-                  if (isRefObject(p)) {
-                    const ref = resolveParamsRef(openapi, p.$ref)
-                    const val = { isArray: false, isEnum: false, value: $ref2Type(p.$ref) }
+                ;[...(openapi.paths[path].parameters || []), ...(target.parameters || [])].forEach(
+                  p => {
+                    if (isRefObject(p)) {
+                      const ref = resolveParamsRef(openapi, p.$ref)
+                      const val = { isArray: false, isEnum: false, value: $ref2Type(p.$ref) }
 
-                    switch (ref.in) {
-                      case 'header':
-                        reqRefHeaders.push(val)
-                        break
-                      case 'query':
-                        refQuery.push(val)
-                        if (ref.required) queryRequired = true
-                        break
-                      default:
-                        break
-                    }
-                  } else {
-                    const value = schema2value(p.schema)
-                    if (!value) return
+                      switch (ref.in) {
+                        case 'header':
+                          reqRefHeaders.push(val)
+                          break
+                        case 'query':
+                          refQuery.push(val)
+                          if (ref.required) queryRequired = true
+                          break
+                        default:
+                          break
+                      }
+                    } else {
+                      const value = schema2value(p.schema)
+                      if (!value) return
 
-                    const prop = {
-                      name: getPropertyName(p.name),
-                      required: !!p.required,
-                      isOneOf: false,
-                      values: [value]
-                    }
+                      const prop = {
+                        name: getPropertyName(p.name),
+                        required: !!p.required,
+                        isOneOf: false,
+                        values: [value]
+                      }
 
-                    switch (p.in) {
-                      case 'header':
-                        reqHeaders.push(prop)
-                        break
-                      case 'query':
-                        query.push(prop)
-                        if (p.required) queryRequired = true
-                        break
-                      default:
-                        break
+                      switch (p.in) {
+                        case 'header':
+                          reqHeaders.push(prop)
+                          break
+                        case 'query':
+                          query.push(prop)
+                          if (p.required) queryRequired = true
+                          break
+                        default:
+                          break
+                      }
                     }
                   }
-                })
+                )
 
                 if (reqHeaders.length || reqRefHeaders.length) {
                   params.push({

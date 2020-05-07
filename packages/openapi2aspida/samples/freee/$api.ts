@@ -1,38 +1,38 @@
 /* eslint-disable */
 import { AspidaClient } from 'aspida'
 import { Methods as Methods0 } from './api/1/account_items/index'
-import { Methods as Methods1 } from './api/1/account_items/_id'
+import { Methods as Methods1 } from './api/1/account_items/_id@number'
 import { Methods as Methods2 } from './api/1/banks/index'
-import { Methods as Methods3 } from './api/1/banks/_id'
+import { Methods as Methods3 } from './api/1/banks/_id@number'
 import { Methods as Methods4 } from './api/1/companies/index'
-import { Methods as Methods5 } from './api/1/companies/_id'
+import { Methods as Methods5 } from './api/1/companies/_id@number'
 import { Methods as Methods6 } from './api/1/deals/index'
-import { Methods as Methods7 } from './api/1/deals/_id/index'
-import { Methods as Methods8 } from './api/1/deals/_id/payments/index'
-import { Methods as Methods9 } from './api/1/deals/_id/payments/_payment_id'
-import { Methods as Methods10 } from './api/1/deals/_id/renews/index'
-import { Methods as Methods11 } from './api/1/deals/_id/renews/_renew_id'
+import { Methods as Methods7 } from './api/1/deals/_id@number/index'
+import { Methods as Methods8 } from './api/1/deals/_id@number/payments/index'
+import { Methods as Methods9 } from './api/1/deals/_id@number/payments/_payment_id@number'
+import { Methods as Methods10 } from './api/1/deals/_id@number/renews/index'
+import { Methods as Methods11 } from './api/1/deals/_id@number/renews/_renew_id@number'
 import { Methods as Methods12 } from './api/1/expense_application_line_templates/index'
-import { Methods as Methods13 } from './api/1/expense_application_line_templates/_id'
+import { Methods as Methods13 } from './api/1/expense_application_line_templates/_id@number'
 import { Methods as Methods14 } from './api/1/expense_applications/index'
-import { Methods as Methods15 } from './api/1/expense_applications/_id'
+import { Methods as Methods15 } from './api/1/expense_applications/_id@number'
 import { Methods as Methods16 } from './api/1/forms/selectables'
 import { Methods as Methods17 } from './api/1/invoices/index'
-import { Methods as Methods18 } from './api/1/invoices/_id'
+import { Methods as Methods18 } from './api/1/invoices/_id@number'
 import { Methods as Methods19 } from './api/1/items/index'
-import { Methods as Methods20 } from './api/1/items/_id'
+import { Methods as Methods20 } from './api/1/items/_id@number'
 import { Methods as Methods21 } from './api/1/journals/index'
-import { Methods as Methods22 } from './api/1/journals/reports/_id/download'
-import { Methods as Methods23 } from './api/1/journals/reports/_id/status'
+import { Methods as Methods22 } from './api/1/journals/reports/_id@number/download'
+import { Methods as Methods23 } from './api/1/journals/reports/_id@number/status'
 import { Methods as Methods24 } from './api/1/manual_journals/index'
-import { Methods as Methods25 } from './api/1/manual_journals/_id'
+import { Methods as Methods25 } from './api/1/manual_journals/_id@number'
 import { Methods as Methods26 } from './api/1/partners/index'
-import { Methods as Methods27 } from './api/1/partners/_id'
-import { Methods as Methods28 } from './api/1/partners/code/_code'
+import { Methods as Methods27 } from './api/1/partners/_id@number'
+import { Methods as Methods28 } from './api/1/partners/code/_code@string'
 import { Methods as Methods29 } from './api/1/quotations/index'
-import { Methods as Methods30 } from './api/1/quotations/_id'
+import { Methods as Methods30 } from './api/1/quotations/_id@number'
 import { Methods as Methods31 } from './api/1/receipts/index'
-import { Methods as Methods32 } from './api/1/receipts/_id'
+import { Methods as Methods32 } from './api/1/receipts/_id@number'
 import { Methods as Methods33 } from './api/1/reports/trial_bs'
 import { Methods as Methods34 } from './api/1/reports/trial_bs_three_years'
 import { Methods as Methods35 } from './api/1/reports/trial_bs_two_years'
@@ -41,23 +41,23 @@ import { Methods as Methods37 } from './api/1/reports/trial_pl_sections'
 import { Methods as Methods38 } from './api/1/reports/trial_pl_three_years'
 import { Methods as Methods39 } from './api/1/reports/trial_pl_two_years'
 import { Methods as Methods40 } from './api/1/sections/index'
-import { Methods as Methods41 } from './api/1/sections/_id'
-import { Methods as Methods42 } from './api/1/segments/_segment_id/tags/index'
-import { Methods as Methods43 } from './api/1/segments/_segment_id/tags/_id'
+import { Methods as Methods41 } from './api/1/sections/_id@number'
+import { Methods as Methods42 } from './api/1/segments/_segment_id@number/tags/index'
+import { Methods as Methods43 } from './api/1/segments/_segment_id@number/tags/_id@number'
 import { Methods as Methods44 } from './api/1/tags/index'
-import { Methods as Methods45 } from './api/1/tags/_id'
+import { Methods as Methods45 } from './api/1/tags/_id@number'
 import { Methods as Methods46 } from './api/1/taxes/codes/index'
-import { Methods as Methods47 } from './api/1/taxes/codes/_code'
-import { Methods as Methods48 } from './api/1/taxes/companies/_company_id'
+import { Methods as Methods47 } from './api/1/taxes/codes/_code@number'
+import { Methods as Methods48 } from './api/1/taxes/companies/_company_id@number'
 import { Methods as Methods49 } from './api/1/transfers/index'
-import { Methods as Methods50 } from './api/1/transfers/_id'
+import { Methods as Methods50 } from './api/1/transfers/_id@number'
 import { Methods as Methods51 } from './api/1/users/index'
 import { Methods as Methods52 } from './api/1/users/capabilities'
 import { Methods as Methods53 } from './api/1/users/me'
 import { Methods as Methods54 } from './api/1/wallet_txns/index'
-import { Methods as Methods55 } from './api/1/wallet_txns/_id'
+import { Methods as Methods55 } from './api/1/wallet_txns/_id@number'
 import { Methods as Methods56 } from './api/1/walletables/index'
-import { Methods as Methods57 } from './api/1/walletables/_type/_id'
+import { Methods as Methods57 } from './api/1/walletables/_type/_id@number'
 
 const api = <T>(client: AspidaClient<T>) => {
   const prefix = (client.baseURL === undefined ? 'https://api.freee.co.jp' : client.baseURL).replace(/\/$/, '')
@@ -66,7 +66,7 @@ const api = <T>(client: AspidaClient<T>) => {
     api: {
       $1: {
         account_items: {
-          _id: (val0: number | string) => ({
+          _id: (val0: number) => ({
             get: (option: { query: Methods1['get']['query'], config?: T }) =>
               client.fetch<Methods1['get']['resBody']>(prefix, `/api/1/account_items/${val0}`, 'GET', option).json(),
             $get: async (option: { query: Methods1['get']['query'], config?: T }) =>
@@ -90,7 +90,7 @@ const api = <T>(client: AspidaClient<T>) => {
             (await client.fetch<Methods0['post']['resBody']>(prefix, '/api/1/account_items', 'POST', option, 'URLSearchParams').json()).data
         },
         banks: {
-          _id: (val1: number | string) => ({
+          _id: (val1: number) => ({
             get: (option?: { config?: T }) =>
               client.fetch<Methods3['get']['resBody']>(prefix, `/api/1/banks/${val1}`, 'GET', option).json(),
             $get: async (option?: { config?: T }) =>
@@ -102,7 +102,7 @@ const api = <T>(client: AspidaClient<T>) => {
             (await client.fetch<Methods2['get']['resBody']>(prefix, '/api/1/banks', 'GET', option).json()).data
         },
         companies: {
-          _id: (val2: number | string) => ({
+          _id: (val2: number) => ({
             get: (option?: { query?: Methods5['get']['query'], config?: T }) =>
               client.fetch<Methods5['get']['resBody']>(prefix, `/api/1/companies/${val2}`, 'GET', option).json(),
             $get: async (option?: { query?: Methods5['get']['query'], config?: T }) =>
@@ -118,9 +118,9 @@ const api = <T>(client: AspidaClient<T>) => {
             (await client.fetch<Methods4['get']['resBody']>(prefix, '/api/1/companies', 'GET', option).json()).data
         },
         deals: {
-          _id: (val3: number | string) => ({
+          _id: (val3: number) => ({
             payments: {
-              _payment_id: (val4: number | string) => ({
+              _payment_id: (val4: number) => ({
                 put: (option: { data: Methods9['put']['reqBody'], config?: T }) =>
                   client.fetch<Methods9['put']['resBody']>(prefix, `/api/1/deals/${val3}/payments/${val4}`, 'PUT', option, 'URLSearchParams').json(),
                 $put: async (option: { data: Methods9['put']['reqBody'], config?: T }) =>
@@ -136,7 +136,7 @@ const api = <T>(client: AspidaClient<T>) => {
                 (await client.fetch<Methods8['post']['resBody']>(prefix, `/api/1/deals/${val3}/payments`, 'POST', option, 'URLSearchParams').json()).data
             },
             renews: {
-              _renew_id: (val5: number | string) => ({
+              _renew_id: (val5: number) => ({
                 put: (option: { data: Methods11['put']['reqBody'], config?: T }) =>
                   client.fetch<Methods11['put']['resBody']>(prefix, `/api/1/deals/${val3}/renews/${val5}`, 'PUT', option, 'URLSearchParams').json(),
                 $put: async (option: { data: Methods11['put']['reqBody'], config?: T }) =>
@@ -174,7 +174,7 @@ const api = <T>(client: AspidaClient<T>) => {
             (await client.fetch<Methods6['post']['resBody']>(prefix, '/api/1/deals', 'POST', option, 'URLSearchParams').json()).data
         },
         expense_application_line_templates: {
-          _id: (val6: number | string) => ({
+          _id: (val6: number) => ({
             get: (option: { query: Methods13['get']['query'], config?: T }) =>
               client.fetch<Methods13['get']['resBody']>(prefix, `/api/1/expense_application_line_templates/${val6}`, 'GET', option).json(),
             $get: async (option: { query: Methods13['get']['query'], config?: T }) =>
@@ -198,7 +198,7 @@ const api = <T>(client: AspidaClient<T>) => {
             (await client.fetch<Methods12['post']['resBody']>(prefix, '/api/1/expense_application_line_templates', 'POST', option, 'URLSearchParams').json()).data
         },
         expense_applications: {
-          _id: (val7: number | string) => ({
+          _id: (val7: number) => ({
             get: (option: { query: Methods15['get']['query'], config?: T }) =>
               client.fetch<Methods15['get']['resBody']>(prefix, `/api/1/expense_applications/${val7}`, 'GET', option).json(),
             $get: async (option: { query: Methods15['get']['query'], config?: T }) =>
@@ -230,7 +230,7 @@ const api = <T>(client: AspidaClient<T>) => {
           }
         },
         invoices: {
-          _id: (val8: number | string) => ({
+          _id: (val8: number) => ({
             get: (option: { query: Methods18['get']['query'], config?: T }) =>
               client.fetch<Methods18['get']['resBody']>(prefix, `/api/1/invoices/${val8}`, 'GET', option).json(),
             $get: async (option: { query: Methods18['get']['query'], config?: T }) =>
@@ -254,7 +254,7 @@ const api = <T>(client: AspidaClient<T>) => {
             (await client.fetch<Methods17['post']['resBody']>(prefix, '/api/1/invoices', 'POST', option, 'URLSearchParams').json()).data
         },
         items: {
-          _id: (val9: number | string) => ({
+          _id: (val9: number) => ({
             get: (option: { query: Methods20['get']['query'], config?: T }) =>
               client.fetch<Methods20['get']['resBody']>(prefix, `/api/1/items/${val9}`, 'GET', option).json(),
             $get: async (option: { query: Methods20['get']['query'], config?: T }) =>
@@ -279,7 +279,7 @@ const api = <T>(client: AspidaClient<T>) => {
         },
         journals: {
           reports: {
-            _id: (val10: number | string) => ({
+            _id: (val10: number) => ({
               download: {
                 get: (option: { query: Methods22['get']['query'], config?: T }) =>
                   client.fetch<void>(prefix, `/api/1/journals/reports/${val10}/download`, 'GET', option).send(),
@@ -300,7 +300,7 @@ const api = <T>(client: AspidaClient<T>) => {
             (await client.fetch<Methods21['get']['resBody']>(prefix, '/api/1/journals', 'GET', option).json()).data
         },
         manual_journals: {
-          _id: (val11: number | string) => ({
+          _id: (val11: number) => ({
             get: (option: { query: Methods25['get']['query'], config?: T }) =>
               client.fetch<Methods25['get']['resBody']>(prefix, `/api/1/manual_journals/${val11}`, 'GET', option).json(),
             $get: async (option: { query: Methods25['get']['query'], config?: T }) =>
@@ -324,7 +324,7 @@ const api = <T>(client: AspidaClient<T>) => {
             (await client.fetch<Methods24['post']['resBody']>(prefix, '/api/1/manual_journals', 'POST', option, 'URLSearchParams').json()).data
         },
         partners: {
-          _id: (val12: number | string) => ({
+          _id: (val12: number) => ({
             get: (option: { query: Methods27['get']['query'], config?: T }) =>
               client.fetch<Methods27['get']['resBody']>(prefix, `/api/1/partners/${val12}`, 'GET', option).json(),
             $get: async (option: { query: Methods27['get']['query'], config?: T }) =>
@@ -339,7 +339,7 @@ const api = <T>(client: AspidaClient<T>) => {
               (await client.fetch<void>(prefix, `/api/1/partners/${val12}`, 'DELETE', option).send()).data
           }),
           code: {
-            _code: (val13: number | string) => ({
+            _code: (val13: string) => ({
               put: (option: { data: Methods28['put']['reqBody'], config?: T }) =>
                 client.fetch<Methods28['put']['resBody']>(prefix, `/api/1/partners/code/${val13}`, 'PUT', option, 'URLSearchParams').json(),
               $put: async (option: { data: Methods28['put']['reqBody'], config?: T }) =>
@@ -356,7 +356,7 @@ const api = <T>(client: AspidaClient<T>) => {
             (await client.fetch<Methods26['post']['resBody']>(prefix, '/api/1/partners', 'POST', option, 'URLSearchParams').json()).data
         },
         quotations: {
-          _id: (val14: number | string) => ({
+          _id: (val14: number) => ({
             get: (option: { query: Methods30['get']['query'], config?: T }) =>
               client.fetch<Methods30['get']['resBody']>(prefix, `/api/1/quotations/${val14}`, 'GET', option).json(),
             $get: async (option: { query: Methods30['get']['query'], config?: T }) =>
@@ -380,7 +380,7 @@ const api = <T>(client: AspidaClient<T>) => {
             (await client.fetch<Methods29['post']['resBody']>(prefix, '/api/1/quotations', 'POST', option, 'URLSearchParams').json()).data
         },
         receipts: {
-          _id: (val15: number | string) => ({
+          _id: (val15: number) => ({
             get: (option: { query: Methods32['get']['query'], config?: T }) =>
               client.fetch<Methods32['get']['resBody']>(prefix, `/api/1/receipts/${val15}`, 'GET', option).json(),
             $get: async (option: { query: Methods32['get']['query'], config?: T }) =>
@@ -448,7 +448,7 @@ const api = <T>(client: AspidaClient<T>) => {
           }
         },
         sections: {
-          _id: (val16: number | string) => ({
+          _id: (val16: number) => ({
             get: (option: { query: Methods41['get']['query'], config?: T }) =>
               client.fetch<Methods41['get']['resBody']>(prefix, `/api/1/sections/${val16}`, 'GET', option).json(),
             $get: async (option: { query: Methods41['get']['query'], config?: T }) =>
@@ -472,9 +472,9 @@ const api = <T>(client: AspidaClient<T>) => {
             (await client.fetch<Methods40['post']['resBody']>(prefix, '/api/1/sections', 'POST', option, 'URLSearchParams').json()).data
         },
         segments: {
-          _segment_id: (val17: number | string) => ({
+          _segment_id: (val17: number) => ({
             tags: {
-              _id: (val18: number | string) => ({
+              _id: (val18: number) => ({
                 put: (option: { data: Methods43['put']['reqBody'], config?: T }) =>
                   client.fetch<Methods43['put']['resBody']>(prefix, `/api/1/segments/${val17}/tags/${val18}`, 'PUT', option, 'URLSearchParams').json(),
                 $put: async (option: { data: Methods43['put']['reqBody'], config?: T }) =>
@@ -496,7 +496,7 @@ const api = <T>(client: AspidaClient<T>) => {
           })
         },
         tags: {
-          _id: (val19: number | string) => ({
+          _id: (val19: number) => ({
             get: (option: { query: Methods45['get']['query'], config?: T }) =>
               client.fetch<Methods45['get']['resBody']>(prefix, `/api/1/tags/${val19}`, 'GET', option).json(),
             $get: async (option: { query: Methods45['get']['query'], config?: T }) =>
@@ -521,7 +521,7 @@ const api = <T>(client: AspidaClient<T>) => {
         },
         taxes: {
           codes: {
-            _code: (val20: number | string) => ({
+            _code: (val20: number) => ({
               get: (option?: { config?: T }) =>
                 client.fetch<Methods47['get']['resBody']>(prefix, `/api/1/taxes/codes/${val20}`, 'GET', option).json(),
               $get: async (option?: { config?: T }) =>
@@ -533,7 +533,7 @@ const api = <T>(client: AspidaClient<T>) => {
               (await client.fetch<Methods46['get']['resBody']>(prefix, '/api/1/taxes/codes', 'GET', option).json()).data
           },
           companies: {
-            _company_id: (val21: number | string) => ({
+            _company_id: (val21: number) => ({
               get: (option?: { config?: T }) =>
                 client.fetch<Methods48['get']['resBody']>(prefix, `/api/1/taxes/companies/${val21}`, 'GET', option).json(),
               $get: async (option?: { config?: T }) =>
@@ -542,7 +542,7 @@ const api = <T>(client: AspidaClient<T>) => {
           }
         },
         transfers: {
-          _id: (val22: number | string) => ({
+          _id: (val22: number) => ({
             get: (option: { query: Methods50['get']['query'], config?: T }) =>
               client.fetch<Methods50['get']['resBody']>(prefix, `/api/1/transfers/${val22}`, 'GET', option).json(),
             $get: async (option: { query: Methods50['get']['query'], config?: T }) =>
@@ -588,7 +588,7 @@ const api = <T>(client: AspidaClient<T>) => {
             (await client.fetch<Methods51['get']['resBody']>(prefix, '/api/1/users', 'GET', option).json()).data
         },
         wallet_txns: {
-          _id: (val23: number | string) => ({
+          _id: (val23: number) => ({
             get: (option: { query: Methods55['get']['query'], config?: T }) =>
               client.fetch<Methods55['get']['resBody']>(prefix, `/api/1/wallet_txns/${val23}`, 'GET', option).json(),
             $get: async (option: { query: Methods55['get']['query'], config?: T }) =>
@@ -609,7 +609,7 @@ const api = <T>(client: AspidaClient<T>) => {
         },
         walletables: {
           _type: (val24: number | string) => ({
-            _id: (val25: number | string) => ({
+            _id: (val25: number) => ({
               get: (option: { query: Methods57['get']['query'], config?: T }) =>
                 client.fetch<Methods57['get']['resBody']>(prefix, `/api/1/walletables/${val24}/${val25}`, 'GET', option).json(),
               $get: async (option: { query: Methods57['get']['query'], config?: T }) =>

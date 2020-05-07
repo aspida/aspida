@@ -104,7 +104,7 @@ const methodsToHandler = (
   methodCallback: ServerMethods<any, any>[LowerHttpMethod],
   numberTypeParams: string[]
 ): RequestHandler => async (req, res) => {
-  const result = (await methodCallback({
+  const { status, resBody, resHeaders } = (await methodCallback({
     query: req.query,
     path: req.path,
     method: req.method as HttpMethod,
@@ -120,11 +120,11 @@ const methodsToHandler = (
     user: (req as any).user
   }).catch(() => ({ status: 500, resBody: 'Internal Server Error' }))) as AllResponse<any, any>
 
-  for (const key in result.resHeaders) {
-    res.setHeader(key, result.resHeaders[key])
+  for (const key in resHeaders) {
+    res.setHeader(key, resHeaders[key])
   }
 
-  res.status(result.status).json(result.resBody)
+  res.status(status).send(resBody)
 }
 
 export const createRouter = (ctrl: ControllerTree, numberTypeParams: string[] = []) => {
