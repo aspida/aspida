@@ -30,14 +30,24 @@ export default (
               .replace(/\/$/, '')
               .split('/')
               .slice(1)
-              .map(p => getDirName(p /* , openapi.paths[path] */)),
+              .map(p =>
+                getDirName(
+                  p,
+                  openapi.paths[path].parameters?.map(p =>
+                    isRefObject(p) ? resolveParamsRef(openapi, p.$ref) : p
+                  )
+                )
+              ),
             ...(isParent ? ['index'] : [])
           ]
           const methods = Object.keys(openapi.paths[path])
+            .filter((method): method is typeof methodNames[number] =>
+              methodNames.includes(method as typeof methodNames[number])
+            )
             .map<Prop | null>(method => {
-              const target = openapi.paths[path][method as typeof methodNames[number]]
+              const target = openapi.paths[path][method]!
 
-              if (!target || target.deprecated) return null
+              if (target.deprecated) return null
 
               const params: Prop[] = []
 
