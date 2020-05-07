@@ -8,10 +8,11 @@ import { Methods as Methods3 } from './v1.1/2/_hogeId@HogeId/entries.json'
 import { Methods as Methods4 } from './v1.1/2/_hogeId@HogeId/test-4/index'
 import { Methods as Methods5 } from './v1.1/2/_hogeId@HogeId/test-4/_fugaId'
 import { Methods as Methods6 } from './v1.1/2/_hogeId@HogeId/test-4/fuga aa'
-import { Methods as Methods7 } from './v1.1/3.1'
-import { Methods as Methods8 } from './v1.1/_articleId.json'
-import { Methods as Methods9 } from './v1.1/users/_userId@User[\'id\']'
-import { Methods as Methods10 } from './v2.0/index'
+import { Methods as Methods7 } from './v1.1/2/_hogeId@number'
+import { Methods as Methods8 } from './v1.1/3.1'
+import { Methods as Methods9 } from './v1.1/_articleId.json'
+import { Methods as Methods10 } from './v1.1/users/_userId@User[\'id\']'
+import { Methods as Methods11 } from './v2.0/index'
 
 const api = <T>(client: AspidaClient<T>) => {
   const prefix = (client.baseURL === undefined ? 'https://example.com/api/' : client.baseURL).replace(/\/$/, '')
@@ -25,7 +26,7 @@ const api = <T>(client: AspidaClient<T>) => {
     }),
     v1_1: {
       $2: {
-        _hogeId: (val1: ApiTypes.HogeId) => ({
+        _hogeId_0: (val1: ApiTypes.HogeId) => ({
           entries_json: {
             get: (option?: { config?: T }) =>
               client.fetch<Methods3['get']['resBody']>(prefix, `/v1.1/2/${val1}/entries.json`, 'GET', option).json(),
@@ -86,34 +87,40 @@ const api = <T>(client: AspidaClient<T>) => {
             $delete: async (option: { query: Methods4['delete']['query'], config?: T }) =>
               (await client.fetch<Methods4['delete']['resBody']>(prefix, `/v1.1/2/${val1}/test-4`, 'DELETE', option).json()).data
           }
+        }),
+        _hogeId_1: (val3: number) => ({
+          get: (option: { query?: Methods7['get']['query'], headers: Methods7['get']['reqHeaders'], config?: T }) =>
+            client.fetch<Methods7['get']['resBody']>(prefix, `/v1.1/2/${val3}`, 'GET', option).json(),
+          $get: async (option: { query?: Methods7['get']['query'], headers: Methods7['get']['reqHeaders'], config?: T }) =>
+            (await client.fetch<Methods7['get']['resBody']>(prefix, `/v1.1/2/${val3}`, 'GET', option).json()).data
         })
       },
       $3_1: {
-        get: (option: { query?: Methods7['get']['query'], headers: Methods7['get']['reqHeaders'], config?: T }) =>
-          client.fetch<Methods7['get']['resBody']>(prefix, '/v1.1/3.1', 'GET', option).json(),
-        $get: async (option: { query?: Methods7['get']['query'], headers: Methods7['get']['reqHeaders'], config?: T }) =>
-          (await client.fetch<Methods7['get']['resBody']>(prefix, '/v1.1/3.1', 'GET', option).json()).data,
-        post: (option: { data?: Methods7['post']['reqBody'], query: Methods7['post']['query'], config?: T }) =>
-          client.fetch<Methods7['post']['resBody']>(prefix, '/v1.1/3.1', 'POST', option, 'URLSearchParams').json(),
-        $post: async (option: { data?: Methods7['post']['reqBody'], query: Methods7['post']['query'], config?: T }) =>
-          (await client.fetch<Methods7['post']['resBody']>(prefix, '/v1.1/3.1', 'POST', option, 'URLSearchParams').json()).data
+        get: (option: { query?: Methods8['get']['query'], headers: Methods8['get']['reqHeaders'], config?: T }) =>
+          client.fetch<Methods8['get']['resBody']>(prefix, '/v1.1/3.1', 'GET', option).json(),
+        $get: async (option: { query?: Methods8['get']['query'], headers: Methods8['get']['reqHeaders'], config?: T }) =>
+          (await client.fetch<Methods8['get']['resBody']>(prefix, '/v1.1/3.1', 'GET', option).json()).data,
+        post: (option: { data?: Methods8['post']['reqBody'], query: Methods8['post']['query'], config?: T }) =>
+          client.fetch<Methods8['post']['resBody']>(prefix, '/v1.1/3.1', 'POST', option, 'URLSearchParams').json(),
+        $post: async (option: { data?: Methods8['post']['reqBody'], query: Methods8['post']['query'], config?: T }) =>
+          (await client.fetch<Methods8['post']['resBody']>(prefix, '/v1.1/3.1', 'POST', option, 'URLSearchParams').json()).data
       },
-      _articleId_json: (val3: number | string) => ({
+      _articleId_json: (val4: number | string) => ({
         get: (option?: { config?: T }) =>
-          client.fetch<Methods8['get']['resBody']>(prefix, `/v1.1/${val3}.json`, 'GET', option).json(),
+          client.fetch<Methods9['get']['resBody']>(prefix, `/v1.1/${val4}.json`, 'GET', option).json(),
         $get: async (option?: { config?: T }) =>
-          (await client.fetch<Methods8['get']['resBody']>(prefix, `/v1.1/${val3}.json`, 'GET', option).json()).data
+          (await client.fetch<Methods9['get']['resBody']>(prefix, `/v1.1/${val4}.json`, 'GET', option).json()).data
       }),
       users: {
-        _userId: (val4: ApiTypes.User['id']) => ({
-          get: (option: { query: Methods9['get']['query'], headers: Methods9['get']['reqHeaders'], config?: T }) =>
-            client.fetch<Methods9['get']['resBody']>(prefix, `/v1.1/users/${val4}`, 'GET', option).json(),
-          $get: async (option: { query: Methods9['get']['query'], headers: Methods9['get']['reqHeaders'], config?: T }) =>
-            (await client.fetch<Methods9['get']['resBody']>(prefix, `/v1.1/users/${val4}`, 'GET', option).json()).data,
-          post: (option: { query: Methods9['post']['query'], config?: T }) =>
-            client.fetch<Methods9['post']['resBody']>(prefix, `/v1.1/users/${val4}`, 'POST', option).json(),
-          $post: async (option: { query: Methods9['post']['query'], config?: T }) =>
-            (await client.fetch<Methods9['post']['resBody']>(prefix, `/v1.1/users/${val4}`, 'POST', option).json()).data
+        _userId: (val5: ApiTypes.User['id']) => ({
+          get: (option: { query: Methods10['get']['query'], headers: Methods10['get']['reqHeaders'], config?: T }) =>
+            client.fetch<Methods10['get']['resBody']>(prefix, `/v1.1/users/${val5}`, 'GET', option).json(),
+          $get: async (option: { query: Methods10['get']['query'], headers: Methods10['get']['reqHeaders'], config?: T }) =>
+            (await client.fetch<Methods10['get']['resBody']>(prefix, `/v1.1/users/${val5}`, 'GET', option).json()).data,
+          post: (option: { query: Methods10['post']['query'], config?: T }) =>
+            client.fetch<Methods10['post']['resBody']>(prefix, `/v1.1/users/${val5}`, 'POST', option).json(),
+          $post: async (option: { query: Methods10['post']['query'], config?: T }) =>
+            (await client.fetch<Methods10['post']['resBody']>(prefix, `/v1.1/users/${val5}`, 'POST', option).json()).data
         })
       },
       get: (option?: { query?: Methods2['get']['query'], config?: T }) =>
@@ -122,10 +129,10 @@ const api = <T>(client: AspidaClient<T>) => {
         (await client.fetch<Methods2['get']['resBody']>(prefix, '/v1.1', 'GET', option).json()).data
     },
     v2_0: {
-      get: (option: { data: Methods10['get']['reqBody'], query: Methods10['get']['query'], headers: Methods10['get']['reqHeaders'], config?: T }) =>
-        client.fetch<Methods10['get']['resBody'], Methods10['get']['resHeaders']>(prefix, '/v2.0', 'GET', option, 'FormData').json(),
-      $get: async (option: { data: Methods10['get']['reqBody'], query: Methods10['get']['query'], headers: Methods10['get']['reqHeaders'], config?: T }) =>
-        (await client.fetch<Methods10['get']['resBody'], Methods10['get']['resHeaders']>(prefix, '/v2.0', 'GET', option, 'FormData').json()).data
+      get: (option: { data: Methods11['get']['reqBody'], query: Methods11['get']['query'], headers: Methods11['get']['reqHeaders'], config?: T }) =>
+        client.fetch<Methods11['get']['resBody'], Methods11['get']['resHeaders']>(prefix, '/v2.0', 'GET', option, 'FormData').json(),
+      $get: async (option: { data: Methods11['get']['reqBody'], query: Methods11['get']['query'], headers: Methods11['get']['reqHeaders'], config?: T }) =>
+        (await client.fetch<Methods11['get']['resBody'], Methods11['get']['resHeaders']>(prefix, '/v2.0', 'GET', option, 'FormData').json()).data
     },
     get: (option?: { query?: Methods0['get']['query'], headers?: Methods0['get']['reqHeaders'], config?: T }) =>
       client.fetch<Methods0['get']['resBody']>(prefix, '', 'GET', option).formData(),

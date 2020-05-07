@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { AspidaClient } from 'aspida'
-import { Methods as Methods0 } from './auth/_provider/callback'
+import { Methods as Methods0 } from './auth/_provider@string/callback'
 import { Methods as Methods1 } from './auth/email-confirmation'
 import { Methods as Methods2 } from './auth/forgot-password'
 import { Methods as Methods3 } from './auth/local/index'
@@ -11,24 +11,24 @@ import { Methods as Methods7 } from './connect/_any/index'
 import { Methods as Methods8 } from './email'
 import { Methods as Methods9 } from './upload'
 import { Methods as Methods10 } from './upload/files/index'
-import { Methods as Methods11 } from './upload/files/_id'
+import { Methods as Methods11 } from './upload/files/_id@string'
 import { Methods as Methods12 } from './upload/files/count'
-import { Methods as Methods13 } from './upload/search/_id'
+import { Methods as Methods13 } from './upload/search/_id@string'
 import { Methods as Methods14 } from './users/index'
-import { Methods as Methods15 } from './users/_id'
+import { Methods as Methods15 } from './users/_id@string'
 import { Methods as Methods16 } from './users/me'
 import { Methods as Methods17 } from './users-permissions/init'
 import { Methods as Methods18 } from './users-permissions/roles/index'
-import { Methods as Methods19 } from './users-permissions/roles/_id'
-import { Methods as Methods20 } from './users-permissions/roles/_role'
-import { Methods as Methods21 } from './users-permissions/search/_id'
+import { Methods as Methods19 } from './users-permissions/roles/_id@string'
+import { Methods as Methods20 } from './users-permissions/roles/_role@string'
+import { Methods as Methods21 } from './users-permissions/search/_id@string'
 
 const api = <T>(client: AspidaClient<T>) => {
   const prefix = (client.baseURL === undefined ? 'http://localhost:1337' : client.baseURL).replace(/\/$/, '')
 
   return {
     auth: {
-      _provider: (val0: number | string) => ({
+      _provider: (val0: string) => ({
         callback: {
           get: (option?: { config?: T }) =>
             client.fetch<Methods0['get']['resBody']>(prefix, `/auth/${val0}/callback`, 'GET', option).json(),
@@ -89,7 +89,7 @@ const api = <T>(client: AspidaClient<T>) => {
     },
     upload: {
       files: {
-        _id: (val2: number | string) => ({
+        _id: (val2: string) => ({
           get: (option?: { config?: T }) =>
             client.fetch<Methods11['get']['resBody']>(prefix, `/upload/files/${val2}`, 'GET', option).json(),
           $get: async (option?: { config?: T }) =>
@@ -111,7 +111,7 @@ const api = <T>(client: AspidaClient<T>) => {
           (await client.fetch<Methods10['get']['resBody']>(prefix, '/upload/files', 'GET', option).json()).data
       },
       search: {
-        _id: (val3: number | string) => ({
+        _id: (val3: string) => ({
           get: (option?: { config?: T }) =>
             client.fetch<Methods13['get']['resBody']>(prefix, `/upload/search/${val3}`, 'GET', option).json(),
           $get: async (option?: { config?: T }) =>
@@ -124,7 +124,7 @@ const api = <T>(client: AspidaClient<T>) => {
         (await client.fetch<Methods9['post']['resBody']>(prefix, '/upload', 'POST', option).json()).data
     },
     users: {
-      _id: (val4: number | string) => ({
+      _id: (val4: string) => ({
         get: (option?: { config?: T }) =>
           client.fetch<Methods15['get']['resBody']>(prefix, `/users/${val4}`, 'GET', option).json(),
         $get: async (option?: { config?: T }) =>
@@ -157,13 +157,13 @@ const api = <T>(client: AspidaClient<T>) => {
           (await client.fetch<Methods17['get']['resBody']>(prefix, '/users-permissions/init', 'GET', option).json()).data
       },
       roles: {
-        _id: (val5: number | string) => ({
+        _id: (val5: string) => ({
           get: (option?: { config?: T }) =>
             client.fetch<Methods19['get']['resBody']>(prefix, `/users-permissions/roles/${val5}`, 'GET', option).json(),
           $get: async (option?: { config?: T }) =>
             (await client.fetch<Methods19['get']['resBody']>(prefix, `/users-permissions/roles/${val5}`, 'GET', option).json()).data
         }),
-        _role: (val6: number | string) => ({
+        _role: (val6: string) => ({
           put: (option: { data: Methods20['put']['reqBody'], config?: T }) =>
             client.fetch<Methods20['put']['resBody']>(prefix, `/users-permissions/roles/${val6}`, 'PUT', option).json(),
           $put: async (option: { data: Methods20['put']['reqBody'], config?: T }) =>
@@ -183,7 +183,7 @@ const api = <T>(client: AspidaClient<T>) => {
           (await client.fetch<Methods18['post']['resBody']>(prefix, '/users-permissions/roles', 'POST', option).json()).data
       },
       search: {
-        _id: (val7: number | string) => ({
+        _id: (val7: string) => ({
           get: (option?: { query?: Methods21['get']['query'], config?: T }) =>
             client.fetch<Methods21['get']['resBody']>(prefix, `/users-permissions/search/${val7}`, 'GET', option).json(),
           $get: async (option?: { query?: Methods21['get']['query'], config?: T }) =>

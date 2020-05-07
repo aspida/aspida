@@ -1,14 +1,14 @@
 /* eslint-disable */
 import { AspidaClient } from 'aspida'
 import { Methods as Methods0 } from './pet/index'
-import { Methods as Methods1 } from './pet/_petId/index'
-import { Methods as Methods2 } from './pet/_petId/uploadImage'
+import { Methods as Methods1 } from './pet/_petId@number/index'
+import { Methods as Methods2 } from './pet/_petId@number/uploadImage'
 import { Methods as Methods3 } from './pet/findByStatus'
 import { Methods as Methods4 } from './store/inventory'
 import { Methods as Methods5 } from './store/order/index'
-import { Methods as Methods6 } from './store/order/_orderId'
+import { Methods as Methods6 } from './store/order/_orderId@number'
 import { Methods as Methods7 } from './user/index'
-import { Methods as Methods8 } from './user/_username'
+import { Methods as Methods8 } from './user/_username@string'
 import { Methods as Methods9 } from './user/createWithArray'
 import { Methods as Methods10 } from './user/createWithList'
 import { Methods as Methods11 } from './user/login'
@@ -18,7 +18,7 @@ const api = <T>(client: AspidaClient<T>) => {
 
   return {
     pet: {
-      _petId: (val0: number | string) => ({
+      _petId: (val0: number) => ({
         uploadImage: {
           post: (option?: { data?: Methods2['post']['reqBody'], config?: T }) =>
             client.fetch<Methods2['post']['resBody']>(prefix, `/pet/${val0}/uploadImage`, 'POST', option, 'FormData').json(),
@@ -61,7 +61,7 @@ const api = <T>(client: AspidaClient<T>) => {
           (await client.fetch<Methods4['get']['resBody']>(prefix, '/store/inventory', 'GET', option).json()).data
       },
       order: {
-        _orderId: (val1: number | string) => ({
+        _orderId: (val1: number) => ({
           get: (option?: { config?: T }) =>
             client.fetch<Methods6['get']['resBody']>(prefix, `/store/order/${val1}`, 'GET', option).json(),
           $get: async (option?: { config?: T }) =>
@@ -78,7 +78,7 @@ const api = <T>(client: AspidaClient<T>) => {
       }
     },
     user: {
-      _username: (val2: number | string) => ({
+      _username: (val2: string) => ({
         get: (option?: { config?: T }) =>
           client.fetch<Methods8['get']['resBody']>(prefix, `/user/${val2}`, 'GET', option).json(),
         $get: async (option?: { config?: T }) =>
