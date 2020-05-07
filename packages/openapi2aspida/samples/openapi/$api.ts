@@ -1,43 +1,43 @@
 /* eslint-disable */
 import { AspidaClient } from 'aspida'
 import { Methods as Methods0 } from './api/stream/v1/stories/index'
-import { Methods as Methods1 } from './api/stream/v1/stories/_storyId'
+import { Methods as Methods1 } from './api/stream/v1/stories/_storyId@number'
 import { Methods as Methods2 } from './api/v1/me'
 import { Methods as Methods3 } from './api/v1/mixes/index'
-import { Methods as Methods4 } from './api/v1/mixes/_id'
-import { Methods as Methods5 } from './api/v1/mixes/_mixId/cards'
-import { Methods as Methods6 } from './api/v1/mixes/_mixId/url'
+import { Methods as Methods4 } from './api/v1/mixes/_id@string'
+import { Methods as Methods5 } from './api/v1/mixes/_mixId@string/cards'
+import { Methods as Methods6 } from './api/v1/mixes/_mixId@string/url'
 import { Methods as Methods7 } from './api/v1/parse/index'
 import { Methods as Methods8 } from './api/v1/parse/image'
 import { Methods as Methods9 } from './api/v1/token'
 import { Methods as Methods10 } from './api/v3/2fa'
 import { Methods as Methods11 } from './api/v3/channels/index'
-import { Methods as Methods12 } from './api/v3/channels/_channelId/index'
-import { Methods as Methods13 } from './api/v3/channels/_channelId/chats/index'
-import { Methods as Methods14 } from './api/v3/channels/_channelId/chats/_chatId/index'
-import { Methods as Methods15 } from './api/v3/channels/_channelId/chats/_chatId/items/index'
-import { Methods as Methods16 } from './api/v3/channels/_channelId/chats/_chatId/items/_itemId'
-import { Methods as Methods17 } from './api/v3/channels/_channelId/chats/_chatId/items/audio'
-import { Methods as Methods18 } from './api/v3/channels/_channelId/chats/_chatId/items/image'
-import { Methods as Methods19 } from './api/v3/channels/_channelId/chats/_chatId/items/video'
-import { Methods as Methods20 } from './api/v3/channels/_channelId/chats/_chatId/itemslist'
-import { Methods as Methods21 } from './api/v3/channels/_channelId/chats/_chatId/users/index'
-import { Methods as Methods22 } from './api/v3/channels/_channelId/chats/_chatId/users/remove'
-import { Methods as Methods23 } from './api/v3/channels/_channelId/news-feed'
-import { Methods as Methods24 } from './api/v3/channels/_channelId/notifications'
-import { Methods as Methods25 } from './api/v3/chats/_chatId/items/index'
-import { Methods as Methods26 } from './api/v3/chats/_chatId/items/_itemId'
-import { Methods as Methods27 } from './api/v3/chats/_chatId/items/audio'
-import { Methods as Methods28 } from './api/v3/chats/_chatId/items/image'
-import { Methods as Methods29 } from './api/v3/chats/_chatId/items/video'
+import { Methods as Methods12 } from './api/v3/channels/_channelId@number/chats/_chatId@number/items/_itemId@number'
+import { Methods as Methods13 } from './api/v3/channels/_channelId@number/news-feed'
+import { Methods as Methods14 } from './api/v3/channels/_channelId@string/index'
+import { Methods as Methods15 } from './api/v3/channels/_channelId@string/chats/index'
+import { Methods as Methods16 } from './api/v3/channels/_channelId@string/chats/_chatId@string/index'
+import { Methods as Methods17 } from './api/v3/channels/_channelId@string/chats/_chatId@string/items/index'
+import { Methods as Methods18 } from './api/v3/channels/_channelId@string/chats/_chatId@string/items/audio'
+import { Methods as Methods19 } from './api/v3/channels/_channelId@string/chats/_chatId@string/items/image'
+import { Methods as Methods20 } from './api/v3/channels/_channelId@string/chats/_chatId@string/items/video'
+import { Methods as Methods21 } from './api/v3/channels/_channelId@string/chats/_chatId@string/itemslist'
+import { Methods as Methods22 } from './api/v3/channels/_channelId@string/chats/_chatId@string/users/index'
+import { Methods as Methods23 } from './api/v3/channels/_channelId@string/chats/_chatId@string/users/remove'
+import { Methods as Methods24 } from './api/v3/channels/_channelId@string/notifications'
+import { Methods as Methods25 } from './api/v3/chats/_chatId@number/items/_itemId@number'
+import { Methods as Methods26 } from './api/v3/chats/_chatId@string/items/index'
+import { Methods as Methods27 } from './api/v3/chats/_chatId@string/items/audio'
+import { Methods as Methods28 } from './api/v3/chats/_chatId@string/items/image'
+import { Methods as Methods29 } from './api/v3/chats/_chatId@string/items/video'
 import { Methods as Methods30 } from './api/v3/chats/keys'
 import { Methods as Methods31 } from './api/v3/extension/audio'
 import { Methods as Methods32 } from './api/v3/extension/image'
 import { Methods as Methods33 } from './api/v3/extension/parse'
-import { Methods as Methods34 } from './api/v3/extension/story/_storyId/index'
-import { Methods as Methods35 } from './api/v3/extension/story/_storyId/audio'
-import { Methods as Methods36 } from './api/v3/extension/story/_storyId/image'
-import { Methods as Methods37 } from './api/v3/extension/story/_storyId/video'
+import { Methods as Methods34 } from './api/v3/extension/story/_storyId@string/index'
+import { Methods as Methods35 } from './api/v3/extension/story/_storyId@string/audio'
+import { Methods as Methods36 } from './api/v3/extension/story/_storyId@string/image'
+import { Methods as Methods37 } from './api/v3/extension/story/_storyId@string/video'
 import { Methods as Methods38 } from './api/v3/extension/video'
 import { Methods as Methods39 } from './api/v3/fcm_token'
 import { Methods as Methods40 } from './api/v3/info'
@@ -46,11 +46,11 @@ import { Methods as Methods42 } from './api/v3/logout'
 import { Methods as Methods43 } from './api/v3/me'
 import { Methods as Methods44 } from './api/v3/organisation/index'
 import { Methods as Methods45 } from './api/v3/organisation/users'
-import { Methods as Methods46 } from './api/v3/stories/_storyId/items/index'
-import { Methods as Methods47 } from './api/v3/stories/_storyId/items/_itemId/index'
-import { Methods as Methods48 } from './api/v3/stories/_storyId/items/_itemId/reaction'
+import { Methods as Methods46 } from './api/v3/stories/_storyId@number/items/index'
+import { Methods as Methods47 } from './api/v3/stories/_storyId@number/items/_itemId@number/index'
+import { Methods as Methods48 } from './api/v3/stories/_storyId@number/items/_itemId@number/reaction'
 import { Methods as Methods49 } from './api/v3/user/index'
-import { Methods as Methods50 } from './api/v3/user/_userId'
+import { Methods as Methods50 } from './api/v3/user/_userId@string'
 import { Methods as Methods51 } from './api/v3/user/profile'
 
 const api = <T>(client: AspidaClient<T>) => {
@@ -61,7 +61,7 @@ const api = <T>(client: AspidaClient<T>) => {
       stream: {
         v1: {
           stories: {
-            _storyId: (val0: number | string) => ({
+            _storyId: (val0: number) => ({
               get: (option: { query: Methods1['get']['query'], config?: T }) =>
                 client.fetch<Methods1['get']['resBody']>(prefix, `/api/stream/v1/stories/${val0}`, 'GET', option).json(),
               $get: async (option: { query: Methods1['get']['query'], config?: T }) =>
@@ -82,13 +82,13 @@ const api = <T>(client: AspidaClient<T>) => {
             (await client.fetch<Methods2['get']['resBody']>(prefix, '/api/v1/me', 'GET', option).json()).data
         },
         mixes: {
-          _id: (val1: number | string) => ({
+          _id: (val1: string) => ({
             put: (option?: { data?: Methods4['put']['reqBody'], config?: T }) =>
               client.fetch<void>(prefix, `/api/v1/mixes/${val1}`, 'PUT', option).send(),
             $put: async (option?: { data?: Methods4['put']['reqBody'], config?: T }) =>
               (await client.fetch<void>(prefix, `/api/v1/mixes/${val1}`, 'PUT', option).send()).data
           }),
-          _mixId: (val2: number | string) => ({
+          _mixId: (val2: string) => ({
             cards: {
               post: (option?: { data?: Methods5['post']['reqBody'], config?: T }) =>
                 client.fetch<void>(prefix, `/api/v1/mixes/${val2}/cards`, 'POST', option).send(),
@@ -138,107 +138,115 @@ const api = <T>(client: AspidaClient<T>) => {
             (await client.fetch<Methods10['post']['resBody']>(prefix, '/api/v3/2fa', 'POST', option).json()).data
         },
         channels: {
-          _channelId: (val3: number | string) => ({
+          _channelId: (val3: number) => ({
             chats: {
-              _chatId: (val4: number | string) => ({
+              _chatId: (val4: number) => ({
                 items: {
-                  _itemId: (val5: number | string) => ({
-                    post: (option?: { data?: Methods16['post']['reqBody'], headers?: Methods16['post']['reqHeaders'], config?: T }) =>
-                      client.fetch<Methods16['post']['resBody']>(prefix, `/api/v3/channels/${val3}/chats/${val4}/items/${val5}`, 'POST', option).json(),
-                    $post: async (option?: { data?: Methods16['post']['reqBody'], headers?: Methods16['post']['reqHeaders'], config?: T }) =>
-                      (await client.fetch<Methods16['post']['resBody']>(prefix, `/api/v3/channels/${val3}/chats/${val4}/items/${val5}`, 'POST', option).json()).data
-                  }),
+                  _itemId: (val5: number) => ({
+                    post: (option?: { data?: Methods12['post']['reqBody'], headers?: Methods12['post']['reqHeaders'], config?: T }) =>
+                      client.fetch<Methods12['post']['resBody']>(prefix, `/api/v3/channels/${val3}/chats/${val4}/items/${val5}`, 'POST', option).json(),
+                    $post: async (option?: { data?: Methods12['post']['reqBody'], headers?: Methods12['post']['reqHeaders'], config?: T }) =>
+                      (await client.fetch<Methods12['post']['resBody']>(prefix, `/api/v3/channels/${val3}/chats/${val4}/items/${val5}`, 'POST', option).json()).data
+                  })
+                }
+              })
+            },
+            news_feed: {
+              get: (option?: { query?: Methods13['get']['query'], headers?: Methods13['get']['reqHeaders'], config?: T }) =>
+                client.fetch<Methods13['get']['resBody']>(prefix, `/api/v3/channels/${val3}/news-feed`, 'GET', option).json(),
+              $get: async (option?: { query?: Methods13['get']['query'], headers?: Methods13['get']['reqHeaders'], config?: T }) =>
+                (await client.fetch<Methods13['get']['resBody']>(prefix, `/api/v3/channels/${val3}/news-feed`, 'GET', option).json()).data
+            }
+          }),
+          _channelId: (val6: string) => ({
+            chats: {
+              _chatId: (val7: string) => ({
+                items: {
                   audio: {
-                    post: (option?: { data?: Methods17['post']['reqBody'], headers?: Methods17['post']['reqHeaders'], config?: T }) =>
-                      client.fetch<Methods17['post']['resBody']>(prefix, `/api/v3/channels/${val3}/chats/${val4}/items/audio`, 'POST', option, 'FormData').json(),
-                    $post: async (option?: { data?: Methods17['post']['reqBody'], headers?: Methods17['post']['reqHeaders'], config?: T }) =>
-                      (await client.fetch<Methods17['post']['resBody']>(prefix, `/api/v3/channels/${val3}/chats/${val4}/items/audio`, 'POST', option, 'FormData').json()).data
+                    post: (option?: { data?: Methods18['post']['reqBody'], headers?: Methods18['post']['reqHeaders'], config?: T }) =>
+                      client.fetch<Methods18['post']['resBody']>(prefix, `/api/v3/channels/${val6}/chats/${val7}/items/audio`, 'POST', option, 'FormData').json(),
+                    $post: async (option?: { data?: Methods18['post']['reqBody'], headers?: Methods18['post']['reqHeaders'], config?: T }) =>
+                      (await client.fetch<Methods18['post']['resBody']>(prefix, `/api/v3/channels/${val6}/chats/${val7}/items/audio`, 'POST', option, 'FormData').json()).data
                   },
                   image: {
-                    post: (option?: { data?: Methods18['post']['reqBody'], headers?: Methods18['post']['reqHeaders'], config?: T }) =>
-                      client.fetch<Methods18['post']['resBody']>(prefix, `/api/v3/channels/${val3}/chats/${val4}/items/image`, 'POST', option, 'FormData').json(),
-                    $post: async (option?: { data?: Methods18['post']['reqBody'], headers?: Methods18['post']['reqHeaders'], config?: T }) =>
-                      (await client.fetch<Methods18['post']['resBody']>(prefix, `/api/v3/channels/${val3}/chats/${val4}/items/image`, 'POST', option, 'FormData').json()).data
+                    post: (option?: { data?: Methods19['post']['reqBody'], headers?: Methods19['post']['reqHeaders'], config?: T }) =>
+                      client.fetch<Methods19['post']['resBody']>(prefix, `/api/v3/channels/${val6}/chats/${val7}/items/image`, 'POST', option, 'FormData').json(),
+                    $post: async (option?: { data?: Methods19['post']['reqBody'], headers?: Methods19['post']['reqHeaders'], config?: T }) =>
+                      (await client.fetch<Methods19['post']['resBody']>(prefix, `/api/v3/channels/${val6}/chats/${val7}/items/image`, 'POST', option, 'FormData').json()).data
                   },
                   video: {
-                    post: (option?: { data?: Methods19['post']['reqBody'], headers?: Methods19['post']['reqHeaders'], config?: T }) =>
-                      client.fetch<Methods19['post']['resBody']>(prefix, `/api/v3/channels/${val3}/chats/${val4}/items/video`, 'POST', option, 'FormData').json(),
-                    $post: async (option?: { data?: Methods19['post']['reqBody'], headers?: Methods19['post']['reqHeaders'], config?: T }) =>
-                      (await client.fetch<Methods19['post']['resBody']>(prefix, `/api/v3/channels/${val3}/chats/${val4}/items/video`, 'POST', option, 'FormData').json()).data
+                    post: (option?: { data?: Methods20['post']['reqBody'], headers?: Methods20['post']['reqHeaders'], config?: T }) =>
+                      client.fetch<Methods20['post']['resBody']>(prefix, `/api/v3/channels/${val6}/chats/${val7}/items/video`, 'POST', option, 'FormData').json(),
+                    $post: async (option?: { data?: Methods20['post']['reqBody'], headers?: Methods20['post']['reqHeaders'], config?: T }) =>
+                      (await client.fetch<Methods20['post']['resBody']>(prefix, `/api/v3/channels/${val6}/chats/${val7}/items/video`, 'POST', option, 'FormData').json()).data
                   },
-                  get: (option?: { query?: Methods15['get']['query'], headers?: Methods15['get']['reqHeaders'], config?: T }) =>
-                    client.fetch<Methods15['get']['resBody']>(prefix, `/api/v3/channels/${val3}/chats/${val4}/items`, 'GET', option).json(),
-                  $get: async (option?: { query?: Methods15['get']['query'], headers?: Methods15['get']['reqHeaders'], config?: T }) =>
-                    (await client.fetch<Methods15['get']['resBody']>(prefix, `/api/v3/channels/${val3}/chats/${val4}/items`, 'GET', option).json()).data,
-                  post: (option: { data: Methods15['post']['reqBody'], headers?: Methods15['post']['reqHeaders'], config?: T }) =>
-                    client.fetch<Methods15['post']['resBody']>(prefix, `/api/v3/channels/${val3}/chats/${val4}/items`, 'POST', option).json(),
-                  $post: async (option: { data: Methods15['post']['reqBody'], headers?: Methods15['post']['reqHeaders'], config?: T }) =>
-                    (await client.fetch<Methods15['post']['resBody']>(prefix, `/api/v3/channels/${val3}/chats/${val4}/items`, 'POST', option).json()).data
+                  get: (option?: { query?: Methods17['get']['query'], headers?: Methods17['get']['reqHeaders'], config?: T }) =>
+                    client.fetch<Methods17['get']['resBody']>(prefix, `/api/v3/channels/${val6}/chats/${val7}/items`, 'GET', option).json(),
+                  $get: async (option?: { query?: Methods17['get']['query'], headers?: Methods17['get']['reqHeaders'], config?: T }) =>
+                    (await client.fetch<Methods17['get']['resBody']>(prefix, `/api/v3/channels/${val6}/chats/${val7}/items`, 'GET', option).json()).data,
+                  post: (option: { data: Methods17['post']['reqBody'], headers?: Methods17['post']['reqHeaders'], config?: T }) =>
+                    client.fetch<Methods17['post']['resBody']>(prefix, `/api/v3/channels/${val6}/chats/${val7}/items`, 'POST', option).json(),
+                  $post: async (option: { data: Methods17['post']['reqBody'], headers?: Methods17['post']['reqHeaders'], config?: T }) =>
+                    (await client.fetch<Methods17['post']['resBody']>(prefix, `/api/v3/channels/${val6}/chats/${val7}/items`, 'POST', option).json()).data
                 },
                 itemslist: {
-                  get: (option: { query: Methods20['get']['query'], headers?: Methods20['get']['reqHeaders'], config?: T }) =>
-                    client.fetch<Methods20['get']['resBody']>(prefix, `/api/v3/channels/${val3}/chats/${val4}/itemslist`, 'GET', option).json(),
-                  $get: async (option: { query: Methods20['get']['query'], headers?: Methods20['get']['reqHeaders'], config?: T }) =>
-                    (await client.fetch<Methods20['get']['resBody']>(prefix, `/api/v3/channels/${val3}/chats/${val4}/itemslist`, 'GET', option).json()).data
+                  get: (option: { query: Methods21['get']['query'], headers?: Methods21['get']['reqHeaders'], config?: T }) =>
+                    client.fetch<Methods21['get']['resBody']>(prefix, `/api/v3/channels/${val6}/chats/${val7}/itemslist`, 'GET', option).json(),
+                  $get: async (option: { query: Methods21['get']['query'], headers?: Methods21['get']['reqHeaders'], config?: T }) =>
+                    (await client.fetch<Methods21['get']['resBody']>(prefix, `/api/v3/channels/${val6}/chats/${val7}/itemslist`, 'GET', option).json()).data
                 },
                 users: {
                   remove: {
-                    post: (option: { data: Methods22['post']['reqBody'], headers?: Methods22['post']['reqHeaders'], config?: T }) =>
-                      client.fetch<void>(prefix, `/api/v3/channels/${val3}/chats/${val4}/users/remove`, 'POST', option).send(),
-                    $post: async (option: { data: Methods22['post']['reqBody'], headers?: Methods22['post']['reqHeaders'], config?: T }) =>
-                      (await client.fetch<void>(prefix, `/api/v3/channels/${val3}/chats/${val4}/users/remove`, 'POST', option).send()).data
+                    post: (option: { data: Methods23['post']['reqBody'], headers?: Methods23['post']['reqHeaders'], config?: T }) =>
+                      client.fetch<void>(prefix, `/api/v3/channels/${val6}/chats/${val7}/users/remove`, 'POST', option).send(),
+                    $post: async (option: { data: Methods23['post']['reqBody'], headers?: Methods23['post']['reqHeaders'], config?: T }) =>
+                      (await client.fetch<void>(prefix, `/api/v3/channels/${val6}/chats/${val7}/users/remove`, 'POST', option).send()).data
                   },
-                  get: (option?: { headers?: Methods21['get']['reqHeaders'], config?: T }) =>
-                    client.fetch<Methods21['get']['resBody']>(prefix, `/api/v3/channels/${val3}/chats/${val4}/users`, 'GET', option).json(),
-                  $get: async (option?: { headers?: Methods21['get']['reqHeaders'], config?: T }) =>
-                    (await client.fetch<Methods21['get']['resBody']>(prefix, `/api/v3/channels/${val3}/chats/${val4}/users`, 'GET', option).json()).data,
-                  post: (option: { data: Methods21['post']['reqBody'], headers?: Methods21['post']['reqHeaders'], config?: T }) =>
-                    client.fetch<void>(prefix, `/api/v3/channels/${val3}/chats/${val4}/users`, 'POST', option).send(),
-                  $post: async (option: { data: Methods21['post']['reqBody'], headers?: Methods21['post']['reqHeaders'], config?: T }) =>
-                    (await client.fetch<void>(prefix, `/api/v3/channels/${val3}/chats/${val4}/users`, 'POST', option).send()).data,
-                  put: (option: { data: Methods21['put']['reqBody'], headers?: Methods21['put']['reqHeaders'], config?: T }) =>
-                    client.fetch<void>(prefix, `/api/v3/channels/${val3}/chats/${val4}/users`, 'PUT', option).send(),
-                  $put: async (option: { data: Methods21['put']['reqBody'], headers?: Methods21['put']['reqHeaders'], config?: T }) =>
-                    (await client.fetch<void>(prefix, `/api/v3/channels/${val3}/chats/${val4}/users`, 'PUT', option).send()).data
+                  get: (option?: { headers?: Methods22['get']['reqHeaders'], config?: T }) =>
+                    client.fetch<Methods22['get']['resBody']>(prefix, `/api/v3/channels/${val6}/chats/${val7}/users`, 'GET', option).json(),
+                  $get: async (option?: { headers?: Methods22['get']['reqHeaders'], config?: T }) =>
+                    (await client.fetch<Methods22['get']['resBody']>(prefix, `/api/v3/channels/${val6}/chats/${val7}/users`, 'GET', option).json()).data,
+                  post: (option: { data: Methods22['post']['reqBody'], headers?: Methods22['post']['reqHeaders'], config?: T }) =>
+                    client.fetch<void>(prefix, `/api/v3/channels/${val6}/chats/${val7}/users`, 'POST', option).send(),
+                  $post: async (option: { data: Methods22['post']['reqBody'], headers?: Methods22['post']['reqHeaders'], config?: T }) =>
+                    (await client.fetch<void>(prefix, `/api/v3/channels/${val6}/chats/${val7}/users`, 'POST', option).send()).data,
+                  put: (option: { data: Methods22['put']['reqBody'], headers?: Methods22['put']['reqHeaders'], config?: T }) =>
+                    client.fetch<void>(prefix, `/api/v3/channels/${val6}/chats/${val7}/users`, 'PUT', option).send(),
+                  $put: async (option: { data: Methods22['put']['reqBody'], headers?: Methods22['put']['reqHeaders'], config?: T }) =>
+                    (await client.fetch<void>(prefix, `/api/v3/channels/${val6}/chats/${val7}/users`, 'PUT', option).send()).data
                 },
-                get: (option?: { headers?: Methods14['get']['reqHeaders'], config?: T }) =>
-                  client.fetch<Methods14['get']['resBody']>(prefix, `/api/v3/channels/${val3}/chats/${val4}`, 'GET', option).json(),
-                $get: async (option?: { headers?: Methods14['get']['reqHeaders'], config?: T }) =>
-                  (await client.fetch<Methods14['get']['resBody']>(prefix, `/api/v3/channels/${val3}/chats/${val4}`, 'GET', option).json()).data,
-                put: (option: { data: Methods14['put']['reqBody'], headers?: Methods14['put']['reqHeaders'], config?: T }) =>
-                  client.fetch<void>(prefix, `/api/v3/channels/${val3}/chats/${val4}`, 'PUT', option).send(),
-                $put: async (option: { data: Methods14['put']['reqBody'], headers?: Methods14['put']['reqHeaders'], config?: T }) =>
-                  (await client.fetch<void>(prefix, `/api/v3/channels/${val3}/chats/${val4}`, 'PUT', option).send()).data,
-                delete: (option?: { headers?: Methods14['delete']['reqHeaders'], config?: T }) =>
-                  client.fetch<void>(prefix, `/api/v3/channels/${val3}/chats/${val4}`, 'DELETE', option).send(),
-                $delete: async (option?: { headers?: Methods14['delete']['reqHeaders'], config?: T }) =>
-                  (await client.fetch<void>(prefix, `/api/v3/channels/${val3}/chats/${val4}`, 'DELETE', option).send()).data
+                get: (option?: { headers?: Methods16['get']['reqHeaders'], config?: T }) =>
+                  client.fetch<Methods16['get']['resBody']>(prefix, `/api/v3/channels/${val6}/chats/${val7}`, 'GET', option).json(),
+                $get: async (option?: { headers?: Methods16['get']['reqHeaders'], config?: T }) =>
+                  (await client.fetch<Methods16['get']['resBody']>(prefix, `/api/v3/channels/${val6}/chats/${val7}`, 'GET', option).json()).data,
+                put: (option: { data: Methods16['put']['reqBody'], headers?: Methods16['put']['reqHeaders'], config?: T }) =>
+                  client.fetch<void>(prefix, `/api/v3/channels/${val6}/chats/${val7}`, 'PUT', option).send(),
+                $put: async (option: { data: Methods16['put']['reqBody'], headers?: Methods16['put']['reqHeaders'], config?: T }) =>
+                  (await client.fetch<void>(prefix, `/api/v3/channels/${val6}/chats/${val7}`, 'PUT', option).send()).data,
+                delete: (option?: { headers?: Methods16['delete']['reqHeaders'], config?: T }) =>
+                  client.fetch<void>(prefix, `/api/v3/channels/${val6}/chats/${val7}`, 'DELETE', option).send(),
+                $delete: async (option?: { headers?: Methods16['delete']['reqHeaders'], config?: T }) =>
+                  (await client.fetch<void>(prefix, `/api/v3/channels/${val6}/chats/${val7}`, 'DELETE', option).send()).data
               }),
-              get: (option?: { headers?: Methods13['get']['reqHeaders'], config?: T }) =>
-                client.fetch<Methods13['get']['resBody']>(prefix, `/api/v3/channels/${val3}/chats`, 'GET', option).json(),
-              $get: async (option?: { headers?: Methods13['get']['reqHeaders'], config?: T }) =>
-                (await client.fetch<Methods13['get']['resBody']>(prefix, `/api/v3/channels/${val3}/chats`, 'GET', option).json()).data,
-              post: (option: { data: Methods13['post']['reqBody'], headers?: Methods13['post']['reqHeaders'], config?: T }) =>
-                client.fetch<Methods13['post']['resBody']>(prefix, `/api/v3/channels/${val3}/chats`, 'POST', option).json(),
-              $post: async (option: { data: Methods13['post']['reqBody'], headers?: Methods13['post']['reqHeaders'], config?: T }) =>
-                (await client.fetch<Methods13['post']['resBody']>(prefix, `/api/v3/channels/${val3}/chats`, 'POST', option).json()).data
-            },
-            news_feed: {
-              get: (option?: { query?: Methods23['get']['query'], headers?: Methods23['get']['reqHeaders'], config?: T }) =>
-                client.fetch<Methods23['get']['resBody']>(prefix, `/api/v3/channels/${val3}/news-feed`, 'GET', option).json(),
-              $get: async (option?: { query?: Methods23['get']['query'], headers?: Methods23['get']['reqHeaders'], config?: T }) =>
-                (await client.fetch<Methods23['get']['resBody']>(prefix, `/api/v3/channels/${val3}/news-feed`, 'GET', option).json()).data
+              get: (option?: { headers?: Methods15['get']['reqHeaders'], config?: T }) =>
+                client.fetch<Methods15['get']['resBody']>(prefix, `/api/v3/channels/${val6}/chats`, 'GET', option).json(),
+              $get: async (option?: { headers?: Methods15['get']['reqHeaders'], config?: T }) =>
+                (await client.fetch<Methods15['get']['resBody']>(prefix, `/api/v3/channels/${val6}/chats`, 'GET', option).json()).data,
+              post: (option: { data: Methods15['post']['reqBody'], headers?: Methods15['post']['reqHeaders'], config?: T }) =>
+                client.fetch<Methods15['post']['resBody']>(prefix, `/api/v3/channels/${val6}/chats`, 'POST', option).json(),
+              $post: async (option: { data: Methods15['post']['reqBody'], headers?: Methods15['post']['reqHeaders'], config?: T }) =>
+                (await client.fetch<Methods15['post']['resBody']>(prefix, `/api/v3/channels/${val6}/chats`, 'POST', option).json()).data
             },
             notifications: {
               get: (option?: { query?: Methods24['get']['query'], headers?: Methods24['get']['reqHeaders'], config?: T }) =>
-                client.fetch<Methods24['get']['resBody']>(prefix, `/api/v3/channels/${val3}/notifications`, 'GET', option).json(),
+                client.fetch<Methods24['get']['resBody']>(prefix, `/api/v3/channels/${val6}/notifications`, 'GET', option).json(),
               $get: async (option?: { query?: Methods24['get']['query'], headers?: Methods24['get']['reqHeaders'], config?: T }) =>
-                (await client.fetch<Methods24['get']['resBody']>(prefix, `/api/v3/channels/${val3}/notifications`, 'GET', option).json()).data
+                (await client.fetch<Methods24['get']['resBody']>(prefix, `/api/v3/channels/${val6}/notifications`, 'GET', option).json()).data
             },
-            get: (option?: { query?: Methods12['get']['query'], headers?: Methods12['get']['reqHeaders'], config?: T }) =>
-              client.fetch<void>(prefix, `/api/v3/channels/${val3}`, 'GET', option).send(),
-            $get: async (option?: { query?: Methods12['get']['query'], headers?: Methods12['get']['reqHeaders'], config?: T }) =>
-              (await client.fetch<void>(prefix, `/api/v3/channels/${val3}`, 'GET', option).send()).data
+            get: (option?: { query?: Methods14['get']['query'], headers?: Methods14['get']['reqHeaders'], config?: T }) =>
+              client.fetch<void>(prefix, `/api/v3/channels/${val6}`, 'GET', option).send(),
+            $get: async (option?: { query?: Methods14['get']['query'], headers?: Methods14['get']['reqHeaders'], config?: T }) =>
+              (await client.fetch<void>(prefix, `/api/v3/channels/${val6}`, 'GET', option).send()).data
           }),
           get: (option?: { query?: Methods11['get']['query'], headers?: Methods11['get']['reqHeaders'], config?: T }) =>
             client.fetch<Methods11['get']['resBody']>(prefix, '/api/v3/channels', 'GET', option).json(),
@@ -246,44 +254,48 @@ const api = <T>(client: AspidaClient<T>) => {
             (await client.fetch<Methods11['get']['resBody']>(prefix, '/api/v3/channels', 'GET', option).json()).data
         },
         chats: {
-          _chatId: (val6: number | string) => ({
+          _chatId: (val8: number) => ({
             items: {
-              _itemId: (val7: number | string) => ({
-                post: (option?: { data?: Methods26['post']['reqBody'], headers?: Methods26['post']['reqHeaders'], config?: T }) =>
-                  client.fetch<Methods26['post']['resBody']>(prefix, `/api/v3/chats/${val6}/items/${val7}`, 'POST', option).json(),
-                $post: async (option?: { data?: Methods26['post']['reqBody'], headers?: Methods26['post']['reqHeaders'], config?: T }) =>
-                  (await client.fetch<Methods26['post']['resBody']>(prefix, `/api/v3/chats/${val6}/items/${val7}`, 'POST', option).json()).data,
-                get: (option?: { headers?: Methods26['get']['reqHeaders'], config?: T }) =>
-                  client.fetch<Methods26['get']['resBody']>(prefix, `/api/v3/chats/${val6}/items/${val7}`, 'GET', option).json(),
-                $get: async (option?: { headers?: Methods26['get']['reqHeaders'], config?: T }) =>
-                  (await client.fetch<Methods26['get']['resBody']>(prefix, `/api/v3/chats/${val6}/items/${val7}`, 'GET', option).json()).data
-              }),
+              _itemId: (val9: number) => ({
+                post: (option?: { data?: Methods25['post']['reqBody'], headers?: Methods25['post']['reqHeaders'], config?: T }) =>
+                  client.fetch<Methods25['post']['resBody']>(prefix, `/api/v3/chats/${val8}/items/${val9}`, 'POST', option).json(),
+                $post: async (option?: { data?: Methods25['post']['reqBody'], headers?: Methods25['post']['reqHeaders'], config?: T }) =>
+                  (await client.fetch<Methods25['post']['resBody']>(prefix, `/api/v3/chats/${val8}/items/${val9}`, 'POST', option).json()).data,
+                get: (option?: { headers?: Methods25['get']['reqHeaders'], config?: T }) =>
+                  client.fetch<Methods25['get']['resBody']>(prefix, `/api/v3/chats/${val8}/items/${val9}`, 'GET', option).json(),
+                $get: async (option?: { headers?: Methods25['get']['reqHeaders'], config?: T }) =>
+                  (await client.fetch<Methods25['get']['resBody']>(prefix, `/api/v3/chats/${val8}/items/${val9}`, 'GET', option).json()).data
+              })
+            }
+          }),
+          _chatId: (val10: string) => ({
+            items: {
               audio: {
                 post: (option?: { data?: Methods27['post']['reqBody'], headers?: Methods27['post']['reqHeaders'], config?: T }) =>
-                  client.fetch<Methods27['post']['resBody']>(prefix, `/api/v3/chats/${val6}/items/audio`, 'POST', option, 'FormData').json(),
+                  client.fetch<Methods27['post']['resBody']>(prefix, `/api/v3/chats/${val10}/items/audio`, 'POST', option, 'FormData').json(),
                 $post: async (option?: { data?: Methods27['post']['reqBody'], headers?: Methods27['post']['reqHeaders'], config?: T }) =>
-                  (await client.fetch<Methods27['post']['resBody']>(prefix, `/api/v3/chats/${val6}/items/audio`, 'POST', option, 'FormData').json()).data
+                  (await client.fetch<Methods27['post']['resBody']>(prefix, `/api/v3/chats/${val10}/items/audio`, 'POST', option, 'FormData').json()).data
               },
               image: {
                 post: (option?: { data?: Methods28['post']['reqBody'], headers?: Methods28['post']['reqHeaders'], config?: T }) =>
-                  client.fetch<Methods28['post']['resBody']>(prefix, `/api/v3/chats/${val6}/items/image`, 'POST', option, 'FormData').json(),
+                  client.fetch<Methods28['post']['resBody']>(prefix, `/api/v3/chats/${val10}/items/image`, 'POST', option, 'FormData').json(),
                 $post: async (option?: { data?: Methods28['post']['reqBody'], headers?: Methods28['post']['reqHeaders'], config?: T }) =>
-                  (await client.fetch<Methods28['post']['resBody']>(prefix, `/api/v3/chats/${val6}/items/image`, 'POST', option, 'FormData').json()).data
+                  (await client.fetch<Methods28['post']['resBody']>(prefix, `/api/v3/chats/${val10}/items/image`, 'POST', option, 'FormData').json()).data
               },
               video: {
                 post: (option?: { data?: Methods29['post']['reqBody'], headers?: Methods29['post']['reqHeaders'], config?: T }) =>
-                  client.fetch<Methods29['post']['resBody']>(prefix, `/api/v3/chats/${val6}/items/video`, 'POST', option, 'FormData').json(),
+                  client.fetch<Methods29['post']['resBody']>(prefix, `/api/v3/chats/${val10}/items/video`, 'POST', option, 'FormData').json(),
                 $post: async (option?: { data?: Methods29['post']['reqBody'], headers?: Methods29['post']['reqHeaders'], config?: T }) =>
-                  (await client.fetch<Methods29['post']['resBody']>(prefix, `/api/v3/chats/${val6}/items/video`, 'POST', option, 'FormData').json()).data
+                  (await client.fetch<Methods29['post']['resBody']>(prefix, `/api/v3/chats/${val10}/items/video`, 'POST', option, 'FormData').json()).data
               },
-              get: (option?: { query?: Methods25['get']['query'], headers?: Methods25['get']['reqHeaders'], config?: T }) =>
-                client.fetch<Methods25['get']['resBody']>(prefix, `/api/v3/chats/${val6}/items`, 'GET', option).json(),
-              $get: async (option?: { query?: Methods25['get']['query'], headers?: Methods25['get']['reqHeaders'], config?: T }) =>
-                (await client.fetch<Methods25['get']['resBody']>(prefix, `/api/v3/chats/${val6}/items`, 'GET', option).json()).data,
-              post: (option: { data: Methods25['post']['reqBody'], headers?: Methods25['post']['reqHeaders'], config?: T }) =>
-                client.fetch<Methods25['post']['resBody']>(prefix, `/api/v3/chats/${val6}/items`, 'POST', option).json(),
-              $post: async (option: { data: Methods25['post']['reqBody'], headers?: Methods25['post']['reqHeaders'], config?: T }) =>
-                (await client.fetch<Methods25['post']['resBody']>(prefix, `/api/v3/chats/${val6}/items`, 'POST', option).json()).data
+              get: (option?: { query?: Methods26['get']['query'], headers?: Methods26['get']['reqHeaders'], config?: T }) =>
+                client.fetch<Methods26['get']['resBody']>(prefix, `/api/v3/chats/${val10}/items`, 'GET', option).json(),
+              $get: async (option?: { query?: Methods26['get']['query'], headers?: Methods26['get']['reqHeaders'], config?: T }) =>
+                (await client.fetch<Methods26['get']['resBody']>(prefix, `/api/v3/chats/${val10}/items`, 'GET', option).json()).data,
+              post: (option: { data: Methods26['post']['reqBody'], headers?: Methods26['post']['reqHeaders'], config?: T }) =>
+                client.fetch<Methods26['post']['resBody']>(prefix, `/api/v3/chats/${val10}/items`, 'POST', option).json(),
+              $post: async (option: { data: Methods26['post']['reqBody'], headers?: Methods26['post']['reqHeaders'], config?: T }) =>
+                (await client.fetch<Methods26['post']['resBody']>(prefix, `/api/v3/chats/${val10}/items`, 'POST', option).json()).data
             }
           }),
           keys: {
@@ -313,29 +325,29 @@ const api = <T>(client: AspidaClient<T>) => {
               (await client.fetch<Methods33['post']['resBody']>(prefix, '/api/v3/extension/parse', 'POST', option).json()).data
           },
           story: {
-            _storyId: (val8: number | string) => ({
+            _storyId: (val11: string) => ({
               audio: {
                 post: (option?: { data?: Methods35['post']['reqBody'], headers?: Methods35['post']['reqHeaders'], config?: T }) =>
-                  client.fetch<Methods35['post']['resBody']>(prefix, `/api/v3/extension/story/${val8}/audio`, 'POST', option, 'FormData').json(),
+                  client.fetch<Methods35['post']['resBody']>(prefix, `/api/v3/extension/story/${val11}/audio`, 'POST', option, 'FormData').json(),
                 $post: async (option?: { data?: Methods35['post']['reqBody'], headers?: Methods35['post']['reqHeaders'], config?: T }) =>
-                  (await client.fetch<Methods35['post']['resBody']>(prefix, `/api/v3/extension/story/${val8}/audio`, 'POST', option, 'FormData').json()).data
+                  (await client.fetch<Methods35['post']['resBody']>(prefix, `/api/v3/extension/story/${val11}/audio`, 'POST', option, 'FormData').json()).data
               },
               image: {
                 post: (option?: { data?: Methods36['post']['reqBody'], headers?: Methods36['post']['reqHeaders'], config?: T }) =>
-                  client.fetch<Methods36['post']['resBody']>(prefix, `/api/v3/extension/story/${val8}/image`, 'POST', option, 'FormData').json(),
+                  client.fetch<Methods36['post']['resBody']>(prefix, `/api/v3/extension/story/${val11}/image`, 'POST', option, 'FormData').json(),
                 $post: async (option?: { data?: Methods36['post']['reqBody'], headers?: Methods36['post']['reqHeaders'], config?: T }) =>
-                  (await client.fetch<Methods36['post']['resBody']>(prefix, `/api/v3/extension/story/${val8}/image`, 'POST', option, 'FormData').json()).data
+                  (await client.fetch<Methods36['post']['resBody']>(prefix, `/api/v3/extension/story/${val11}/image`, 'POST', option, 'FormData').json()).data
               },
               video: {
                 post: (option?: { data?: Methods37['post']['reqBody'], headers?: Methods37['post']['reqHeaders'], config?: T }) =>
-                  client.fetch<Methods37['post']['resBody']>(prefix, `/api/v3/extension/story/${val8}/video`, 'POST', option, 'FormData').json(),
+                  client.fetch<Methods37['post']['resBody']>(prefix, `/api/v3/extension/story/${val11}/video`, 'POST', option, 'FormData').json(),
                 $post: async (option?: { data?: Methods37['post']['reqBody'], headers?: Methods37['post']['reqHeaders'], config?: T }) =>
-                  (await client.fetch<Methods37['post']['resBody']>(prefix, `/api/v3/extension/story/${val8}/video`, 'POST', option, 'FormData').json()).data
+                  (await client.fetch<Methods37['post']['resBody']>(prefix, `/api/v3/extension/story/${val11}/video`, 'POST', option, 'FormData').json()).data
               },
               post: (option: { data: Methods34['post']['reqBody'], headers?: Methods34['post']['reqHeaders'], config?: T }) =>
-                client.fetch<Methods34['post']['resBody']>(prefix, `/api/v3/extension/story/${val8}`, 'POST', option, 'FormData').json(),
+                client.fetch<Methods34['post']['resBody']>(prefix, `/api/v3/extension/story/${val11}`, 'POST', option, 'FormData').json(),
               $post: async (option: { data: Methods34['post']['reqBody'], headers?: Methods34['post']['reqHeaders'], config?: T }) =>
-                (await client.fetch<Methods34['post']['resBody']>(prefix, `/api/v3/extension/story/${val8}`, 'POST', option, 'FormData').json()).data
+                (await client.fetch<Methods34['post']['resBody']>(prefix, `/api/v3/extension/story/${val11}`, 'POST', option, 'FormData').json()).data
             })
           },
           video: {
@@ -388,33 +400,33 @@ const api = <T>(client: AspidaClient<T>) => {
             (await client.fetch<Methods44['get']['resBody']>(prefix, '/api/v3/organisation', 'GET', option).json()).data
         },
         stories: {
-          _storyId: (val9: number | string) => ({
+          _storyId: (val12: number) => ({
             items: {
-              _itemId: (val10: number | string) => ({
+              _itemId: (val13: number) => ({
                 reaction: {
                   post: (option: { data: Methods48['post']['reqBody'], headers?: Methods48['post']['reqHeaders'], config?: T }) =>
-                    client.fetch<Methods48['post']['resBody']>(prefix, `/api/v3/stories/${val9}/items/${val10}/reaction`, 'POST', option).json(),
+                    client.fetch<Methods48['post']['resBody']>(prefix, `/api/v3/stories/${val12}/items/${val13}/reaction`, 'POST', option).json(),
                   $post: async (option: { data: Methods48['post']['reqBody'], headers?: Methods48['post']['reqHeaders'], config?: T }) =>
-                    (await client.fetch<Methods48['post']['resBody']>(prefix, `/api/v3/stories/${val9}/items/${val10}/reaction`, 'POST', option).json()).data
+                    (await client.fetch<Methods48['post']['resBody']>(prefix, `/api/v3/stories/${val12}/items/${val13}/reaction`, 'POST', option).json()).data
                 },
                 get: (option?: { headers?: Methods47['get']['reqHeaders'], config?: T }) =>
-                  client.fetch<Methods47['get']['resBody']>(prefix, `/api/v3/stories/${val9}/items/${val10}`, 'GET', option).json(),
+                  client.fetch<Methods47['get']['resBody']>(prefix, `/api/v3/stories/${val12}/items/${val13}`, 'GET', option).json(),
                 $get: async (option?: { headers?: Methods47['get']['reqHeaders'], config?: T }) =>
-                  (await client.fetch<Methods47['get']['resBody']>(prefix, `/api/v3/stories/${val9}/items/${val10}`, 'GET', option).json()).data
+                  (await client.fetch<Methods47['get']['resBody']>(prefix, `/api/v3/stories/${val12}/items/${val13}`, 'GET', option).json()).data
               }),
               get: (option?: { query?: Methods46['get']['query'], headers?: Methods46['get']['reqHeaders'], config?: T }) =>
-                client.fetch<Methods46['get']['resBody']>(prefix, `/api/v3/stories/${val9}/items`, 'GET', option).json(),
+                client.fetch<Methods46['get']['resBody']>(prefix, `/api/v3/stories/${val12}/items`, 'GET', option).json(),
               $get: async (option?: { query?: Methods46['get']['query'], headers?: Methods46['get']['reqHeaders'], config?: T }) =>
-                (await client.fetch<Methods46['get']['resBody']>(prefix, `/api/v3/stories/${val9}/items`, 'GET', option).json()).data
+                (await client.fetch<Methods46['get']['resBody']>(prefix, `/api/v3/stories/${val12}/items`, 'GET', option).json()).data
             }
           })
         },
         user: {
-          _userId: (val11: number | string) => ({
+          _userId: (val14: string) => ({
             get: (option?: { headers?: Methods50['get']['reqHeaders'], config?: T }) =>
-              client.fetch<Methods50['get']['resBody']>(prefix, `/api/v3/user/${val11}`, 'GET', option).json(),
+              client.fetch<Methods50['get']['resBody']>(prefix, `/api/v3/user/${val14}`, 'GET', option).json(),
             $get: async (option?: { headers?: Methods50['get']['reqHeaders'], config?: T }) =>
-              (await client.fetch<Methods50['get']['resBody']>(prefix, `/api/v3/user/${val11}`, 'GET', option).json()).data
+              (await client.fetch<Methods50['get']['resBody']>(prefix, `/api/v3/user/${val14}`, 'GET', option).json()).data
           }),
           profile: {
             put: (option?: { data?: Methods51['put']['reqBody'], headers?: Methods51['put']['reqHeaders'], config?: T }) =>
