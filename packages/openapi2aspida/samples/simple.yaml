@@ -3,6 +3,28 @@ info:
   title: "simple"
   version: "1.0"
 paths:
+  /user/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: The user ID
+    get:
+      responses:
+        202:
+          description: "accept"
+    patch:
+      summary: Updates an existing user with the specified ID
+      responses:
+        202:
+          description: "accept"
+    delete:
+      summary: Deletes the user with the specified ID
+      responses:
+        202:
+          description: "accept"
   /dummy/{id}/simple:
     put:
       summary: "simple"

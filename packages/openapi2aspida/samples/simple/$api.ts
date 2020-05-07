@@ -28,6 +28,22 @@ const api = <T>(client: AspidaClient<T>) => {
             (await client.fetch<void>(prefix, `/dummy/${val0}/simple`, 'PUT', option).send()).data
         }
       })
+    },
+    user: {
+      _id: (val1: number) => ({
+        get: (option?: { config?: T }) =>
+          client.fetch<void>(prefix, `/user/${val1}`, 'GET', option).send(),
+        $get: async (option?: { config?: T }) =>
+          (await client.fetch<void>(prefix, `/user/${val1}`, 'GET', option).send()).data,
+        patch: (option?: { config?: T }) =>
+          client.fetch<void>(prefix, `/user/${val1}`, 'PATCH', option).send(),
+        $patch: async (option?: { config?: T }) =>
+          (await client.fetch<void>(prefix, `/user/${val1}`, 'PATCH', option).send()).data,
+        delete: (option?: { config?: T }) =>
+          client.fetch<void>(prefix, `/user/${val1}`, 'DELETE', option).send(),
+        $delete: async (option?: { config?: T }) =>
+          (await client.fetch<void>(prefix, `/user/${val1}`, 'DELETE', option).send()).data
+      })
     }
   }
 }

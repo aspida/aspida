@@ -1,9 +1,14 @@
-export default (text: string /* , methods: OpenAPIV3.PathItemObject */) => {
+import { OpenAPIV3 } from 'openapi-types'
+import { getPropertyName, schema2value } from './converters'
+
+export default (text: string, params?: OpenAPIV3.ParameterObject[]) => {
   if (text === '*') return '_any'
   if (!/^{/.test(text)) return text
 
   const valName = text.slice(1, -1)
-  // const method = methodNames.find(name => methods[name]?.parameters?.find((param) => !isRefObject(param) && param.name === valName && param.in === 'path'))
-  // return `_${valName}${method ? `@${type2value(methods[method]!.parameters!.filter((param) => !isRefObject(param) && param.name === valName && param.in === 'path')[0], '')}` : ''}`
-  return `_${valName}`
+  const schemaVal = schema2value(params?.find(p => p.in === 'path' && p.name === valName)?.schema)
+
+  return `_${getPropertyName(valName)}${
+    schemaVal && typeof schemaVal.value === 'string' ? `@${schemaVal.value}` : ''
+  }`
 }
