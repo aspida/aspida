@@ -49,10 +49,11 @@ export default (input: string, trailingSlash: boolean) => {
             valType = `ApiTypes.${valType}`
           }
 
-          valFn = `${indent}${valName.replace(
-            /\./g,
-            '_'
-          )}: (val${valCount}: ${valType}) => ({\n<% next %>\n${indent}})`
+          const duplicatedNames = dirList.filter(d => d.startsWith(valName))
+
+          valFn = `${indent}${valName.replace(/\./g, '_')}${
+            duplicatedNames.length > 1 ? `_${duplicatedNames.indexOf(file)}` : ''
+          }: (val${valCount}: ${valType}) => ({\n<% next %>\n${indent}})`
           newUrl = `${url}/\${val${valCount}}${valName.replace(/^[^.]+/, '')}`
           valCount += 1
         }

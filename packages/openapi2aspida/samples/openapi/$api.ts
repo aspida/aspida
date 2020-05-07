@@ -138,7 +138,7 @@ const api = <T>(client: AspidaClient<T>) => {
             (await client.fetch<Methods10['post']['resBody']>(prefix, '/api/v3/2fa', 'POST', option).json()).data
         },
         channels: {
-          _channelId: (val3: number) => ({
+          _channelId_0: (val3: number) => ({
             chats: {
               _chatId: (val4: number) => ({
                 items: {
@@ -158,7 +158,7 @@ const api = <T>(client: AspidaClient<T>) => {
                 (await client.fetch<Methods13['get']['resBody']>(prefix, `/api/v3/channels/${val3}/news-feed`, 'GET', option).json()).data
             }
           }),
-          _channelId: (val6: string) => ({
+          _channelId_1: (val6: string) => ({
             chats: {
               _chatId: (val7: string) => ({
                 items: {
@@ -254,7 +254,7 @@ const api = <T>(client: AspidaClient<T>) => {
             (await client.fetch<Methods11['get']['resBody']>(prefix, '/api/v3/channels', 'GET', option).json()).data
         },
         chats: {
-          _chatId: (val8: number) => ({
+          _chatId_0: (val8: number) => ({
             items: {
               _itemId: (val9: number) => ({
                 post: (option?: { data?: Methods25['post']['reqBody'], headers?: Methods25['post']['reqHeaders'], config?: T }) =>
@@ -268,7 +268,7 @@ const api = <T>(client: AspidaClient<T>) => {
               })
             }
           }),
-          _chatId: (val10: string) => ({
+          _chatId_1: (val10: string) => ({
             items: {
               audio: {
                 post: (option?: { data?: Methods27['post']['reqBody'], headers?: Methods27['post']['reqHeaders'], config?: T }) =>
