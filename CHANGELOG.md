@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.15.2](https://github.com/aspidajs/aspida/compare/v0.15.1...v0.15.2) (2020-05-07)
+
+
+### Features
+
+* **server:** add prototype ([9c4240b](https://github.com/aspidajs/aspida/commit/9c4240b06f565ec65821307da15af5607a7c8752))
+* **server:** add start:server command ([472d115](https://github.com/aspidajs/aspida/commit/472d1158957c4862c8e9361483ab3d0743254c70))
+* **server:** transform param to number ([dfc10a6](https://github.com/aspidajs/aspida/commit/dfc10a69668fcf116f98411459ad385357c4689a))
+
+
+### Bug Fixes
+
+* **aspida:** support duplicated path value types ([b61e625](https://github.com/aspidajs/aspida/commit/b61e625b59fec4012bfed530908ccbd297fabbb8))
+* **openapi:** support additionalProperties ([11c14ee](https://github.com/aspidajs/aspida/commit/11c14ee76b4ebe5c446ef6a84e2af88bcecdb1b8))
+* **openapi:** support duplicated path value type ([e590088](https://github.com/aspidajs/aspida/commit/e590088b49de47457041449bd50d59cb1f54178e))
+* **openapi:** support paths common parameters ([edbc5b2](https://github.com/aspidajs/aspida/commit/edbc5b24b41a22bfee60a293d439e42c313d45ce))
+* **openapi:** support properties of $ref ([13c234c](https://github.com/aspidajs/aspida/commit/13c234c2ec1dc915e6855d9fcdc95c82bc818d5d))
+
 ### [0.15.1](https://github.com/aspidajs/aspida/compare/v0.15.0...v0.15.1) (2020-04-28)
 
 
