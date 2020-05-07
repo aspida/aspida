@@ -100,29 +100,34 @@ export type ControllerTree = {
   }
 }
 
-const methodsToHandler = (methods: ServerMethods<any, any>): RequestHandler => async (req, res) => {
-  if (!methods[req.method.toLowerCase()]) {
-    res.status(404).send(`Cannot ${req.method} ${req.path}`)
-    return
-  }
-
-  const result = (await methods[req.method.toLowerCase()]({
+const methodsToHandler = (
+  methodCallback: ServerMethods<any, any>[LowerHttpMethod],
+  numberTypeParams: string[]
+): RequestHandler => async (req, res) => {
+  const result = (await methodCallback({
     query: req.query,
     path: req.path,
     method: req.method as HttpMethod,
     reqBody: {},
     reqHeaders: {},
-    params: req.params,
+    params: numberTypeParams.reduce(
+      (p, c) => ({
+        ...p,
+        [c]: +p[c]
+      }),
+      req.params as Record<string, string | number>
+    ),
     user: (req as any).user
   }).catch(() => ({ status: 500, resBody: 'Internal Server Error' }))) as AllResponse<any, any>
 
-  Object.entries((result.resHeaders as Record<string, any>) ?? {}).forEach(([key, val]) => {
-    res.setHeader(key, val)
-  })
+  for (const key in result.resHeaders) {
+    res.setHeader(key, result.resHeaders[key])
+  }
+
   res.status(result.status).json(result.resBody)
 }
 
-export const createRouter = (ctrl: ControllerTree) => {
+export const createRouter = (ctrl: ControllerTree, numberTypeParams: string[] = []) => {
   const router = express.Router({ mergeParams: true })
 
   if (ctrl.middleware) {
@@ -132,22 +137,38 @@ export const createRouter = (ctrl: ControllerTree) => {
   }
 
   if (ctrl.controller) {
-    const methods = (Array.isArray(ctrl.controller) ? ctrl.controller : [ctrl.controller]).map(m =>
-      typeof m === 'object' ? methodsToHandler(m) : m
-    )
-    router.route('/').all(methods)
+    if (Array.isArray(ctrl.controller)) {
+      const controllers = [...ctrl.controller]
+      const targetMethods = controllers.pop() as ServerMethods<any, any>
+      for (const method in targetMethods) {
+        ;(router.route('/') as any)[method]([
+          ...controllers,
+          methodsToHandler(targetMethods[method], numberTypeParams)
+        ])
+      }
+    } else {
+      for (const method in ctrl.controller) {
+        ;(router.route('/') as any)[method](
+          methodsToHandler(ctrl.controller[method], numberTypeParams)
+        )
+      }
+    }
   }
 
   if (ctrl.children) {
     // eslint-disable-next-line no-unused-expressions
     ctrl.children.names?.forEach(n => {
-      router.use(n.name, createRouter(n))
+      router.use(n.name, createRouter(n, numberTypeParams))
     })
 
     if (ctrl.children.value) {
+      const pathName = ctrl.children.value.name.replace('_', ':').split('@')
       router.use(
-        ctrl.children.value.name.replace('_', ':').split('@')[0],
-        createRouter(ctrl.children.value)
+        pathName[0],
+        createRouter(
+          ctrl.children.value,
+          pathName[1] === 'number' ? [...numberTypeParams, pathName[0].slice(2)] : numberTypeParams
+        )
       )
     }
   }
