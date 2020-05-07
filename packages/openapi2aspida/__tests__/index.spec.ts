@@ -1,5 +1,4 @@
 import fs from 'fs'
-import rimraf from 'rimraf'
 import getConfig from '../src/getConfig'
 import buildFromScript from '../src'
 
@@ -7,7 +6,7 @@ const basePath = 'packages/openapi2aspida'
 
 describe('cli test', () => {
   beforeAll(() => fs.mkdirSync(`${basePath}/_samples`))
-  afterAll(fn => rimraf(`${basePath}/_samples`, fn))
+  afterAll(fn => fs.rmdir(`${basePath}/_samples`, { recursive: true }, fn))
 
   test('main', () => {
     const configs = getConfig(`${basePath}/aspida.config.js`)
