@@ -190,6 +190,9 @@ import api from "../apis/$api"
   // res -> { id: 0, name: 'taro' }
 })()
 ```
+### Read more posts by DEV Community
+
+**[aspida - DEV Community](https://dev.to/t/aspida)**
 
 ### Learn more about HTTP clients
 
