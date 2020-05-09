@@ -143,13 +143,13 @@ const api = <T>(client: AspidaClient<T>) => {
     $post: async (option: { data: Methods0['post']['reqBody'], query: Methods0['post']['query'], headers?: Methods0['post']['reqHeaders'], config?: T }) =>
       (await client.fetch<Methods0['post']['resBody']>(prefix, '', 'POST', option).arrayBuffer()).data,
     put: (option: { query: Methods0['put']['query'], config?: T }) =>
-      client.fetch<Methods0['put']['resBody']>(prefix, '', 'PUT', option).json(),
+      client.fetch<Methods0['put']['resBody'], Methods0['put']['resHeaders']>(prefix, '', 'PUT', option).json(),
     $put: async (option: { query: Methods0['put']['query'], config?: T }) =>
-      (await client.fetch<Methods0['put']['resBody']>(prefix, '', 'PUT', option).json()).data,
+      (await client.fetch<Methods0['put']['resBody'], Methods0['put']['resHeaders']>(prefix, '', 'PUT', option).json()).data,
     delete: (option: { query: Methods0['delete']['query'], config?: T }) =>
-      client.fetch<Methods0['delete']['resBody']>(prefix, '', 'DELETE', option).blob(),
+      client.fetch<void, Methods0['delete']['resHeaders']>(prefix, '', 'DELETE', option).send(),
     $delete: async (option: { query: Methods0['delete']['query'], config?: T }) =>
-      (await client.fetch<Methods0['delete']['resBody']>(prefix, '', 'DELETE', option).blob()).data
+      (await client.fetch<void, Methods0['delete']['resHeaders']>(prefix, '', 'DELETE', option).send()).data
   }
 }
 

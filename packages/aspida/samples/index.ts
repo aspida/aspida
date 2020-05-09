@@ -29,17 +29,19 @@ export type Methods = {
 
   put: {
     query: { aa: number }
-    resBody: { aa: number }
+    resBody?: { aa: number }
+    resHeaders: { token: string }
   }
 
   delete: {
     query: { aa: number }
-    resBody: Blob
+    resHeaders?: { token: string }
   }
 }
 
 export default mockMethods<Methods>({
   get: ({ query }) => (query?.aa ? { status: 200, resBody: new FormData() } : { status: 403 }),
   post: ({ reqBody }) => (reqBody ? { status: 200, resBody: new ArrayBuffer(1) } : { status: 500 }),
-  put: ({ query }) => ({ status: 200, resBody: query })
+  put: () => ({ status: 200, resHeaders: { token: 'aaa' } }),
+  delete: () => ({ status: 202, resBody: undefined })
 })
