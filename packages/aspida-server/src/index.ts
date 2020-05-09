@@ -1,27 +1,10 @@
 import { LowerHttpMethod, AspidaMethods, HttpMethod, AspidaMethodParams } from 'aspida'
-import express, { RequestHandler } from 'express'
+import express, { RequestHandler, Request } from 'express'
 
-type ServerValues = {
-  params?: Record<string, any>
-  user?: any
-}
-
-type RequestParams<
-  T extends AspidaMethods[LowerHttpMethod],
-  U extends ServerValues
-> = T extends AspidaMethodParams
-  ? {
-      path: string
-      method: HttpMethod
-      params: U['params']
-      user: U['user']
-      query: T['query'] extends Record<string, any> | undefined ? T['query'] : undefined
-      reqBody: T['reqBody'] extends Record<string, any> | undefined ? T['reqBody'] : undefined
-      reqHeaders: T['reqHeaders'] extends Record<string, any> | undefined
-        ? T['reqHeaders']
-        : undefined
-    }
-  : never
+type RequestParams<T extends AspidaMethodParams> = {
+  path: string
+  method: HttpMethod
+} & Pick<T, 'query' | 'reqBody' | 'reqHeaders'>
 
 type Status = {
   ok: 200 | 201 | 202 | 203 | 204 | 205 | 206
@@ -44,18 +27,22 @@ type Status = {
     | 505
 }
 
-type StatusResponse = {
+type SubAllResponse<T, U> = {
   status: Status['ok']
+  resBody?: T
+  resHeaders?: U
 }
 
-type DataResponse<T> = {
+type DataResponse<T, U> = {
   status: Status['ok']
   resBody: T
+  resHeaders?: U
 }
 
-type HeadersResponse<T> = {
+type HeadersResponse<T, U> = {
   status: Status['ok']
-  resHeaders: T
+  resBody?: T
+  resHeaders: U
 }
 
 type AllResponse<T, U> = {
@@ -71,17 +58,35 @@ type OtherResponse = {
 }
 
 type ServerResponse<K extends AspidaMethodParams> =
-  | (K['resBody'] extends Record<string, any> | undefined
-      ? K['resHeaders'] extends Record<string, any> | undefined
+  | (K['resBody'] extends {}
+      ? K['resHeaders'] extends {}
         ? AllResponse<K['resBody'], K['resHeaders']>
-        : DataResponse<K['resBody']>
-      : K['resHeaders'] extends Record<string, any> | undefined
-      ? HeadersResponse<K['resHeaders']>
-      : StatusResponse)
+        : DataResponse<
+            K['resBody'],
+            K['resHeaders'] extends {} | undefined ? K['resHeaders'] : undefined
+          >
+      : K['resHeaders'] extends {}
+      ? HeadersResponse<
+          K['resBody'] extends {} | undefined ? K['resBody'] : undefined,
+          K['resHeaders']
+        >
+      : SubAllResponse<
+          K['resBody'] extends {} | undefined ? K['resBody'] : undefined,
+          K['resHeaders'] extends {} | undefined ? K['resHeaders'] : undefined
+        >)
   | OtherResponse
 
+type ServerValues = {
+  params?: Record<string, any>
+  user?: any
+}
+
+type FileType<T extends AspidaMethodParams> = T['reqFormat'] extends FormData
+  ? Pick<Request, 'file' | 'files'>
+  : {}
+
 export type ServerMethods<T extends AspidaMethods, U extends ServerValues> = {
-  [K in keyof T]: (req: RequestParams<T[K], U>) => Promise<ServerResponse<T[K]>>
+  [K in keyof T]: (req: RequestParams<T[K]> & U & FileType<T[K]>) => Promise<ServerResponse<T[K]>>
 }
 
 export const createController = <T extends AspidaMethods, U extends ServerValues = {}>(
@@ -117,7 +122,9 @@ const methodsToHandler = (
       }),
       req.params as Record<string, string | number>
     ),
-    user: (req as any).user
+    user: (req as any).user,
+    file: req.file,
+    files: req.files
   }).catch(() => ({ status: 500, resBody: 'Internal Server Error' }))) as AllResponse<any, any>
 
   for (const key in resHeaders) {
