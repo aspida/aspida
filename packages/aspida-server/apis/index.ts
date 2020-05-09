@@ -4,7 +4,7 @@ export type Methods = {
       id: number
     }
 
-    resBody: { id: number }
+    resBody?: { id: number }
   }
 
   post: {

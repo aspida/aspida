@@ -1,4 +1,5 @@
 import mockClient from '@aspida/axios/dist/mockClient'
+import { MockRoute } from '../src'
 import api from '../../aspida/samples/$api'
 
 describe('initialize', () => {
@@ -121,7 +122,7 @@ describe('initialize', () => {
 
   test('enable log', async () => {
     const spyLog = jest.spyOn(console, 'log').mockImplementation(x => x)
-    const routes = [{ path: '', methods: { get: () => ({ status: 200 }) } }]
+    const routes: MockRoute[] = [{ path: '', methods: { get: () => ({ status: 200 }) } }]
 
     adapter.attachRoutes(routes, { log: true })
     await client.get()

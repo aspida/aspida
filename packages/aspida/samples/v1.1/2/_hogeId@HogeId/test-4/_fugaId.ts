@@ -24,9 +24,6 @@ export type Methods = {
 }
 
 export default mockMethods<Methods>({
-  get: ({ query }) =>
-    query?.aa
-      ? { status: 200, resBody: { id: query.aa }, resHeaders: { token: 'aaa' } }
-      : { status: 403 },
+  get: ({ query }) => (query?.aa ? { status: 200, resBody: { id: query.aa } } : { status: 403 }),
   delete: ({ query }) => (query.aa ? { status: 204, resBody: { id: 11 } } : { status: 500 })
 })
