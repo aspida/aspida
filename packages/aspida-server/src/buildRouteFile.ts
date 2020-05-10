@@ -7,7 +7,7 @@ export type Template = {
   text: string
 }
 
-export default ({ input, port }: Config): Template[] => [
+export default ({ input, port, cors }: Config): Template[] => [
   {
     text: createRouteString(input),
     filePath: path.posix.join(input, `$controllers.ts`)
@@ -15,15 +15,19 @@ export default ({ input, port }: Config): Template[] => [
   {
     text: `/* eslint-disable */
 import express from 'express'
-import helmet from 'helmet'
-import cors from 'cors'
+import helmet from 'helmet'${cors ? "\nimport cors from 'cors'" : ''}
 import { createRouter } from 'aspida-server'
 import controllers from './$controllers'
 
 express()
-  .use(helmet())
-  .use(cors())
-  .use(express.json())
+  .use(helmet())${cors ? '\n  .use(cors())' : ''}
+  .use((req, res, next) => {
+    express.json()(req, res, err => {
+      if (err) return res.sendStatus(400)
+
+      next()
+    })
+  })
   .use(express.urlencoded({ extended: true }))
   .use(createRouter(controllers))
   .listen(${port}, () => {

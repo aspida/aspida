@@ -1,9 +1,11 @@
 import path from 'path'
 import fs from 'fs'
+import parseInterface from 'aspida/dist/parseInterface'
 
 export default (inputDir: string) => {
   const middlewares: string[] = []
   const controllers: string[] = []
+  const validates: string[] = []
 
   const createText = (input: string, indent: string, params: [string, string][], user = '') => {
     let result = ''
@@ -31,6 +33,40 @@ ${params.map(v => `    ${v[0]}: ${v[1]}`).join('\n')}
       )
     } else if (fs.existsSync(path.join(input, '@values.ts'))) {
       fs.unlinkSync(path.join(input, '$values.ts'))
+    }
+
+    if (fs.existsSync(path.join(input, 'index.ts'))) {
+      const text = fs.readFileSync(path.join(input, 'index.ts'), 'utf8')
+      const methods = parseInterface(text, 'Methods')
+      if (methods) {
+        const validateInfo = methods
+          .map(m => {
+            const props: [string, string][] = []
+            if (m.props.query && text.includes(`export class ${m.props.query.value} `)) {
+              props.push(['Query', m.props.query.value])
+            }
+            if (m.props.reqBody && text.includes(`export class ${m.props.reqBody.value} `)) {
+              props.push(['Body', m.props.reqBody.value])
+            }
+            if (m.props.reqHeaders && text.includes(`export class ${m.props.reqHeaders.value} `)) {
+              props.push(['Headers', m.props.reqHeaders.value])
+            }
+            return { method: m.name, props }
+          })
+          .filter(v => v.props.length)
+
+        if (validateInfo.length) {
+          result += `,\n${indent}validator: {\n${validateInfo
+            .map(
+              v =>
+                `  ${indent}${v.method}: {\n${v.props
+                  .map(p => `    ${indent}${p[0]}: Validator${validates.length}.${p[1]}`)
+                  .join(',\n')}\n  ${indent}}`
+            )
+            .join(',\n')}\n${indent}}`
+          validates.push(input)
+        }
+      }
     }
 
     if (fs.existsSync(path.join(input, '@controller.ts'))) {
@@ -84,7 +120,9 @@ ${params.map(v => `    ${v[0]}: ${v[1]}`).join('\n')}
 
   const text = createText(inputDir, '  ', [])
 
-  return `/* eslint-disable */${controllers.length ? '\n' : ''}${controllers
+  return `/* eslint-disable */${validates.length ? '\n' : ''}${validates
+    .map((v, i) => `import * as Validator${i} from '${v.replace(inputDir, '.')}'`)
+    .join('\n')}${controllers.length ? '\n' : ''}${controllers
     .map((c, i) => `import controller${i} from '${c.replace(inputDir, '.')}'`)
     .join('\n')}${middlewares.length ? '\n' : ''}${middlewares
     .map((m, i) => `import middleware${i} from '${m.replace(inputDir, '.')}'`)

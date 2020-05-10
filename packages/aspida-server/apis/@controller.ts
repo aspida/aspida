@@ -8,7 +8,7 @@ export default createController<Methods>([
   },
   {
     get: v => {
-      return new Promise(resolve => resolve({ status: 200, resBody: v.query }))
+      return new Promise(resolve => resolve({ status: 200, resBody: { id: +v.query.id } }))
     },
     post: async () => ({ status: 200, resBody: { id: 1 } })
   }

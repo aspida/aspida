@@ -1,5 +1,6 @@
 import { LowerHttpMethod, AspidaMethods, HttpMethod, AspidaMethodParams } from 'aspida'
 import express, { RequestHandler, Request } from 'express'
+import { validateOrReject } from 'class-validator'
 
 type RequestParams<T extends AspidaMethodParams> = {
   path: string
@@ -95,9 +96,16 @@ export const createController = <T extends AspidaMethods, U extends ServerValues
 
 export const createMiddleware = (middleware: RequestHandler | RequestHandler[]) => middleware
 
+type Validators = {
+  Query?: any
+  Body?: any
+  Headers?: any
+}
+
 export type ControllerTree = {
   name: string
   controller?: ServerMethods<any, any> | (RequestHandler | ServerMethods<any, any>)[]
+  validator?: { [K in LowerHttpMethod]?: Validators }
   middleware?: RequestHandler | RequestHandler[]
   children?: {
     names?: ControllerTree[]
@@ -106,15 +114,33 @@ export type ControllerTree = {
 }
 
 const methodsToHandler = (
+  Validator: Validators | undefined,
   methodCallback: ServerMethods<any, any>[LowerHttpMethod],
   numberTypeParams: string[]
 ): RequestHandler => async (req, res) => {
+  try {
+    if (Validator?.Query) {
+      await validateOrReject(Object.assign(new Validator.Query(), req.query))
+    }
+
+    if (Validator?.Headers) {
+      await validateOrReject(Object.assign(new Validator.Headers(), req.headers))
+    }
+
+    if (Validator?.Body) {
+      await validateOrReject(Object.assign(new Validator.Body(), req.body))
+    }
+  } catch (e) {
+    res.sendStatus(400)
+    return
+  }
+
   const { status, resBody, resHeaders } = (await methodCallback({
     query: req.query,
     path: req.path,
     method: req.method as HttpMethod,
-    reqBody: {},
-    reqHeaders: {},
+    reqBody: req.body,
+    reqHeaders: req.headers,
     params: numberTypeParams.reduce(
       (p, c) => ({
         ...p,
@@ -150,13 +176,21 @@ export const createRouter = (ctrl: ControllerTree, numberTypeParams: string[] = 
       for (const method in targetMethods) {
         ;(router.route('/') as any)[method]([
           ...controllers,
-          methodsToHandler(targetMethods[method], numberTypeParams)
+          methodsToHandler(
+            ctrl.validator?.[method as LowerHttpMethod],
+            targetMethods[method],
+            numberTypeParams
+          )
         ])
       }
     } else {
       for (const method in ctrl.controller) {
         ;(router.route('/') as any)[method](
-          methodsToHandler(ctrl.controller[method], numberTypeParams)
+          methodsToHandler(
+            ctrl.validator?.[method as LowerHttpMethod],
+            ctrl.controller[method],
+            numberTypeParams
+          )
         )
       }
     }
