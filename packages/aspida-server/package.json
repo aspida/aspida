@@ -24,7 +24,7 @@
   "dependencies": {
     "@types/cors": "^2.8.6",
     "@types/express": "^4.17.6",
-    "@types/helmet": "^0.0.46",
+    "@types/helmet": "^0.0.47",
     "@types/multer": "^1.4.3",
     "class-validator": "^0.12.2",
     "cors": "^2.8.5",
