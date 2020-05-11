@@ -7,7 +7,7 @@ import cors from 'cors'
 import { createRouter } from 'aspida-server'
 import controllers from './$controllers'
 
-express()
+export const server = express()
   .use(helmet())
   .use(cors())
   .use((req, res, next) => {

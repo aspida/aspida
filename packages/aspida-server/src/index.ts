@@ -1,5 +1,5 @@
 import { LowerHttpMethod, AspidaMethods, HttpMethod, AspidaMethodParams } from 'aspida'
-import express, { RequestHandler } from 'express'
+import express, { RequestHandler, Request } from 'express'
 import { validateOrReject } from 'class-validator'
 
 type RequestParams<T extends AspidaMethodParams> = {
@@ -8,6 +8,7 @@ type RequestParams<T extends AspidaMethodParams> = {
   query: T['query']
   body: T['reqBody']
   headers: T['reqHeaders']
+  originalRequest: Request
 }
 
 type Status = {
@@ -139,6 +140,7 @@ const methodsToHandler = (
     method: req.method as HttpMethod,
     body: req.body,
     headers: req.headers,
+    originalRequest: req,
     params: numberTypeParams.reduce(
       (p, c) => ({
         ...p,

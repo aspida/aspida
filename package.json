@@ -11,7 +11,7 @@
     "dev:path": "npm run build:path && cd packages/pathpida && node bin/index.js --build",
     "start:server": "cd packages/aspida-server && node bin/index.js --build && tsc --project tsconfig.server.json && node .aspida/$server.js",
     "build:aspida": "npm run rimraf -- aspida && cd packages/aspida && tsc --project tsconfig.build.json",
-    "build:server": "npm run rimraf -- aspida-server && cd packages/aspida-server && tsc --project tsconfig.build.json",
+    "build:server": "npm run rimraf -- aspida-server && cd packages/aspida-server && aspida -b && tsc --project tsconfig.build.json",
     "build:axios": "npm run rimraf -- aspida-axios && cd packages/aspida-axios && tsc --project tsconfig.build.json",
     "build:fetch": "npm run rimraf -- aspida-fetch && cd packages/aspida-fetch && tsc --project tsconfig.build.json",
     "build:node-fetch": "npm run rimraf -- aspida-node-fetch && cd packages/aspida-node-fetch && tsc --project tsconfig.build.json",
