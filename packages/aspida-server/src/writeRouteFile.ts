@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { Template } from './buildRouteFile'
+import { Template } from './buildServerFile'
 
 export default ({ filePath, text }: Template) => {
   fs.writeFileSync(filePath, text, 'utf8')

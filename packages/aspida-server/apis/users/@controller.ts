@@ -6,6 +6,6 @@ export default createController<Methods>([
     next()
   },
   {
-    get: async () => ({ status: 200, resBody: [{ id: 1, name: 'aa' }] })
+    get: async () => ({ status: 200, body: [{ id: 1, name: 'aa' }] })
   }
 ])

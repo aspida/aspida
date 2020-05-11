@@ -5,7 +5,10 @@ import { validateOrReject } from 'class-validator'
 type RequestParams<T extends AspidaMethodParams> = {
   path: string
   method: HttpMethod
-} & Pick<T, 'query' | 'reqBody' | 'reqHeaders'>
+  query: T['query']
+  body: T['reqBody']
+  headers: T['reqHeaders']
+}
 
 type Status = {
   ok: 200 | 201 | 202 | 203 | 204 | 205 | 206
@@ -30,32 +33,32 @@ type Status = {
 
 type SubAllResponse<T, U> = {
   status: Status['ok']
-  resBody?: T
-  resHeaders?: U
+  body?: T
+  headers?: U
 }
 
 type DataResponse<T, U> = {
   status: Status['ok']
-  resBody: T
-  resHeaders?: U
+  body: T
+  headers?: U
 }
 
 type HeadersResponse<T, U> = {
   status: Status['ok']
-  resBody?: T
-  resHeaders: U
+  body?: T
+  headers: U
 }
 
 type AllResponse<T, U> = {
   status: Status['ok']
-  resBody: T
-  resHeaders: U
+  body: T
+  headers: U
 }
 
 type OtherResponse = {
   status: Status['other']
-  resBody?: any
-  resHeaders?: any
+  body?: any
+  headers?: any
 }
 
 type ServerResponse<K extends AspidaMethodParams> =
@@ -130,12 +133,12 @@ const methodsToHandler = (
     return
   }
 
-  const { status, resBody, resHeaders } = (await methodCallback({
+  const { status, body, headers } = (await methodCallback({
     query: req.query,
     path: req.path,
     method: req.method as HttpMethod,
-    reqBody: req.body,
-    reqHeaders: req.headers,
+    body: req.body,
+    headers: req.headers,
     params: numberTypeParams.reduce(
       (p, c) => ({
         ...p,
@@ -145,13 +148,13 @@ const methodsToHandler = (
     ),
     user: (req as any).user,
     files: req.files
-  }).catch(() => ({ status: 500, resBody: 'Internal Server Error' }))) as AllResponse<any, any>
+  }).catch(() => ({ status: 500, body: 'Internal Server Error' }))) as AllResponse<any, any>
 
-  for (const key in resHeaders) {
-    res.setHeader(key, resHeaders[key])
+  for (const key in headers) {
+    res.setHeader(key, headers[key])
   }
 
-  res.status(status).send(resBody)
+  res.status(status).send(body)
 }
 
 export const createRouter = (

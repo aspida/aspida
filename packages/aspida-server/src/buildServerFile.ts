@@ -1,6 +1,6 @@
 import path from 'path'
 import { Config } from './getConfig'
-import createRouteString from './createRouteString'
+import createControllersText from './createControllersText'
 
 export type Template = {
   filePath: string
@@ -9,7 +9,7 @@ export type Template = {
 
 export default ({ input, port, cors, uploader }: Config): Template[] => [
   {
-    text: createRouteString(input),
+    text: createControllersText(input),
     filePath: path.posix.join(input, `$controllers.ts`)
   },
   {
