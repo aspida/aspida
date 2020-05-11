@@ -16,6 +16,7 @@ export default {
       Body: Validator0.ValidBody
     }
   },
+  uploader: ['post'],
   controller: controller0,
   middleware: middleware0,
   children: {

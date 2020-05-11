@@ -66,6 +66,13 @@ ${params.map(v => `    ${v[0]}: ${v[1]}`).join('\n')}
             .join(',\n')}\n${indent}}`
           validates.push(input)
         }
+
+        const uploaders = methods
+          .filter(m => m.props.reqFormat?.value === 'FormData')
+          .map(m => m.name)
+        if (uploaders.length) {
+          result += `,\n${indent}uploader: ['${uploaders.join("', '")}']`
+        }
       }
     }
 

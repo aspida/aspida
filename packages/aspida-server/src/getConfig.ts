@@ -4,12 +4,20 @@ export type Config = {
   input: string
   port: number
   cors: boolean
+  uploader: {
+    dest?: string
+    size?: number
+  }
 }
 
 type ConfigFile = BaseConfig & {
   server?: {
     port?: number
     cors?: boolean
+    uploader?: {
+      dest?: string
+      size?: number
+    }
   }
 }
 
@@ -20,7 +28,8 @@ const createConfig = (config: ConfigFile) => {
   return {
     input: config.input,
     port: server.port ?? 8080,
-    cors: server.cors ?? false
+    cors: server.cors ?? false,
+    uploader: server.uploader ?? {}
   }
 }
 

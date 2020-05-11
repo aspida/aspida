@@ -7,14 +7,15 @@ export type Template = {
   text: string
 }
 
-export default ({ input, port, cors }: Config): Template[] => [
+export default ({ input, port, cors, uploader }: Config): Template[] => [
   {
     text: createRouteString(input),
     filePath: path.posix.join(input, `$controllers.ts`)
   },
   {
-    text: `/* eslint-disable */
+    text: `/* eslint-disable */${uploader.dest ?? "\nimport { tmpdir } from 'os'"}
 import express from 'express'
+import multer from 'multer'
 import helmet from 'helmet'${cors ? "\nimport cors from 'cors'" : ''}
 import { createRouter } from 'aspida-server'
 import controllers from './$controllers'
@@ -28,8 +29,9 @@ express()
       next()
     })
   })
-  .use(express.urlencoded({ extended: true }))
-  .use(createRouter(controllers))
+  .use(createRouter(controllers, multer({ dest: ${
+    uploader.dest ?? 'tmpdir()'
+  }, limits: { fileSize: ${uploader.size ?? '1024 ** 3'} } }).any()))
   .listen(${port}, () => {
     console.log('aspida-server runs successfully.')
   })

@@ -1,5 +1,5 @@
 import { LowerHttpMethod, AspidaMethods, HttpMethod, AspidaMethodParams } from 'aspida'
-import express, { RequestHandler, Request } from 'express'
+import express, { RequestHandler } from 'express'
 import { validateOrReject } from 'class-validator'
 
 type RequestParams<T extends AspidaMethodParams> = {
@@ -83,7 +83,7 @@ type ServerValues = {
 }
 
 type FileType<T extends AspidaMethodParams> = T['reqFormat'] extends FormData
-  ? Pick<Request, 'file' | 'files'>
+  ? { files: Express.Multer.File[] }
   : {}
 
 export type ServerMethods<T extends AspidaMethods, U extends ServerValues> = {
@@ -105,6 +105,7 @@ type Validators = {
 export type ControllerTree = {
   name: string
   controller?: ServerMethods<any, any> | (RequestHandler | ServerMethods<any, any>)[]
+  uploader?: string[]
   validator?: { [K in LowerHttpMethod]?: Validators }
   middleware?: RequestHandler | RequestHandler[]
   children?: {
@@ -119,17 +120,11 @@ const methodsToHandler = (
   numberTypeParams: string[]
 ): RequestHandler => async (req, res) => {
   try {
-    if (Validator?.Query) {
-      await validateOrReject(Object.assign(new Validator.Query(), req.query))
-    }
-
-    if (Validator?.Headers) {
-      await validateOrReject(Object.assign(new Validator.Headers(), req.headers))
-    }
-
-    if (Validator?.Body) {
-      await validateOrReject(Object.assign(new Validator.Body(), req.body))
-    }
+    await Promise.all([
+      Validator?.Query && validateOrReject(Object.assign(new Validator.Query(), req.query)),
+      Validator?.Headers && validateOrReject(Object.assign(new Validator.Headers(), req.headers)),
+      Validator?.Body && validateOrReject(Object.assign(new Validator.Body(), req.body))
+    ])
   } catch (e) {
     res.sendStatus(400)
     return
@@ -149,7 +144,6 @@ const methodsToHandler = (
       req.params as Record<string, string | number>
     ),
     user: (req as any).user,
-    file: req.file,
     files: req.files
   }).catch(() => ({ status: 500, resBody: 'Internal Server Error' }))) as AllResponse<any, any>
 
@@ -160,7 +154,11 @@ const methodsToHandler = (
   res.status(status).send(resBody)
 }
 
-export const createRouter = (ctrl: ControllerTree, numberTypeParams: string[] = []) => {
+export const createRouter = (
+  ctrl: ControllerTree,
+  uploader: RequestHandler,
+  numberTypeParams: string[] = []
+) => {
   const router = express.Router({ mergeParams: true })
 
   if (ctrl.middleware) {
@@ -174,6 +172,10 @@ export const createRouter = (ctrl: ControllerTree, numberTypeParams: string[] = 
       const controllers = [...ctrl.controller]
       const targetMethods = controllers.pop() as ServerMethods<any, any>
       for (const method in targetMethods) {
+        if (ctrl.uploader?.includes(method)) {
+          controllers.unshift(uploader)
+        }
+
         ;(router.route('/') as any)[method]([
           ...controllers,
           methodsToHandler(
@@ -185,12 +187,14 @@ export const createRouter = (ctrl: ControllerTree, numberTypeParams: string[] = 
       }
     } else {
       for (const method in ctrl.controller) {
+        const handler = methodsToHandler(
+          ctrl.validator?.[method as LowerHttpMethod],
+          ctrl.controller[method],
+          numberTypeParams
+        )
+
         ;(router.route('/') as any)[method](
-          methodsToHandler(
-            ctrl.validator?.[method as LowerHttpMethod],
-            ctrl.controller[method],
-            numberTypeParams
-          )
+          ctrl.uploader?.includes(method) ? [uploader, handler] : handler
         )
       }
     }
@@ -199,7 +203,7 @@ export const createRouter = (ctrl: ControllerTree, numberTypeParams: string[] = 
   if (ctrl.children) {
     // eslint-disable-next-line no-unused-expressions
     ctrl.children.names?.forEach(n => {
-      router.use(n.name, createRouter(n, numberTypeParams))
+      router.use(n.name, createRouter(n, uploader, numberTypeParams))
     })
 
     if (ctrl.children.value) {
@@ -208,6 +212,7 @@ export const createRouter = (ctrl: ControllerTree, numberTypeParams: string[] = 
         pathName[0],
         createRouter(
           ctrl.children.value,
+          uploader,
           pathName[1] === 'number' ? [...numberTypeParams, pathName[0].slice(2)] : numberTypeParams
         )
       )

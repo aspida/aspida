@@ -1,5 +1,7 @@
 /* eslint-disable */
+import { tmpdir } from 'os'
 import express from 'express'
+import multer from 'multer'
 import helmet from 'helmet'
 import cors from 'cors'
 import { createRouter } from 'aspida-server'
@@ -15,8 +17,7 @@ express()
       next()
     })
   })
-  .use(express.urlencoded({ extended: true }))
-  .use(createRouter(controllers))
+  .use(createRouter(controllers, multer({ dest: tmpdir(), limits: { fileSize: 1024 ** 3 } }).any()))
   .listen(10000, () => {
     console.log('aspida-server runs successfully.')
   })
