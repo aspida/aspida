@@ -10,7 +10,7 @@ export type Template = {
 export default ({ input, port, cors, uploader }: Config): Template[] => [
   {
     text: createControllersText(input),
-    filePath: path.posix.join(input, `$controllers.ts`)
+    filePath: path.posix.join(input, '$controllers.ts')
   },
   {
     text: `/* eslint-disable */${uploader.dest ?? "\nimport { tmpdir } from 'os'"}
@@ -34,8 +34,7 @@ express()
   }, limits: { fileSize: ${uploader.size ?? '1024 ** 3'} } }).any()))
   .listen(${port}, () => {
     console.log('aspida-server runs successfully.')
-  })
-`,
-    filePath: path.posix.join(input, `$server.ts`)
+  })\n`,
+    filePath: path.posix.join(input, '$server.ts')
   }
 ]

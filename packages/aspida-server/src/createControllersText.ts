@@ -18,17 +18,13 @@ export default (inputDir: string) => {
     if (params.length || userPath) {
       fs.writeFileSync(
         path.join(input, '$values.ts'),
-        `/* eslint-disable */
-${userPath ? `import { User } from '${userPath}'\n\n` : ''}export type Values = {
-${
-  params.length
-    ? `  params: {
-${params.map(v => `    ${v[0]}: ${v[1]}`).join('\n')}
-  }`
-    : ''
-}${params.length ? '\n' : ''}${userPath ? '  user: User' : ''}
-}
-`,
+        `/* eslint-disable */\n${
+          userPath ? `import { User } from '${userPath}'\n\n` : ''
+        }export type Values = {\n${
+          params.length
+            ? `  params: {\n${params.map(v => `    ${v[0]}: ${v[1]}`).join('\n')}\n  }`
+            : ''
+        }${params.length ? '\n' : ''}${userPath ? '  user: User' : ''}\n}\n`,
         'utf8'
       )
     } else if (fs.existsSync(path.join(input, '@values.ts'))) {
@@ -89,6 +85,7 @@ ${params.map(v => `    ${v[0]}: ${v[1]}`).join('\n')}
     const childrenDirs = fs
       .readdirSync(input)
       .filter(d => fs.statSync(path.join(input, d)).isDirectory())
+
     if (childrenDirs.length) {
       result += `,\n${indent}children: {\n`
       const names = childrenDirs.filter(d => !d.startsWith('_'))
@@ -109,6 +106,7 @@ ${params.map(v => `    ${v[0]}: ${v[1]}`).join('\n')}
       }
 
       const value = childrenDirs.find(d => d.startsWith('_'))
+
       if (value) {
         result += `${
           names.length ? ',\n' : ''
@@ -133,10 +131,5 @@ ${params.map(v => `    ${v[0]}: ${v[1]}`).join('\n')}
     .map((c, i) => `import controller${i} from '${c.replace(inputDir, '.')}'`)
     .join('\n')}${middlewares.length ? '\n' : ''}${middlewares
     .map((m, i) => `import middleware${i} from '${m.replace(inputDir, '.')}'`)
-    .join('\n')}
-
-export default {
-  name: '/'${text}
-}
-`
+    .join('\n')}\n\nexport default {\n  name: '/'${text}\n}\n`
 }
