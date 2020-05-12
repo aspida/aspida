@@ -10,6 +10,9 @@ export default createController<Methods>([
     get: v => {
       return new Promise(resolve => resolve({ status: 200, body: { id: +v.query.id } }))
     },
-    post: async v => ({ status: 200, body: { id: +v.query.id, port: v.body.port } })
+    post: async v => ({
+      status: 200,
+      body: { id: +v.query.id, port: v.body.port, fileName: v.files[0].originalname }
+    })
   }
 ])

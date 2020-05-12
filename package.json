@@ -34,7 +34,6 @@
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
-    "@types/form-data": "^2.5.0",
     "@types/jest": "^25.2.1",
     "@types/minimist": "^1.2.0",
     "@types/node-fetch": "^2.5.7",
