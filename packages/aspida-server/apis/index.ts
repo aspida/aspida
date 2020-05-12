@@ -1,4 +1,4 @@
-import { IsNumberString, IsBooleanString, IsPort, IsEmpty } from 'class-validator'
+import { IsNumberString, IsBooleanString, IsPort } from 'class-validator'
 
 export class ValidQuery {
   @IsNumberString()
@@ -12,7 +12,6 @@ export class ValidBody {
   @IsPort()
   port!: string
 
-  @IsEmpty()
   file!: File
 }
 
@@ -29,6 +28,7 @@ export type Methods = {
     resBody: {
       id: number
       port: string
+      fileName: string
     }
   }
 }

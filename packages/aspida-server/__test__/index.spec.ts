@@ -22,6 +22,7 @@ beforeAll(async fn => {
   }
   fn()
 })
+
 afterAll(() => {
   server.kill()
 })
@@ -46,12 +47,14 @@ test('GET: 400', async () => {
 
 test('POST: formdata', async () => {
   const port = '3000'
+  const fileName = 'tsconfig.json'
   const form = new FormData()
   form.append('port', port)
-  form.append('file', fs.createReadStream('tsconfig.json'))
+  form.append('file', fs.createReadStream(fileName))
   const res = await axios.post(baseURL, form, {
     headers: form.getHeaders(),
     params: { id: 1, disable: true }
   })
   expect(res.data.port).toBe(port)
+  expect(res.data.fileName).toBe(fileName)
 })
