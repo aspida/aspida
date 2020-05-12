@@ -3,11 +3,23 @@ import getBaseConfig, { BaseConfig } from 'aspida/dist/getConfig'
 export type Config = {
   input: string
   port: number
+  helmet: boolean
+  cors: boolean
+  uploader: {
+    dest?: string
+    size?: number
+  }
 }
 
 type ConfigFile = BaseConfig & {
   server?: {
     port?: number
+    helmet?: boolean
+    cors?: boolean
+    uploader?: {
+      dest?: string
+      size?: number
+    }
   }
 }
 
@@ -17,7 +29,10 @@ const createConfig = (config: ConfigFile) => {
 
   return {
     input: config.input,
-    port: server.port || 8080
+    port: server.port ?? 8080,
+    helmet: server.helmet ?? true,
+    cors: server.cors ?? false,
+    uploader: server.uploader ?? {}
   }
 }
 

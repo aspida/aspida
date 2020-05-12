@@ -1,10 +1,15 @@
 import { LowerHttpMethod, AspidaMethods, HttpMethod, AspidaMethodParams } from 'aspida'
 import express, { RequestHandler, Request } from 'express'
+import { validateOrReject } from 'class-validator'
 
 type RequestParams<T extends AspidaMethodParams> = {
   path: string
   method: HttpMethod
-} & Pick<T, 'query' | 'reqBody' | 'reqHeaders'>
+  query: T['query']
+  body: T['reqBody']
+  headers: T['reqHeaders']
+  originalRequest: Request
+}
 
 type Status = {
   ok: 200 | 201 | 202 | 203 | 204 | 205 | 206
@@ -29,32 +34,32 @@ type Status = {
 
 type SubAllResponse<T, U> = {
   status: Status['ok']
-  resBody?: T
-  resHeaders?: U
+  body?: T
+  headers?: U
 }
 
 type DataResponse<T, U> = {
   status: Status['ok']
-  resBody: T
-  resHeaders?: U
+  body: T
+  headers?: U
 }
 
 type HeadersResponse<T, U> = {
   status: Status['ok']
-  resBody?: T
-  resHeaders: U
+  body?: T
+  headers: U
 }
 
 type AllResponse<T, U> = {
   status: Status['ok']
-  resBody: T
-  resHeaders: U
+  body: T
+  headers: U
 }
 
 type OtherResponse = {
   status: Status['other']
-  resBody?: any
-  resHeaders?: any
+  body?: any
+  headers?: any
 }
 
 type ServerResponse<K extends AspidaMethodParams> =
@@ -82,7 +87,7 @@ type ServerValues = {
 }
 
 type FileType<T extends AspidaMethodParams> = T['reqFormat'] extends FormData
-  ? Pick<Request, 'file' | 'files'>
+  ? { files: Express.Multer.File[] }
   : {}
 
 export type ServerMethods<T extends AspidaMethods, U extends ServerValues> = {
@@ -95,9 +100,17 @@ export const createController = <T extends AspidaMethods, U extends ServerValues
 
 export const createMiddleware = (middleware: RequestHandler | RequestHandler[]) => middleware
 
+type Validators = {
+  Query?: any
+  Body?: any
+  Headers?: any
+}
+
 export type ControllerTree = {
   name: string
   controller?: ServerMethods<any, any> | (RequestHandler | ServerMethods<any, any>)[]
+  uploader?: string[]
+  validator?: { [K in LowerHttpMethod]?: Validators }
   middleware?: RequestHandler | RequestHandler[]
   children?: {
     names?: ControllerTree[]
@@ -106,15 +119,28 @@ export type ControllerTree = {
 }
 
 const methodsToHandler = (
+  Validator: Validators | undefined,
   methodCallback: ServerMethods<any, any>[LowerHttpMethod],
   numberTypeParams: string[]
 ): RequestHandler => async (req, res) => {
-  const { status, resBody, resHeaders } = (await methodCallback({
+  try {
+    await Promise.all([
+      Validator?.Query && validateOrReject(Object.assign(new Validator.Query(), req.query)),
+      Validator?.Headers && validateOrReject(Object.assign(new Validator.Headers(), req.headers)),
+      Validator?.Body && validateOrReject(Object.assign(new Validator.Body(), req.body))
+    ])
+  } catch (e) {
+    res.sendStatus(400)
+    return
+  }
+
+  const { status, body, headers } = (await methodCallback({
     query: req.query,
     path: req.path,
     method: req.method as HttpMethod,
-    reqBody: {},
-    reqHeaders: {},
+    body: req.body,
+    headers: req.headers,
+    originalRequest: req,
     params: numberTypeParams.reduce(
       (p, c) => ({
         ...p,
@@ -123,18 +149,21 @@ const methodsToHandler = (
       req.params as Record<string, string | number>
     ),
     user: (req as any).user,
-    file: req.file,
     files: req.files
-  }).catch(() => ({ status: 500, resBody: 'Internal Server Error' }))) as AllResponse<any, any>
+  }).catch(() => ({ status: 500, body: 'Internal Server Error' }))) as AllResponse<any, any>
 
-  for (const key in resHeaders) {
-    res.setHeader(key, resHeaders[key])
+  for (const key in headers) {
+    res.setHeader(key, headers[key])
   }
 
-  res.status(status).send(resBody)
+  res.status(status).send(body)
 }
 
-export const createRouter = (ctrl: ControllerTree, numberTypeParams: string[] = []) => {
+export const createRouter = (
+  ctrl: ControllerTree,
+  uploader: RequestHandler,
+  numberTypeParams: string[] = []
+) => {
   const router = express.Router({ mergeParams: true })
 
   if (ctrl.middleware) {
@@ -148,15 +177,29 @@ export const createRouter = (ctrl: ControllerTree, numberTypeParams: string[] = 
       const controllers = [...ctrl.controller]
       const targetMethods = controllers.pop() as ServerMethods<any, any>
       for (const method in targetMethods) {
+        if (ctrl.uploader?.includes(method)) {
+          controllers.unshift(uploader)
+        }
+
         ;(router.route('/') as any)[method]([
           ...controllers,
-          methodsToHandler(targetMethods[method], numberTypeParams)
+          methodsToHandler(
+            ctrl.validator?.[method as LowerHttpMethod],
+            targetMethods[method],
+            numberTypeParams
+          )
         ])
       }
     } else {
       for (const method in ctrl.controller) {
+        const handler = methodsToHandler(
+          ctrl.validator?.[method as LowerHttpMethod],
+          ctrl.controller[method],
+          numberTypeParams
+        )
+
         ;(router.route('/') as any)[method](
-          methodsToHandler(ctrl.controller[method], numberTypeParams)
+          ctrl.uploader?.includes(method) ? [uploader, handler] : handler
         )
       }
     }
@@ -165,7 +208,7 @@ export const createRouter = (ctrl: ControllerTree, numberTypeParams: string[] = 
   if (ctrl.children) {
     // eslint-disable-next-line no-unused-expressions
     ctrl.children.names?.forEach(n => {
-      router.use(n.name, createRouter(n, numberTypeParams))
+      router.use(n.name, createRouter(n, uploader, numberTypeParams))
     })
 
     if (ctrl.children.value) {
@@ -174,6 +217,7 @@ export const createRouter = (ctrl: ControllerTree, numberTypeParams: string[] = 
         pathName[0],
         createRouter(
           ctrl.children.value,
+          uploader,
           pathName[1] === 'number' ? [...numberTypeParams, pathName[0].slice(2)] : numberTypeParams
         )
       )

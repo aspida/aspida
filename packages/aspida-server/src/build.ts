@@ -1,5 +1,5 @@
 import { Config } from './getConfig'
-import build, { Template } from './buildRouteFile'
+import build, { Template } from './buildServerFile'
 import { Command } from 'aspida/dist/cli/command'
 
 export class CommandToBuild implements Command {
