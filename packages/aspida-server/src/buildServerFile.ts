@@ -37,6 +37,6 @@ export const server = express()${helmet ? '\n  .use(helmet())' : ''}${
   .listen(${port}, () => {
     console.log('aspida-server runs successfully.')
   })\n`,
-    filePath: path.posix.join(input, '$server.ts')
+    filePath: path.posix.join(input, 'server.ts')
   }
 ]

@@ -126,7 +126,7 @@ export default (inputDir: string) => {
   const text = createText(inputDir, '  ', [])
 
   return `/* eslint-disable */${validates.length ? '\n' : ''}${validates
-    .map((v, i) => `import * as Validator${i} from '${v.replace(inputDir, '.')}'`)
+    .map((v, i) => `import * as Validator${i} from '${v.replace(inputDir, '.')}/index'`)
     .join('\n')}${controllers.length ? '\n' : ''}${controllers
     .map((c, i) => `import controller${i} from '${c.replace(inputDir, '.')}'`)
     .join('\n')}${middlewares.length ? '\n' : ''}${middlewares

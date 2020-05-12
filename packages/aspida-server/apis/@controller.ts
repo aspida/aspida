@@ -1,5 +1,5 @@
 import { createController } from 'aspida-server'
-import { Methods } from '.'
+import { Methods } from './'
 
 export default createController<Methods>([
   (req, res, next) => {
@@ -10,6 +10,6 @@ export default createController<Methods>([
     get: v => {
       return new Promise(resolve => resolve({ status: 200, body: { id: +v.query.id } }))
     },
-    post: async () => ({ status: 200, body: { id: 1 } })
+    post: async v => ({ status: 200, body: { id: +v.query.id, port: v.body.port } })
   }
 ])

@@ -4,7 +4,7 @@ import getConfig from '../src/getConfig'
 
 const basePath = 'packages/aspida-server'
 
-test('build $server.ts', () => {
+test('build', () => {
   const config = getConfig(`${basePath}/aspida.config.js`)[0]
   const inputDir = `${basePath}/${config.input}`
 

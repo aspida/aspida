@@ -1,5 +1,5 @@
 /* eslint-disable */
-import * as Validator0 from '.'
+import * as Validator0 from './index'
 import controller0 from './@controller'
 import controller1 from './users/@controller'
 import controller2 from './users/_userId@number/@controller'
