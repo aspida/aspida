@@ -7,7 +7,7 @@ import cors from 'cors'
 import { createRouter } from 'aspida-server'
 import controllers from './$controllers'
 
-export const server = express()
+export const app = express()
   .use(helmet())
   .use(cors())
   .use((req, res, next) => {
@@ -18,6 +18,7 @@ export const server = express()
     })
   })
   .use(createRouter(controllers, multer({ dest: tmpdir(), limits: { fileSize: 1024 ** 3 } }).any()))
-  .listen(10000, () => {
-    console.log('aspida-server runs successfully.')
-  })
+
+export const server = app.listen(10000, () => {
+  console.log('aspida-server runs successfully.')
+})

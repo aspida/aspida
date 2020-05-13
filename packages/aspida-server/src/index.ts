@@ -91,11 +91,13 @@ type FileType<T extends AspidaMethodParams> = T['reqFormat'] extends FormData
   : {}
 
 export type ServerMethods<T extends AspidaMethods, U extends ServerValues> = {
-  [K in keyof T]: (req: RequestParams<T[K]> & U & FileType<T[K]>) => Promise<ServerResponse<T[K]>>
+  [K in keyof T]: (
+    req: RequestParams<T[K]> & U & FileType<T[K]>
+  ) => ServerResponse<T[K]> | Promise<ServerResponse<T[K]>>
 }
 
 export const createController = <T extends AspidaMethods, U extends ServerValues = {}>(
-  methods: ServerMethods<T, U> | (RequestHandler | ServerMethods<T, U>)[]
+  methods: ServerMethods<T, U>
 ) => methods
 
 export const createMiddleware = (middleware: RequestHandler | RequestHandler[]) => middleware
@@ -108,7 +110,8 @@ type Validators = {
 
 export type ControllerTree = {
   name: string
-  controller?: ServerMethods<any, any> | (RequestHandler | ServerMethods<any, any>)[]
+  controller?: ServerMethods<any, any>
+  ctrlMiddleware?: RequestHandler | RequestHandler[]
   uploader?: string[]
   validator?: { [K in LowerHttpMethod]?: Validators }
   middleware?: RequestHandler | RequestHandler[]
@@ -134,29 +137,35 @@ const methodsToHandler = (
     return
   }
 
-  const { status, body, headers } = (await methodCallback({
-    query: req.query,
-    path: req.path,
-    method: req.method as HttpMethod,
-    body: req.body,
-    headers: req.headers,
-    originalRequest: req,
-    params: numberTypeParams.reduce(
-      (p, c) => ({
-        ...p,
-        [c]: +p[c]
-      }),
-      req.params as Record<string, string | number>
-    ),
-    user: (req as any).user,
-    files: req.files
-  }).catch(() => ({ status: 500, body: 'Internal Server Error' }))) as AllResponse<any, any>
+  try {
+    const result = methodCallback({
+      query: req.query,
+      path: req.path,
+      method: req.method as HttpMethod,
+      body: req.body,
+      headers: req.headers,
+      originalRequest: req,
+      params: numberTypeParams.reduce(
+        (p, c) => ({
+          ...p,
+          [c]: +p[c]
+        }),
+        req.params as Record<string, string | number>
+      ),
+      user: (req as any).user,
+      files: req.files
+    })
 
-  for (const key in headers) {
-    res.setHeader(key, headers[key])
+    const { status, body, headers } = result instanceof Promise ? await result : result
+
+    for (const key in headers) {
+      res.setHeader(key, headers[key])
+    }
+
+    res.status(status).send(body)
+  } catch (e) {
+    res.sendStatus(500)
   }
-
-  res.status(status).send(body)
 }
 
 export const createRouter = (
@@ -173,35 +182,24 @@ export const createRouter = (
   }
 
   if (ctrl.controller) {
-    if (Array.isArray(ctrl.controller)) {
-      const controllers = [...ctrl.controller]
-      const targetMethods = controllers.pop() as ServerMethods<any, any>
-      for (const method in targetMethods) {
-        if (ctrl.uploader?.includes(method)) {
-          controllers.unshift(uploader)
-        }
+    const ctrlMiddlewareList = Array.isArray(ctrl.ctrlMiddleware)
+      ? ctrl.ctrlMiddleware
+      : ctrl.ctrlMiddleware
+      ? [ctrl.ctrlMiddleware]
+      : []
 
-        ;(router.route('/') as any)[method]([
-          ...controllers,
-          methodsToHandler(
-            ctrl.validator?.[method as LowerHttpMethod],
-            targetMethods[method],
-            numberTypeParams
-          )
-        ])
-      }
-    } else {
-      for (const method in ctrl.controller) {
-        const handler = methodsToHandler(
-          ctrl.validator?.[method as LowerHttpMethod],
-          ctrl.controller[method],
-          numberTypeParams
-        )
+    for (const method in ctrl.controller) {
+      const handler = methodsToHandler(
+        ctrl.validator?.[method as LowerHttpMethod],
+        ctrl.controller[method],
+        numberTypeParams
+      )
 
-        ;(router.route('/') as any)[method](
-          ctrl.uploader?.includes(method) ? [uploader, handler] : handler
-        )
-      }
+      ;(router.route('/') as any)[method](
+        ctrl.uploader?.includes(method)
+          ? [uploader, ...ctrlMiddlewareList, handler]
+          : [...ctrlMiddlewareList, handler]
+      )
     }
   }
 
