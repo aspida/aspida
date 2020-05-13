@@ -1,26 +1,34 @@
+import { IsNumberString, IsBooleanString, IsPort } from 'class-validator'
+
+export class ValidQuery {
+  @IsNumberString()
+  id!: string
+
+  @IsBooleanString()
+  disable!: string
+}
+
+export class ValidBody {
+  @IsPort()
+  port!: string
+
+  file!: File
+}
+
 export type Methods = {
   get: {
-    query: {
-      id: number
-    }
-
-    resBody: { id: number }
+    query: ValidQuery
+    resBody?: { id: number }
   }
 
   post: {
-    query: {
-      id: number
-    }
-
+    query: ValidQuery
     reqFormat: FormData
-
-    reqBody: {
-      name: string
-      file: File
-    }
-
+    reqBody: ValidBody
     resBody: {
       id: number
+      port: string
+      fileName: string
     }
   }
 }

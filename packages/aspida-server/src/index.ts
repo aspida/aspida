@@ -1,27 +1,15 @@
 import { LowerHttpMethod, AspidaMethods, HttpMethod, AspidaMethodParams } from 'aspida'
-import express, { RequestHandler } from 'express'
+import express, { RequestHandler, Request } from 'express'
+import { validateOrReject } from 'class-validator'
 
-type ServerValues = {
-  params?: Record<string, any>
-  user?: any
+type RequestParams<T extends AspidaMethodParams> = {
+  path: string
+  method: HttpMethod
+  query: T['query']
+  body: T['reqBody']
+  headers: T['reqHeaders']
+  originalRequest: Request
 }
-
-type RequestParams<
-  T extends AspidaMethods[LowerHttpMethod],
-  U extends ServerValues
-> = T extends AspidaMethodParams
-  ? {
-      path: string
-      method: HttpMethod
-      params: U['params']
-      user: U['user']
-      query: T['query'] extends Record<string, any> | undefined ? T['query'] : undefined
-      reqBody: T['reqBody'] extends Record<string, any> | undefined ? T['reqBody'] : undefined
-      reqHeaders: T['reqHeaders'] extends Record<string, any> | undefined
-        ? T['reqHeaders']
-        : undefined
-    }
-  : never
 
 type Status = {
   ok: 200 | 201 | 202 | 203 | 204 | 205 | 206
@@ -44,55 +32,88 @@ type Status = {
     | 505
 }
 
-type StatusResponse = {
+type SubAllResponse<T, U> = {
   status: Status['ok']
+  body?: T
+  headers?: U
 }
 
-type DataResponse<T> = {
+type DataResponse<T, U> = {
   status: Status['ok']
-  resBody: T
+  body: T
+  headers?: U
 }
 
-type HeadersResponse<T> = {
+type HeadersResponse<T, U> = {
   status: Status['ok']
-  resHeaders: T
+  body?: T
+  headers: U
 }
 
 type AllResponse<T, U> = {
   status: Status['ok']
-  resBody: T
-  resHeaders: U
+  body: T
+  headers: U
 }
 
 type OtherResponse = {
   status: Status['other']
-  resBody?: any
-  resHeaders?: any
+  body?: any
+  headers?: any
 }
 
 type ServerResponse<K extends AspidaMethodParams> =
-  | (K['resBody'] extends Record<string, any> | undefined
-      ? K['resHeaders'] extends Record<string, any> | undefined
+  | (K['resBody'] extends {}
+      ? K['resHeaders'] extends {}
         ? AllResponse<K['resBody'], K['resHeaders']>
-        : DataResponse<K['resBody']>
-      : K['resHeaders'] extends Record<string, any> | undefined
-      ? HeadersResponse<K['resHeaders']>
-      : StatusResponse)
+        : DataResponse<
+            K['resBody'],
+            K['resHeaders'] extends {} | undefined ? K['resHeaders'] : undefined
+          >
+      : K['resHeaders'] extends {}
+      ? HeadersResponse<
+          K['resBody'] extends {} | undefined ? K['resBody'] : undefined,
+          K['resHeaders']
+        >
+      : SubAllResponse<
+          K['resBody'] extends {} | undefined ? K['resBody'] : undefined,
+          K['resHeaders'] extends {} | undefined ? K['resHeaders'] : undefined
+        >)
   | OtherResponse
 
+type ServerValues = {
+  params?: Record<string, any>
+  user?: any
+}
+
+type FileType<T extends AspidaMethodParams> = T['reqFormat'] extends FormData
+  ? { files: Express.Multer.File[] }
+  : {}
+
 export type ServerMethods<T extends AspidaMethods, U extends ServerValues> = {
-  [K in keyof T]: (req: RequestParams<T[K], U>) => Promise<ServerResponse<T[K]>>
+  [K in keyof T]: (
+    req: RequestParams<T[K]> & U & FileType<T[K]>
+  ) => ServerResponse<T[K]> | Promise<ServerResponse<T[K]>>
 }
 
 export const createController = <T extends AspidaMethods, U extends ServerValues = {}>(
-  methods: ServerMethods<T, U> | (RequestHandler | ServerMethods<T, U>)[]
+  methods: ServerMethods<T, U>
 ) => methods
 
 export const createMiddleware = (middleware: RequestHandler | RequestHandler[]) => middleware
 
+type Validators = {
+  Query?: any
+  Body?: any
+  Headers?: any
+}
+
 export type ControllerTree = {
   name: string
-  controller?: ServerMethods<any, any> | (RequestHandler | ServerMethods<any, any>)[]
+  controller?: ServerMethods<any, any>
+  ctrlMiddleware?: RequestHandler | RequestHandler[]
+  uploader?: string[]
+  validator?: { [K in LowerHttpMethod]?: Validators }
   middleware?: RequestHandler | RequestHandler[]
   children?: {
     names?: ControllerTree[]
@@ -101,33 +122,57 @@ export type ControllerTree = {
 }
 
 const methodsToHandler = (
+  Validator: Validators | undefined,
   methodCallback: ServerMethods<any, any>[LowerHttpMethod],
   numberTypeParams: string[]
 ): RequestHandler => async (req, res) => {
-  const { status, resBody, resHeaders } = (await methodCallback({
-    query: req.query,
-    path: req.path,
-    method: req.method as HttpMethod,
-    reqBody: {},
-    reqHeaders: {},
-    params: numberTypeParams.reduce(
-      (p, c) => ({
-        ...p,
-        [c]: +p[c]
-      }),
-      req.params as Record<string, string | number>
-    ),
-    user: (req as any).user
-  }).catch(() => ({ status: 500, resBody: 'Internal Server Error' }))) as AllResponse<any, any>
-
-  for (const key in resHeaders) {
-    res.setHeader(key, resHeaders[key])
+  try {
+    await Promise.all([
+      Validator?.Query && validateOrReject(Object.assign(new Validator.Query(), req.query)),
+      Validator?.Headers && validateOrReject(Object.assign(new Validator.Headers(), req.headers)),
+      Validator?.Body && validateOrReject(Object.assign(new Validator.Body(), req.body))
+    ])
+  } catch (e) {
+    res.sendStatus(400)
+    return
   }
 
-  res.status(status).send(resBody)
+  try {
+    const result = methodCallback({
+      query: req.query,
+      path: req.path,
+      method: req.method as HttpMethod,
+      body: req.body,
+      headers: req.headers,
+      originalRequest: req,
+      params: numberTypeParams.reduce(
+        (p, c) => ({
+          ...p,
+          [c]: +p[c]
+        }),
+        req.params as Record<string, string | number>
+      ),
+      user: (req as any).user,
+      files: req.files
+    })
+
+    const { status, body, headers } = result instanceof Promise ? await result : result
+
+    for (const key in headers) {
+      res.setHeader(key, headers[key])
+    }
+
+    res.status(status).send(body)
+  } catch (e) {
+    res.sendStatus(500)
+  }
 }
 
-export const createRouter = (ctrl: ControllerTree, numberTypeParams: string[] = []) => {
+export const createRouter = (
+  ctrl: ControllerTree,
+  uploader: RequestHandler,
+  numberTypeParams: string[] = []
+) => {
   const router = express.Router({ mergeParams: true })
 
   if (ctrl.middleware) {
@@ -137,28 +182,31 @@ export const createRouter = (ctrl: ControllerTree, numberTypeParams: string[] = 
   }
 
   if (ctrl.controller) {
-    if (Array.isArray(ctrl.controller)) {
-      const controllers = [...ctrl.controller]
-      const targetMethods = controllers.pop() as ServerMethods<any, any>
-      for (const method in targetMethods) {
-        ;(router.route('/') as any)[method]([
-          ...controllers,
-          methodsToHandler(targetMethods[method], numberTypeParams)
-        ])
-      }
-    } else {
-      for (const method in ctrl.controller) {
-        ;(router.route('/') as any)[method](
-          methodsToHandler(ctrl.controller[method], numberTypeParams)
-        )
-      }
+    const ctrlMiddlewareList = Array.isArray(ctrl.ctrlMiddleware)
+      ? ctrl.ctrlMiddleware
+      : ctrl.ctrlMiddleware
+      ? [ctrl.ctrlMiddleware]
+      : []
+
+    for (const method in ctrl.controller) {
+      const handler = methodsToHandler(
+        ctrl.validator?.[method as LowerHttpMethod],
+        ctrl.controller[method],
+        numberTypeParams
+      )
+
+      ;(router.route('/') as any)[method](
+        ctrl.uploader?.includes(method)
+          ? [uploader, ...ctrlMiddlewareList, handler]
+          : [...ctrlMiddlewareList, handler]
+      )
     }
   }
 
   if (ctrl.children) {
     // eslint-disable-next-line no-unused-expressions
     ctrl.children.names?.forEach(n => {
-      router.use(n.name, createRouter(n, numberTypeParams))
+      router.use(n.name, createRouter(n, uploader, numberTypeParams))
     })
 
     if (ctrl.children.value) {
@@ -167,6 +215,7 @@ export const createRouter = (ctrl: ControllerTree, numberTypeParams: string[] = 
         pathName[0],
         createRouter(
           ctrl.children.value,
+          uploader,
           pathName[1] === 'number' ? [...numberTypeParams, pathName[0].slice(2)] : numberTypeParams
         )
       )

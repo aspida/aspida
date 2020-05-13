@@ -1,15 +1,17 @@
-import { createController } from 'aspida-server'
-import { Methods } from '.'
+import { createController, createMiddleware } from 'aspida-server'
+import { Methods } from './'
 
-export default createController<Methods>([
-  (req, res, next) => {
-    console.log('Controller level middleware:', req.path)
-    next()
+export const middleware = createMiddleware((req, res, next) => {
+  console.log('Controller level middleware:', req.path)
+  next()
+})
+
+export default createController<Methods>({
+  get: async v => {
+    return await { status: 200, body: { id: +v.query.id } }
   },
-  {
-    get: v => {
-      return new Promise(resolve => resolve({ status: 200, resBody: v.query }))
-    },
-    post: async () => ({ status: 200, resBody: { id: 1 } })
-  }
-])
+  post: v => ({
+    status: 200,
+    body: { id: +v.query.id, port: v.body.port, fileName: v.files[0].originalname }
+  })
+})

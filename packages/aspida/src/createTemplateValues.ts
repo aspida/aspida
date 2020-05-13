@@ -98,18 +98,21 @@ export default (input: string, trailingSlash: boolean) => {
 
   const rootIndexPath = path.posix.join(input, 'index.ts')
   const rootIndent = '  '
+  const emptyMethodsRegExp = /.+{\n\n? +},?\n/
+  let api = createApiString(
+    input,
+    '.',
+    rootIndent,
+    '',
+    `{\n<% props %>\n  }`,
+    fs.existsSync(rootIndexPath)
+      ? getMethodsString('./index', rootIndexPath, rootIndent, '')
+      : undefined
+  )
 
-  return {
-    api: createApiString(
-      input,
-      '.',
-      rootIndent,
-      '',
-      `{\n<% props %>\n  }`,
-      fs.existsSync(rootIndexPath)
-        ? getMethodsString('./index', rootIndexPath, rootIndent, '')
-        : undefined
-    ),
-    imports
+  while (emptyMethodsRegExp.test(api)) {
+    api = api.replace(emptyMethodsRegExp, '')
   }
+
+  return { api, imports }
 }

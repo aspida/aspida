@@ -13,9 +13,9 @@ export const printLog = (config: MockRequestConfig, status: number) => {
   )
 }
 
-export type MockRoute<T extends AspidaMethods = AspidaMethods> = {
+export type MockRoute = {
   path: string
-  methods: MockMethods<T>
+  methods: MockMethods<any>
 }
 
 export type MockClient<U> = AspidaClient<U> & {
