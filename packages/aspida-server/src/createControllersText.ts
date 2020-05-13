@@ -4,7 +4,7 @@ import parseInterface from 'aspida/dist/parseInterface'
 
 export default (inputDir: string) => {
   const middlewares: string[] = []
-  const controllers: string[] = []
+  const controllers: [string, boolean][] = []
   const validates: string[] = []
 
   const createText = (input: string, indent: string, params: [string, string][], user = '') => {
@@ -74,7 +74,14 @@ export default (inputDir: string) => {
 
     if (fs.existsSync(path.join(input, '@controller.ts'))) {
       result += `,\n${indent}controller: controller${controllers.length}`
-      controllers.push(`${input}/@controller`)
+      const text = fs.readFileSync(path.join(input, '@controller.ts'), 'utf8')
+      const hasMiddleware = /export (const|{)(.*[ ,])?middleware[, }=]/.test(text)
+
+      if (hasMiddleware) {
+        result += `,\n${indent}ctrlMiddleware: ctrlMiddleware${controllers.length}`
+      }
+
+      controllers.push([`${input}/@controller`, hasMiddleware])
     }
 
     if (fs.existsSync(path.join(input, '@middleware.ts'))) {
@@ -124,11 +131,17 @@ export default (inputDir: string) => {
   }
 
   const text = createText(inputDir, '  ', [])
+  const ctrlMiddleware = controllers.filter(c => c[1])
 
   return `/* eslint-disable */${validates.length ? '\n' : ''}${validates
     .map((v, i) => `import * as Validator${i} from '${v.replace(inputDir, '.')}/index'`)
     .join('\n')}${controllers.length ? '\n' : ''}${controllers
-    .map((c, i) => `import controller${i} from '${c.replace(inputDir, '.')}'`)
+    .map(
+      (ctrl, i) =>
+        `import controller${i}${
+          ctrl[1] ? `, { middleware as ctrlMiddleware${ctrlMiddleware.indexOf(ctrl)} }` : ''
+        } from '${ctrl[0].replace(inputDir, '.')}'`
+    )
     .join('\n')}${middlewares.length ? '\n' : ''}${middlewares
     .map((m, i) => `import middleware${i} from '${m.replace(inputDir, '.')}'`)
     .join('\n')}\n\nexport default {\n  name: '/'${text}\n}\n`

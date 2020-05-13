@@ -21,9 +21,7 @@ import multer from 'multer'${helmet ? "\nimport helmet from 'helmet'" : ''}${
 import { createRouter } from 'aspida-server'
 import controllers from './$controllers'
 
-export const server = express()${helmet ? '\n  .use(helmet())' : ''}${
-      cors ? '\n  .use(cors())' : ''
-    }
+export const app = express()${helmet ? '\n  .use(helmet())' : ''}${cors ? '\n  .use(cors())' : ''}
   .use((req, res, next) => {
     express.json()(req, res, err => {
       if (err) return res.sendStatus(400)
@@ -34,9 +32,10 @@ export const server = express()${helmet ? '\n  .use(helmet())' : ''}${
   .use(createRouter(controllers, multer({ dest: ${
     uploader.dest ?? 'tmpdir()'
   }, limits: { fileSize: ${uploader.size ?? '1024 ** 3'} } }).any()))
-  .listen(${port}, () => {
-    console.log('aspida-server runs successfully.')
-  })\n`,
+
+export const server = app.listen(${port}, () => {
+  console.log('aspida-server runs successfully.')
+})\n`,
     filePath: path.posix.join(input, 'server.ts')
   }
 ]
