@@ -1,11 +1,11 @@
 import minimist from 'minimist'
-import getBaseConfig, { BaseConfig } from 'aspida/dist/getConfig'
+import getBaseConfig, { BaseConfig } from 'aspida/src/getConfig'
 import write from './writeRouteFile'
-import watch from 'aspida/dist/cli/watchInputDir'
-import { options } from 'aspida/dist/cli'
+import watch from 'aspida/src/cli/watchInputDir'
+import { options } from 'aspida/src/cli'
 import { Build, Watch, CommandToBuild } from './build'
-import { Command, nullCommand } from 'aspida/dist/cli/command'
-import { version as versionCommand } from 'aspida/dist/cli/version'
+import { Command, nullCommand } from 'aspida/src/cli/command'
+import { version as versionCommand } from 'aspida/src/cli/version'
 
 const getBuildCommandFactory = (configs: BaseConfig[]) =>
   CommandToBuild.getFactory(configs, { write, watch })

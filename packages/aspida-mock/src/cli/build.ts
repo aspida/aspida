@@ -1,6 +1,6 @@
-import { BaseConfig } from 'aspida/dist/getConfig'
+import { BaseConfig } from 'aspida/src/getConfig'
 import build, { Template } from './buildRouteFile'
-import { Command } from 'aspida/dist/cli/command'
+import { Command } from 'aspida/src/cli/command'
 
 export class CommandToBuild implements Command {
   static getFactory(configs: BaseConfig[], io: BuildIO) {

@@ -1,6 +1,6 @@
 import path from 'path'
 import { OpenAPI } from 'openapi-types'
-import getBaseConfig, { BaseConfig } from 'aspida/dist/getConfig'
+import getBaseConfig, { BaseConfig } from 'aspida/src/getConfig'
 
 export type Config = {
   input: string | OpenAPI.Document

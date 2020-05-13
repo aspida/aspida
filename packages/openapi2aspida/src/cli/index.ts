@@ -3,7 +3,7 @@ import getConfig, { Config } from '../getConfig'
 import write from '../writeRouteFile'
 import { Build, CommandToBuild } from './build'
 import { Command, nullCommand } from './command'
-import { version as versionCommand } from 'aspida/dist/cli/version'
+import { version as versionCommand } from 'aspida/src/cli/version'
 
 const options: minimist.Opts = {
   string: ['version', 'config', 'build'],
