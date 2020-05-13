@@ -1,6 +1,6 @@
 import path from 'path'
 import fs from 'fs'
-import parseInterface from 'aspida/dist/parseInterface'
+import parseInterface from 'aspida/src/parseInterface'
 
 export default (inputDir: string) => {
   const middlewares: string[] = []

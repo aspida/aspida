@@ -7,6 +7,11 @@ import cors from 'cors'
 import { createRouter } from 'aspida-server'
 import controllers from './$controllers'
 
+export const router = createRouter(
+  controllers,
+  multer({ dest: tmpdir(), limits: { fileSize: 1024 ** 3 } }).any()
+)
+
 export const app = express()
   .use(helmet())
   .use(cors())
@@ -17,8 +22,12 @@ export const app = express()
       next()
     })
   })
-  .use(createRouter(controllers, multer({ dest: tmpdir(), limits: { fileSize: 1024 ** 3 } }).any()))
+  .use('/api', router)
 
-export const server = app.listen(10000, () => {
-  console.log('aspida-server runs successfully.')
-})
+export const run = (port?: number | string) =>
+  new Promise<ReturnType<typeof app.listen>>(resolve => {
+    const server = app.listen(port || 10000, () => {
+      console.log(`aspida-server is running on http://localhost:${port || 10000}`)
+      resolve(server)
+    })
+  })

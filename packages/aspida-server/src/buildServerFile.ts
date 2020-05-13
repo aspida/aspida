@@ -7,7 +7,15 @@ export type Template = {
   text: string
 }
 
-export default ({ input, port, helmet, cors, uploader }: Config): Template[] => [
+export default ({
+  input,
+  port,
+  basePath,
+  helmet,
+  cors,
+  immediate,
+  uploader
+}: Config): Template[] => [
   {
     text: createControllersText(input),
     filePath: path.posix.join(input, '$controllers.ts')
@@ -21,6 +29,13 @@ import multer from 'multer'${helmet ? "\nimport helmet from 'helmet'" : ''}${
 import { createRouter } from 'aspida-server'
 import controllers from './$controllers'
 
+export const router = createRouter(
+  controllers,
+  multer({ dest: ${uploader.dest ?? 'tmpdir()'}, limits: { fileSize: ${
+      uploader.size ?? '1024 ** 3'
+    } } }).any()
+)
+
 export const app = express()${helmet ? '\n  .use(helmet())' : ''}${cors ? '\n  .use(cors())' : ''}
   .use((req, res, next) => {
     express.json()(req, res, err => {
@@ -29,13 +44,16 @@ export const app = express()${helmet ? '\n  .use(helmet())' : ''}${cors ? '\n  .
       next()
     })
   })
-  .use(createRouter(controllers, multer({ dest: ${
-    uploader.dest ?? 'tmpdir()'
-  }, limits: { fileSize: ${uploader.size ?? '1024 ** 3'} } }).any()))
+  .use(${basePath === '/' ? '' : `'${basePath}', `}router)
 
-export const server = app.listen(${port}, () => {
-  console.log('aspida-server runs successfully.')
-})\n`,
+export const run = (port?: number | string) =>
+  new Promise<ReturnType<typeof app.listen>>(resolve => {
+    const server = app.listen(port || ${port}, () => {
+      console.log(\`aspida-server is running on http://localhost:\${port || ${port}}\`)
+      resolve(server)
+    })
+  })
+${immediate ? '\nexport const server = run()\n' : ''}`,
     filePath: path.posix.join(input, 'server.ts')
   }
 ]

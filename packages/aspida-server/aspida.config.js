@@ -1,1 +1,8 @@
-module.exports = { server: { port: 10000, cors: true } }
+module.exports = {
+  server: {
+    port: 10000,
+    basePath: '/api',
+    cors: true,
+    immediate: false
+  }
+}
