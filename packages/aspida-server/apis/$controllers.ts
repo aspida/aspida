@@ -4,6 +4,7 @@ import controller0, { middleware as ctrlMiddleware0 } from './@controller'
 import controller1, { middleware as ctrlMiddleware1 } from './users/@controller'
 import controller2 from './users/_userId@number/@controller'
 import middleware0 from './@middleware'
+import middleware1 from './users/@middleware'
 
 export default {
   name: '/',
@@ -26,6 +27,7 @@ export default {
         name: '/users',
         controller: controller1,
         ctrlMiddleware: ctrlMiddleware1,
+        middleware: middleware1,
         children: {
           value: {
             name: '/_userId@number',

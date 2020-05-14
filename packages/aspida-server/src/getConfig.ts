@@ -1,4 +1,4 @@
-import getBaseConfig, { BaseConfig } from 'aspida/src/getConfig'
+import getBaseConfig, { BaseConfig } from 'aspida/dist/getConfig'
 
 export type Config = {
   input: string

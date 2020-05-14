@@ -1,7 +1,7 @@
-import { User } from '../'
+import { UserInfo } from '../'
 
 export type Methods = {
   get: {
-    resBody: User
+    resBody: UserInfo
   }
 }

@@ -1,6 +1,6 @@
 import fs from 'fs'
 import build from '../src/buildServerFile'
-import aspidaBuild from 'aspida/src/buildTemplate'
+import aspidaBuild from 'aspida/dist/buildTemplate'
 import getConfig from '../src/getConfig'
 
 const basePath = 'packages/aspida-server'
