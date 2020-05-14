@@ -8,7 +8,7 @@ import {
 } from 'aspida'
 import ky, { Options } from 'ky'
 
-export default (client = ky, config?: Options): AspidaClient<Options> => ({
+export default (client: typeof ky = ky, config?: Options): AspidaClient<Options> => ({
   baseURL: typeof config?.prefixUrl === 'string' ? config.prefixUrl : undefined,
   fetch(
     prefixUrl: string,
