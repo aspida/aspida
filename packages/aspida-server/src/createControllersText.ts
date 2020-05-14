@@ -1,6 +1,6 @@
 import path from 'path'
 import fs from 'fs'
-import parseInterface from 'aspida/src/parseInterface'
+import parseInterface from 'aspida/dist/parseInterface'
 
 export default (inputDir: string) => {
   const middlewares: string[] = []
@@ -9,11 +9,13 @@ export default (inputDir: string) => {
 
   const createText = (input: string, indent: string, params: [string, string][], user = '') => {
     let result = ''
-    const userPath = fs.existsSync(path.join(input, '@user.ts'))
-      ? './@user'
-      : user
-      ? `./.${user}`
-      : ''
+    const userPath =
+      fs.existsSync(path.join(input, '@middleware.ts')) &&
+      parseInterface(fs.readFileSync(path.join(input, '@middleware.ts'), 'utf8'), 'User')
+        ? './@middleware'
+        : user
+        ? `./.${user}`
+        : ''
 
     if (params.length || userPath) {
       fs.writeFileSync(
