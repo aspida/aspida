@@ -1,4 +1,4 @@
-import { createController, createMiddleware } from 'aspida-server'
+import { createController, createMiddleware } from 'frourio'
 import { Methods } from './'
 
 export const middleware = createMiddleware((req, res, next) => {

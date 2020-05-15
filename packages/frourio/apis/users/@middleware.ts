@@ -1,4 +1,4 @@
-import { createMiddleware } from 'aspida-server'
+import { createMiddleware } from 'frourio'
 
 export type User = {
   id: number

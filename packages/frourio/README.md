@@ -1,4 +1,4 @@
-# aspida-server
+# frourio
 
 | [aspida] | [aspida-mock] | [openapi2aspida] | [pathpida] |
 | -------- | ------------- | ---------------- | ---------- |
@@ -20,8 +20,8 @@
 <br />
 <br />
 <div align="center">
-  <a href="https://www.npmjs.com/package/aspida-server">
-    <img src="https://img.shields.io/npm/v/aspida-server" alt="npm version" />
+  <a href="https://www.npmjs.com/package/frourio">
+    <img src="https://img.shields.io/npm/v/frourio" alt="npm version" />
   </a>
   <a href="https://circleci.com/gh/aspidajs/aspida">
     <img src="https://img.shields.io/circleci/build/github/aspidajs/aspida.svg?label=test" alt="CircleCI" />
@@ -36,7 +36,7 @@
     <img src="https://api.dependabot.com/badges/status?host=github&repo=aspidajs/aspida" alt="Dependabot Status" />
   </a>
   <a href="https://github.com/aspidajs/aspida/blob/master/packages/aspida-axios/LICENSE">
-    <img src="https://img.shields.io/npm/l/aspida-server" alt="License" />
+    <img src="https://img.shields.io/npm/l/frourio" alt="License" />
   </a>
 </div>
 <br />
@@ -51,18 +51,18 @@
 - Using [npm](https://www.npmjs.com/):
 
   ```sh
-  $ npm install aspida-server
+  $ npm install frourio
   ```
 
 - Using [Yarn](https://yarnpkg.com/):
 
   ```sh
-  $ yarn add aspida-server
+  $ yarn add frourio
   ```
 
 ## License
 
-aspida-server is licensed under a [MIT License](https://github.com/aspidajs/aspida/blob/master/packages/aspida-server/LICENSE).
+frourio is licensed under a [MIT License](https://github.com/aspidajs/aspida/blob/master/packages/frourio/LICENSE).
 
 [aspida]: https://github.com/aspidajs/aspida/tree/master/packages/aspida
 [aspida-mock]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-mock

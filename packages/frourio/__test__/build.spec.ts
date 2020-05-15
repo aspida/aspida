@@ -3,7 +3,7 @@ import build from '../src/buildServerFile'
 import aspidaBuild from 'aspida/dist/buildTemplate'
 import getConfig from '../src/getConfig'
 
-const basePath = 'packages/aspida-server'
+const basePath = 'packages/frourio'
 
 test('build', () => {
   const config = getConfig(`${basePath}/aspida.config.js`)[0]

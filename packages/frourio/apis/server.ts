@@ -4,7 +4,7 @@ import express from 'express'
 import multer from 'multer'
 import helmet from 'helmet'
 import cors from 'cors'
-import { createRouter } from 'aspida-server'
+import { createRouter } from 'frourio'
 import controllers from './$controllers'
 
 export const router = createRouter(
@@ -27,7 +27,7 @@ export const app = express()
 export const run = (port: number | string = 10000) =>
   new Promise<ReturnType<typeof app.listen>>(resolve => {
     const server = app.listen(port, () => {
-      console.log(`aspida-server is running on http://localhost:${port}`)
+      console.log(`Frourio is running on http://localhost:${port}`)
       resolve(server)
     })
   })
