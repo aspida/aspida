@@ -21,7 +21,7 @@ export default ({
     filePath: path.posix.join(input, '$controllers.ts')
   },
   {
-    text: `/* eslint-disable */${uploader.dest ?? "\nimport { tmpdir } from 'os'"}
+    text: `/* eslint-disable */${uploader.dest ? '' : "\nimport { tmpdir } from 'os'"}
 import express from 'express'
 import multer from 'multer'${helmet ? "\nimport helmet from 'helmet'" : ''}${
       cors ? "\nimport cors from 'cors'" : ''
@@ -31,7 +31,7 @@ import controllers from './$controllers'
 
 export const router = createRouter(
   controllers,
-  multer({ dest: ${uploader.dest ?? 'tmpdir()'}, limits: { fileSize: ${
+  multer({ dest: ${uploader.dest ? `'${uploader.dest}'` : 'tmpdir()'}, limits: { fileSize: ${
       uploader.size ?? '1024 ** 3'
     } } }).any()
 )
@@ -46,10 +46,10 @@ export const app = express()${helmet ? '\n  .use(helmet())' : ''}${cors ? '\n  .
   })
   .use(${basePath === '/' ? '' : `'${basePath}', `}router)
 
-export const run = (port?: number | string) =>
+export const run = (port: number | string = ${port}) =>
   new Promise<ReturnType<typeof app.listen>>(resolve => {
-    const server = app.listen(port || ${port}, () => {
-      console.log(\`aspida-server is running on http://localhost:\${port || ${port}}\`)
+    const server = app.listen(port, () => {
+      console.log(\`aspida-server is running on http://localhost:\${port}\`)
       resolve(server)
     })
   })

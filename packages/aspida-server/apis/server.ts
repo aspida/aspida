@@ -24,10 +24,10 @@ export const app = express()
   })
   .use('/api', router)
 
-export const run = (port?: number | string) =>
+export const run = (port: number | string = 10000) =>
   new Promise<ReturnType<typeof app.listen>>(resolve => {
-    const server = app.listen(port || 10000, () => {
-      console.log(`aspida-server is running on http://localhost:${port || 10000}`)
+    const server = app.listen(port, () => {
+      console.log(`aspida-server is running on http://localhost:${port}`)
       resolve(server)
     })
   })
