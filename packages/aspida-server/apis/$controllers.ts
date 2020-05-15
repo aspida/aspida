@@ -1,5 +1,5 @@
 /* eslint-disable */
-import * as Validator0 from './index'
+import * as validator0 from './index'
 import controller0, { middleware as ctrlMiddleware0 } from './@controller'
 import controller1, { middleware as ctrlMiddleware1 } from './users/@controller'
 import controller2 from './users/_userId@number/@controller'
@@ -10,11 +10,11 @@ export default {
   name: '/',
   validator: {
     get: {
-      Query: Validator0.ValidQuery
+      query: { required: false, Class: validator0.ValidQuery }
     },
     post: {
-      Query: Validator0.ValidQuery,
-      Body: Validator0.ValidBody
+      query: { required: true, Class: validator0.ValidQuery },
+      body: { required: true, Class: validator0.ValidBody }
     }
   },
   uploader: ['post'],

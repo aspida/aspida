@@ -22,11 +22,11 @@ export default (inputDir: string) => {
         path.join(input, '$values.ts'),
         `/* eslint-disable */\n${
           userPath ? `import { User } from '${userPath}'\n\n` : ''
-        }export type Values = {\n${
+        }export type Values = {${
           params.length
-            ? `  params: {\n${params.map(v => `    ${v[0]}: ${v[1]}`).join('\n')}\n  }`
+            ? `\n  params: {\n${params.map(v => `    ${v[0]}: ${v[1]}`).join('\n')}\n  }`
             : ''
-        }${params.length ? '\n' : ''}${userPath ? '  user: User' : ''}\n}\n`,
+        }${userPath ? '\n  user: User' : ''}\n}\n`,
         'utf8'
       )
     } else if (fs.existsSync(path.join(input, '@values.ts'))) {
@@ -39,15 +39,15 @@ export default (inputDir: string) => {
       if (methods) {
         const validateInfo = methods
           .map(m => {
-            const props: [string, string][] = []
+            const props: [string, { value: string; hasQuestion: boolean }][] = []
             if (m.props.query && text.includes(`export class ${m.props.query.value} `)) {
-              props.push(['Query', m.props.query.value])
+              props.push(['query', m.props.query])
             }
             if (m.props.reqBody && text.includes(`export class ${m.props.reqBody.value} `)) {
-              props.push(['Body', m.props.reqBody.value])
+              props.push(['body', m.props.reqBody])
             }
             if (m.props.reqHeaders && text.includes(`export class ${m.props.reqHeaders.value} `)) {
-              props.push(['Headers', m.props.reqHeaders.value])
+              props.push(['headers', m.props.reqHeaders])
             }
             return { method: m.name, props }
           })
@@ -58,7 +58,12 @@ export default (inputDir: string) => {
             .map(
               v =>
                 `  ${indent}${v.method}: {\n${v.props
-                  .map(p => `    ${indent}${p[0]}: Validator${validates.length}.${p[1]}`)
+                  .map(
+                    p =>
+                      `    ${indent}${p[0]}: { required: ${!p[1].hasQuestion}, Class: validator${
+                        validates.length
+                      }.${p[1].value} }`
+                  )
                   .join(',\n')}\n  ${indent}}`
             )
             .join(',\n')}\n${indent}}`
@@ -136,7 +141,7 @@ export default (inputDir: string) => {
   const ctrlMiddleware = controllers.filter(c => c[1])
 
   return `/* eslint-disable */${validates.length ? '\n' : ''}${validates
-    .map((v, i) => `import * as Validator${i} from '${v.replace(inputDir, '.')}/index'`)
+    .map((v, i) => `import * as validator${i} from '${v.replace(inputDir, '.')}/index'`)
     .join('\n')}${controllers.length ? '\n' : ''}${controllers
     .map(
       (ctrl, i) =>

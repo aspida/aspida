@@ -102,10 +102,15 @@ export const createController = <T extends AspidaMethods, U extends ServerValues
 
 export const createMiddleware = (middleware: RequestHandler | RequestHandler[]) => middleware
 
+type Validator = {
+  required: boolean
+  Class: any
+}
+
 type Validators = {
-  Query?: any
-  Body?: any
-  Headers?: any
+  query?: Validator
+  body?: Validator
+  headers?: Validator
 }
 
 export type ControllerTree = {
@@ -122,15 +127,21 @@ export type ControllerTree = {
 }
 
 const methodsToHandler = (
-  Validator: Validators | undefined,
+  validator: Validators | undefined,
   methodCallback: ServerMethods<any, any>[LowerHttpMethod],
   numberTypeParams: string[]
 ): RequestHandler => async (req, res) => {
   try {
     await Promise.all([
-      Validator?.Query && validateOrReject(Object.assign(new Validator.Query(), req.query)),
-      Validator?.Headers && validateOrReject(Object.assign(new Validator.Headers(), req.headers)),
-      Validator?.Body && validateOrReject(Object.assign(new Validator.Body(), req.body))
+      validator?.query &&
+        (Object.keys(req.query).length || validator.query.required ? true : undefined) &&
+        validateOrReject(Object.assign(new validator.query.Class(), req.query)),
+      validator?.headers &&
+        (Object.keys(req.headers).length || validator.headers.required ? true : undefined) &&
+        validateOrReject(Object.assign(new validator.headers.Class(), req.headers)),
+      validator?.body &&
+        (Object.keys(req.body).length || validator.body.required ? true : undefined) &&
+        validateOrReject(Object.assign(new validator.body.Class(), req.body))
     ])
   } catch (e) {
     res.sendStatus(400)
