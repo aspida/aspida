@@ -1,7 +1,7 @@
 {
   "name": "aspida-server",
   "version": "0.0.0",
-  "description": "TypeScript friendly RESTful API dedicated server",
+  "description": "Perfectly type-checkable REST framework for TypeScript",
   "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
   "license": "MIT",
   "main": "dist/index.js",
