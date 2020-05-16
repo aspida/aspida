@@ -28,9 +28,9 @@ export type Methods = {
       quoteSource?: string
       quotePersonHandle?: string
       videoId?: number
-      video?: ArrayBuffer
+      video?: Blob
       audioId?: number
-      audio?: ArrayBuffer
+      audio?: Blob
       text?: string
       headline?: string
       quoteCreated?: string

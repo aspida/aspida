@@ -339,7 +339,7 @@ export type receiptCreateParams = {
   company_id: number
   description?: string
   issue_date?: string
-  receipt: ArrayBuffer
+  receipt: Blob
 }
 
 export type receiptUpdateParams = {

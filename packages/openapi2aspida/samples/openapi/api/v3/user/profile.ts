@@ -10,7 +10,7 @@ export type Methods = {
     reqBody?: {
       screenName?: string
       url?: string
-      image?: ArrayBuffer
+      image?: Blob
       imageId?: string
     }
   }

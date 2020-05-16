@@ -116,7 +116,7 @@ export const schema2value = (
   } else if (schema.properties || schema.additionalProperties) {
     value = object2value(schema)
   } else if (schema.format === 'binary') {
-    value = 'ArrayBuffer'
+    value = 'Blob'
   } else if (schema.type !== 'object') {
     value = {
       integer: 'number',

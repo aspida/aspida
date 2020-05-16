@@ -13,7 +13,7 @@ export type Methods = {
     reqFormat: FormData
 
     reqBody?: {
-      file: ArrayBuffer
+      file: Blob
       caption?: string
       headline?: string
       text?: string
