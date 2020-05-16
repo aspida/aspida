@@ -2,22 +2,22 @@ import { IsNumberString, IsBooleanString, IsPort } from 'class-validator'
 
 export class ValidQuery {
   @IsNumberString()
-  id!: string
+  id: string
 
   @IsBooleanString()
-  disable!: string
+  disable: string
 }
 
 export class ValidBody {
   @IsPort()
-  port!: string
+  port: string
 
-  file!: File
+  file: File
 }
 
 export type Methods = {
   get: {
-    query: ValidQuery
+    query?: ValidQuery
     resBody?: { id: number }
   }
 

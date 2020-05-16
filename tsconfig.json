@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "declaration": true,
     "declarationMap": true,
     "downlevelIteration": true,
@@ -9,9 +8,9 @@
     "lib": ["dom", "dom.iterable"],
     "module": "commonjs",
     "moduleResolution": "node",
-    "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,
+    "strictPropertyInitialization": false,
     "target": "es5"
   }
 }

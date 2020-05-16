@@ -1,10 +1,10 @@
-export type User = {
+export type UserInfo = {
   id: number
   name: string
 }
 
 export type Methods = {
   get: {
-    resBody: User[]
+    resBody: UserInfo[]
   }
 }

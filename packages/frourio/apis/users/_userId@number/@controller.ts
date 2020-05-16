@@ -1,4 +1,4 @@
-import { createController } from 'aspida-server'
+import { createController } from 'frourio'
 import { Methods } from './'
 import { Values } from './$values'
 

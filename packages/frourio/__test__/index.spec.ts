@@ -1,30 +1,22 @@
-import { fork, ChildProcess } from 'child_process'
 import fs from 'fs'
 import FormData from 'form-data'
 import axios from 'axios'
 import aspida from '@aspida/axios'
 import api from '../apis/$api'
+import { run, app } from '../apis/server'
 
-const baseURL = 'http://localhost:10000'
+const config = require('../aspida.config') as any
+const baseURL = `http://localhost:${config.server.port}${config.server.basePath ?? ''}`
 const client = api(aspida(undefined, { baseURL }))
-let server: ChildProcess
+let server: ReturnType<typeof app.listen>
 
 beforeAll(async fn => {
-  server = fork(`${__dirname}/../.aspida/server`)
-
-  while (true) {
-    try {
-      await client.$get({ query: { id: '1', disable: 'false' } })
-      break
-    } catch (e) {
-      await new Promise(resolve => setTimeout(resolve, 100))
-    }
-  }
+  server = await run()
   fn()
 })
 
 afterAll(() => {
-  server.kill()
+  server.close()
 })
 
 test('GET: 200', async () => {
@@ -57,4 +49,9 @@ test('POST: formdata', async () => {
   })
   expect(res.data.port).toBe(port)
   expect(res.data.fileName).toBe(fileName)
+})
+
+test('GET: static', async () => {
+  const res = await axios.get(`http://localhost:${config.server.port}/sample.json`)
+  expect(res.data.sample).toBe(true)
 })

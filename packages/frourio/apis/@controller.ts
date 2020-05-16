@@ -1,4 +1,4 @@
-import { createController, createMiddleware } from 'aspida-server'
+import { createController, createMiddleware } from 'frourio'
 import { Methods } from './'
 
 export const middleware = createMiddleware((req, res, next) => {
@@ -8,7 +8,7 @@ export const middleware = createMiddleware((req, res, next) => {
 
 export default createController<Methods>({
   get: async v => {
-    return await { status: 200, body: { id: +v.query.id } }
+    return await { status: 200, body: { id: +(v.query?.id || 0) } }
   },
   post: v => ({
     status: 200,
