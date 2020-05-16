@@ -9,7 +9,7 @@ export type Methods = {
     reqFormat: FormData
 
     reqBody?: {
-      file: ArrayBuffer
+      file: Blob
       rightholder?: string
       statusCopyright?: 'unknown' | 'cc' | 'licensed' | 'sublicensed'
     }

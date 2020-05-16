@@ -15,7 +15,7 @@ export type Methods = {
     reqFormat: FormData
 
     reqBody?: {
-      file: ArrayBuffer
+      file: Blob
     }
   }
 }

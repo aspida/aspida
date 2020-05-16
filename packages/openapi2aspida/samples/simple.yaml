@@ -3,6 +3,28 @@ info:
   title: "simple"
   version: "1.0"
 paths:
+  /file/{id}/upload:
+    post:
+      parameters: 
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID
+        - in: query
+          name: path
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '204':
+          description: No Content
   /user/{id}:
     parameters:
       - in: path

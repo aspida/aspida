@@ -45,7 +45,7 @@ export const app = express()${helmet ? '\n  .use(helmet())' : ''}${cors ? '\n  .
       next()
     })
   })
-  .use(${basePath === '/' ? '' : `'${basePath}', `}router)${
+  .use(${basePath === '/' ? '' : `'/${basePath.replace(/^\//, '')}', `}router)${
       staticDir ? staticDir.map(d => `\n  .use(express.static('${d}'))`).join('') : ''
     }
 

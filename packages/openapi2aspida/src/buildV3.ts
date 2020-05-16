@@ -218,6 +218,7 @@ export default (
                   const typeSet = [
                     ['multipart/form-data', 'FormData'],
                     ['application/x-www-form-urlencoded', 'URLSearchParams'],
+                    ['application/octet-stream', ''],
                     ['application/json', '']
                   ]
 

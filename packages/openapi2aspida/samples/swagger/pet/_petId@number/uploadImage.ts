@@ -9,7 +9,7 @@ export type Methods = {
 
     reqBody?: {
       additionalMetadata?: string
-      file?: ArrayBuffer
+      file?: Blob
     }
   }
 }
