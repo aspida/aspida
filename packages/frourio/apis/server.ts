@@ -23,6 +23,7 @@ export const app = express()
     })
   })
   .use('/api', router)
+  .use(express.static('packages/frourio/public'))
 
 export const run = (port: number | string = 10000) =>
   new Promise<ReturnType<typeof app.listen>>(resolve => {

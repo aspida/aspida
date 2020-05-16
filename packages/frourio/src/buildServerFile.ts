@@ -11,6 +11,7 @@ export default ({
   input,
   port,
   basePath,
+  staticDir,
   helmet,
   cors,
   immediate,
@@ -44,7 +45,9 @@ export const app = express()${helmet ? '\n  .use(helmet())' : ''}${cors ? '\n  .
       next()
     })
   })
-  .use(${basePath === '/' ? '' : `'${basePath}', `}router)
+  .use(${basePath === '/' ? '' : `'${basePath}', `}router)${
+      staticDir ? staticDir.map(d => `\n  .use(express.static('${d}'))`).join('') : ''
+    }
 
 export const run = (port: number | string = ${port}) =>
   new Promise<ReturnType<typeof app.listen>>(resolve => {

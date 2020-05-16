@@ -50,3 +50,8 @@ test('POST: formdata', async () => {
   expect(res.data.port).toBe(port)
   expect(res.data.fileName).toBe(fileName)
 })
+
+test('GET: static', async () => {
+  const res = await axios.get(`http://localhost:${config.server.port}/sample.json`)
+  expect(res.data.sample).toBe(true)
+})

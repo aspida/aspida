@@ -4,6 +4,7 @@ export type Config = {
   input: string
   port: number
   basePath: string
+  staticDir?: string[]
   helmet: boolean
   cors: boolean
   immediate: boolean
@@ -17,6 +18,7 @@ type ConfigFile = BaseConfig & {
   server?: {
     port?: number
     basePath?: string
+    staticDir?: string | string[]
     helmet?: boolean
     cors?: boolean
     immediate?: boolean
@@ -35,6 +37,7 @@ const createConfig = (config: ConfigFile) => {
     input: config.input,
     port: server.port ?? 8080,
     basePath: server.basePath || '/',
+    staticDir: typeof server.staticDir === 'string' ? [server.staticDir] : server.staticDir,
     helmet: server.helmet ?? true,
     cors: server.cors ?? false,
     immediate: server.immediate ?? true,
