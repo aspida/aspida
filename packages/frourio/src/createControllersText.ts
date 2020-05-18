@@ -17,20 +17,22 @@ export default (inputDir: string) => {
         ? `./.${user}`
         : ''
 
+    const valuesPath = path.join(input, '$values.ts')
+
     if (params.length || userPath) {
-      fs.writeFileSync(
-        path.join(input, '$values.ts'),
-        `/* eslint-disable */\n${
-          userPath ? `import { User } from '${userPath}'\n\n` : ''
-        }export type Values = {${
-          params.length
-            ? `\n  params: {\n${params.map(v => `    ${v[0]}: ${v[1]}`).join('\n')}\n  }`
-            : ''
-        }${userPath ? '\n  user: User' : ''}\n}\n`,
-        'utf8'
-      )
-    } else if (fs.existsSync(path.join(input, '@values.ts'))) {
-      fs.unlinkSync(path.join(input, '$values.ts'))
+      const text = `/* eslint-disable */\n${
+        userPath ? `import { User } from '${userPath}'\n\n` : ''
+      }export type Values = {${
+        params.length
+          ? `\n  params: {\n${params.map(v => `    ${v[0]}: ${v[1]}`).join('\n')}\n  }`
+          : ''
+      }${userPath ? '\n  user: User' : ''}\n}\n`
+
+      if (!fs.existsSync(valuesPath) || fs.readFileSync(valuesPath, 'utf8') !== text) {
+        fs.writeFileSync(valuesPath, text, 'utf8')
+      }
+    } else if (fs.existsSync(valuesPath)) {
+      fs.unlinkSync(valuesPath)
     }
 
     if (fs.existsSync(path.join(input, 'index.ts'))) {
