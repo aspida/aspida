@@ -23,6 +23,7 @@ export default ({
   },
   {
     text: `/* eslint-disable */${uploader.dest ? '' : "\nimport { tmpdir } from 'os'"}
+import { Server } from 'http'
 import express from 'express'
 import multer from 'multer'${helmet ? "\nimport helmet from 'helmet'" : ''}${
       cors ? "\nimport cors from 'cors'" : ''
@@ -50,7 +51,7 @@ export const app = express()${helmet ? '\n  .use(helmet())' : ''}${cors ? '\n  .
     }
 
 export const run = (port: number | string = ${port}) =>
-  new Promise<ReturnType<typeof app.listen>>(resolve => {
+  new Promise<Server>(resolve => {
     const server = app.listen(port, () => {
       console.log(\`Frourio is running on http://localhost:\${port}\`)
       resolve(server)

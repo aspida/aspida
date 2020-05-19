@@ -1,8 +1,9 @@
 /* eslint-disable */
 import * as validator0 from './index'
 import controller0, { middleware as ctrlMiddleware0 } from './@controller'
-import controller1, { middleware as ctrlMiddleware1 } from './users/@controller'
-import controller2 from './users/_userId@number/@controller'
+import controller1 from './texts/@controller'
+import controller2, { middleware as ctrlMiddleware1 } from './users/@controller'
+import controller3 from './users/_userId@number/@controller'
 import middleware0 from './@middleware'
 import middleware1 from './users/@middleware'
 
@@ -24,14 +25,18 @@ export default {
   children: {
     names: [
       {
+        name: '/texts',
+        controller: controller1
+      },
+      {
         name: '/users',
-        controller: controller1,
+        controller: controller2,
         ctrlMiddleware: ctrlMiddleware1,
         middleware: middleware1,
         children: {
           value: {
             name: '/_userId@number',
-            controller: controller2
+            controller: controller3
           }
         }
       }

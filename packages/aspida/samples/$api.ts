@@ -129,10 +129,10 @@ const api = <T>(client: AspidaClient<T>) => {
         (await client.fetch<Methods2['get']['resBody']>(prefix, '/v1.1', 'GET', option).json()).data
     },
     v2_0: {
-      get: (option: { data: Methods11['get']['reqBody'], query: Methods11['get']['query'], headers: Methods11['get']['reqHeaders'], config?: T }) =>
-        client.fetch<Methods11['get']['resBody'], Methods11['get']['resHeaders']>(prefix, '/v2.0', 'GET', option, 'FormData').json(),
-      $get: async (option: { data: Methods11['get']['reqBody'], query: Methods11['get']['query'], headers: Methods11['get']['reqHeaders'], config?: T }) =>
-        (await client.fetch<Methods11['get']['resBody'], Methods11['get']['resHeaders']>(prefix, '/v2.0', 'GET', option, 'FormData').json()).data
+      get: (option: { query: Methods11['get']['query'], headers: Methods11['get']['reqHeaders'], config?: T }) =>
+        client.fetch<Methods11['get']['resBody'], Methods11['get']['resHeaders']>(prefix, '/v2.0', 'GET', option).text(),
+      $get: async (option: { query: Methods11['get']['query'], headers: Methods11['get']['reqHeaders'], config?: T }) =>
+        (await client.fetch<Methods11['get']['resBody'], Methods11['get']['resHeaders']>(prefix, '/v2.0', 'GET', option).text()).data
     },
     get: (option?: { query?: Methods0['get']['query'], headers?: Methods0['get']['reqHeaders'], config?: T }) =>
       client.fetch<Methods0['get']['resBody']>(prefix, '', 'GET', option).formData(),

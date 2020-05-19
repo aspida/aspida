@@ -1,27 +1,32 @@
+import { Server } from 'http'
 import fs from 'fs'
 import FormData from 'form-data'
 import axios from 'axios'
 import aspida from '@aspida/axios'
 import api from '../apis/$api'
-import { run, app } from '../apis/server'
+import { app } from '../apis/server'
 
+const port = 11111
 const config = require('../aspida.config') as any
-const baseURL = `http://localhost:${config.server.port}${config.server.basePath ?? ''}`
+const baseURL = `http://localhost:${port}${config.server.basePath ?? ''}`
 const client = api(aspida(undefined, { baseURL }))
-let server: ReturnType<typeof app.listen>
+let server: Server
 
-beforeAll(async fn => {
-  server = await run()
-  fn()
+beforeEach(fn => {
+  server = app.listen(port, fn)
 })
 
-afterAll(() => {
-  server.close()
-})
+afterEach(fn => server.close(fn))
 
 test('GET: 200', async () => {
   const res = await client.$get({ query: { id: '1', disable: 'false' } })
   expect(res?.id).toBe(1)
+})
+
+test('GET: string', async () => {
+  const text = 'test'
+  const res = await client.texts.$get({ query: { val: text } })
+  expect(res).toBe(text)
 })
 
 test('GET: 400', async () => {
@@ -52,6 +57,6 @@ test('POST: formdata', async () => {
 })
 
 test('GET: static', async () => {
-  const res = await axios.get(`http://localhost:${config.server.port}/sample.json`)
+  const res = await axios.get(`http://localhost:${port}/sample.json`)
   expect(res.data.sample).toBe(true)
 })
