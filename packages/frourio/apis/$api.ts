@@ -1,24 +1,31 @@
 /* eslint-disable */
 import { AspidaClient } from 'aspida'
 import { Methods as Methods0 } from './index'
-import { Methods as Methods1 } from './users/index'
-import { Methods as Methods2 } from './users/_userId@number/index'
+import { Methods as Methods1 } from './texts/index'
+import { Methods as Methods2 } from './users/index'
+import { Methods as Methods3 } from './users/_userId@number/index'
 
 const api = <T>(client: AspidaClient<T>) => {
   const prefix = (client.baseURL === undefined ? '' : client.baseURL).replace(/\/$/, '')
 
   return {
+    texts: {
+      get: (option: { query: Methods1['get']['query'], config?: T }) =>
+        client.fetch<Methods1['get']['resBody']>(prefix, '/texts', 'GET', option).text(),
+      $get: async (option: { query: Methods1['get']['query'], config?: T }) =>
+        (await client.fetch<Methods1['get']['resBody']>(prefix, '/texts', 'GET', option).text()).data
+    },
     users: {
       _userId: (val0: number) => ({
         get: (option?: { config?: T }) =>
-          client.fetch<Methods2['get']['resBody']>(prefix, `/users/${val0}`, 'GET', option).json(),
+          client.fetch<Methods3['get']['resBody']>(prefix, `/users/${val0}`, 'GET', option).json(),
         $get: async (option?: { config?: T }) =>
-          (await client.fetch<Methods2['get']['resBody']>(prefix, `/users/${val0}`, 'GET', option).json()).data
+          (await client.fetch<Methods3['get']['resBody']>(prefix, `/users/${val0}`, 'GET', option).json()).data
       }),
       get: (option?: { config?: T }) =>
-        client.fetch<Methods1['get']['resBody']>(prefix, '/users', 'GET', option).json(),
+        client.fetch<Methods2['get']['resBody']>(prefix, '/users', 'GET', option).json(),
       $get: async (option?: { config?: T }) =>
-        (await client.fetch<Methods1['get']['resBody']>(prefix, '/users', 'GET', option).json()).data
+        (await client.fetch<Methods2['get']['resBody']>(prefix, '/users', 'GET', option).json()).data
     },
     get: (option?: { query?: Methods0['get']['query'], config?: T }) =>
       client.fetch<Methods0['get']['resBody']>(prefix, '', 'GET', option).json(),

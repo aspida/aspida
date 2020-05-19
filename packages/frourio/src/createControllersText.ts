@@ -87,7 +87,9 @@ export default (inputDir: string) => {
       const hasMiddleware = /export (const|{)(.*[ ,])?middleware[, }=]/.test(text)
 
       if (hasMiddleware) {
-        result += `,\n${indent}ctrlMiddleware: ctrlMiddleware${controllers.length}`
+        result += `,\n${indent}ctrlMiddleware: ctrlMiddleware${
+          controllers.filter(c => c[1]).length
+        }`
       }
 
       controllers.push([`${input}/@controller`, hasMiddleware])
