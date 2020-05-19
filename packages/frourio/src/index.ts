@@ -2,11 +2,18 @@ import { LowerHttpMethod, AspidaMethods, HttpMethod, AspidaMethodParams } from '
 import express, { RequestHandler, Request } from 'express'
 import { validateOrReject } from 'class-validator'
 
+type ExcludeBlob<T extends AspidaMethodParams> = T['reqFormat'] extends FormData
+  ? Pick<
+      T['reqBody'],
+      { [K in keyof T['reqBody']]-?: T['reqBody'][K] extends Blob ? never : K }[keyof T['reqBody']]
+    >
+  : T['reqBody']
+
 type RequestParams<T extends AspidaMethodParams> = {
   path: string
   method: HttpMethod
   query: T['query']
-  body: T['reqBody']
+  body: ExcludeBlob<T>
   headers: T['reqHeaders']
   originalRequest: Request
 }
