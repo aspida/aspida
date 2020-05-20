@@ -5,6 +5,7 @@ import * as Types from '../../../@types'
 export type Methods = {
   put: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader
+    status: 204
     reqFormat: FormData
 
     reqBody?: {
@@ -17,5 +18,5 @@ export type Methods = {
 }
 
 export default mockMethods<Methods>({
-  put: () => ({ status: 200 })
+  put: () => ({ status: 204 })
 })

@@ -11,6 +11,7 @@ export type Methods = {
       end_date?: string
     }
 
+    status: 200
     resBody: Types.journalStatusResponse
   }
 }

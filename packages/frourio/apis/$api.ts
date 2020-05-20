@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { AspidaClient } from 'aspida'
+import { AspidaClient, BasicHeaders } from 'aspida'
 import { Methods as Methods0 } from './index'
 import { Methods as Methods1 } from './texts/index'
 import { Methods as Methods2 } from './users/index'
@@ -28,9 +28,9 @@ const api = <T>(client: AspidaClient<T>) => {
         (await client.fetch<Methods2['get']['resBody']>(prefix, '/users', 'GET', option).json()).data
     },
     get: (option?: { query?: Methods0['get']['query'], config?: T }) =>
-      client.fetch<Methods0['get']['resBody']>(prefix, '', 'GET', option).json(),
+      client.fetch<Methods0['get']['resBody'], BasicHeaders, Methods0['get']['status']>(prefix, '', 'GET', option).json(),
     $get: async (option?: { query?: Methods0['get']['query'], config?: T }) =>
-      (await client.fetch<Methods0['get']['resBody']>(prefix, '', 'GET', option).json()).data,
+      (await client.fetch<Methods0['get']['resBody'], BasicHeaders, Methods0['get']['status']>(prefix, '', 'GET', option).json()).data,
     post: (option: { data: Methods0['post']['reqBody'], query: Methods0['post']['query'], config?: T }) =>
       client.fetch<Methods0['post']['resBody']>(prefix, '', 'POST', option, 'FormData').json(),
     $post: async (option: { data: Methods0['post']['reqBody'], query: Methods0['post']['query'], config?: T }) =>

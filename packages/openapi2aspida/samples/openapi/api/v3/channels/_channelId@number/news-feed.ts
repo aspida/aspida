@@ -13,6 +13,8 @@ export type Methods = {
       reverse?: boolean
     }
 
+    status: 200
+
     resBody: {
       count: number
       data: (Types.ModelCard & {

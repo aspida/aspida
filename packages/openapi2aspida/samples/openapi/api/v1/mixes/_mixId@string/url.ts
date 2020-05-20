@@ -2,6 +2,8 @@
 import { mockMethods } from 'aspida-mock'
 export type Methods = {
   post: {
+    status: 204
+
     reqBody?: {
       url: string
       published?: boolean
@@ -11,5 +13,5 @@ export type Methods = {
 }
 
 export default mockMethods<Methods>({
-  post: () => ({ status: 200 })
+  post: () => ({ status: 204 })
 })

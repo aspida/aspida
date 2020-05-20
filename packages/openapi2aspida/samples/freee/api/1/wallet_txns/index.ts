@@ -15,12 +15,15 @@ export type Methods = {
       limit?: number
     }
 
+    status: 200
+
     resBody: {
       wallet_txns: Types.walletTxnResponse['wallet_txn'][]
     }
   }
 
   post: {
+    status: 201
     resBody: Types.walletTxnResponse
     reqFormat: URLSearchParams
     reqBody?: Types.walletTxnParams
@@ -29,5 +32,5 @@ export type Methods = {
 
 export default mockMethods<Methods>({
   get: () => ({ status: 200, resBody: { wallet_txns: [{ id: 1, company_id: 1, date: 'a', amount: 1, due_amount: 1, balance: 1, entry_side: 'income', walletable_type: 'bank_account', walletable_id: 1, description: 'a', status: 1 }] } }),
-  post: () => ({ status: 200, resBody: { wallet_txn: { id: 1, company_id: 1, date: 'a', amount: 1, due_amount: 1, balance: 1, entry_side: 'income', walletable_type: 'bank_account', walletable_id: 1, description: 'a', status: 1 } } })
+  post: () => ({ status: 201, resBody: { wallet_txn: { id: 1, company_id: 1, date: 'a', amount: 1, due_amount: 1, balance: 1, entry_side: 'income', walletable_type: 'bank_account', walletable_id: 1, description: 'a', status: 1 } } })
 })

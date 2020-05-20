@@ -7,6 +7,7 @@ export interface Methods {
     reqFormat: FormData
     resHeaders: { token: string }
     resBody: string
+    status: 200 | 204
   }
 }
 

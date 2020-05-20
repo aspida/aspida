@@ -4,6 +4,7 @@ import * as Types from '../../@types'
 
 export type Methods = {
   get: {
+    status: 200
     resBody: Types.Pet
   }
 
@@ -25,6 +26,6 @@ export type Methods = {
 
 export default mockMethods<Methods>({
   get: () => ({ status: 200, resBody: { id: 1, category: { id: 1, name: 'a' }, name: 'a', photoUrls: ['a'], tags: [{ id: 1, name: 'a' }], status: 'available' } }),
-  post: () => ({ status: 200 }),
-  delete: () => ({ status: 200 })
+  post: () => ({ status: 204 }),
+  delete: () => ({ status: 204 })
 })

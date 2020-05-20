@@ -27,12 +27,15 @@ export type Methods = {
       limit?: number
     }
 
+    status: 200
+
     resBody: {
       manual_journals: Types.manualJournalResponse['manual_journal'][]
     }
   }
 
   post: {
+    status: 201
     resBody: Types.manualJournalResponse
     reqFormat: URLSearchParams
     reqBody?: Types.manualJournalCreateParams
@@ -41,5 +44,5 @@ export type Methods = {
 
 export default mockMethods<Methods>({
   get: () => ({ status: 200, resBody: { manual_journals: [{ id: 1, company_id: 1, issue_date: 'a', adjustment: true, txn_number: 'a', details: [{ id: 1, entry_side: 'credit', account_item_id: 1, tax_code: 1, partner_id: 1, partner_name: 'a', partner_code: 'a', partner_long_name: 'a', item_id: 1, item_name: 'a', section_id: 1, section_name: 'a', tag_ids: [1], tag_names: ['a'], segment_1_tag_id: 1, segment_1_tag_name: 1, segment_2_tag_id: 1, segment_2_tag_name: 1, segment_3_tag_id: 1, segment_3_tag_name: 1, amount: 1, vat: 1, description: 'a' }] }] } }),
-  post: () => ({ status: 200, resBody: { manual_journal: { id: 1, company_id: 1, issue_date: 'a', adjustment: true, txn_number: 'a', details: [{ id: 1, entry_side: 'credit', account_item_id: 1, tax_code: 1, partner_id: 1, partner_name: 'a', partner_code: 'a', partner_long_name: 'a', item_id: 1, item_name: 'a', section_id: 1, section_name: 'a', tag_ids: [1], tag_names: ['a'], segment_1_tag_id: 1, segment_1_tag_name: 1, segment_2_tag_id: 1, segment_2_tag_name: 1, segment_3_tag_id: 1, segment_3_tag_name: 1, amount: 1, vat: 1, description: 'a' }] } } })
+  post: () => ({ status: 201, resBody: { manual_journal: { id: 1, company_id: 1, issue_date: 'a', adjustment: true, txn_number: 'a', details: [{ id: 1, entry_side: 'credit', account_item_id: 1, tax_code: 1, partner_id: 1, partner_name: 'a', partner_code: 'a', partner_long_name: 'a', item_id: 1, item_name: 'a', section_id: 1, section_name: 'a', tag_ids: [1], tag_names: ['a'], segment_1_tag_id: 1, segment_1_tag_name: 1, segment_2_tag_id: 1, segment_2_tag_name: 1, segment_3_tag_id: 1, segment_3_tag_name: 1, amount: 1, vat: 1, description: 'a' }] } } })
 })

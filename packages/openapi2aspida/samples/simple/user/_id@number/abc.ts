@@ -4,9 +4,11 @@ export type Methods = {
     query?: {
       q?: string
     }
+
+    status: 202
   }
 }
 
 export default {
-  get: () => ({ status: 200 })
+  get: () => ({ status: 202 })
 }

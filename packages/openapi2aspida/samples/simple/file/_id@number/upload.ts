@@ -5,10 +5,11 @@ export type Methods = {
       path?: string
     }
 
+    status: 204
     reqBody?: Blob
   }
 }
 
 export default {
-  post: () => ({ status: 200 })
+  post: () => ({ status: 204 })
 }

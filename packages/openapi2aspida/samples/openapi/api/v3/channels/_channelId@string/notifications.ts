@@ -11,6 +11,8 @@ export type Methods = {
       offset?: number
     }
 
+    status: 200
+
     resBody: {
       count?: number
       limit?: number

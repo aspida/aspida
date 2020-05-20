@@ -8,10 +8,12 @@ export type Methods = {
       companies?: 'true'
     }
 
+    status: 200
     resBody: Types.meResponse
   }
 
   put: {
+    status: 200
     resBody: Types.userResponse
     reqFormat: URLSearchParams
     reqBody?: Types.userParams

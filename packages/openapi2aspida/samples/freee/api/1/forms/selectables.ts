@@ -9,6 +9,7 @@ export type Methods = {
       includes?: 'account_item'
     }
 
+    status: 200
     resBody: Types.selectablesIndexResponse
   }
 }

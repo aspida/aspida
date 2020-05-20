@@ -11,6 +11,7 @@ export type Methods = {
       'read-only'?: boolean
     }
 
+    status: 200
     resBody: {
       id: number
       name: string

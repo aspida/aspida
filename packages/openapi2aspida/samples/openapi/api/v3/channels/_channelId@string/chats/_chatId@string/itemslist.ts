@@ -10,6 +10,7 @@ export type Methods = {
       ids: string
     }
 
+    status: 200
     resBody: Types.ModelCard[]
   }
 }

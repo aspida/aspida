@@ -18,6 +18,7 @@ export class ValidBody {
 export type Methods = {
   get: {
     query?: ValidQuery
+    status: 200
     resBody?: { id: number }
   }
 

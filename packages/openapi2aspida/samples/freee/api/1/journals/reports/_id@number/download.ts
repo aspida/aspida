@@ -5,6 +5,8 @@ export type Methods = {
     query: {
       company_id: number
     }
+
+    status: 200
   }
 }
 

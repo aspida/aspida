@@ -21,6 +21,7 @@ export type Methods = {
       cost_allocation?: 'only' | 'not_include'
     }
 
+    status: 200
     resBody: Types.trialPlResponse
   }
 }

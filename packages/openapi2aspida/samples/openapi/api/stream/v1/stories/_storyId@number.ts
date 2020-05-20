@@ -10,6 +10,8 @@ export type Methods = {
       limit?: number
     }
 
+    status: 200
+
     resBody: {
       count: number
       data: Types.ModelCard[]

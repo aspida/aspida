@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { AspidaClient } from 'aspida'
+import { AspidaClient, BasicHeaders } from 'aspida'
 import * as ApiTypes from './@types'
 import { Methods as Methods0 } from './index'
 import { Methods as Methods1 } from './_sampleId.json@number'
@@ -124,15 +124,15 @@ const api = <T>(client: AspidaClient<T>) => {
         })
       },
       get: (option?: { query?: Methods2['get']['query'], config?: T }) =>
-        client.fetch<Methods2['get']['resBody']>(prefix, '/v1.1', 'GET', option).json(),
+        client.fetch<Methods2['get']['resBody'], BasicHeaders, Methods2['get']['status']>(prefix, '/v1.1', 'GET', option).json(),
       $get: async (option?: { query?: Methods2['get']['query'], config?: T }) =>
-        (await client.fetch<Methods2['get']['resBody']>(prefix, '/v1.1', 'GET', option).json()).data
+        (await client.fetch<Methods2['get']['resBody'], BasicHeaders, Methods2['get']['status']>(prefix, '/v1.1', 'GET', option).json()).data
     },
     v2_0: {
       get: (option: { query: Methods11['get']['query'], headers: Methods11['get']['reqHeaders'], config?: T }) =>
-        client.fetch<Methods11['get']['resBody'], Methods11['get']['resHeaders']>(prefix, '/v2.0', 'GET', option).text(),
+        client.fetch<Methods11['get']['resBody'], Methods11['get']['resHeaders'], Methods11['get']['status']>(prefix, '/v2.0', 'GET', option).text(),
       $get: async (option: { query: Methods11['get']['query'], headers: Methods11['get']['reqHeaders'], config?: T }) =>
-        (await client.fetch<Methods11['get']['resBody'], Methods11['get']['resHeaders']>(prefix, '/v2.0', 'GET', option).text()).data
+        (await client.fetch<Methods11['get']['resBody'], Methods11['get']['resHeaders'], Methods11['get']['status']>(prefix, '/v2.0', 'GET', option).text()).data
     },
     get: (option?: { query?: Methods0['get']['query'], headers?: Methods0['get']['reqHeaders'], config?: T }) =>
       client.fetch<Methods0['get']['resBody']>(prefix, '', 'GET', option).formData(),
@@ -143,13 +143,13 @@ const api = <T>(client: AspidaClient<T>) => {
     $post: async (option: { data: Methods0['post']['reqBody'], query: Methods0['post']['query'], headers?: Methods0['post']['reqHeaders'], config?: T }) =>
       (await client.fetch<Methods0['post']['resBody']>(prefix, '', 'POST', option).arrayBuffer()).data,
     put: (option: { query: Methods0['put']['query'], config?: T }) =>
-      client.fetch<Methods0['put']['resBody'], Methods0['put']['resHeaders']>(prefix, '', 'PUT', option).json(),
+      client.fetch<Methods0['put']['resBody'], Methods0['put']['resHeaders'], Methods0['put']['status']>(prefix, '', 'PUT', option).json(),
     $put: async (option: { query: Methods0['put']['query'], config?: T }) =>
-      (await client.fetch<Methods0['put']['resBody'], Methods0['put']['resHeaders']>(prefix, '', 'PUT', option).json()).data,
+      (await client.fetch<Methods0['put']['resBody'], Methods0['put']['resHeaders'], Methods0['put']['status']>(prefix, '', 'PUT', option).json()).data,
     delete: (option: { query: Methods0['delete']['query'], config?: T }) =>
-      client.fetch<void, Methods0['delete']['resHeaders']>(prefix, '', 'DELETE', option).send(),
+      client.fetch<void, Methods0['delete']['resHeaders'], Methods0['delete']['status']>(prefix, '', 'DELETE', option).send(),
     $delete: async (option: { query: Methods0['delete']['query'], config?: T }) =>
-      (await client.fetch<void, Methods0['delete']['resHeaders']>(prefix, '', 'DELETE', option).send()).data
+      (await client.fetch<void, Methods0['delete']['resHeaders'], Methods0['delete']['status']>(prefix, '', 'DELETE', option).send()).data
   }
 }
 

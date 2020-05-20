@@ -2,6 +2,8 @@
 import { mockMethods } from 'aspida-mock'
 export type Methods = {
   get: {
+    status: 200
+
     resBody: {
       userId: number
       screenName: string
