@@ -1,15 +1,15 @@
-import { IsNumberString, IsBooleanString, IsPort } from 'class-validator'
+import { Validator } from 'frourio'
 
 export class ValidQuery {
-  @IsNumberString()
+  @Validator.IsNumberString()
   id: string
 
-  @IsBooleanString()
+  @Validator.IsBooleanString()
   disable: string
 }
 
 export class ValidBody {
-  @IsPort()
+  @Validator.IsPort()
   port: string
 
   file: File
@@ -26,6 +26,7 @@ export type Methods = {
     query: ValidQuery
     reqFormat: FormData
     reqBody: ValidBody
+    status: 201
     resBody: {
       id: number
       port: string

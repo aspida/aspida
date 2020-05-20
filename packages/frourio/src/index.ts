@@ -8,6 +8,8 @@ import {
 import express, { RequestHandler, Request } from 'express'
 import { validateOrReject } from 'class-validator'
 
+export * as Validator from 'class-validator'
+
 type HttpStatusNoOk =
   | 301
   | 302
