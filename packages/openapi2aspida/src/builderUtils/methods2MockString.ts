@@ -84,7 +84,10 @@ export default ${needsMockType ? 'mockMethods<Methods>(' : ''}{
 ${methods
   .map(
     m =>
-      `  ${m.name}: () => ({ status: 200${['resBody', 'resHeaders']
+      `  ${m.name}: () => ({ status: ${findProp(m, 'status')?.values[0].value ?? 204}${[
+        'resBody',
+        'resHeaders'
+      ]
         .map(name => prop2String(findProp(m, name), params, schemas))
         .join('')} })`
   )

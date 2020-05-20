@@ -13,6 +13,6 @@ export type Methods = {
 }
 
 export default mockMethods<Methods>({
-  post: () => ({ status: 200 }),
-  put: () => ({ status: 200 })
+  post: () => ({ status: 204 }),
+  put: () => ({ status: 204 })
 })

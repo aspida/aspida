@@ -10,6 +10,8 @@ export type Methods = {
       offset?: number
     }
 
+    status: 200
+
     resBody: {
       limit: number
       offset: number
@@ -18,6 +20,7 @@ export type Methods = {
 
   post: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
+    status: 200
 
     resBody: {
       id: string

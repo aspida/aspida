@@ -144,6 +144,13 @@ export default (
               if (target.responses) {
                 const code = Object.keys(target.responses).find(code => /^20/.test(code))
                 if (code) {
+                  params.push({
+                    name: 'status',
+                    required: true,
+                    isOneOf: false,
+                    values: [{ isArray: false, isEnum: false, value: code }]
+                  })
+
                   const res = target.responses[code]
                   const ref = isRefObject(res) ? resolveResRef(openapi, res.$ref) : res
 

@@ -4,6 +4,7 @@ import * as Types from '../../../../../@types'
 
 export type Methods = {
   put: {
+    status: 200
     resBody: Types.dealResponse
     reqFormat: URLSearchParams
     reqBody: Types.renewUpdateParams
@@ -14,6 +15,7 @@ export type Methods = {
       company_id: number
     }
 
+    status: 200
     resBody: Types.dealResponse
   }
 }

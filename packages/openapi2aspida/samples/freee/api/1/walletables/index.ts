@@ -10,6 +10,8 @@ export type Methods = {
       type?: 'bank_account' | 'credit_card' | 'wallet'
     }
 
+    status: 200
+
     resBody: {
       walletables: Types.walletableResponse['walletable'][]
 
@@ -20,6 +22,7 @@ export type Methods = {
   }
 
   post: {
+    status: 201
     resBody: Types.walletableCreateResponse
     reqFormat: URLSearchParams
     reqBody?: Types.walletableCreateParams
@@ -28,5 +31,5 @@ export type Methods = {
 
 export default mockMethods<Methods>({
   get: () => ({ status: 200, resBody: { walletables: [{ id: 1, name: 'a', bank_id: 1, type: 'bank_account', last_balance: 1, walletable_balance: 1, meta: { up_to_date: true } }], meta: { up_to_date: true } } }),
-  post: () => ({ status: 200, resBody: { id: 1, name: 'a', bank_id: 1, type: 'bank_account' } })
+  post: () => ({ status: 201, resBody: { id: 1, name: 'a', bank_id: 1, type: 'bank_account' } })
 })

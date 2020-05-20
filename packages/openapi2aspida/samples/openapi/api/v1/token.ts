@@ -2,6 +2,8 @@
 import { mockMethods } from 'aspida-mock'
 export type Methods = {
   post: {
+    status: 200
+
     resBody: {
       token: string
     }

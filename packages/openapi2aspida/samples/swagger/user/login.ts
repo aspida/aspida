@@ -7,6 +7,7 @@ export type Methods = {
       password: string
     }
 
+    status: 200
     resBody: string
 
     resHeaders: {

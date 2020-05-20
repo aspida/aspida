@@ -1,8 +1,8 @@
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD' | 'PATCH' | 'OPTIONS'
 export type LowerHttpMethod = 'get' | 'post' | 'put' | 'delete' | 'head' | 'patch' | 'options'
 export type RequestType = 'FormData' | 'URLSearchParams' | 'ArrayBuffer' | 'Blob' | 'string' | 'any'
-
-type BasicHeaders = Record<string, string>
+export type HttpStatusOk = 200 | 201 | 202 | 203 | 204 | 205 | 206
+export type BasicHeaders = Record<string, string>
 
 export type AspidaRequest<Config = any> = {
   query?: any
@@ -12,8 +12,8 @@ export type AspidaRequest<Config = any> = {
   config?: Config
 }
 
-export type AspidaResponse<T, U> = {
-  status: number
+export type AspidaResponse<T, U, V> = {
+  status: V
   headers: U
   originalResponse: any
   data: T
@@ -28,19 +28,19 @@ export type AspidaParams<Config = any> = {
 
 export type AspidaClient<Config> = {
   baseURL: string | undefined
-  fetch: <T, U = BasicHeaders>(
+  fetch: <T, U = BasicHeaders, V = HttpStatusOk>(
     prefix: string,
     path: string,
     method: HttpMethod,
     params?: AspidaParams<Config>,
     type?: RequestType
   ) => {
-    send(): Promise<AspidaResponse<null, U>>
-    json(): Promise<AspidaResponse<T, U>>
-    text(): Promise<AspidaResponse<string, U>>
-    arrayBuffer(): Promise<AspidaResponse<ArrayBuffer, U>>
-    blob(): Promise<AspidaResponse<Blob, U>>
-    formData(): Promise<AspidaResponse<FormData, U>>
+    send(): Promise<AspidaResponse<null, U, V>>
+    json(): Promise<AspidaResponse<T, U, V>>
+    text(): Promise<AspidaResponse<string, U, V>>
+    arrayBuffer(): Promise<AspidaResponse<ArrayBuffer, U, V>>
+    blob(): Promise<AspidaResponse<Blob, U, V>>
+    formData(): Promise<AspidaResponse<FormData, U, V>>
   }
 }
 
@@ -112,6 +112,7 @@ export const optionToRequest = (
 }
 
 export type AspidaMethodParams = {
+  status?: number
   query?: any
   reqHeaders?: any
   reqFormat?: FormData | URLSearchParams | ArrayBuffer | Blob | string | any

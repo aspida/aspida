@@ -10,6 +10,8 @@ export type Methods = {
       type?: 'bank' | 'credit_card' | 'wallet'
     }
 
+    status: 200
+
     resBody: {
       banks: Types.bankResponse['bank'][]
     }

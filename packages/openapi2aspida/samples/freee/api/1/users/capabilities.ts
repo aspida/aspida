@@ -8,6 +8,8 @@ export type Methods = {
       company_id: number
     }
 
+    status: 200
+
     resBody: {
       wallet_txns: Types.userCapability
       deals: Types.userCapability

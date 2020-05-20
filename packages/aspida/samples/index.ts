@@ -29,12 +29,14 @@ export type Methods = {
 
   put: {
     query: { aa: number }
+    status: 200
     resBody?: { aa: number }
     resHeaders: { token: string }
   }
 
   delete: {
     query: { aa: number }
+    status: 202
     resHeaders?: { token: string }
   }
 }

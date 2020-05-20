@@ -10,6 +10,8 @@ export type Methods = {
       excludeItems?: boolean
       excludePinned?: boolean
     }
+
+    status: 200
   }
 }
 

@@ -4,6 +4,8 @@ import * as Types from '../../../../@types'
 
 export type Methods = {
   post: {
+    status: 204
+
     reqBody?: {
       type: Types.CardEnumModel
       title?: string
@@ -28,5 +30,5 @@ export type Methods = {
 }
 
 export default mockMethods<Methods>({
-  post: () => ({ status: 200 })
+  post: () => ({ status: 204 })
 })

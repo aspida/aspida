@@ -30,7 +30,7 @@ export default (client: typeof ky = ky, config?: Options): AspidaClient<Options>
       })
 
       return {
-        status: res.status,
+        status: res.status as any,
         headers: headersToObject(res.headers),
         originalResponse: res,
         data: await fn(res)

@@ -4,6 +4,7 @@ import * as Types from '../@types'
 
 export type Methods = {
   get: {
+    status: 200
     resBody: Types.User
   }
 
@@ -17,6 +18,6 @@ export type Methods = {
 
 export default mockMethods<Methods>({
   get: () => ({ status: 200, resBody: { id: 1, username: 'a', firstName: 'a', lastName: 'a', email: 'a', password: 'a', phone: 'a', userStatus: 1 } }),
-  put: () => ({ status: 200 }),
-  delete: () => ({ status: 200 })
+  put: () => ({ status: 204 }),
+  delete: () => ({ status: 204 })
 })

@@ -5,6 +5,7 @@ import * as Types from '../../@types'
 export type Methods = {
   post: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
+    status: 204
 
     reqBody: {
       fcmToken: string
@@ -14,5 +15,5 @@ export type Methods = {
 }
 
 export default mockMethods<Methods>({
-  post: () => ({ status: 200 })
+  post: () => ({ status: 204 })
 })

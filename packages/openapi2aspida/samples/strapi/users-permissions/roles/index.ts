@@ -19,10 +19,12 @@ export type Methods = {
       _nin?: string[]
     }
 
+    status: 200
     resBody: Types.Users_PermissionsRole[]
   }
 
   post: {
+    status: 200
     resBody: Types.Users_PermissionsRole
     reqBody: Types.NewUsers_PermissionsRole
   }

@@ -9,6 +9,8 @@ export type Methods = {
       limit?: number
     }
 
+    status: 200
+
     resBody: {
       users: Types.userResponse['user'][]
     }

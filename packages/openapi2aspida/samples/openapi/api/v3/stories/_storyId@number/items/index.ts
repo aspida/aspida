@@ -10,6 +10,8 @@ export type Methods = {
       offset?: number
     }
 
+    status: 200
+
     resBody: {
       limit: number
       offset: number
