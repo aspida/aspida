@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.16.0](https://github.com/aspidajs/aspida/compare/v0.15.3...v0.16.0) (2020-05-20)
+
+
+### Features
+
+* **frourio:** export Validator ([a6e8d60](https://github.com/aspidajs/aspida/commit/a6e8d60ea8e3ab07e0d906edc06cffc51815ea13))
+* add status prop to methods ([02826ca](https://github.com/aspidajs/aspida/commit/02826ca23a49cd7ecf6d8c10bc84f1a5720edd74))
+* write file if changes ([1350545](https://github.com/aspidajs/aspida/commit/1350545356def8c6148cb1d90cada7493dd3f007))
+* **server:** add config params ([052b77a](https://github.com/aspidajs/aspida/commit/052b77a9dd337c8d85839a64f350f739aa3ccc81))
+* **server:** add static option to config ([068f546](https://github.com/aspidajs/aspida/commit/068f5463ea7a1b625bfc9aea917bc23a18e53eb2))
+* **server:** change [@user](https://github.com/user).ts to [@middlewere](https://github.com/middlewere).ts ([e5d4c9a](https://github.com/aspidajs/aspida/commit/e5d4c9a97c86097489e4534a2143d8d84e03708c))
+* **server:** clarify outputs ([4953877](https://github.com/aspidajs/aspida/commit/49538777a8a76b713e355e98dc33b36a661ca748))
+
+
+### Bug Fixes
+
+* **openapi:** detect parent or not ([d286b9f](https://github.com/aspidajs/aspida/commit/d286b9fed324b3175b503a9c1e3588c5224e2798))
+* delete Blob type of FormData from req.body ([6fdd688](https://github.com/aspidajs/aspida/commit/6fdd688d7311175ff536dfdbf9338df3aef9aad4))
+* middleware name ([f196f81](https://github.com/aspidajs/aspida/commit/f196f81e8c13a54ee08026b5551d2bfe34e50dfe))
+* support application/octet-stream ([3a249c2](https://github.com/aspidajs/aspida/commit/3a249c2a6e05511e9f16d9be77f751e748ab15f6))
+* **frourio:** add dependencies ([f658110](https://github.com/aspidajs/aspida/commit/f658110ab96aa75d67d4ed6b3063c1aa9a420ea9))
+* **frourio:** format basePath ([cb4107d](https://github.com/aspidajs/aspida/commit/cb4107dde1d67af8f3499f82e9d7c7873162f0bd))
+* **ky:** add type annotation ([f75e54b](https://github.com/aspidajs/aspida/commit/f75e54b9456856cf4932be101dbaf628a9488c54))
+
 ### [0.15.3](https://github.com/aspidajs/aspida/compare/v0.15.2...v0.15.3) (2020-05-13)
 
 

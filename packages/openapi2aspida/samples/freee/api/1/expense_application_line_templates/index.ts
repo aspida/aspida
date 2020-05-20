@@ -10,12 +10,15 @@ export type Methods = {
       limit?: number
     }
 
+    status: 200
+
     resBody: {
       expense_application_line_templates: Types.expenseApplicationLineTemplateResponse['expense_application_line_template'][]
     }
   }
 
   post: {
+    status: 201
     resBody: Types.expenseApplicationLineTemplateResponse
     reqFormat: URLSearchParams
     reqBody: Types.expenseApplicationLineTemplateParams
@@ -24,5 +27,5 @@ export type Methods = {
 
 export default mockMethods<Methods>({
   get: () => ({ status: 200, resBody: { expense_application_line_templates: [{ id: 1, name: 'a', account_item_id: 1, account_item_name: 'a', tax_code: 1, tax_name: 'a', description: 'a', line_description: 'a' }] } }),
-  post: () => ({ status: 200, resBody: { expense_application_line_template: { id: 1, name: 'a', account_item_id: 1, account_item_name: 'a', tax_code: 1, tax_name: 'a', description: 'a', line_description: 'a' } } })
+  post: () => ({ status: 201, resBody: { expense_application_line_template: { id: 1, name: 'a', account_item_id: 1, account_item_name: 'a', tax_code: 1, tax_name: 'a', description: 'a', line_description: 'a' } } })
 })

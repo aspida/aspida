@@ -26,7 +26,7 @@ export default (
         params: request?.query,
         headers: { ...config?.headers, ...request?.config?.headers, ...request?.headers }
       })
-      const { status, headers, data } = res
+      const { status, headers, data } = res as any
 
       return { status, headers, data, originalResponse: res }
     }

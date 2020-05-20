@@ -1,4 +1,4 @@
-import { HttpMethod, AspidaMethods, AspidaMethodParams } from 'aspida'
+import { HttpMethod, HttpStatusOk, AspidaMethods, AspidaMethodParams } from 'aspida'
 
 type RequestParams<T extends AspidaMethodParams> = {
   path: string
@@ -6,77 +6,67 @@ type RequestParams<T extends AspidaMethodParams> = {
   values: Record<string, string | number>
 } & Pick<T, 'query' | 'reqBody' | 'reqHeaders'>
 
-type Status = {
-  ok: 200 | 201 | 202 | 203 | 204 | 205 | 206
-  other:
-    | 301
-    | 302
-    | 400
-    | 401
-    | 402
-    | 403
-    | 404
-    | 405
-    | 406
-    | 409
-    | 500
-    | 501
-    | 502
-    | 503
-    | 504
-    | 505
-}
+type HttpStatusNoOk =
+  | 301
+  | 302
+  | 400
+  | 401
+  | 402
+  | 403
+  | 404
+  | 405
+  | 406
+  | 409
+  | 500
+  | 501
+  | 502
+  | 503
+  | 504
+  | 505
 
-type SubAllResponse<T, U> = {
-  status: Status['ok']
-  resBody?: T
-  resHeaders?: U
-}
+type PartiallyPartial<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
 
-type DataResponse<T, U> = {
-  status: Status['ok']
-  resBody: T
-  resHeaders?: U
-}
-
-type HeadersResponse<T, U> = {
-  status: Status['ok']
-  resBody?: T
-  resHeaders: U
-}
-
-type AllResponse<T, U> = {
-  status: Status['ok']
+type BaseResponse<T, U, V> = {
+  status: V extends number ? V : HttpStatusOk
   resBody: T
   resHeaders: U
 }
 
-type OtherResponse = {
-  status: Status['other']
-  resBody?: any
-  resHeaders?: any
-}
-
-export type PartialResponse = SubAllResponse<any, any> | OtherResponse
+export type PartialResponse = PartiallyPartial<
+  BaseResponse<any, any, HttpStatusOk | HttpStatusNoOk>,
+  'resBody' | 'resHeaders'
+>
 
 export type MockResponse<K extends AspidaMethodParams = { resBody: {}; resHeaders: {} }> =
   | (K['resBody'] extends {}
       ? K['resHeaders'] extends {}
-        ? AllResponse<K['resBody'], K['resHeaders']>
-        : DataResponse<
-            K['resBody'],
-            K['resHeaders'] extends {} | undefined ? K['resHeaders'] : undefined
+        ? BaseResponse<K['resBody'], K['resHeaders'], K['status']>
+        : PartiallyPartial<
+            BaseResponse<
+              K['resBody'],
+              K['resHeaders'] extends {} | undefined ? K['resHeaders'] : undefined,
+              K['status']
+            >,
+            'resHeaders'
           >
       : K['resHeaders'] extends {}
-      ? HeadersResponse<
-          K['resBody'] extends {} | undefined ? K['resBody'] : undefined,
-          K['resHeaders']
+      ? PartiallyPartial<
+          BaseResponse<
+            K['resBody'] extends {} | undefined ? K['resBody'] : undefined,
+            K['resHeaders'],
+            K['status']
+          >,
+          'resBody'
         >
-      : SubAllResponse<
-          K['resBody'] extends {} | undefined ? K['resBody'] : undefined,
-          K['resHeaders'] extends {} | undefined ? K['resHeaders'] : undefined
+      : PartiallyPartial<
+          BaseResponse<
+            K['resBody'] extends {} | undefined ? K['resBody'] : undefined,
+            K['resHeaders'] extends {} | undefined ? K['resHeaders'] : undefined,
+            K['status']
+          >,
+          'resBody' | 'resHeaders'
         >)
-  | OtherResponse
+  | PartiallyPartial<BaseResponse<any, any, HttpStatusNoOk>, 'resBody' | 'resHeaders'>
 
 export type MockMethods<T extends AspidaMethods> = {
   [K in keyof T]?: (req: RequestParams<T[K]>) => MockResponse<T[K]> | Promise<MockResponse<T[K]>>

@@ -8,6 +8,7 @@ export type Methods = {
       company_id: number
     }
 
+    status: 200
     resBody: Types.walletTxnResponse
   }
 
@@ -15,10 +16,12 @@ export type Methods = {
     query: {
       company_id: number
     }
+
+    status: 204
   }
 }
 
 export default mockMethods<Methods>({
   get: () => ({ status: 200, resBody: { wallet_txn: { id: 1, company_id: 1, date: 'a', amount: 1, due_amount: 1, balance: 1, entry_side: 'income', walletable_type: 'bank_account', walletable_id: 1, description: 'a', status: 1 } } }),
-  delete: () => ({ status: 200 })
+  delete: () => ({ status: 204 })
 })

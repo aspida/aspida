@@ -30,7 +30,13 @@ export default (
             }: ${importName}['${method}']['reqHeaders'],`
           : ''
       const resHeaders = (method: LowerHttpMethod) =>
-        props.resHeaders ? `, ${importName}['${method}']['resHeaders']` : ''
+        props.resHeaders
+          ? `, ${importName}['${method}']['resHeaders']`
+          : props.status
+          ? ', BasicHeaders'
+          : ''
+      const status = (method: LowerHttpMethod) =>
+        `${props.status ? `, ${importName}['${method}']['status']` : ''}`
       const option = (method: LowerHttpMethod) =>
         `option${isOptionRequired ? '' : '?'}: {${reqBody(method)}${query(method)}${reqHeaders(
           method
@@ -57,7 +63,9 @@ export default (
       const quotation = newUrl.includes('${') ? '`' : "'"
       const tmpChanks = [
         `(${option(name)}) =>`,
-        `client.fetch<${resBody(name)}${resHeaders(name)}>(prefix, ${quotation}${newUrl}${
+        `client.fetch<${resBody(name)}${resHeaders(name)}${status(
+          name
+        )}>(prefix, ${quotation}${newUrl}${
           trailingSlash ? '/' : ''
         }${quotation}, '${name.toUpperCase()}'${request()}).${resMethodName()}()`
       ]

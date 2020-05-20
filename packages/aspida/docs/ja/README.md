@@ -202,6 +202,52 @@ import api from "../apis/$api"
 - **[aspida-fetch](https://github.com/aspidajs/aspida/tree/develop/packages/aspida-fetch#readme)**
 - **[aspida-node-fetch](https://github.com/aspidajs/aspida/tree/develop/packages/aspida-node-fetch#readme)**
 
+## Command Line Interface のオプション
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th width="100%">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td nowrap><code>--build</code><br /><code>-b</code></td>
+      <td></td>
+      <td></td>
+      <td>
+        aspida のルーティングに必要な
+        <code>$api.ts</code> を生成します。
+      </td>
+    </tr>
+    <tr>
+      <td nowrap><code>--config</code><br /><code>-c</code></td>
+      <td><code>string</code></td>
+      <td><code>"aspida.config.js"</code></td>
+      <td>設定ファイルまでのパスを指定します。</td>
+    </tr>
+    <tr>
+      <td nowrap><code>--watch</code><br /><code>-w</code></td>
+      <td></td>
+      <td></td>
+      <td>
+        監視モードを有効にします。<br />
+        API のエンドポイントとなるファイルの増減に合わせて
+        <code>$api.ts</code> を再生成します。
+      </td>
+    </tr>
+    <tr>
+      <td nowrap><code>--version</code><br /><code>-v</code></td>
+      <td></td>
+      <td></td>
+      <td>aspida のバージョンを表示します。</td>
+    </tr>
+  </tbody>
+</table>
+
 ## Tips
 
 ### 型定義ファイルを置くディレクトリを apis 以外に変更する

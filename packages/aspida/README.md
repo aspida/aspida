@@ -190,6 +190,7 @@ import api from "../apis/$api"
   // res -> { id: 0, name: 'taro' }
 })()
 ```
+
 ### Read more posts by DEV Community
 
 **[aspida - DEV Community](https://dev.to/t/aspida)**
@@ -200,6 +201,52 @@ import api from "../apis/$api"
 - **[aspida-ky](https://github.com/aspidajs/aspida/tree/develop/packages/aspida-ky#readme)**
 - **[aspida-fetch](https://github.com/aspidajs/aspida/tree/develop/packages/aspida-fetch#readme)**
 - **[aspida-node-fetch](https://github.com/aspidajs/aspida/tree/develop/packages/aspida-node-fetch#readme)**
+
+## Command Line Interface Options
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th width="100%">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td nowrap><code>--build</code><br /><code>-b</code></td>
+      <td></td>
+      <td></td>
+      <td>
+        Generate <code>$api.ts</code> required for
+        aspida routing.
+      </td>
+    </tr>
+    <tr>
+      <td nowrap><code>--config</code><br /><code>-c</code></td>
+      <td><code>string</code></td>
+      <td><code>"aspida.config.js"</code></td>
+      <td>Specify the path to the configuration file.</td>
+    </tr>
+    <tr>
+      <td nowrap><code>--watch</code><br /><code>-w</code></td>
+      <td></td>
+      <td></td>
+      <td>
+        Enable watch mode.<br />
+        Regenerate <code>$api.ts</code> according to
+        the increase / decrease of the API endpoint file.
+      </td>
+    </tr>
+    <tr>
+      <td nowrap><code>--version</code><br /><code>-v</code></td>
+      <td></td>
+      <td></td>
+      <td>Print aspida version.</td>
+    </tr>
+  </tbody>
+</table>
 
 ## Tips
 

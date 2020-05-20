@@ -2,6 +2,7 @@
 import { mockMethods } from 'aspida-mock'
 export type Methods = {
   get: {
+    status: 200
     resBody: {
       id: number
       title: number
@@ -10,6 +11,8 @@ export type Methods = {
   }
 
   post: {
+    status: 200
+
     resBody: {
       id: number
     }

@@ -5,6 +5,7 @@ import * as Types from '../../../../../../@types'
 export type Methods = {
   get: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
+    status: 200
 
     resBody: {
       chatId?: number
@@ -38,6 +39,7 @@ export type Methods = {
 
   put: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
+    status: 200
 
     reqBody: {
       name?: string
@@ -51,6 +53,7 @@ export type Methods = {
 
   delete: {
     reqHeaders?: Types.AppIdHeader & Types.AppPlatformHeader & Types.AppVersionHeader & Types.AppOrganisationToken
+    status: 200
   }
 }
 

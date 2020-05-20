@@ -12,10 +12,11 @@ export type Methods = {
       end_date?: string
     }
 
+    status: 202
     resBody: Types.journalsResponse
   }
 }
 
 export default mockMethods<Methods>({
-  get: () => ({ status: 200, resBody: { journals: { id: 1, messages: 'a', company_id: 1, download_type: 'csv', start_date: 'a', end_date: 'a', visible_tags: ['partner'], status_url: 'a' } } })
+  get: () => ({ status: 202, resBody: { journals: { id: 1, messages: 'a', company_id: 1, download_type: 'csv', start_date: 'a', end_date: 'a', visible_tags: ['partner'], status_url: 'a' } } })
 })

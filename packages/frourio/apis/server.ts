@@ -1,5 +1,6 @@
 /* eslint-disable */
 import { tmpdir } from 'os'
+import { Server } from 'http'
 import express from 'express'
 import multer from 'multer'
 import helmet from 'helmet'
@@ -26,7 +27,7 @@ export const app = express()
   .use(express.static('packages/frourio/public'))
 
 export const run = (port: number | string = 10000) =>
-  new Promise<ReturnType<typeof app.listen>>(resolve => {
+  new Promise<Server>(resolve => {
     const server = app.listen(port, () => {
       console.log(`Frourio is running on http://localhost:${port}`)
       resolve(server)

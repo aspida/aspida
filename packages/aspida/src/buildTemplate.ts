@@ -10,7 +10,7 @@ export type Template = {
 export default ({ input, baseURL, trailingSlash }: BaseConfig): Template => {
   const { api, imports } = createTemplateValues(input, trailingSlash)
   const text = `/* eslint-disable */
-import { AspidaClient } from 'aspida'
+import { AspidaClient${api.includes('BasicHeaders') ? ', BasicHeaders' : ''} } from 'aspida'
 <% types %><% imports %>
 
 const api = <T>(client: AspidaClient<T>) => {

@@ -19,6 +19,7 @@ export type Methods = {
       adjustment?: 'only' | 'without'
     }
 
+    status: 200
     resBody: Types.trialBsTwoYearsResponse
   }
 }

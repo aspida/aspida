@@ -6,5 +6,5 @@ export type Methods = {
 }
 
 export default mockMethods<Methods>({
-  get: () => ({ status: 200 })
+  get: () => ({ status: 204 })
 })

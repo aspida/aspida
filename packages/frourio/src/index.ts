@@ -1,89 +1,91 @@
-import { LowerHttpMethod, AspidaMethods, HttpMethod, AspidaMethodParams } from 'aspida'
+import {
+  LowerHttpMethod,
+  AspidaMethods,
+  HttpMethod,
+  HttpStatusOk,
+  AspidaMethodParams
+} from 'aspida'
 import express, { RequestHandler, Request } from 'express'
 import { validateOrReject } from 'class-validator'
 
-type RequestParams<T extends AspidaMethodParams> = {
-  path: string
-  method: HttpMethod
-  query: T['query']
-  body: T['reqBody']
-  headers: T['reqHeaders']
-  originalRequest: Request
-}
+export * as Validator from 'class-validator'
 
-type Status = {
-  ok: 200 | 201 | 202 | 203 | 204 | 205 | 206
-  other:
-    | 301
-    | 302
-    | 400
-    | 401
-    | 402
-    | 403
-    | 404
-    | 405
-    | 406
-    | 409
-    | 500
-    | 501
-    | 502
-    | 503
-    | 504
-    | 505
-}
+type HttpStatusNoOk =
+  | 301
+  | 302
+  | 400
+  | 401
+  | 402
+  | 403
+  | 404
+  | 405
+  | 406
+  | 409
+  | 500
+  | 501
+  | 502
+  | 503
+  | 504
+  | 505
 
-type SubAllResponse<T, U> = {
-  status: Status['ok']
-  body?: T
-  headers?: U
-}
+type PartiallyPartial<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
 
-type DataResponse<T, U> = {
-  status: Status['ok']
-  body: T
-  headers?: U
-}
-
-type HeadersResponse<T, U> = {
-  status: Status['ok']
-  body?: T
-  headers: U
-}
-
-type AllResponse<T, U> = {
-  status: Status['ok']
+type BaseResponse<T, U, V> = {
+  status: V extends number ? V : HttpStatusOk
   body: T
   headers: U
-}
-
-type OtherResponse = {
-  status: Status['other']
-  body?: any
-  headers?: any
 }
 
 type ServerResponse<K extends AspidaMethodParams> =
   | (K['resBody'] extends {}
       ? K['resHeaders'] extends {}
-        ? AllResponse<K['resBody'], K['resHeaders']>
-        : DataResponse<
-            K['resBody'],
-            K['resHeaders'] extends {} | undefined ? K['resHeaders'] : undefined
+        ? BaseResponse<K['resBody'], K['resHeaders'], K['status']>
+        : PartiallyPartial<
+            BaseResponse<
+              K['resBody'],
+              K['resHeaders'] extends {} | undefined ? K['resHeaders'] : undefined,
+              K['status']
+            >,
+            'headers'
           >
       : K['resHeaders'] extends {}
-      ? HeadersResponse<
-          K['resBody'] extends {} | undefined ? K['resBody'] : undefined,
-          K['resHeaders']
+      ? PartiallyPartial<
+          BaseResponse<
+            K['resBody'] extends {} | undefined ? K['resBody'] : undefined,
+            K['resHeaders'],
+            K['status']
+          >,
+          'body'
         >
-      : SubAllResponse<
-          K['resBody'] extends {} | undefined ? K['resBody'] : undefined,
-          K['resHeaders'] extends {} | undefined ? K['resHeaders'] : undefined
+      : PartiallyPartial<
+          BaseResponse<
+            K['resBody'] extends {} | undefined ? K['resBody'] : undefined,
+            K['resHeaders'] extends {} | undefined ? K['resHeaders'] : undefined,
+            K['status']
+          >,
+          'body' | 'headers'
         >)
-  | OtherResponse
+  | PartiallyPartial<BaseResponse<any, any, HttpStatusNoOk>, 'body' | 'headers'>
 
 type ServerValues = {
   params?: Record<string, any>
   user?: any
+}
+
+type ExcludeBlob<T extends AspidaMethodParams> = T['reqFormat'] extends FormData
+  ? Pick<
+      T['reqBody'],
+      { [K in keyof T['reqBody']]-?: T['reqBody'][K] extends Blob ? never : K }[keyof T['reqBody']]
+    >
+  : T['reqBody']
+
+type RequestParams<T extends AspidaMethodParams> = {
+  path: string
+  method: HttpMethod
+  query: T['query']
+  body: ExcludeBlob<T>
+  headers: T['reqHeaders']
+  originalRequest: Request
 }
 
 type FileType<T extends AspidaMethodParams> = T['reqFormat'] extends FormData

@@ -8,6 +8,7 @@ export type Methods = {
       token: string
     }
 
+    status: 200
     resBody: Types.ModelMixV3
   }
 }

@@ -17,12 +17,15 @@ export type Methods = {
       limit?: number
     }
 
+    status: 200
+
     resBody: {
       receipts: Types.receiptResponse['receipt'][]
     }
   }
 
   post: {
+    status: 201
     resBody: Types.receiptResponse
     reqFormat: FormData
     reqBody: Types.receiptCreateParams
@@ -31,5 +34,5 @@ export type Methods = {
 
 export default mockMethods<Methods>({
   get: () => ({ status: 200, resBody: { receipts: [{ id: 1, status: 'unconfirmed', description: 'a', mime_type: 'a', issue_date: 'a', origin: 'unknown', created_at: 'a', file_src: 'a', user: { id: 1, email: 'a', display_name: 'a' } }] } }),
-  post: () => ({ status: 200, resBody: { receipt: { id: 1, status: 'unconfirmed', description: 'a', mime_type: 'a', issue_date: 'a', origin: 'unknown', created_at: 'a', file_src: 'a', user: { id: 1, email: 'a', display_name: 'a' } } } })
+  post: () => ({ status: 201, resBody: { receipt: { id: 1, status: 'unconfirmed', description: 'a', mime_type: 'a', issue_date: 'a', origin: 'unknown', created_at: 'a', file_src: 'a', user: { id: 1, email: 'a', display_name: 'a' } } } })
 })

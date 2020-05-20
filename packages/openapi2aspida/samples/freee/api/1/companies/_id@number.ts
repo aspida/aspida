@@ -15,10 +15,12 @@ export type Methods = {
       walletables?: 'true'
     }
 
+    status: 200
     resBody: Types.companyResponse
   }
 
   put: {
+    status: 200
     resBody: Types.companyUpdateResponse
     reqFormat: URLSearchParams
     reqBody?: Types.companyParams

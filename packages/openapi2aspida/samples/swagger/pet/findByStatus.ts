@@ -8,6 +8,7 @@ export type Methods = {
       status: ('available' | 'pending' | 'sold')[]
     }
 
+    status: 200
     resBody: Types.Pet[]
   }
 }
