@@ -29,7 +29,7 @@ export default (
     files.push(
       ...Object.keys(openapi.paths)
         .map((path, _i, pathList) => {
-          const isParent = pathList.some(p => new RegExp(`^${path}/.+`).test(p))
+          const isParent = pathList.some(p => p.startsWith(`${path}/`))
           const methodProps = Object.keys(
             openapi.paths[path]
           ).filter((method): method is typeof methodNames[number] =>
@@ -142,7 +142,7 @@ export default (
               }
 
               if (target.responses) {
-                const code = Object.keys(target.responses).find(code => /^20/.test(code))
+                const code = Object.keys(target.responses).find(code => code.startsWith('20'))
                 if (code) {
                   params.push({
                     name: 'status',
@@ -194,7 +194,7 @@ export default (
                                 }
                               )
                             })
-                            .filter(v => v) as Prop[]
+                            .filter((v): v is Prop => !!v)
                         }
                       ]
                     })
@@ -266,7 +266,7 @@ export default (
                 values: [{ isArray: false, isEnum: false, value: params }]
               }
             })
-            .filter(method => method) as Prop[]
+            .filter((method): method is Prop => !!method)
 
           if (methods.length) {
             const methodsText = props2String(methods, '')
