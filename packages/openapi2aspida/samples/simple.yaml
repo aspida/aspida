@@ -127,3 +127,21 @@ paths:
             application/json:
               schema:
                 type: "string"
+components:
+  schemas:
+    Customer:
+      description: Customer
+      properties:
+        id:
+          description: ID
+          type: integer
+        name:
+          description: NAME
+          type: string
+        pet:
+          description: 'Type of pet 1:dog 2:cat 3:other'
+          type: number
+          enum:
+            - 1
+            - 2
+            - 3

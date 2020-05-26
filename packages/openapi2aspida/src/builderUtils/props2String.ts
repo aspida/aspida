@@ -27,7 +27,7 @@ export const value2String = (v: PropValue, indent: string): string =>
       : v.isArray
       ? array2String(v.value as PropValue, indent)
       : v.isEnum
-      ? `'${(v.value as string[]).join("' | '")}'`
+      ? (v.value as string[]).join(' | ')
       : Array.isArray(v.value)
       ? // eslint-disable-next-line @typescript-eslint/no-use-before-define
         props2String(v.value as Prop[], `  ${indent}`)

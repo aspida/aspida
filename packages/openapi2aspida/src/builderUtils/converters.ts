@@ -109,7 +109,7 @@ export const schema2value = (
     value = of2Values(schema)
   } else if (schema.enum) {
     isEnum = true
-    value = schema.enum
+    value = schema.type === 'string' ? schema.enum.map(e => `'${e}'`) : schema.enum
   } else if (isArraySchema(schema)) {
     isArray = true
     value = schema2value(schema.items)

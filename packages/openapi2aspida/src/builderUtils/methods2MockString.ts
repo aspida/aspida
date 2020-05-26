@@ -64,7 +64,7 @@ const value2String = (v: PropValue, params: Parameter[], schemas: Schema[]): str
       : v.isArray
       ? `[${value2String(v.value as PropValue, params, schemas)}]`
       : v.isEnum
-      ? `'${(v.value as string[])[0]}'`
+      ? (v.value as string[])[0]
       : Array.isArray(v.value)
       ? props2String(v.value as Prop[], params, schemas)
       : typeof v.value === 'string'
