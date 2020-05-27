@@ -37,7 +37,7 @@ type BaseResponse<T, U, V> = {
 }
 
 type ServerResponse<K extends AspidaMethodParams> =
-  | (K['resBody'] extends {}
+  | (K['resBody'] extends {} | null
       ? K['resHeaders'] extends {}
         ? BaseResponse<K['resBody'], K['resHeaders'], K['status']>
         : PartiallyPartial<
@@ -51,7 +51,7 @@ type ServerResponse<K extends AspidaMethodParams> =
       : K['resHeaders'] extends {}
       ? PartiallyPartial<
           BaseResponse<
-            K['resBody'] extends {} | undefined ? K['resBody'] : undefined,
+            K['resBody'] extends {} | null | undefined ? K['resBody'] : undefined,
             K['resHeaders'],
             K['status']
           >,
@@ -59,7 +59,7 @@ type ServerResponse<K extends AspidaMethodParams> =
         >
       : PartiallyPartial<
           BaseResponse<
-            K['resBody'] extends {} | undefined ? K['resBody'] : undefined,
+            K['resBody'] extends {} | null | undefined ? K['resBody'] : undefined,
             K['resHeaders'] extends {} | undefined ? K['resHeaders'] : undefined,
             K['status']
           >,

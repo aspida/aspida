@@ -5,4 +5,6 @@ export type Methods = {
     }
     resBody: string
   }
+
+  put: {}
 }
