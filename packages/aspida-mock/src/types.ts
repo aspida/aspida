@@ -38,7 +38,7 @@ export type PartialResponse = PartiallyPartial<
 >
 
 export type MockResponse<K extends AspidaMethodParams = { resBody: {}; resHeaders: {} }> =
-  | (K['resBody'] extends {}
+  | (K['resBody'] extends {} | null
       ? K['resHeaders'] extends {}
         ? BaseResponse<K['resBody'], K['resHeaders'], K['status']>
         : PartiallyPartial<
@@ -52,7 +52,7 @@ export type MockResponse<K extends AspidaMethodParams = { resBody: {}; resHeader
       : K['resHeaders'] extends {}
       ? PartiallyPartial<
           BaseResponse<
-            K['resBody'] extends {} | undefined ? K['resBody'] : undefined,
+            K['resBody'] extends {} | null | undefined ? K['resBody'] : undefined,
             K['resHeaders'],
             K['status']
           >,
@@ -60,7 +60,7 @@ export type MockResponse<K extends AspidaMethodParams = { resBody: {}; resHeader
         >
       : PartiallyPartial<
           BaseResponse<
-            K['resBody'] extends {} | undefined ? K['resBody'] : undefined,
+            K['resBody'] extends {} | null | undefined ? K['resBody'] : undefined,
             K['resHeaders'] extends {} | undefined ? K['resHeaders'] : undefined,
             K['status']
           >,
