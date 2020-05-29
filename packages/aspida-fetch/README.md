@@ -1,7 +1,7 @@
 # @aspida/fetch
 
-| [aspida] | [aspida-mock] | [openapi2aspida] | [pathpida] |
-| -------- | ------------- | ---------------- | ---------- |
+| [aspida] | [aspida-mock] | [openapi2aspida] |
+| -------- | ------------- | ---------------- |
 
 
 | [@aspida/axios] | [@aspida/ky] | @aspida/fetch | [@aspida/node-fetch] |
@@ -95,7 +95,6 @@ aspida-fetch is licensed under a [MIT License](https://github.com/aspidajs/aspid
 [aspida]: https://github.com/aspidajs/aspida/tree/master/packages/aspida
 [aspida-mock]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-mock
 [openapi2aspida]: https://github.com/aspidajs/aspida/tree/master/packages/openapi2aspida
-[pathpida]: https://github.com/aspidajs/aspida/tree/master/packages/pathpida
 [@aspida/axios]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-axios
 [@aspida/ky]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-ky
 [@aspida/node-fetch]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-node-fetch

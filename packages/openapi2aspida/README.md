@@ -1,7 +1,7 @@
 # OpenAPI or Swagger to aspida
 
-| [aspida] | [aspida-mock] | openapi2aspida | [pathpida] |
-| -------- | ------------- | -------------- | ---------- |
+| [aspida] | [aspida-mock] | openapi2aspida |
+| -------- | ------------- | -------------- |
 
 
 | [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] | [@aspida/node-fetch] |
@@ -115,7 +115,6 @@ openapi2aspida is licensed under a [MIT License](https://github.com/aspidajs/asp
 
 [aspida]: https://github.com/aspidajs/aspida/tree/master/packages/aspida
 [aspida-mock]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-mock
-[pathpida]: https://github.com/aspidajs/aspida/tree/master/packages/pathpida
 [@aspida/axios]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-axios
 [@aspida/ky]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-ky
 [@aspida/fetch]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-fetch
