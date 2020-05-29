@@ -6,7 +6,6 @@
   "scripts": {
     "dev:aspida": "npm run build:aspida && cd packages/aspida && node bin/index.js --build",
     "dev:frourio": "npm run build:frourio && cd packages/frourio && aspida -b && node bin/index.js --build",
-    "dev:openapi": "npm run build:openapi && cd packages/openapi2aspida && node samples/rimraf.js && node bin/index.js --build",
     "dev:mock": "npm run build:mock && cd packages/aspida-mock && aspida -b && node bin/index.js --build",
     "build:aspida": "npm run rimraf -- aspida && cd packages/aspida && tsc --project tsconfig.build.json",
     "build:frourio": "npm run rimraf -- frourio && cd packages/frourio && tsc --project tsconfig.build.json",
@@ -14,7 +13,6 @@
     "build:fetch": "npm run rimraf -- aspida-fetch && cd packages/aspida-fetch && tsc --project tsconfig.build.json",
     "build:node-fetch": "npm run rimraf -- aspida-node-fetch && cd packages/aspida-node-fetch && tsc --project tsconfig.build.json",
     "build:ky": "npm run rimraf -- aspida-ky && cd packages/aspida-ky && tsc --project tsconfig.build.json",
-    "build:openapi": "npm run rimraf -- openapi2aspida && cd packages/openapi2aspida && tsc --project tsconfig.build.json",
     "build:mock": "npm run rimraf -- aspida-mock && cd packages/aspida-mock && tsc --project tsconfig.build.json",
     "rimraf": "node -e \"require('fs').rmdirSync('packages/' + process.argv[1] + '/dist', { recursive: true })\"",
     "release": "standard-version --skip.tag",

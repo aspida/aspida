@@ -1,11 +1,7 @@
 # aspida-mock
 
-| [aspida] | aspida-mock | [openapi2aspida] |
-| -------- | ----------- | ---------------- |
-
-
-| [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] | [@aspida/node-fetch] |
-| --------------- | ------------ | --------------- | -------------------- |
+| [aspida] | aspida-mock | [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] | [@aspida/node-fetch] |
+| -------- | ----------- | --------------- | ------------ | --------------- | -------------------- |
 
 
 <br />
@@ -329,7 +325,6 @@ aspida-mock は aspida の設定ファイル `aspida.config.js` の項目のう�
 aspida-mock is licensed under a [MIT License](https://github.com/aspidajs/aspida/blob/master/packages/aspida-mock/LICENSE).
 
 [aspida]: https://github.com/aspidajs/aspida/tree/master/packages/aspida
-[openapi2aspida]: https://github.com/aspidajs/aspida/tree/master/packages/openapi2aspida
 [@aspida/axios]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-axios
 [@aspida/ky]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-ky
 [@aspida/fetch]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-fetch
