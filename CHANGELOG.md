@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.17.0](https://github.com/aspidajs/aspida/compare/v0.16.0...v0.17.0) (2020-06-14)
+
+
+### Features
+
+* support array type value of FormData ([855347a](https://github.com/aspidajs/aspida/commit/855347acbbc18f43ca341c0f6a6f96dc64514074))
+
+
+### Bug Fixes
+
+* **frourio:** support null response ([d4621bc](https://github.com/aspidajs/aspida/commit/d4621bc56253fe693252997e1c1c99fb2ae59f9e))
+* **mock:** support null response ([350be0d](https://github.com/aspidajs/aspida/commit/350be0d1557c4214d8da40a96ff8de34c71a11fd))
+* **openapi:** support for enum other than string ([3faaf32](https://github.com/aspidajs/aspida/commit/3faaf32392c1855c2d1bc0cc85ed6b7ada7fd185))
+
 ## [0.16.0](https://github.com/aspidajs/aspida/compare/v0.15.3...v0.16.0) (2020-05-20)
 
 
