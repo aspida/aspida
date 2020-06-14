@@ -2,7 +2,7 @@
   "name": "aspida-mock",
   "version": "0.6.1",
   "description": "TypeScript friendly RESTful API mock for aspida",
-  "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
+  "author": "Solufa <solufa2020@gmail.com>",
   "license": "MIT",
   "main": "dist/index.js",
   "bin": "bin/index.js",

@@ -2,7 +2,7 @@
   "name": "@aspida/node-fetch",
   "version": "0.3.0",
   "description": "node-fetch client for aspida",
-  "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
+  "author": "Solufa <solufa2020@gmail.com>",
   "license": "MIT",
   "main": "dist/index.js",
   "homepage": "https://github.com/aspidajs/aspida/tree/master/packages/aspida-node-fetch#readme",

@@ -2,7 +2,7 @@
   "name": "@aspida/ky",
   "version": "0.4.0",
   "description": "ky client for aspida",
-  "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
+  "author": "Solufa <solufa2020@gmail.com>",
   "license": "MIT",
   "main": "dist/index.js",
   "homepage": "https://github.com/aspidajs/aspida/tree/master/packages/aspida-ky#readme",

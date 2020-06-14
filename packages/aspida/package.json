@@ -2,7 +2,7 @@
   "name": "aspida",
   "version": "0.16.0",
   "description": "TypeScript friendly HTTP client wrapper for the browser and node.js",
-  "author": "m-mitsuhide <m.mitsuhide@amatelus.com>",
+  "author": "Solufa <solufa2020@gmail.com>",
   "license": "MIT",
   "main": "dist/index.js",
   "bin": "bin/index.js",
