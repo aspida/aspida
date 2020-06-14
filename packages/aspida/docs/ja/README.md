@@ -1,9 +1,5 @@
-| aspida | [aspida-mock] | [openapi2aspida] | [pathpida] |
-| ------ | ------------- | ---------------- | ---------- |
-
-
-| [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] | [@aspida/node-fetch] |
-| --------------- | ------------ | --------------- | -------------------- |
+| aspida | [aspida-mock] | [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] | [@aspida/node-fetch] |
+| ------ | ------------- | --------------- | ------------ | --------------- | -------------------- |
 
 
 <br />
@@ -408,13 +404,31 @@ import api from "../apis/$api"
 })()
 ```
 
+### OpenAPI / Swagger から変換する
+
+`aspida.config.js`
+
+```js
+module.exports = {
+  input: "apis", // "input" of aspida is "output" for openapi2aspida
+  openapi: { inputFile: "https://petstore.swagger.io/v2/swagger.json" } // Compatible with yaml/json of OpenAPI3.0/Swagger2.0
+}
+```
+
+`tarminal`
+
+```sh
+$ npx openapi2aspida --build
+# apis/$api.ts was built successfully.
+```
+
+[openapi2aspida ドキュメント](https://github.com/aspidajs/openapi2aspida)
+
 ## License
 
 aspida is licensed under a [MIT License](https://github.com/aspidajs/aspida/blob/master/packages/aspida/LICENSE).
 
 [aspida-mock]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-mock
-[openapi2aspida]: https://github.com/aspidajs/aspida/tree/master/packages/openapi2aspida
-[pathpida]: https://github.com/aspidajs/aspida/tree/master/packages/pathpida
 [@aspida/axios]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-axios
 [@aspida/ky]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-ky
 [@aspida/fetch]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-fetch

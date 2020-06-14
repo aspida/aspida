@@ -1,9 +1,5 @@
-| [aspida] | [aspida-mock] | [openapi2aspida] | [pathpida] |
-| -------- | ------------- | ---------------- | ---------- |
-
-
-| [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] | [@aspida/node-fetch] |
-| --------------- | ------------ | --------------- | -------------------- |
+| [aspida] | [aspida-mock] | [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] | [@aspida/node-fetch] |
+| -------- | ------------- | --------------- | ------------ | --------------- | -------------------- |
 
 
 <br />
@@ -46,8 +42,6 @@
 
 - [aspida] - TypeScript friendly HTTP client wrapper for the browser and node.js.
 - [aspida-mock] - TypeScript friendly RESTful API mock for aspida.
-- [openapi2aspida] - Convert OpenAPI 3.0 or Swagger 2.0 definitions into aspida.
-- [pathpida] - TypeScript friendly path generator for Next.js or Nuxt.js.
 - [@aspida/axios] - [axios](https://github.com/axios/axios/) client for aspida.
 - [@aspida/ky] - [ky](https://github.com/sindresorhus/ky/) client for aspida.
 - [@aspida/fetch] - [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) client for aspida.
@@ -55,8 +49,6 @@
 
 [aspida]: packages/aspida
 [aspida-mock]: packages/aspida-mock
-[openapi2aspida]: packages/openapi2aspida
-[pathpida]: packages/pathpida
 [@aspida/axios]: packages/aspida-axios
 [@aspida/ky]: packages/aspida-ky
 [@aspida/fetch]: packages/aspida-fetch
