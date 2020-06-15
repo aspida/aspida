@@ -24,7 +24,7 @@ export default (client: typeof ky = ky, config?: Options): AspidaClient<Options>
         prefixUrl,
         ...config,
         ...request?.config,
-        body: request?.body as any,
+        body: request?.httpBody,
         searchParams: request?.query,
         headers: { ...config?.headers, ...request?.config?.headers, ...request?.headers }
       })
@@ -33,7 +33,7 @@ export default (client: typeof ky = ky, config?: Options): AspidaClient<Options>
         status: res.status as any,
         headers: headersToObject(res.headers),
         originalResponse: res,
-        data: await fn(res)
+        body: await fn(res)
       }
     }
 

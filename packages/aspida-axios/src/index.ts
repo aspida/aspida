@@ -22,13 +22,13 @@ export default (
         responseType,
         ...config,
         ...request?.config,
-        data: request?.body,
+        data: request?.httpBody,
         params: request?.query,
         headers: { ...config?.headers, ...request?.config?.headers, ...request?.headers }
       })
       const { status, headers, data } = res as any
 
-      return { status, headers, data, originalResponse: res }
+      return { status, headers, body: data, originalResponse: res }
     }
 
     return {

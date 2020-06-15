@@ -17,8 +17,8 @@
   <a href="https://www.npmjs.com/package/aspida">
     <img src="https://img.shields.io/npm/v/aspida" alt="npm version" />
   </a>
-  <a href="https://circleci.com/gh/aspidajs/aspida">
-    <img src="https://img.shields.io/circleci/build/github/aspidajs/aspida.svg?label=test" alt="CircleCI" />
+  <a href="https://github.com/aspidajs/aspida/actions?query=workflow%3A%22Node.js+CI%22">
+    <img src="https://github.com/aspidajs/aspida/workflows/Node.js%20CI/badge.svg?branch=master" alt="Node.js CI" />
   </a>
   <a href="https://codecov.io/gh/aspidajs/aspida">
     <img src="https://img.shields.io/codecov/c/github/aspidajs/aspida.svg" alt="Codecov" />
@@ -41,6 +41,24 @@
 </div>
 <br />
 <br />
+
+## 破壊的変更 (2020/06/16) :warning:
+
+aspida >= `0.18.0` でリクエストとレスポンスが持つプロパティ `data` が `body` に変わりました
+
+```typescript
+const { body } = await client.v1.users.post({ body: { name: "taro" } })
+
+const body = await client.v1.users.$post({ body: { name: "taro" } })
+```
+
+### この変更で影響を受けるモジュール
+
+- @aspida/axios >= `0.8.0`
+- @aspida/ky >= `0.6.0`
+- @aspida/fetch >= `0.6.0`
+- @aspida/node-fetch >= `0.5.0`
+- openapi2aspida >= `0.8.0`
 
 ## 特徴
 
@@ -173,12 +191,12 @@ import api from "../apis/$api"
   const limit = 10
   const client = api(aspida())
 
-  await client.v1.users.post({ data: { name: "taro" } })
+  await client.v1.users.post({ body: { name: "taro" } })
 
   const res = await client.v1.users.get({ query: { limit } })
   console.log(res)
   // req -> GET: /v1/users/?limit=10
-  // res -> { status: 200, data: [{ id: 0, name: 'taro' }], headers: {...} }
+  // res -> { status: 200, body: [{ id: 0, name: 'taro' }], headers: {...} }
 
   const user = await client.v1.users._userId(userId).$get()
   console.log(user)
@@ -326,7 +344,7 @@ import api from "../apis/$api"
   const client = api(aspida())
 
   const user = await client.v1.users.$post({
-    data: {
+    body: {
       name: "taro",
       icon: imageBuffer
     }
@@ -366,7 +384,7 @@ import api from "../apis/$api"
 ;(async () => {
   const client = api(aspida())
 
-  const user = await client.v1.users.$post({ data: { name: "taro" } })
+  const user = await client.v1.users.$post({ body: { name: "taro" } })
   console.log(user)
   // req -> POST: /v1/users
   // res -> { id: 0, name: 'taro' }
@@ -424,7 +442,13 @@ $ npx openapi2aspida --build
 
 [openapi2aspida ドキュメント](https://github.com/aspidajs/openapi2aspida)
 
-## License
+## サポート
+
+<a href="https://twitter.com/solufa2020">
+  <img src="https://aspidajs.github.io/aspida/assets/images/twitter.svg" width="65" alt="Twitter" />
+</a>
+
+## ライセンス
 
 aspida is licensed under a [MIT License](https://github.com/aspidajs/aspida/blob/master/packages/aspida/LICENSE).
 

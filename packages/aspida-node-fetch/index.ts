@@ -30,7 +30,7 @@ export default (client = fetch, config?: FetchConfig): AspidaClient<FetchConfig>
           method,
           ...config,
           ...request?.config,
-          body: request?.body,
+          body: request?.httpBody,
           headers: { ...config?.headers, ...request?.config?.headers, ...request?.headers }
         }
       )
@@ -39,7 +39,7 @@ export default (client = fetch, config?: FetchConfig): AspidaClient<FetchConfig>
         status: res.status as any,
         headers: headersToObject(res.headers as any),
         originalResponse: res,
-        data: await fn(res)
+        body: await fn(res)
       }
     }
 

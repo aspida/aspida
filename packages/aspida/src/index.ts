@@ -7,8 +7,8 @@ export type BasicHeaders = Record<string, string>
 export type AspidaRequest<Config = any> = {
   query?: any
   headers?: any
+  httpBody?: any
   body?: any
-  data?: any
   config?: Config
 }
 
@@ -16,13 +16,13 @@ export type AspidaResponse<T, U, V> = {
   status: V
   headers: U
   originalResponse: any
-  data: T
+  body: T
 }
 
 export type AspidaParams<Config = any> = {
   query?: any
   headers?: any
-  data?: any
+  body?: any
   config?: Config
 }
 
@@ -97,32 +97,32 @@ export const optionToRequest = (
   option?: AspidaParams,
   type?: RequestType
 ): AspidaRequest | undefined => {
-  if (!option?.data) return option
+  if (!option?.body) return option
 
-  let body
+  let httpBody
   const headers: BasicHeaders = {}
 
   switch (type) {
     case 'FormData':
-      body = dataToFormData(option.data)
+      httpBody = dataToFormData(option.body)
       break
     case 'URLSearchParams':
-      body = dataToURLString(option.data)
+      httpBody = dataToURLString(option.body)
       headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8'
       break
     case 'ArrayBuffer':
     case 'string':
     case 'Blob':
     case 'any':
-      body = option.data
+      httpBody = option.body
       break
     default:
-      body = JSON.stringify(option.data)
+      httpBody = JSON.stringify(option.body)
       headers['Content-Type'] = 'application/json;charset=utf-8'
       break
   }
 
-  return { body, ...option, headers: { ...headers, ...option.headers } }
+  return { httpBody, ...option, headers: { ...headers, ...option.headers } }
 }
 
 export type AspidaMethodParams = {

@@ -17,7 +17,7 @@ export default (
 
       const reqBody = (method: LowerHttpMethod) =>
         props.reqBody
-          ? ` data${props.reqBody.hasQuestion ? '?' : ''}: ${importName}['${method}']['reqBody'],`
+          ? ` body${props.reqBody.hasQuestion ? '?' : ''}: ${importName}['${method}']['reqBody'],`
           : ''
       const query = (method: LowerHttpMethod) =>
         props.query
@@ -73,6 +73,6 @@ export default (
       return `${indent}  ${name}: ${tmpChanks[0]}
 ${indent}    ${tmpChanks[1]},
 ${indent}  $${name}: async ${tmpChanks[0]}
-${indent}    (await ${tmpChanks[1]}).data`
+${indent}    (await ${tmpChanks[1]}).body`
     })
     .join(',\n')
