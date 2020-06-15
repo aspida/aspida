@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.18.0](https://github.com/aspidajs/aspida/compare/v0.17.0...v0.18.0) (2020-06-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* change property name from data to body
+
+### Features
+
+* add default input dirs ([e9f7a18](https://github.com/aspidajs/aspida/commit/e9f7a18ea7418cac4b7f04a5d7522a78cbf32879))
+* change property name from data to body ([42e0a90](https://github.com/aspidajs/aspida/commit/42e0a90d49da022710fc09e7d1c546c0fc06d4a8))
+
 ## [0.17.0](https://github.com/aspidajs/aspida/compare/v0.16.0...v0.17.0) (2020-06-14)
 
 
