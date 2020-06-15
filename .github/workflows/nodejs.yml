@@ -55,6 +55,7 @@ jobs:
       - run: cd packages/aspida && npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: yarn build:mock
       - run: yarn build:axios
       - run: cd packages/aspida-axios && npm publish
         env:
