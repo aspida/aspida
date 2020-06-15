@@ -13,7 +13,11 @@ type ConfigFile = {
   trailingSlash?: boolean
 }
 
-const defaultConfig: BaseConfig = { input: 'apis', baseURL: '', trailingSlash: false }
+const defaultConfig: BaseConfig = {
+  input: ['apis', 'server/api', 'api'].find(input => fs.existsSync(input)) ?? 'apis',
+  baseURL: '',
+  trailingSlash: false
+}
 
 export default (configPath = 'aspida.config.js'): BaseConfig[] => {
   if (fs.existsSync(configPath)) {
