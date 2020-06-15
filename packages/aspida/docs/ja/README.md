@@ -424,7 +424,13 @@ $ npx openapi2aspida --build
 
 [openapi2aspida ドキュメント](https://github.com/aspidajs/openapi2aspida)
 
-## License
+## サポート
+
+<a href="https://twitter.com/solufa2020">
+  <img src="https://aspidajs.github.io/aspida/assets/images/twitter.svg" width="65" alt="Twitter" />
+</a>
+
+## ライセンス
 
 aspida is licensed under a [MIT License](https://github.com/aspidajs/aspida/blob/master/packages/aspida/LICENSE).
 
