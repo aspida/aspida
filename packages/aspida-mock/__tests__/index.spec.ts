@@ -59,7 +59,7 @@ describe('initialize', () => {
       }
     ])
 
-    expect(await client.$post({ query: { aa: 2 }, data: { val: 3 } })).toEqual(6)
+    expect(await client.$post({ query: { aa: 2 }, body: { val: 3 } })).toEqual(6)
   })
 
   test('middleware path through', async () => {
