@@ -51,7 +51,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - run: yarn --frozen-lockfile
-      - run: yarn build
+      - run: yarn build:aspida
       - run: cd packages/aspida && npm publish
+      - run: yarn build:axios
+      - run: cd packages/aspida-axios && npm publish
+      - run: yarn build:fetch
+      - run: cd packages/aspida-fetch && npm publish
+      - run: yarn build:node-fetch
+      - run: cd packages/aspida-node-fetch && npm publish
+      - run: yarn build:ky
+      - run: cd packages/aspida-ky && npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
