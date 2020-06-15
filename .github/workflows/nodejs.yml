@@ -33,6 +33,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     if: contains(github.ref, 'tags/v')
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
@@ -51,8 +53,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - run: yarn --frozen-lockfile
-      - env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: yarn build:aspida
       - run: cd packages/aspida && npm publish
       - run: yarn build:axios
