@@ -19,8 +19,8 @@
   <a href="https://www.npmjs.com/package/aspida-mock">
     <img src="https://img.shields.io/npm/v/aspida-mock" alt="npm version" />
   </a>
-  <a href="https://circleci.com/gh/aspidajs/aspida">
-    <img src="https://img.shields.io/circleci/build/github/aspidajs/aspida.svg?label=test" alt="CircleCI" />
+  <a href="https://github.com/aspidajs/aspida/actions?query=workflow%3A%22Node.js+CI%22">
+    <img src="https://github.com/aspidajs/aspida/workflows/Node.js%20CI/badge.svg?branch=master" alt="Node.js CI" />
   </a>
   <a href="https://codecov.io/gh/aspidajs/aspida">
     <img src="https://img.shields.io/codecov/c/github/aspidajs/aspida.svg" alt="Codecov" />
