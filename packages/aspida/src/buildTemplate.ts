@@ -26,7 +26,7 @@ export default api
       '<% types %>',
       api.includes(': ApiTypes.') ? `import * as ApiTypes from './@types'\n` : ''
     )
-    .replace('<% imports %>', imports.map(i => i.replace(input, '.')).join('\n'))
+    .replace('<% imports %>', imports.join('\n'))
     .replace('<% api %>', api)
     .replace('<% baseURL %>', baseURL)
 
