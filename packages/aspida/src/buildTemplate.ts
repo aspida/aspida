@@ -77,11 +77,13 @@ export default ({ input, baseURL, trailingSlash, outputEachDir }: BaseConfig): T
   if (outputEachDir) {
     const notIndexFiles = listNotIndexFiles(direntTree)
     if (notIndexFiles.length) {
-      throw new Error(
-        `Since true is specified in outputEachDir at aspida.config.js, you need to rename the following files\n${notIndexFiles.join(
+      console.error(
+        `Error on aspida: Since true is specified in outputEachDir at aspida.config.js, you need to rename the following files\n${notIndexFiles.join(
           '\n'
         )}\n`
       )
+
+      return []
     }
 
     const appendTemplate = (tree: DirentTree) => {
