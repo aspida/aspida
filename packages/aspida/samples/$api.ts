@@ -5,14 +5,14 @@ import { Methods as Methods0 } from './index'
 import { Methods as Methods1 } from './_sampleId.json@number'
 import { Methods as Methods2 } from './v1.1'
 import { Methods as Methods3 } from './v1.1/2/_hogeId@HogeId/entries.json'
-import { Methods as Methods4 } from './v1.1/2/_hogeId@HogeId/test-4/index'
+import { Methods as Methods4 } from './v1.1/2/_hogeId@HogeId/test-4'
 import { Methods as Methods5 } from './v1.1/2/_hogeId@HogeId/test-4/_fugaId'
 import { Methods as Methods6 } from './v1.1/2/_hogeId@HogeId/test-4/fuga aa'
 import { Methods as Methods7 } from './v1.1/2/_hogeId@number'
 import { Methods as Methods8 } from './v1.1/3.1'
 import { Methods as Methods9 } from './v1.1/_articleId.json'
 import { Methods as Methods10 } from './v1.1/users/_userId@User[\'id\']'
-import { Methods as Methods11 } from './v2.0/index'
+import { Methods as Methods11 } from './v2.0'
 
 const api = <T>(client: AspidaClient<T>) => {
   const prefix = (client.baseURL === undefined ? 'https://example.com/api/' : client.baseURL).replace(/\/$/, '')

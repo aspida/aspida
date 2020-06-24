@@ -1,6 +1,7 @@
 import path from 'path'
 import { BaseConfig } from './getConfig'
 import createTemplateValues from './createTemplateValues'
+import { getDirentTree } from './getDirentTree'
 
 export type Template = {
   text: string
@@ -8,7 +9,7 @@ export type Template = {
 }
 
 export default ({ input, baseURL, trailingSlash }: BaseConfig): Template => {
-  const { api, imports } = createTemplateValues(input, trailingSlash)
+  const { api, imports } = createTemplateValues(getDirentTree(input), trailingSlash)
   const text = `/* eslint-disable */
 import { AspidaClient${api.includes('BasicHeaders') ? ', BasicHeaders' : ''} } from 'aspida'
 <% types %><% imports %>
