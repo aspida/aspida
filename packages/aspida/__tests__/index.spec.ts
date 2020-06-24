@@ -26,4 +26,34 @@ describe('cli test', () => {
       expect(text).toBe(result)
     })
   })
+
+  test('outputEachDir', () => {
+    const { input, baseURL, trailingSlash, outputEachDir } = getConfig(
+      `${basePath}/aspida.config.js`
+    )[1]
+    const inputDir = `${basePath}/${input}`
+    const listApiFiles = (dir: string): string[] =>
+      fs
+        .readdirSync(dir, { withFileTypes: true })
+        .flatMap(dirent =>
+          dirent.isFile() ? [`${dir}/${dirent.name}`] : listApiFiles(`${dir}/${dirent.name}`)
+        )
+        .filter(name => name.endsWith('$api.ts'))
+
+    const templates = build({
+      input: inputDir,
+      baseURL,
+      trailingSlash,
+      outputEachDir
+    })
+    const apiFiles = listApiFiles(inputDir)
+    expect(templates).toHaveLength(apiFiles.length)
+
+    apiFiles.forEach(apiPath => {
+      const targetTemplate = templates.filter(t => t.filePath === apiPath)[0]
+      expect(targetTemplate).not.toBeUndefined()
+      const result = fs.readFileSync(apiPath, 'utf8')
+      expect(targetTemplate.text).toBe(result)
+    })
+  })
 })
