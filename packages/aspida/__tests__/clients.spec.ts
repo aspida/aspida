@@ -19,6 +19,16 @@ test('aspida response status 404', async () => {
   await expect(target.get()).rejects.toHaveProperty('response.status', 404)
 })
 
+test('path value', async () => {
+  app.get('/v1.1/2/:hogeId/entries.json', (req, res) => {
+    res.json([{ id: 0, title: req.params.hogeId }])
+  })
+
+  const text = 'hoge'
+  const target = client.v1_1.$2._hogeId_0(text).entries_json
+  await expect(target.$get()).resolves.toMatchObject([{ id: 0, title: text }])
+})
+
 test('aspida response string', async () => {
   app.get('/v2.0', (req, res) => {
     res.send(req.query.val)

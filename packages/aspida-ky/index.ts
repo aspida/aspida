@@ -20,9 +20,9 @@ export default (client: typeof ky = ky, config?: Options): AspidaClient<Options>
     const send = <V>(fn: (res: Response) => Promise<V>) => async () => {
       const request = optionToRequest(params, type)
       const res = await client(url, {
+        ...config,
         method,
         prefixUrl,
-        ...config,
         ...request?.config,
         body: request?.httpBody,
         searchParams: request?.query,

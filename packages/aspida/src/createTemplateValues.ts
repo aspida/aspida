@@ -53,8 +53,16 @@ export default (direntTree: DirentTree, trailingSlash: boolean) => {
             valType = `ApiTypes.${valType}`
           }
 
+          const prevUrl = `'${url}${trailingSlash ? '/' : ''}'`
+          if (url.length && !pathes.includes(prevUrl)) pathes.push(prevUrl)
+
           const duplicatedNames = tree.children.filter(d => d.name.startsWith(valName))
-          const prefixVal = `\`\${${prefix}}/\${val${valCount}}${valName.replace(/^[^.]+/, '')}\``
+          const prefixVal = `\`\${${prefix}}${
+            url.length ? `\${PATH${pathes.indexOf(prevUrl)}}` : ''
+          }${url.length && trailingSlash ? '' : '/'}\${val${valCount}}${valName.replace(
+            /^[^.]+/,
+            ''
+          )}\``
 
           newPrefix = `prefix${valCount}`
           newUrl = ''
