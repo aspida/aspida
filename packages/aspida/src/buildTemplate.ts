@@ -30,9 +30,9 @@ const createTemplate = (
   tree: DirentTree,
   baseURL: string,
   trailingSlash: boolean,
-  appendPrefix?: string
+  basePath: string
 ) => {
-  const { api, imports, pathes } = createTemplateValues(tree, trailingSlash)
+  const { api, imports, pathes } = createTemplateValues(tree, basePath, trailingSlash)
   const text = `/* eslint-disable */
 import { AspidaClient${api.includes('BasicHeaders') ? ', BasicHeaders' : ''} } from 'aspida'
 <% types %><% imports %>
@@ -41,11 +41,7 @@ ${['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'PATCH', 'OPTIONS']
   .map(m => `\nconst ${m} = '${m}'`)
   .join('')}${pathes.map((p, i) => `\nconst PATH${i} = ${p}`).join('')}
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
-  const prefix = ${
-    appendPrefix ? '`${' : ''
-  }(baseURL === undefined ? '<% baseURL %>' : baseURL).replace(/\\/$/, '')${
-    appendPrefix ? `}/${appendPrefix}\`` : ''
-  }
+  const prefix = (baseURL === undefined ? '<% baseURL %>' : baseURL).replace(/\\/$/, '')
 
   return <% api %>
 }
@@ -57,11 +53,11 @@ export default api
       '<% types %>',
       api.includes(': ApiTypes.')
         ? `import * as ApiTypes from '${
-            appendPrefix
-              ? appendPrefix
+            basePath
+              ? basePath
                   .split('/')
-                  .map(() => '../')
-                  .join('')
+                  .map(() => '')
+                  .join('../')
               : './'
           }@types'\n`
         : ''
@@ -75,7 +71,7 @@ export default api
 
 export default ({ input, baseURL, trailingSlash, outputEachDir }: BaseConfig): Template[] => {
   const direntTree = getDirentTree(input)
-  const templates = [createTemplate(direntTree, baseURL, trailingSlash)]
+  const templates = [createTemplate(direntTree, baseURL, trailingSlash, '')]
 
   if (outputEachDir) {
     const notIndexFiles = listNotIndexFiles(direntTree)
@@ -94,12 +90,7 @@ export default ({ input, baseURL, trailingSlash, outputEachDir }: BaseConfig): T
         if (!c.isDir || c.name.startsWith('_')) return
 
         templates.push(
-          createTemplate(
-            c.tree,
-            baseURL,
-            trailingSlash,
-            c.tree.path.replace(input, '').replace(/^\//, '')
-          )
+          createTemplate(c.tree, baseURL, trailingSlash, c.tree.path.replace(input, ''))
         )
 
         appendTemplate(c.tree)

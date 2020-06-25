@@ -3,7 +3,7 @@ import createMethods from './createMethodsString'
 import { Method } from './parseInterface'
 import { DirentTree } from './getDirentTree'
 
-export default (direntTree: DirentTree, trailingSlash: boolean) => {
+export default (direntTree: DirentTree, basePath: string, trailingSlash: boolean) => {
   const imports: string[] = []
   const pathes: string[] = []
   const getMethodsString = (
@@ -21,7 +21,12 @@ export default (direntTree: DirentTree, trailingSlash: boolean) => {
       newPath = `PATH${pathes.indexOf(newPath)}`
     }
 
-    return createMethods(methods, indent, importName, newPrefix, newPath)
+    return createMethods(
+      methods,
+      indent,
+      importName,
+      newPrefix && newPath.length > 2 ? `\`\${${newPrefix}}\${${newPath}}\`` : newPrefix || newPath
+    )
   }
 
   let valCount = 0
@@ -57,7 +62,7 @@ export default (direntTree: DirentTree, trailingSlash: boolean) => {
           if (url.length && !pathes.includes(prevUrl)) pathes.push(prevUrl)
 
           const duplicatedNames = tree.children.filter(d => d.name.startsWith(valName))
-          const prefixVal = `\`\${${prefix}}${
+          const prefixVal = `\`${prefix ? `\${${prefix}}` : ''}${
             url.length ? `\${PATH${pathes.indexOf(prevUrl)}}` : ''
           }${url.length && trailingSlash ? '' : '/'}\${val${valCount}}${valName.replace(
             /^[^.]+/,
@@ -125,11 +130,11 @@ export default (direntTree: DirentTree, trailingSlash: boolean) => {
     direntTree,
     '.',
     '    ',
-    'prefix',
     '',
+    basePath,
     `{\n<% props %>\n  }`,
     rootIndexData && !rootIndexData.isDir
-      ? getMethodsString('./index', rootIndexData.methods, '  ', 'prefix', '')
+      ? getMethodsString('./index', rootIndexData.methods, '  ', '', basePath)
       : undefined
   )
 
