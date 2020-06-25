@@ -1,13 +1,7 @@
 import { LowerHttpMethod } from './'
 import { Method } from './parseInterface'
 
-export default (
-  methods: Method[],
-  indent: string,
-  importName: string,
-  newPrefix: string,
-  path: string
-) =>
+export default (methods: Method[], indent: string, importName: string, path: string) =>
   methods
     .map(({ name, props }) => {
       const isOptionRequired =
@@ -64,7 +58,7 @@ export default (
         `(${option(name)}) =>`,
         `fetch<${resBody(name)}${resHeaders(name)}${status(
           name
-        )}>(${newPrefix}, ${path}, ${name.toUpperCase()}${request()}).${resMethodName()}()`
+        )}>(prefix, ${path}, ${name.toUpperCase()}${request()}).${resMethodName()}()`
       ]
 
       return `${indent}  ${name}: ${tmpChanks[0]}

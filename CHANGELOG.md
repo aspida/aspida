@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.19.2](https://github.com/aspidajs/aspida/compare/v0.19.1...v0.19.2) (2020-06-25)
+
+
+### Bug Fixes
+
+* prefix pattern ([c127df3](https://github.com/aspidajs/aspida/commit/c127df32ae06fd5e1108606064d088e2ebc025ec))
+
 ### [0.19.1](https://github.com/aspidajs/aspida/compare/v0.19.0...v0.19.1) (2020-06-25)
 
 

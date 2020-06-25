@@ -4,9 +4,9 @@ import { Methods as Methods0 } from './index'
 
 const GET = 'GET'
 const POST = 'POST'
-const PATH0 = '/'
+const PATH0 = '/v1.1/3.1/'
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
-  const prefix = `${(baseURL === undefined ? '' : baseURL).replace(/\/$/, '')}/v1.1/3.1`
+  const prefix = (baseURL === undefined ? '' : baseURL).replace(/\/$/, '')
 
   return {
     get: (option: { query?: Methods0['get']['query'], headers: Methods0['get']['reqHeaders'], config?: T }) =>
