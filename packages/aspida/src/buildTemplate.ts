@@ -32,15 +32,18 @@ const createTemplate = (
   trailingSlash: boolean,
   appendPrefix?: string
 ) => {
-  const { api, imports } = createTemplateValues(tree, trailingSlash)
+  const { api, imports, pathes } = createTemplateValues(tree, trailingSlash)
   const text = `/* eslint-disable */
 import { AspidaClient${api.includes('BasicHeaders') ? ', BasicHeaders' : ''} } from 'aspida'
 <% types %><% imports %>
-
-const api = <T>(client: AspidaClient<T>) => {
+${['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'PATCH', 'OPTIONS']
+  .filter(m => api.includes(`, ${m}, option`))
+  .map(m => `\nconst ${m} = '${m}'`)
+  .join('')}${pathes.map((p, i) => `\nconst PATH${i} = ${p}`).join('')}
+const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const prefix = ${
     appendPrefix ? '`${' : ''
-  }(client.baseURL === undefined ? '<% baseURL %>' : client.baseURL).replace(/\\/$/, '')${
+  }(baseURL === undefined ? '<% baseURL %>' : baseURL).replace(/\\/$/, '')${
     appendPrefix ? `}/${appendPrefix}\`` : ''
   }
 

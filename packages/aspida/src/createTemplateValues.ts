@@ -5,10 +5,23 @@ import { DirentTree } from './getDirentTree'
 
 export default (direntTree: DirentTree, trailingSlash: boolean) => {
   const imports: string[] = []
-  const getMethodsString = (file: string, methods: Method[], indent: string, newUrl: string) => {
+  const pathes: string[] = []
+  const getMethodsString = (
+    file: string,
+    methods: Method[],
+    indent: string,
+    newPrefix: string,
+    newUrl: string
+  ) => {
     const importName = `Methods${imports.length}`
     imports.push(`import { Methods as ${importName} } from '${file.replace(/'/g, "\\'")}'`)
-    return createMethods(methods, indent, importName, newUrl, trailingSlash)
+    let newPath = `'${newUrl}${trailingSlash ? '/' : ''}'`
+    if (newPath.length > 2) {
+      if (!pathes.includes(newPath)) pathes.push(newPath)
+      newPath = `PATH${pathes.indexOf(newPath)}`
+    }
+
+    return createMethods(methods, indent, importName, newPrefix, newPath)
   }
 
   let valCount = 0
@@ -17,6 +30,7 @@ export default (direntTree: DirentTree, trailingSlash: boolean) => {
     tree: DirentTree,
     importBasePath: string,
     indent: string,
+    prefix: string,
     url: string,
     text: string,
     methodsOfIndexTsFile?: string
@@ -25,12 +39,14 @@ export default (direntTree: DirentTree, trailingSlash: boolean) => {
       .map(dirent => {
         const file = dirent.name
         const basename = path.basename(file, '.ts')
+        const hasVal = file.startsWith('_')
         let valFn = `${indent}${basename
           .replace(/[^a-zA-Z0-9$_]/g, '_')
           .replace(/^(\d)/, '$$$1')}: {\n<% next %>\n${indent}}`
+        let newPrefix = prefix
         let newUrl = `${url}/${basename}`
 
-        if (file.startsWith('_')) {
+        if (hasVal) {
           let [valName, valType = 'number | string'] = basename.split('@')
 
           if (/^[A-Z]/.test(valType)) {
@@ -38,11 +54,13 @@ export default (direntTree: DirentTree, trailingSlash: boolean) => {
           }
 
           const duplicatedNames = tree.children.filter(d => d.name.startsWith(valName))
+          const prefixVal = `\`\${${prefix}}/\${val${valCount}}${valName.replace(/^[^.]+/, '')}\``
 
+          newPrefix = `prefix${valCount}`
+          newUrl = ''
           valFn = `${indent}${valName.replace(/\./g, '_')}${
             duplicatedNames.length > 1 ? `_${duplicatedNames.indexOf(dirent)}` : ''
-          }: (val${valCount}: ${valType}) => ({\n<% next %>\n${indent}})`
-          newUrl = `${url}/\${val${valCount}}${valName.replace(/^[^.]+/, '')}`
+          }: (val${valCount}: ${valType}) => {\n${indent}  const ${newPrefix} = ${prefixVal}\n\n${indent}  return {\n<% next %>\n${indent}  }\n${indent}}`
           valCount += 1
         }
 
@@ -54,14 +72,16 @@ export default (direntTree: DirentTree, trailingSlash: boolean) => {
           return createApiString(
             dirent.tree,
             `${importBasePath}/${file}`,
-            `${indent}  `,
+            `${indent}${hasVal ? '  ' : ''}  `,
+            newPrefix,
             newUrl,
             valFn.replace('<% next %>', '<% props %>'),
             methodsOfIndexTsFile?.isDir === false
               ? getMethodsString(
                   `${importBasePath}/${file}`,
                   methodsOfIndexTsFile.methods,
-                  indent,
+                  `${indent}${hasVal ? '  ' : ''}`,
+                  newPrefix,
                   newUrl
                 )
               : undefined
@@ -69,7 +89,13 @@ export default (direntTree: DirentTree, trailingSlash: boolean) => {
         } else if (file !== 'index.ts' && tree.children.every(d => d.name !== basename)) {
           return valFn.replace(
             '<% next %>',
-            getMethodsString(`${importBasePath}/${basename}`, dirent.methods, indent, newUrl)
+            getMethodsString(
+              `${importBasePath}/${basename}`,
+              dirent.methods,
+              `${indent}${hasVal ? '  ' : ''}`,
+              newPrefix,
+              newUrl
+            )
           )
         }
       })
@@ -85,14 +111,17 @@ export default (direntTree: DirentTree, trailingSlash: boolean) => {
 
   const emptyMethodsRegExp = /.+{\n\n? +},?\n/
   const rootIndexData = direntTree.children.find(c => c.name === 'index.ts')
+
+  /* eslint-disable no-template-curly-in-string */
   let api = createApiString(
     direntTree,
     '.',
     '    ',
+    'prefix',
     '',
     `{\n<% props %>\n  }`,
     rootIndexData && !rootIndexData.isDir
-      ? getMethodsString('./index', rootIndexData.methods, '  ', '')
+      ? getMethodsString('./index', rootIndexData.methods, '  ', 'prefix', '')
       : undefined
   )
 
@@ -100,5 +129,5 @@ export default (direntTree: DirentTree, trailingSlash: boolean) => {
     api = api.replace(emptyMethodsRegExp, '')
   }
 
-  return { api, imports }
+  return { api, imports, pathes }
 }

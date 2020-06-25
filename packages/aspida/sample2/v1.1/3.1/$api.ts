@@ -2,18 +2,21 @@
 import { AspidaClient } from 'aspida'
 import { Methods as Methods0 } from './index'
 
-const api = <T>(client: AspidaClient<T>) => {
-  const prefix = `${(client.baseURL === undefined ? '' : client.baseURL).replace(/\/$/, '')}/v1.1/3.1`
+const GET = 'GET'
+const POST = 'POST'
+const PATH0 = '/'
+const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
+  const prefix = `${(baseURL === undefined ? '' : baseURL).replace(/\/$/, '')}/v1.1/3.1`
 
   return {
     get: (option: { query?: Methods0['get']['query'], headers: Methods0['get']['reqHeaders'], config?: T }) =>
-      client.fetch<Methods0['get']['resBody']>(prefix, '/', 'GET', option).json(),
-    $get: async (option: { query?: Methods0['get']['query'], headers: Methods0['get']['reqHeaders'], config?: T }) =>
-      (await client.fetch<Methods0['get']['resBody']>(prefix, '/', 'GET', option).json()).body,
+      fetch<Methods0['get']['resBody']>(prefix, PATH0, GET, option).json(),
+    $get: (option: { query?: Methods0['get']['query'], headers: Methods0['get']['reqHeaders'], config?: T }) =>
+      fetch<Methods0['get']['resBody']>(prefix, PATH0, GET, option).json().then(r => r.body),
     post: (option: { body?: Methods0['post']['reqBody'], query: Methods0['post']['query'], config?: T }) =>
-      client.fetch<Methods0['post']['resBody']>(prefix, '/', 'POST', option, 'URLSearchParams').json(),
-    $post: async (option: { body?: Methods0['post']['reqBody'], query: Methods0['post']['query'], config?: T }) =>
-      (await client.fetch<Methods0['post']['resBody']>(prefix, '/', 'POST', option, 'URLSearchParams').json()).body
+      fetch<Methods0['post']['resBody']>(prefix, PATH0, POST, option, 'URLSearchParams').json(),
+    $post: (option: { body?: Methods0['post']['reqBody'], query: Methods0['post']['query'], config?: T }) =>
+      fetch<Methods0['post']['resBody']>(prefix, PATH0, POST, option, 'URLSearchParams').json().then(r => r.body)
   }
 }
 

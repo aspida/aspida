@@ -3,20 +3,27 @@ import { AspidaClient } from 'aspida'
 import * as ApiTypes from '../../@types'
 import { Methods as Methods0 } from './_userId@User[\'id\']'
 
-const api = <T>(client: AspidaClient<T>) => {
-  const prefix = `${(client.baseURL === undefined ? '' : client.baseURL).replace(/\/$/, '')}/v1.1/users`
+const GET = 'GET'
+const POST = 'POST'
+const PATH0 = '/'
+const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
+  const prefix = `${(baseURL === undefined ? '' : baseURL).replace(/\/$/, '')}/v1.1/users`
 
   return {
-    _userId: (val0: ApiTypes.User['id']) => ({
-      get: (option: { query: Methods0['get']['query'], headers: Methods0['get']['reqHeaders'], config?: T }) =>
-        client.fetch<Methods0['get']['resBody']>(prefix, `/${val0}/`, 'GET', option).json(),
-      $get: async (option: { query: Methods0['get']['query'], headers: Methods0['get']['reqHeaders'], config?: T }) =>
-        (await client.fetch<Methods0['get']['resBody']>(prefix, `/${val0}/`, 'GET', option).json()).body,
-      post: (option: { query: Methods0['post']['query'], config?: T }) =>
-        client.fetch<Methods0['post']['resBody']>(prefix, `/${val0}/`, 'POST', option).json(),
-      $post: async (option: { query: Methods0['post']['query'], config?: T }) =>
-        (await client.fetch<Methods0['post']['resBody']>(prefix, `/${val0}/`, 'POST', option).json()).body
-    })
+    _userId: (val0: ApiTypes.User['id']) => {
+      const prefix0 = `${prefix}/${val0}`
+
+      return {
+        get: (option: { query: Methods0['get']['query'], headers: Methods0['get']['reqHeaders'], config?: T }) =>
+          fetch<Methods0['get']['resBody']>(prefix0, PATH0, GET, option).json(),
+        $get: (option: { query: Methods0['get']['query'], headers: Methods0['get']['reqHeaders'], config?: T }) =>
+          fetch<Methods0['get']['resBody']>(prefix0, PATH0, GET, option).json().then(r => r.body),
+        post: (option: { query: Methods0['post']['query'], config?: T }) =>
+          fetch<Methods0['post']['resBody']>(prefix0, PATH0, POST, option).json(),
+        $post: (option: { query: Methods0['post']['query'], config?: T }) =>
+          fetch<Methods0['post']['resBody']>(prefix0, PATH0, POST, option).json().then(r => r.body)
+      }
+    }
   }
 }
 
