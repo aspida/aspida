@@ -16,11 +16,11 @@ export default (
     const send = (responseType?: 'arraybuffer' | 'blob' | 'json' | 'text') => async () => {
       const request = optionToRequest(params, type)
       const res = await client.request({
+        ...config,
         url,
         baseURL,
         method,
         responseType,
-        ...config,
         ...request?.config,
         data: request?.httpBody,
         params: request?.query,

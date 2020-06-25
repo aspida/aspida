@@ -31,7 +31,7 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
         },
         test_4: {
           _fugaId: (val1: number | string) => {
-            const prefix1 = `${prefix0}/${val1}`
+            const prefix1 = `${prefix0}${PATH1}${val1}`
 
             return {
               get: (option?: { query?: Methods2['get']['query'], config?: T }) =>
