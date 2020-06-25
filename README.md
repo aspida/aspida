@@ -262,6 +262,15 @@ import api from "../apis/$api"
   </tbody>
 </table>
 
+## Options of aspida.config.js
+
+| Option        | Type    | Default                     | Description                                           |
+| ------------- | ------- | --------------------------- | ----------------------------------------------------- |
+| input         | string  | "apis", "server/api", "api" | Specifies the endpoint type definition root directory |
+| baseURL       | string  | ""                          | Specify baseURL of the request                        |
+| trailingSlash | boolean | false                       | Append `/` to the request URL                         |
+| outputEachDir | boolean | false                       | Generate `$api.ts` in each endpoint directory         |
+
 ## Tips
 
 ### Change the directory where type definition file is placed to other than apis
@@ -324,7 +333,7 @@ export type Methods = {
 
     reqBody: {
       name: string
-      icon: ArrayBuffer
+      icon: Blob
     }
 
     resBody: {
@@ -346,7 +355,7 @@ import api from "../apis/$api"
   const user = await client.v1.users.$post({
     body: {
       name: "taro",
-      icon: imageBuffer
+      icon: imageBlob
     }
   })
   console.log(user)
@@ -442,10 +451,76 @@ $ npx openapi2aspida --build
 
 [Docs of openapi2aspida](https://github.com/aspidajs/openapi2aspida)
 
+### Define endpoints that contain special characters
+
+Special characters are encoded as percent-encoding in the file name  
+Example `":"` -> `"%3A"`
+
+`apis/foo%3Abar.ts`
+
+```ts
+export type Methods = {
+  get: {
+    resBody: string
+  }
+}
+```
+
+With clients, `"%3A"` -> `"_3A"`
+
+`src/index.ts`
+
+```typescript
+import aspida from "@aspida/axios"
+import api from "../apis/$api"
+;(async () => {
+  const client = api(aspida())
+
+  const message = await client.foo_3Abar.$get()
+  console.log(message)
+  // req -> GET: /foo%3Abar (= /foo:bar)
+})()
+```
+
+### Import only some endpoints
+
+If you don't need to use all of `apis/$api.ts` , you can split them up and import only part of them  
+`outputEachDir` option generates `$api.ts` in each endpoint directory  
+`$api.ts` will not be generated under the directory containing the path variable
+
+`aspida.config.js`
+
+```js
+module.exports = {
+  input: "apis",
+  outputEachDir: true
+}
+```
+
+Import only `$api.ts` of the endpoint you want to use and put it into Object
+
+`src/index.ts`
+
+```typescript
+import aspida from "@aspida/axios"
+import api0 from "../apis/v1/foo/$api"
+import api1 from "../apis/v2/bar/$api"
+;(async () => {
+  const aspidaClient = aspida()
+  const client = {
+    foo: api0(aspidaClient),
+    bar: api1(aspidaClient)
+  }
+
+  const message = await client.bar._id(1).$get()
+  // req -> GET: /foo
+})()
+```
+
 ## Support
 
 <a href="https://twitter.com/solufa2020">
-  <img src="https://aspidajs.github.io/aspida/assets/images/twitter.svg" width="65" alt="Twitter" />
+  <img src="https://aspidajs.github.io/aspida/assets/images/twitter.svg" width="50" alt="Twitter" />
 </a>
 
 ## License
