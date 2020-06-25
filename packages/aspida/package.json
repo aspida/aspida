@@ -1,6 +1,6 @@
 {
   "name": "aspida",
-  "version": "0.18.1",
+  "version": "0.19.0",
   "description": "TypeScript friendly HTTP client wrapper for the browser and node.js",
   "author": "Solufa <solufa2020@gmail.com>",
   "license": "MIT",
@@ -18,10 +18,10 @@
     "dist"
   ],
   "keywords": [
+    "typescript",
     "xhr",
     "http",
-    "ajax",
-    "promise"
+    "ajax"
   ],
   "dependencies": {
     "chokidar": "^3.4.0",

@@ -5,18 +5,21 @@ export type BaseConfig = {
   input: string
   baseURL: string
   trailingSlash: boolean
+  outputEachDir: boolean
 }
 
 type ConfigFile = {
   input?: string
   baseURL?: string
   trailingSlash?: boolean
+  outputEachDir?: boolean
 }
 
 const defaultConfig: BaseConfig = {
   input: ['apis', 'server/api', 'api'].find(input => fs.existsSync(input)) ?? 'apis',
   baseURL: '',
-  trailingSlash: false
+  trailingSlash: false,
+  outputEachDir: false
 }
 
 export default (configPath = 'aspida.config.js'): BaseConfig[] => {

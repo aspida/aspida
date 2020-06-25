@@ -1,6 +1,6 @@
 import mockClient from '@aspida/axios/dist/mockClient'
 import { MockRoute } from '../src'
-import api from '../../aspida/samples/$api'
+import api from '../../aspida/sample1/$api'
 
 describe('initialize', () => {
   const adapter = mockClient()

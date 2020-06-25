@@ -36,7 +36,7 @@ export type BuildIO = {
 
 export class Build implements BuildCommand {
   run(config: BaseConfig, io: BuildIO): void {
-    io.write(build(config))
+    build(config).forEach(io.write)
   }
 }
 

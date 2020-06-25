@@ -1,20 +1,51 @@
 import path from 'path'
 import { BaseConfig } from './getConfig'
 import createTemplateValues from './createTemplateValues'
+import { getDirentTree, DirentTree } from './getDirentTree'
 
 export type Template = {
   text: string
   filePath: string
 }
 
-export default ({ input, baseURL, trailingSlash }: BaseConfig): Template => {
-  const { api, imports } = createTemplateValues(input, trailingSlash)
+const listNotIndexFiles = (tree: DirentTree): string[] => {
+  return [
+    ...tree.children
+      .filter(c => !c.name.startsWith('_') && !c.isDir && c.name !== 'index.ts')
+      .map(
+        c =>
+          `${path.posix.join(tree.path, c.name)} -> ${path.posix.join(
+            tree.path,
+            c.name.replace('.ts', ''),
+            'index.ts'
+          )}`
+      ),
+    ...tree.children
+      .map(c => (!c.name.startsWith('_') && c.isDir ? listNotIndexFiles(c.tree) : []))
+      .reduce((p, c) => [...p, ...c], [])
+  ]
+}
+
+const createTemplate = (
+  tree: DirentTree,
+  baseURL: string,
+  trailingSlash: boolean,
+  appendPrefix?: string
+) => {
+  const { api, imports, pathes } = createTemplateValues(tree, trailingSlash)
   const text = `/* eslint-disable */
 import { AspidaClient${api.includes('BasicHeaders') ? ', BasicHeaders' : ''} } from 'aspida'
 <% types %><% imports %>
-
-const api = <T>(client: AspidaClient<T>) => {
-  const prefix = (client.baseURL === undefined ? '<% baseURL %>' : client.baseURL).replace(/\\/$/, '')
+${['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'PATCH', 'OPTIONS']
+  .filter(m => api.includes(`, ${m}, option`))
+  .map(m => `\nconst ${m} = '${m}'`)
+  .join('')}${pathes.map((p, i) => `\nconst PATH${i} = ${p}`).join('')}
+const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
+  const prefix = ${
+    appendPrefix ? '`${' : ''
+  }(baseURL === undefined ? '<% baseURL %>' : baseURL).replace(/\\/$/, '')${
+    appendPrefix ? `}/${appendPrefix}\`` : ''
+  }
 
   return <% api %>
 }
@@ -24,11 +55,59 @@ export default api
 `
     .replace(
       '<% types %>',
-      api.includes(': ApiTypes.') ? `import * as ApiTypes from './@types'\n` : ''
+      api.includes(': ApiTypes.')
+        ? `import * as ApiTypes from '${
+            appendPrefix
+              ? appendPrefix
+                  .split('/')
+                  .map(() => '../')
+                  .join('')
+              : './'
+          }@types'\n`
+        : ''
     )
     .replace('<% imports %>', imports.join('\n'))
     .replace('<% api %>', api)
     .replace('<% baseURL %>', baseURL)
 
-  return { text, filePath: path.posix.join(input, '$api.ts') }
+  return { text, filePath: path.posix.join(tree.path, '$api.ts') }
+}
+
+export default ({ input, baseURL, trailingSlash, outputEachDir }: BaseConfig): Template[] => {
+  const direntTree = getDirentTree(input)
+  const templates = [createTemplate(direntTree, baseURL, trailingSlash)]
+
+  if (outputEachDir) {
+    const notIndexFiles = listNotIndexFiles(direntTree)
+    if (notIndexFiles.length) {
+      console.error(
+        `Error on aspida: Since true is specified in outputEachDir at aspida.config.js, you need to rename the following files\n${notIndexFiles.join(
+          '\n'
+        )}\n`
+      )
+
+      return []
+    }
+
+    const appendTemplate = (tree: DirentTree) => {
+      tree.children.forEach(c => {
+        if (!c.isDir || c.name.startsWith('_')) return
+
+        templates.push(
+          createTemplate(
+            c.tree,
+            baseURL,
+            trailingSlash,
+            c.tree.path.replace(input, '').replace(/^\//, '')
+          )
+        )
+
+        appendTemplate(c.tree)
+      })
+    }
+
+    appendTemplate(direntTree)
+  }
+
+  return templates
 }

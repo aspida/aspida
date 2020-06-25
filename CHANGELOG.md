@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.19.0](https://github.com/aspidajs/aspida/compare/v0.18.1...v0.19.0) (2020-06-25)
+
+
+### Features
+
+* add outputEachDir option to config ([6122a21](https://github.com/aspidajs/aspida/commit/6122a2167972e501260a943da44d5b11c8c655ae))
+* assign strings to variable for uglify ([5b92af1](https://github.com/aspidajs/aspida/commit/5b92af1745269b16337b0d85c65cc6fecbffb1d0))
+
+
+### Refactors
+
+*  separate fs dependency from core logic ([2842e61](https://github.com/aspidajs/aspida/commit/2842e6182051fa6514504dbd07039ac1772a8091))
+
+
+### Documentation
+
+* add options and tips ([0c9cbcf](https://github.com/aspidajs/aspida/commit/0c9cbcfb310d3d10c638a6e63826eed0170a3f0e))
+
 ### [0.18.1](https://github.com/aspidajs/aspida/compare/v0.18.0...v0.18.1) (2020-06-19)
 
 

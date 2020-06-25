@@ -5,8 +5,8 @@ export default (
   methods: Method[],
   indent: string,
   importName: string,
-  newUrl: string,
-  trailingSlash: boolean
+  newPrefix: string,
+  path: string
 ) =>
   methods
     .map(({ name, props }) => {
@@ -60,19 +60,16 @@ export default (
               [key: string]: string
             })[props.resBody.value] || 'json'
 
-      const quotation = newUrl.includes('${') ? '`' : "'"
       const tmpChanks = [
         `(${option(name)}) =>`,
-        `client.fetch<${resBody(name)}${resHeaders(name)}${status(
+        `fetch<${resBody(name)}${resHeaders(name)}${status(
           name
-        )}>(prefix, ${quotation}${newUrl}${
-          trailingSlash ? '/' : ''
-        }${quotation}, '${name.toUpperCase()}'${request()}).${resMethodName()}()`
+        )}>(${newPrefix}, ${path}, ${name.toUpperCase()}${request()}).${resMethodName()}()`
       ]
 
       return `${indent}  ${name}: ${tmpChanks[0]}
 ${indent}    ${tmpChanks[1]},
-${indent}  $${name}: async ${tmpChanks[0]}
-${indent}    (await ${tmpChanks[1]}).body`
+${indent}  $${name}: ${tmpChanks[0]}
+${indent}    ${tmpChanks[1]}.then(r => r.body)`
     })
     .join(',\n')

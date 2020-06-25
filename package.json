@@ -23,10 +23,10 @@
     "typecheck": "npm run build:aspida && npm run build:mock && npm run build:axios && tsc --noEmit"
   },
   "devDependencies": {
-    "@commitlint/cli": "^8.3.5",
-    "@commitlint/config-conventional": "^8.3.4",
+    "@commitlint/cli": "^9.0.1",
+    "@commitlint/config-conventional": "^9.0.1",
     "@types/express": "^4.17.6",
-    "@types/jest": "^26.0.0",
+    "@types/jest": "^26.0.3",
     "@types/minimist": "^1.2.0",
     "@types/node-fetch": "^2.5.7",
     "@typescript-eslint/eslint-plugin": "2.34.0",
@@ -36,7 +36,7 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.21.2",
-    "eslint-plugin-jest": "^23.13.2",
+    "eslint-plugin-jest": "^23.17.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-promise": "^4.2.1",
