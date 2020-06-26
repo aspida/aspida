@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.19.3](https://github.com/aspidajs/aspida/compare/v0.19.2...v0.19.3) (2020-06-26)
+
+
+### Bug Fixes
+
+* remove 'index' from import path ([7889f6a](https://github.com/aspidajs/aspida/commit/7889f6a5a4779e080f8769a83415e21dded05fac))
+
+
+### Documentation
+
+* fix sample code ([79b3e62](https://github.com/aspidajs/aspida/commit/79b3e62cfbfe47296ccc25ea6684444a70641384))
+
 ### [0.19.2](https://github.com/aspidajs/aspida/compare/v0.19.1...v0.19.2) (2020-06-25)
 
 

@@ -512,7 +512,7 @@ import api1 from "../apis/v2/bar/$api"
   }
 
   const message = await client.bar._id(1).$get()
-  // req -> GET: /foo
+  // req -> GET: /v2/bar/1
 })()
 ```
 

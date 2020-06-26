@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { AspidaClient, BasicHeaders } from 'aspida'
 import * as ApiTypes from '../@types'
-import { Methods as Methods0 } from './index'
+import { Methods as Methods0 } from '.'
 import { Methods as Methods1 } from './2/_hogeId@HogeId/entries.json'
 import { Methods as Methods2 } from './2/_hogeId@HogeId/test-4'
 import { Methods as Methods3 } from './2/_hogeId@HogeId/test-4/_fugaId'

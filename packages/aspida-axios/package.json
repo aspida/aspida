@@ -1,6 +1,6 @@
 {
   "name": "@aspida/axios",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "description": "axios client for aspida",
   "author": "Solufa <solufa2020@gmail.com>",
   "license": "MIT",
@@ -24,6 +24,6 @@
     "axios"
   ],
   "dependencies": {
-    "aspida": "^0.19.2"
+    "aspida": "^0.19.3"
   }
 }
