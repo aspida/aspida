@@ -134,7 +134,7 @@ export default (direntTree: DirentTree, basePath: string, trailingSlash: boolean
     basePath,
     `{\n<% props %>\n  }`,
     rootIndexData && !rootIndexData.isDir
-      ? getMethodsString('./index', rootIndexData.methods, '  ', '', basePath)
+      ? getMethodsString('.', rootIndexData.methods, '  ', '', basePath)
       : undefined
   )
 
