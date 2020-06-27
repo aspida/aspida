@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.19.4](https://github.com/aspidajs/aspida/compare/v0.19.3...v0.19.4) (2020-06-27)
+
+
+### Bug Fixes
+
+* delete default input "server/api" ([24cd1af](https://github.com/aspidajs/aspida/commit/24cd1af4b7d6a709f57982dc5903aaf96f1fd0ee))
+* ignore comma when parsing ([3a365fe](https://github.com/aspidajs/aspida/commit/3a365fe8c763dadb79966339cceac2121398420a))
+
 ### [0.19.3](https://github.com/aspidajs/aspida/compare/v0.19.2...v0.19.3) (2020-06-26)
 
 
