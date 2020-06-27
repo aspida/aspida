@@ -16,7 +16,7 @@ type ConfigFile = {
 }
 
 const defaultConfig: BaseConfig = {
-  input: ['apis', 'server/api', 'api'].find(input => fs.existsSync(input)) ?? 'apis',
+  input: ['apis', 'api'].find(input => fs.existsSync(input)) ?? 'apis',
   baseURL: '',
   trailingSlash: false,
   outputEachDir: false

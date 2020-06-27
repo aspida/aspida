@@ -264,12 +264,12 @@ import api from "../apis/$api"
 
 ## Options of aspida.config.js
 
-| Option        | Type    | Default                     | Description                                           |
-| ------------- | ------- | --------------------------- | ----------------------------------------------------- |
-| input         | string  | "apis", "server/api", "api" | Specifies the endpoint type definition root directory |
-| baseURL       | string  | ""                          | Specify baseURL of the request                        |
-| trailingSlash | boolean | false                       | Append `/` to the request URL                         |
-| outputEachDir | boolean | false                       | Generate `$api.ts` in each endpoint directory         |
+| Option        | Type    | Default       | Description                                           |
+| ------------- | ------- | ------------- | ----------------------------------------------------- |
+| input         | string  | "apis", "api" | Specifies the endpoint type definition root directory |
+| baseURL       | string  | ""            | Specify baseURL of the request                        |
+| trailingSlash | boolean | false         | Append `/` to the request URL                         |
+| outputEachDir | boolean | false         | Generate `$api.ts` in each endpoint directory         |
 
 ## Tips
 

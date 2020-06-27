@@ -263,12 +263,12 @@ import api from "../apis/$api"
 
 ## aspida.config.js のオプション
 
-| Option        | Type    | Default                     | Description                                        |
-| ------------- | ------- | --------------------------- | -------------------------------------------------- |
-| input         | string  | "apis", "server/api", "api" | エンドポイントの型定義ルートディレクトリを指定     |
-| baseURL       | string  | ""                          | リクエスト時の baseURL を指定                      |
-| trailingSlash | boolean | false                       | リクエスト URL の末尾に `/` を付与                 |
-| outputEachDir | boolean | false                       | `$api.ts` を各エンドポイントのディレクトリにも生成 |
+| Option        | Type    | Default       | Description                                        |
+| ------------- | ------- | ------------- | -------------------------------------------------- |
+| input         | string  | "apis", "api" | エンドポイントの型定義ルートディレクトリを指定     |
+| baseURL       | string  | ""            | リクエスト時の baseURL を指定                      |
+| trailingSlash | boolean | false         | リクエスト URL の末尾に `/` を付与                 |
+| outputEachDir | boolean | false         | `$api.ts` を各エンドポイントのディレクトリにも生成 |
 
 ## Tips
 
