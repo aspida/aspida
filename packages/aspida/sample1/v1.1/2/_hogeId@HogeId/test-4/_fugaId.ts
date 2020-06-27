@@ -3,8 +3,10 @@ import { mockMethods } from 'aspida-mock'
 export type Methods = {
   get: {
     query?: { aa?: number }
-    resBody: { id: number }
-  }
+    // eslint-disable-next-line
+    resBody: { id: number },
+    // eslint-disable-next-line
+  },
 
   post: {
     query: { aa: number }
