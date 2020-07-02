@@ -11,10 +11,7 @@ jobs:
         node-version: [12, 14]
         os: [macos-latest, windows-latest, ubuntu-latest]
     steps:
-      - name: set git to use LF
-        run: |
-          git config --global core.autocrlf false
-          git config --global core.eol lf
+      - run: git config --global core.autocrlf false
       - uses: actions/checkout@v2
       - name: setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
