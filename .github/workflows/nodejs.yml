@@ -11,6 +11,10 @@ jobs:
         node-version: [12, 14]
         os: [macos-latest, windows-latest, ubuntu-latest]
     steps:
+      - name: set git to use LF
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
       - uses: actions/checkout@v2
       - name: setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
@@ -28,7 +32,6 @@ jobs:
             ${{ runner.os }}-yarn-
       - run: yarn --frozen-lockfile
       - run: yarn lint
-        if: "matrix.os != 'windows-latest'"
       - run: yarn typecheck
       - run: yarn test --coverage
       - run: npx codecov
