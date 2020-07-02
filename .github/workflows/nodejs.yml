@@ -4,13 +4,18 @@ on: push
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    name: "Test on Node:${{ matrix.node-version }} OS:${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node-version: [10, 12, 14]
+        os: [macos-latest, windows-latest, ubuntu-latest]
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js
+      - name: setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
-          node-version: "12.x"
+          node-version: ${{ matrix.node-version }}
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
