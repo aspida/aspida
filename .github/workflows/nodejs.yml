@@ -11,7 +11,9 @@ jobs:
         node-version: [12, 14]
         os: [macos-latest, windows-latest, ubuntu-latest]
     steps:
-      - run: git config --global core.autocrlf false
+      - name: Disable autocrlf
+        run: git config --global core.autocrlf false
+        if: matrix.os == 'windows-latest'
       - uses: actions/checkout@v2
       - name: setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
@@ -32,7 +34,7 @@ jobs:
       - run: yarn typecheck
       - run: yarn test --coverage
       - run: npx codecov
-        if: "matrix.os == 'ubuntu-latest' && matrix.node-version == 14"
+        if: github.ref == 'refs/heads/master' && matrix.os == 'ubuntu-latest' && matrix.node-version == 14
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
