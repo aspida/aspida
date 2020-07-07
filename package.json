@@ -25,7 +25,7 @@
   "devDependencies": {
     "@commitlint/cli": "^9.0.1",
     "@commitlint/config-conventional": "^9.0.1",
-    "@types/express": "^4.17.6",
+    "@types/express": "^4.17.7",
     "@types/jest": "^26.0.4",
     "@types/minimist": "^1.2.0",
     "@types/node-fetch": "^2.5.7",
