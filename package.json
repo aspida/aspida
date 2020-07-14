@@ -23,10 +23,10 @@
     "typecheck": "npm run build:aspida && npm run build:mock && npm run build:axios && tsc --noEmit"
   },
   "devDependencies": {
-    "@commitlint/cli": "^9.0.1",
-    "@commitlint/config-conventional": "^9.0.1",
-    "@types/express": "^4.17.6",
-    "@types/jest": "^26.0.3",
+    "@commitlint/cli": "^9.1.1",
+    "@commitlint/config-conventional": "^9.1.1",
+    "@types/express": "^4.17.7",
+    "@types/jest": "^26.0.4",
     "@types/minimist": "^1.2.0",
     "@types/node-fetch": "^2.5.7",
     "@typescript-eslint/eslint-plugin": "2.34.0",
@@ -36,7 +36,7 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-jest": "^23.17.1",
+    "eslint-plugin-jest": "^23.18.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-promise": "^4.2.1",
@@ -44,12 +44,12 @@
     "express": "^4.17.1",
     "husky": "^4.2.5",
     "jest": "^25.5.4",
-    "ky": "^0.20.0",
+    "ky": "^0.21.0",
     "lint-staged": "^10.2.11",
     "node-fetch": "^2.6.0",
     "prettier": "2.0.5",
-    "standard-version": "^8.0.0",
+    "standard-version": "^8.0.1",
     "ts-jest": "^25.5.1",
-    "typescript": "^3.9.5"
+    "typescript": "^3.9.6"
   }
 }
