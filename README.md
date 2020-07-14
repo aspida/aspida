@@ -8,7 +8,7 @@
 <br />
 <br />
 <div align="center">
-  <img src="https://aspidajs.github.io/aspida/logos/svg/black.svg" alt="aspida" title="aspida" width="600" />
+  <img src="https://aspida.github.io/aspida/logos/svg/black.svg" alt="aspida" title="aspida" width="600" />
 </div>
 <br />
 <br />
@@ -68,7 +68,7 @@ const body = await client.v1.users.$post({ body: { name: "taro" } })
 - Path definition is the same naming convention as Nuxt.js pages
 
 <br />
-<img src="https://aspidajs.github.io/aspida/assets/images/vscode.gif" width="720" alt="vscode" />
+<img src="https://aspida.github.io/aspida/assets/images/vscode.gif" width="720" alt="vscode" />
 <br />
 
 ## Procedure
@@ -520,7 +520,7 @@ import api1 from "../apis/v2/bar/$api"
 ## Support
 
 <a href="https://twitter.com/solufa2020">
-  <img src="https://aspidajs.github.io/aspida/assets/images/twitter.svg" width="50" alt="Twitter" />
+  <img src="https://aspida.github.io/aspida/assets/images/twitter.svg" width="50" alt="Twitter" />
 </a>
 
 ## License
