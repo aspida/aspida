@@ -19,34 +19,34 @@
   <a href="https://www.npmjs.com/package/aspida-mock">
     <img src="https://img.shields.io/npm/v/aspida-mock" alt="npm version" />
   </a>
-  <a href="https://github.com/aspidajs/aspida/actions?query=workflow%3A%22Node.js+CI%22">
-    <img src="https://github.com/aspidajs/aspida/workflows/Node.js%20CI/badge.svg?branch=master" alt="Node.js CI" />
+  <a href="https://github.com/aspida/aspida/actions?query=workflow%3A%22Node.js+CI%22">
+    <img src="https://github.com/aspida/aspida/workflows/Node.js%20CI/badge.svg?branch=master" alt="Node.js CI" />
   </a>
-  <a href="https://codecov.io/gh/aspidajs/aspida">
-    <img src="https://img.shields.io/codecov/c/github/aspidajs/aspida.svg" alt="Codecov" />
+  <a href="https://codecov.io/gh/aspida/aspida">
+    <img src="https://img.shields.io/codecov/c/github/aspida/aspida.svg" alt="Codecov" />
   </a>
-  <a href="https://lgtm.com/projects/g/aspidajs/aspida/context:javascript">
-    <img src="https://img.shields.io/lgtm/grade/javascript/g/aspidajs/aspida.svg" alt="Language grade: JavaScript" />
+  <a href="https://lgtm.com/projects/g/aspida/aspida/context:javascript">
+    <img src="https://img.shields.io/lgtm/grade/javascript/g/aspida/aspida.svg" alt="Language grade: JavaScript" />
   </a>
   <a href="https://dependabot.com">
-    <img src="https://api.dependabot.com/badges/status?host=github&repo=aspidajs/aspida" alt="Dependabot Status" />
+    <img src="https://api.dependabot.com/badges/status?host=github&repo=aspida/aspida" alt="Dependabot Status" />
   </a>
-  <a href="https://github.com/aspidajs/aspida/blob/master/packages/aspida-mock/LICENSE">
+  <a href="https://github.com/aspida/aspida/blob/master/packages/aspida-mock/LICENSE">
     <img src="https://img.shields.io/npm/l/aspida-mock" alt="License" />
   </a>
 </div>
 <br />
 <p align="center">TypeScript friendly RESTful API mock for aspida.</p>
 <div align="center">
-  <a href="https://github.com/aspidajs/aspida/tree/master/packages/aspida-mock#readme">🇺🇸English</a> |
-  <a href="https://github.com/aspidajs/aspida/tree/master/packages/aspida-mock/docs/ja#readme">🇯🇵日本語</a>
+  <a href="https://github.com/aspida/aspida/tree/master/packages/aspida-mock#readme">🇺🇸English</a> |
+  <a href="https://github.com/aspida/aspida/tree/master/packages/aspida-mock/docs/ja#readme">🇯🇵日本語</a>
 </div>
 <br />
 <br />
 
 ## 特徴
 
-- [aspida](https://github.com/aspidajs/aspida/tree/master/packages/aspida)の型定義を利用する TypeScript 専用 API モック
+- [aspida](https://github.com/aspida/aspida/tree/master/packages/aspida)の型定義を利用する TypeScript 専用 API モック
 - `GET`/`POST`/`PUT`/`DELETE` など全ての HTTP メソッドに数行で対応
 - サーバー不要、ブラウザのみで動作
 
@@ -318,14 +318,14 @@ Command Line Interface では以下のオプションを指定することがで
 
 aspida-mock は aspida の設定ファイル `aspida.config.js` の項目のうち、「input」のみを参照します。  
 これにより、常に aspida と同じディレクトリからモックを生成できます。  
-[aspida docs: 型定義ファイルを置くディレクトリを apis 以外に変更する](https://github.com/aspidajs/aspida/tree/master/packages/aspida/docs/ja#%E5%9E%8B%E5%AE%9A%E7%BE%A9%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E7%BD%AE%E3%81%8F%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA%E3%82%92-apis-%E4%BB%A5%E5%A4%96%E3%81%AB%E5%A4%89%E6%9B%B4%E3%81%99%E3%82%8B)
+[aspida docs: 型定義ファイルを置くディレクトリを apis 以外に変更する](https://github.com/aspida/aspida/tree/master/packages/aspida/docs/ja#%E5%9E%8B%E5%AE%9A%E7%BE%A9%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E7%BD%AE%E3%81%8F%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA%E3%82%92-apis-%E4%BB%A5%E5%A4%96%E3%81%AB%E5%A4%89%E6%9B%B4%E3%81%99%E3%82%8B)
 
 ## License
 
-aspida-mock is licensed under a [MIT License](https://github.com/aspidajs/aspida/blob/master/packages/aspida-mock/LICENSE).
+aspida-mock is licensed under a [MIT License](https://github.com/aspida/aspida/blob/master/packages/aspida-mock/LICENSE).
 
-[aspida]: https://github.com/aspidajs/aspida/tree/master/packages/aspida
-[@aspida/axios]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-axios
-[@aspida/ky]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-ky
-[@aspida/fetch]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-fetch
-[@aspida/node-fetch]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-node-fetch
+[aspida]: https://github.com/aspida/aspida/tree/master/packages/aspida
+[@aspida/axios]: https://github.com/aspida/aspida/tree/master/packages/aspida-axios
+[@aspida/ky]: https://github.com/aspida/aspida/tree/master/packages/aspida-ky
+[@aspida/fetch]: https://github.com/aspida/aspida/tree/master/packages/aspida-fetch
+[@aspida/node-fetch]: https://github.com/aspida/aspida/tree/master/packages/aspida-node-fetch
