@@ -8,7 +8,7 @@
 <br />
 <br />
 <div align="center">
-  <img src="https://aspidajs.github.io/aspida/logos/svg/black.svg" alt="aspida" title="aspida" width="600" />
+  <img src="https://aspida.github.io/aspida/logos/svg/black.svg" alt="aspida" title="aspida" width="600" />
 </div>
 <br />
 <br />
@@ -68,7 +68,7 @@ const body = await client.v1.users.$post({ body: { name: "taro" } })
 - パス定義は Nuxt.js の pages と同じ命名規則
 
 <br />
-<img src="https://aspidajs.github.io/aspida/assets/images/vscode.gif" width="720" alt="vscode" />
+<img src="https://aspida.github.io/aspida/assets/images/vscode.gif" width="720" alt="vscode" />
 <br />
 
 ## 手順
@@ -519,7 +519,7 @@ import api1 from "../apis/v2/bar/$api"
 ## サポート
 
 <a href="https://twitter.com/m_mitsuhide">
-  <img src="https://aspidajs.github.io/aspida/assets/images/twitter.svg" width="50" alt="Twitter" />
+  <img src="https://aspida.github.io/aspida/assets/images/twitter.svg" width="50" alt="Twitter" />
 </a>
 
 ## ライセンス
