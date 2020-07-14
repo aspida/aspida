@@ -17,27 +17,27 @@
   <a href="https://www.npmjs.com/package/aspida">
     <img src="https://img.shields.io/npm/v/aspida" alt="npm version" />
   </a>
-  <a href="https://github.com/aspidajs/aspida/actions?query=workflow%3A%22Node.js+CI%22">
-    <img src="https://github.com/aspidajs/aspida/workflows/Node.js%20CI/badge.svg?branch=master" alt="Node.js CI" />
+  <a href="https://github.com/aspida/aspida/actions?query=workflow%3A%22Node.js+CI%22">
+    <img src="https://github.com/aspida/aspida/workflows/Node.js%20CI/badge.svg?branch=master" alt="Node.js CI" />
   </a>
-  <a href="https://codecov.io/gh/aspidajs/aspida">
-    <img src="https://img.shields.io/codecov/c/github/aspidajs/aspida.svg" alt="Codecov" />
+  <a href="https://codecov.io/gh/aspida/aspida">
+    <img src="https://img.shields.io/codecov/c/github/aspida/aspida.svg" alt="Codecov" />
   </a>
-  <a href="https://lgtm.com/projects/g/aspidajs/aspida/context:javascript">
-    <img src="https://img.shields.io/lgtm/grade/javascript/g/aspidajs/aspida.svg" alt="Language grade: JavaScript" />
+  <a href="https://lgtm.com/projects/g/aspida/aspida/context:javascript">
+    <img src="https://img.shields.io/lgtm/grade/javascript/g/aspida/aspida.svg" alt="Language grade: JavaScript" />
   </a>
   <a href="https://dependabot.com">
-    <img src="https://api.dependabot.com/badges/status?host=github&repo=aspidajs/aspida" alt="Dependabot Status" />
+    <img src="https://api.dependabot.com/badges/status?host=github&repo=aspida/aspida" alt="Dependabot Status" />
   </a>
-  <a href="https://github.com/aspidajs/aspida/blob/master/packages/aspida/LICENSE">
+  <a href="https://github.com/aspida/aspida/blob/master/packages/aspida/LICENSE">
     <img src="https://img.shields.io/npm/l/aspida" alt="License" />
   </a>
 </div>
 <br />
 <p align="center">ブラウザと node.js のためのTypeScriptフレンドリーな HTTP クライアントラッパー</p>
 <div align="center">
-  <a href="https://github.com/aspidajs/aspida/tree/master/packages/aspida#readme">🇺🇸English</a> |
-  <a href="https://github.com/aspidajs/aspida/tree/master/packages/aspida/docs/ja#readme">🇯🇵日本語</a>
+  <a href="https://github.com/aspida/aspida/tree/master/packages/aspida#readme">🇺🇸English</a> |
+  <a href="https://github.com/aspida/aspida/tree/master/packages/aspida/docs/ja#readme">🇯🇵日本語</a>
 </div>
 <br />
 <br />
@@ -211,10 +211,10 @@ import api from "../apis/$api"
 
 ### HTTP クライアントについてもっと詳しく
 
-- **[aspida-axios](https://github.com/aspidajs/aspida/tree/develop/packages/aspida-axios#readme)**
-- **[aspida-ky](https://github.com/aspidajs/aspida/tree/develop/packages/aspida-ky#readme)**
-- **[aspida-fetch](https://github.com/aspidajs/aspida/tree/develop/packages/aspida-fetch#readme)**
-- **[aspida-node-fetch](https://github.com/aspidajs/aspida/tree/develop/packages/aspida-node-fetch#readme)**
+- **[aspida-axios](https://github.com/aspida/aspida/tree/develop/packages/aspida-axios#readme)**
+- **[aspida-ky](https://github.com/aspida/aspida/tree/develop/packages/aspida-ky#readme)**
+- **[aspida-fetch](https://github.com/aspida/aspida/tree/develop/packages/aspida-fetch#readme)**
+- **[aspida-node-fetch](https://github.com/aspida/aspida/tree/develop/packages/aspida-node-fetch#readme)**
 
 ## Command Line Interface のオプション
 
@@ -448,7 +448,7 @@ $ npx openapi2aspida --build
 # apis/$api.ts was built successfully.
 ```
 
-[openapi2aspida ドキュメント](https://github.com/aspidajs/openapi2aspida)
+[openapi2aspida ドキュメント](https://github.com/aspida/openapi2aspida)
 
 ### 特殊文字を含む URL を定義する
 
@@ -524,10 +524,10 @@ import api1 from "../apis/v2/bar/$api"
 
 ## ライセンス
 
-aspida is licensed under a [MIT License](https://github.com/aspidajs/aspida/blob/master/packages/aspida/LICENSE).
+aspida is licensed under a [MIT License](https://github.com/aspida/aspida/blob/master/packages/aspida/LICENSE).
 
-[aspida-mock]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-mock
-[@aspida/axios]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-axios
-[@aspida/ky]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-ky
-[@aspida/fetch]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-fetch
-[@aspida/node-fetch]: https://github.com/aspidajs/aspida/tree/master/packages/aspida-node-fetch
+[aspida-mock]: https://github.com/aspida/aspida/tree/master/packages/aspida-mock
+[@aspida/axios]: https://github.com/aspida/aspida/tree/master/packages/aspida-axios
+[@aspida/ky]: https://github.com/aspida/aspida/tree/master/packages/aspida-ky
+[@aspida/fetch]: https://github.com/aspida/aspida/tree/master/packages/aspida-fetch
+[@aspida/node-fetch]: https://github.com/aspida/aspida/tree/master/packages/aspida-node-fetch

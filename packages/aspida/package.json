@@ -6,13 +6,13 @@
   "license": "MIT",
   "main": "dist/index.js",
   "bin": "bin/index.js",
-  "homepage": "https://github.com/aspidajs/aspida#readme",
+  "homepage": "https://github.com/aspida/aspida#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aspidajs/aspida.git"
+    "url": "git+https://github.com/aspida/aspida.git"
   },
   "bugs": {
-    "url": "https://github.com/aspidajs/aspida/issues"
+    "url": "https://github.com/aspida/aspida/issues"
   },
   "files": [
     "dist"
