@@ -58,7 +58,7 @@ export default (
               return
             }
 
-            const res = result ? toAxiosResponse(result, customConfig) : { status: 404, config }
+            const res = result ? toAxiosResponse(result, config) : { status: 404, config }
 
             if (mockConfig?.log) printLog(customConfig, res.status)
 

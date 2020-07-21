@@ -22,11 +22,52 @@
     "test": "jest",
     "typecheck": "npm run build:aspida && npm run build:mock && npm run build:axios && tsc --noEmit"
   },
+  "eslintConfig": {
+    "env": {
+      "es6": true,
+      "node": true,
+      "browser": true
+    },
+    "extends": [
+      "standard",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:jest/recommended",
+      "plugin:prettier/recommended",
+      "prettier/@typescript-eslint",
+      "prettier/standard"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2018,
+      "sourceType": "module"
+    },
+    "root": true,
+    "rules": {
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "@typescript-eslint/camelcase": "off",
+      "@typescript-eslint/no-explicit-any": "off"
+    }
+  },
+  "prettier": {
+    "printWidth": 100,
+    "semi": false,
+    "arrowParens": "avoid",
+    "singleQuote": true,
+    "trailingComma": "none",
+    "overrides": [
+      {
+        "files": [
+          "*.md",
+          "*.yml"
+        ],
+        "options": {
+          "singleQuote": false
+        }
+      }
+    ]
+  },
   "devDependencies": {
-    "@commitlint/cli": "^9.1.1",
-    "@commitlint/config-conventional": "^9.1.1",
     "@types/express": "^4.17.7",
-    "@types/jest": "^26.0.4",
+    "@types/jest": "^26.0.5",
     "@types/minimist": "^1.2.0",
     "@types/node-fetch": "^2.5.7",
     "@typescript-eslint/eslint-plugin": "2.34.0",
@@ -42,14 +83,12 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "express": "^4.17.1",
-    "husky": "^4.2.5",
     "jest": "^25.5.4",
-    "ky": "^0.21.0",
-    "lint-staged": "^10.2.11",
+    "ky": "^0.23.0",
     "node-fetch": "^2.6.0",
     "prettier": "2.0.5",
-    "standard-version": "^8.0.1",
+    "standard-version": "^8.0.2",
     "ts-jest": "^25.5.1",
-    "typescript": "^3.9.6"
+    "typescript": "^3.9.7"
   }
 }
