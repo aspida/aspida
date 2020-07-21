@@ -84,7 +84,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "express": "^4.17.1",
     "jest": "^25.5.4",
-    "ky": "^0.22.0",
+    "ky": "^0.23.0",
     "node-fetch": "^2.6.0",
     "prettier": "2.0.5",
     "standard-version": "^8.0.2",
