@@ -29,6 +29,18 @@ describe('initialize', () => {
     ).resolves.toHaveProperty('status', 200)
   })
 
+  test('response 400 error', async () => {
+    const status = 400
+    adapter.attachRoutes([{ path: '', methods: { get: () => ({ status }) } }])
+    await expect(client.get()).rejects.toHaveProperty('response.status', status)
+  })
+
+  test('response 500 error', async () => {
+    const status = 500
+    adapter.attachRoutes([{ path: '', methods: { get: () => ({ status }) } }])
+    await expect(client.get()).rejects.toHaveProperty('response.status', status)
+  })
+
   test('set delayTime', async () => {
     const delayMSec = 500
     const startTime = Date.now()
