@@ -4,6 +4,13 @@ export type RequestType = 'FormData' | 'URLSearchParams' | 'ArrayBuffer' | 'Blob
 export type HttpStatusOk = 200 | 201 | 202 | 203 | 204 | 205 | 206
 export type BasicHeaders = Record<string, string>
 
+export type AspidaConfig = {
+  input: string
+  baseURL: string
+  trailingSlash: boolean
+  outputEachDir: boolean
+}
+
 export type AspidaRequest<Config = any> = {
   query?: any
   headers?: any
@@ -43,6 +50,8 @@ export type AspidaClient<Config> = {
     formData(): Promise<AspidaResponse<FormData, U, V>>
   }
 }
+
+export { getConfigs } from './getConfigs'
 
 export const headersToObject = (headers: Headers): any =>
   [...headers.entries()].reduce((prev, [key, val]) => ({ ...prev, [key]: val }), {})

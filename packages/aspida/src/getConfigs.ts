@@ -1,12 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-
-export type BaseConfig = {
-  input: string
-  baseURL: string
-  trailingSlash: boolean
-  outputEachDir: boolean
-}
+import { AspidaConfig } from './'
 
 type ConfigFile = {
   input?: string
@@ -15,14 +9,14 @@ type ConfigFile = {
   outputEachDir?: boolean
 }
 
-const defaultConfig: BaseConfig = {
+const defaultConfig: AspidaConfig = {
   input: ['apis', 'api'].find(input => fs.existsSync(input)) ?? 'apis',
   baseURL: '',
   trailingSlash: false,
   outputEachDir: false
 }
 
-export default (configPath = 'aspida.config.js'): BaseConfig[] => {
+export const getConfigs = (configPath = 'aspida.config.js'): AspidaConfig[] => {
   if (fs.existsSync(configPath)) {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const config: ConfigFile | ConfigFile[] = require(path.join(process.cwd(), configPath))
