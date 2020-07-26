@@ -76,7 +76,7 @@ aspida の型定義ファイルで mockMethods を export する
 
 <!-- prettier-ignore -->
 ```ts
-import { mockMethods } from 'aspida-mock'
+import { mockMethods } from "aspida-mock"
 
 export type Methods = {
   post: {
@@ -108,7 +108,7 @@ export default mockMethods<Methods>({
 ```json
 {
   "scripts": {
-    "build": "aspida --build && aspida-mock --build"
+    "build": "aspida && aspida-mock"
   }
 }
 ```
@@ -123,26 +123,26 @@ $ npm run build
 
 <!-- prettier-ignore -->
 ```ts
-import aspidaClient from '@aspida/axios'
-import mockClient from '@aspida/axios/dist/mockClient'
-import api from './apis/$api'
-import mock from './apis/$mock'
+import aspidaClient from "@aspida/axios"
+import mockClient from "@aspida/axios/dist/mockClient"
+import api from "./api/$api"
+import mock from "./api/$mock"
 
-const client = process.env.NODE_ENV === 'development' ? mock(mockClient()) : api(aspidaClient())
+const client = process.env.NODE_ENV === "development" ? mock(mockClient()) : api(aspidaClient())
 
 ;(async () => {
   const res = await client.users.post({
     query: { id: 0 },
-    headers: { val: 'hoge' },
-    data: { name: 'fuga' }
+    headers: { val: "hoge" },
+    data: { name: "fuga" }
   })
 
   console.log(res)
   /*
   {
     status: 200,
-    headers: { token: 'hoge' },
-    data: { id: 0, name: 'fuga' }
+    headers: { token: "hoge" },
+    data: { id: 0, name: "fuga" }
   }
   */
 })()
@@ -152,7 +152,7 @@ const client = process.env.NODE_ENV === 'development' ? mock(mockClient()) : api
 
 全てのリクエストについて、mockMethods に到達する前に処理を挿入することができます。
 
-`apis/@middleware.ts`
+`api/@middleware.ts`
 
 ```ts
 import { mockMiddleware } from "aspida-mock"
@@ -167,11 +167,11 @@ export default mockMiddleware([
 ])
 ```
 
-`apis/users.ts`
+`api/users.ts`
 
 <!-- prettier-ignore -->
 ```ts
-import { mockMethods } from 'aspida-mock'
+import { mockMethods } from "aspida-mock"
 
 export type Methods = {
   get: {
@@ -194,8 +194,8 @@ export default mockMethods<Methods>({
 
 <!-- prettier-ignore -->
 ```ts
-import mockClient from '@aspida/axios/dist/mockClient'
-import mock from './apis/$mock'
+import mockClient from "@aspida/axios/dist/mockClient"
+import mock from "./api/$mock"
 
 const client = mock(mockClient())
 
@@ -224,8 +224,8 @@ aspida-mock ではいくつかのオプションを利用することができ�
 
 <!-- prettier-ignore -->
 ```ts
-import mockClient from '@aspida/axios/dist/mockClient'
-import mock from './apis/$mock'
+import mockClient from "@aspida/axios/dist/mockClient"
+import mock from "./api/$mock"
 
 const client = mock(mockClient(), { delayMSec: 500 })
 
@@ -242,13 +242,13 @@ const client = mock(mockClient(), { delayMSec: 500 })
 
 <!-- prettier-ignore -->
 ```ts
-import mockClient from '@aspida/axios/dist/mockClient'
-import mock from './apis/$mock'
+import mockClient from "@aspida/axios/dist/mockClient"
+import mock from "./api/$mock"
 
 const client = mock(mockClient(), { log: true })
 
 ;(async () => {
-  await client.users.$get({ query: { bar: 'baz' }})
+  await client.users.$get({ query: { bar: "baz" }})
   // [mock] get: /users?bar=baz => 200
 })()
 ```
@@ -281,15 +281,6 @@ Command Line Interface では以下のオプションを指定することがで
   </thead>
   <tbody>
     <tr>
-      <td nowrap><code>--build</code><br /><code>-b</code></td>
-      <td></td>
-      <td></td>
-      <td>
-        aspida-mock のルーティングに必要な
-        <code>$mock.ts</code> を生成します。
-      </td>
-    </tr>
-    <tr>
       <td nowrap><code>--config</code><br /><code>-c</code></td>
       <td><code>string</code></td>
       <td><code>"aspida.config.js"</code></td>
@@ -318,7 +309,7 @@ Command Line Interface では以下のオプションを指定することがで
 
 aspida-mock は aspida の設定ファイル `aspida.config.js` の項目のうち、「input」のみを参照します。  
 これにより、常に aspida と同じディレクトリからモックを生成できます。  
-[aspida docs: 型定義ファイルを置くディレクトリを apis 以外に変更する](https://github.com/aspida/aspida/tree/master/packages/aspida/docs/ja#%E5%9E%8B%E5%AE%9A%E7%BE%A9%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E7%BD%AE%E3%81%8F%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA%E3%82%92-apis-%E4%BB%A5%E5%A4%96%E3%81%AB%E5%A4%89%E6%9B%B4%E3%81%99%E3%82%8B)
+[aspida.config.js のオプション](https://github.com/aspida/aspida/tree/master/packages/aspida/docs/ja#aspidaconfigjs-%E3%81%AE%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3)
 
 ## License
 

@@ -72,11 +72,11 @@
 
 Export mockMethods in aspida type definition file.
 
-`apis/users.ts`
+`api/users.ts`
 
 <!-- prettier-ignore -->
 ```ts
-import { mockMethods } from 'aspida-mock'
+import { mockMethods } from "aspida-mock"
 
 export type Methods = {
   post: {
@@ -108,7 +108,7 @@ export default mockMethods<Methods>({
 ```json
 {
   "scripts": {
-    "build": "aspida --build && aspida-mock --build"
+    "build": "aspida && aspida-mock"
   }
 }
 ```
@@ -123,26 +123,26 @@ $ npm run build
 
 <!-- prettier-ignore -->
 ```ts
-import aspidaClient from '@aspida/axios'
-import mockClient from '@aspida/axios/dist/mockClient'
-import api from './apis/$api'
-import mock from './apis/$mock'
+import aspidaClient from "@aspida/axios"
+import mockClient from "@aspida/axios/dist/mockClient"
+import api from "./api/$api"
+import mock from "./api/$mock"
 
-const client = process.env.NODE_ENV === 'development' ? mock(mockClient()) : api(aspidaClient())
+const client = process.env.NODE_ENV === "development" ? mock(mockClient()) : api(aspidaClient())
 
 ;(async () => {
   const res = await client.users.post({
     query: { id: 0 },
-    headers: { val: 'hoge' },
-    data: { name: 'fuga' }
+    headers: { val: "hoge" },
+    data: { name: "fuga" }
   })
 
   console.log(res)
   /*
   {
     status: 200,
-    headers: { token: 'hoge' },
-    data: { id: 0, name: 'fuga' }
+    headers: { token: "hoge" },
+    data: { id: 0, name: "fuga" }
   }
   */
 })()
@@ -152,7 +152,7 @@ const client = process.env.NODE_ENV === 'development' ? mock(mockClient()) : api
 
 For every request, you can insert processing before reaching mockMethods.
 
-`apis/@middleware.ts`
+`api/@middleware.ts`
 
 ```ts
 import { mockMiddleware } from "aspida-mock"
@@ -167,11 +167,11 @@ export default mockMiddleware([
 ])
 ```
 
-`apis/users.ts`
+`api/users.ts`
 
 <!-- prettier-ignore -->
 ```ts
-import { mockMethods } from 'aspida-mock'
+import { mockMethods } from "aspida-mock"
 
 export type Methods = {
   get: {
@@ -194,8 +194,8 @@ export default mockMethods<Methods>({
 
 <!-- prettier-ignore -->
 ```ts
-import mockClient from '@aspida/axios/dist/mockClient'
-import mock from './apis/$mock'
+import mockClient from "@aspida/axios/dist/mockClient"
+import mock from "./api/$mock"
 
 const client = mock(mockClient())
 
@@ -224,8 +224,8 @@ Simulate response delay.
 
 <!-- prettier-ignore -->
 ```ts
-import mockClient from '@aspida/axios/dist/mockClient'
-import mock from './apis/$mock'
+import mockClient from "@aspida/axios/dist/mockClient"
+import mock from "./api/$mock"
 
 const client = mock(mockClient(), { delayMSec: 500 })
 
@@ -242,13 +242,13 @@ Switch request log output.
 
 <!-- prettier-ignore -->
 ```ts
-import mockClient from '@aspida/axios/dist/mockClient'
-import mock from './apis/$mock'
+import mockClient from "@aspida/axios/dist/mockClient"
+import mock from "./api/$mock"
 
 const client = mock(mockClient(), { log: true })
 
 ;(async () => {
-  await client.users.$get({ query: { bar: 'baz' }})
+  await client.users.$get({ query: { bar: "baz" }})
   // [mock] get: /users?bar=baz => 200
 })()
 ```
@@ -281,15 +281,6 @@ The following options can be specified in the Command Line Interface.
   </thead>
   <tbody>
     <tr>
-      <td nowrap><code>--build</code><br /><code>-b</code></td>
-      <td></td>
-      <td></td>
-      <td>
-        Generate <code>$mock.ts</code> required for
-        aspida-mock routing.
-      </td>
-    </tr>
-    <tr>
       <td nowrap><code>--config</code><br /><code>-c</code></td>
       <td><code>string</code></td>
       <td><code>"aspida.config.js"</code></td>
@@ -318,7 +309,7 @@ The following options can be specified in the Command Line Interface.
 
 aspida-mock refers to only "input" among the items of the aspida configuration file `aspida.config.js`.  
 This allows you to always generate a mock from the same directory as aspida.  
-[Change the directory where type definition file is placed to other than apis](https://github.com/aspida/aspida/tree/master/packages/aspida#change-the-directory-where-type-definition-file-is-placed-to-other-than-apis)
+[Options of aspida.config.js](https://github.com/aspida/aspida#options-of-aspidaconfigjs)
 
 ## License
 
