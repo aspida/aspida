@@ -58,7 +58,7 @@ describe('initialize', () => {
 
     const elapsedTime = Date.now() - startTime
     expect(elapsedTime).toBeGreaterThanOrEqual(delayMSec - 1)
-    expect(elapsedTime).toBeLessThan(delayMSec + 100)
+    expect(elapsedTime).toBeLessThan(delayMSec + 20)
   })
 
   test('post json data', async () => {
