@@ -20,7 +20,7 @@
     "release:patch": "npm run release -- --release-as patch",
     "rimraf": "node -e \"require('fs').rmdirSync('packages/' + process.argv[1] + '/dist', { recursive: true })\"",
     "test": "jest",
-    "typecheck": "npm run build:aspida && npm run build:mock && npm run build:axios && tsc --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "eslintConfig": {
     "env": {

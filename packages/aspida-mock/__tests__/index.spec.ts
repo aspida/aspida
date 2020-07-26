@@ -1,4 +1,4 @@
-import mockClient from '@aspida/axios/dist/mockClient'
+import mockClient from '../../aspida-axios/src/mockClient'
 import { MockRoute } from '../src'
 import api from '../../aspida/sample1/$api'
 
