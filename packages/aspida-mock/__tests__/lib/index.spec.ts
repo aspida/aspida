@@ -45,7 +45,7 @@ describe('cli', () => {
         outputEachDir: false
       })
 
-      expect(text).toBe(result)
+      expect(text).toBe(result.includes('\r\n') ? result.replace(/\r\n/g, '\n') : result)
       expect(filePath).toBe(resultFilePath)
     })
   })

@@ -53,6 +53,7 @@
     "arrowParens": "avoid",
     "singleQuote": true,
     "trailingComma": "none",
+    "endOfLine": "auto",
     "overrides": [
       {
         "files": [

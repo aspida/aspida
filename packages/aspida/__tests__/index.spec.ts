@@ -23,7 +23,7 @@ describe('cli test', () => {
       })
 
       expect(filePath).toBe(resultFilePath)
-      expect(text).toBe(result)
+      expect(text).toBe(result.includes('\r\n') ? result.replace(/\r\n/g, '\n') : result)
     })
   })
 
@@ -53,7 +53,9 @@ describe('cli test', () => {
       const targetTemplate = templates.filter(t => t.filePath === apiPath)[0]
       expect(targetTemplate).not.toBeUndefined()
       const result = fs.readFileSync(apiPath, 'utf8')
-      expect(targetTemplate.text).toBe(result)
+      expect(targetTemplate.text).toBe(
+        result.includes('\r\n') ? result.replace(/\r\n/g, '\n') : result
+      )
     })
   })
 })
