@@ -1,19 +1,14 @@
 import fs from 'fs'
 import path from 'path'
-import { BaseConfig } from 'aspida/dist/getConfig'
+import { AspidaConfig } from 'aspida'
 import listFiles from './listFiles'
 import createRouteString from './createRouteString'
-
-export type Template = {
-  filePath: string
-  text: string
-}
 
 const hasMiddleware = (input: string) =>
   fs.existsSync(path.join(input, '@middleware')) ||
   fs.existsSync(path.join(input, '@middleware.ts'))
 
-export default ({ input, trailingSlash }: BaseConfig): Template => ({
+export default ({ input, trailingSlash }: AspidaConfig) => ({
   text: createRouteString(
     input,
     trailingSlash,
