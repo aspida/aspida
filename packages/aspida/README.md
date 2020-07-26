@@ -73,10 +73,10 @@ const body = await client.v1.users.$post({ body: { name: "taro" } })
 
 ## Procedure
 
-1. Reproduce the endpoint directory structure in the apis directory
+1. Reproduce the endpoint directory structure in the "api" directory
 1. Export a Type alias named "Methods"
-1. Call 'aspida --build' with npm scripts
-1. API type definition file 'apis/\$api.ts' will be generated, so import the application and make an HTTP request
+1. Call "aspida" with npm scripts
+1. API type definition file "api/\$api.ts" will be generated, so import the application and make an HTTP request
 
 ## Getting Started
 
@@ -94,10 +94,10 @@ const body = await client.v1.users.$post({ body: { name: "taro" } })
   $ yarn add @aspida/axios axios
   ```
 
-### Create apis directory
+### Create "api" directory
 
 ```sh
-$ mkdir apis
+$ mkdir api
 ```
 
 ### Create an endpoint type definition file
@@ -105,7 +105,7 @@ $ mkdir apis
 - GET: /v1/users/?limit={number}
 - POST: /v1/users
 
-  `apis/v1/users/index.ts`
+  `api/v1/users/index.ts`
 
   ```typescript
   type User = {
@@ -135,7 +135,7 @@ $ mkdir apis
 - GET: /v1/users/\${userId}
 - PUT: /v1/users/\${userId}
 
-  `apis/v1/users/_userId@number.ts`
+  `api/v1/users/_userId@number.ts`
 
   Specify the type of path variable “userId” starting with underscore with “@number”  
   If not specified with @, the default path variable type is "number | string"
@@ -168,7 +168,7 @@ $ mkdir apis
 ```json
 {
   "scripts": {
-    "api:build": "aspida --build"
+    "api:build": "aspida"
   }
 }
 ```
@@ -176,7 +176,7 @@ $ mkdir apis
 ```sh
 $ npm run api:build
 
-> apis/$api.ts was built successfully.
+> api/$api.ts was built successfully.
 ```
 
 ### Make HTTP request from application
@@ -185,7 +185,7 @@ $ npm run api:build
 
 ```typescript
 import aspida from "@aspida/axios"
-import api from "../apis/$api"
+import api from "../api/$api"
 ;(async () => {
   const userId = 0
   const limit = 10
@@ -196,12 +196,12 @@ import api from "../apis/$api"
   const res = await client.v1.users.get({ query: { limit } })
   console.log(res)
   // req -> GET: /v1/users/?limit=10
-  // res -> { status: 200, body: [{ id: 0, name: 'taro' }], headers: {...} }
+  // res -> { status: 200, body: [{ id: 0, name: "taro" }], headers: {...} }
 
   const user = await client.v1.users._userId(userId).$get()
   console.log(user)
   // req -> GET: /v1/users/0
-  // res -> { id: 0, name: 'taro' }
+  // res -> { id: 0, name: "taro" }
 })()
 ```
 
@@ -228,15 +228,6 @@ import api from "../apis/$api"
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td nowrap><code>--build</code><br /><code>-b</code></td>
-      <td></td>
-      <td></td>
-      <td>
-        Generate <code>$api.ts</code> required for
-        aspida routing.
-      </td>
-    </tr>
     <tr>
       <td nowrap><code>--config</code><br /><code>-c</code></td>
       <td><code>string</code></td>
@@ -266,14 +257,44 @@ import api from "../apis/$api"
 
 | Option        | Type    | Default       | Description                                           |
 | ------------- | ------- | ------------- | ----------------------------------------------------- |
-| input         | string  | "apis", "api" | Specifies the endpoint type definition root directory |
+| input         | string  | "api", "apis" | Specifies the endpoint type definition root directory |
 | baseURL       | string  | ""            | Specify baseURL of the request                        |
 | trailingSlash | boolean | false         | Append `/` to the request URL                         |
 | outputEachDir | boolean | false         | Generate `$api.ts` in each endpoint directory         |
 
+## Node.js API
+
+```ts
+import { build, watch, version } from "aspida"
+
+console.log(version()) // 0.1.0
+
+build()
+build("./app/aspida.config.js")
+build({ input: "api1" })
+build({ baseURL: "https://example.com/v1" })
+build({
+  input: "api2",
+  baseURL: "https://example.com/v2",
+  trailingSlash: true,
+  outputEachDir: true
+})
+
+watch()
+watch("./app/aspida.config.js")
+watch({ input: "api1" })
+watch({ baseURL: "https://example.com/v1" })
+watch({
+  input: "api2",
+  baseURL: "https://example.com/v2",
+  trailingSlash: true,
+  outputEachDir: true
+})
+```
+
 ## Tips
 
-### Change the directory where type definition file is placed to other than apis
+### Change the directory where type definition file is placed to other than "api"
 
 Create a configuration file at the root of the project
 
@@ -286,13 +307,16 @@ module.exports = { input: "src" }
 Specify baseURL in configuration file
 
 ```javascript
-module.exports = { input: "apis", baseURL: "https://example.com/api" }
+module.exports = { baseURL: "https://example.com/api" }
 ```
 
 If you want to define multiple API endpoints, specify them in an array
 
 ```javascript
-module.exports = [{ input: "api1" }, { input: "api2", baseURL: "https://example.com/api" }]
+module.exports = [
+  { input: "api1" },
+  { input: "api2", baseURL: "https://example.com/api" }
+]
 ```
 
 ### Serialize GET parameters manually
@@ -306,7 +330,7 @@ If you want to serialize manually, you can use config object of HTTP client
 import axios from "axios"
 import qs from "qs"
 import aspida from "@aspida/axios"
-import api from "../apis/$api"
+import api from "../api/$api"
 ;(async () => {
   const client = api(
     aspida(axios, { paramsSerializer: params => qs.stringify(params, { indices: false }) })
@@ -318,13 +342,13 @@ import api from "../apis/$api"
   })
   console.log(users)
   // req -> GET: /v1/users/?ids=1&ids=2&ids=3
-  // res -> [{ id: 1, name: 'taro1' }, { id: 2, name: 'taro2' }, { id: 3, name: 'taro3' }]
+  // res -> [{ id: 1, name: "taro1" }, { id: 2, name: "taro2" }, { id: 3, name: "taro3" }]
 })()
 ```
 
 ### POST with FormData
 
-`apis/v1/users/index.ts`
+`api/v1/users/index.ts`
 
 ```typescript
 export type Methods = {
@@ -348,7 +372,7 @@ export type Methods = {
 
 ```typescript
 import aspida from "@aspida/axios"
-import api from "../apis/$api"
+import api from "../api/$api"
 ;(async () => {
   const client = api(aspida())
 
@@ -360,13 +384,13 @@ import api from "../apis/$api"
   })
   console.log(user)
   // req -> POST: h/v1/users
-  // res -> { id: 0, name: 'taro' }
+  // res -> { id: 0, name: "taro" }
 })()
 ```
 
 ### POST with URLSearchParams
 
-`apis/v1/users/index.ts`
+`api/v1/users/index.ts`
 
 ```typescript
 export type Methods = {
@@ -389,20 +413,20 @@ export type Methods = {
 
 ```typescript
 import aspida from "@aspida/axios"
-import api from "../apis/$api"
+import api from "../api/$api"
 ;(async () => {
   const client = api(aspida())
 
   const user = await client.v1.users.$post({ body: { name: "taro" } })
   console.log(user)
   // req -> POST: /v1/users
-  // res -> { id: 0, name: 'taro' }
+  // res -> { id: 0, name: "taro" }
 })()
 ```
 
 ### Receive response with ArrayBuffer
 
-`apis/v1/users/index.ts`
+`api/v1/users/index.ts`
 
 ```typescript
 export type Methods = {
@@ -420,7 +444,7 @@ export type Methods = {
 
 ```typescript
 import aspida from "@aspida/axios"
-import api from "../apis/$api"
+import api from "../api/$api"
 ;(async () => {
   const client = api(aspida())
 
@@ -433,20 +457,13 @@ import api from "../apis/$api"
 
 ### Convert from OpenAPI / Swagger
 
-`aspida.config.js`
-
-```js
-module.exports = {
-  input: "apis", // "input" of aspida is "output" for openapi2aspida
-  openapi: { inputFile: "https://petstore.swagger.io/v2/swagger.json" } // Compatible with yaml/json of OpenAPI3.0/Swagger2.0
-}
-```
+Compatible with yaml/json of OpenAPI3.0/Swagger2.0
 
 `tarminal`
 
 ```sh
-$ npx openapi2aspida --build
-# apis/$api.ts was built successfully.
+$ npx openapi2aspida -i https://petstore.swagger.io/v2/swagger.json
+# api/$api.ts was built successfully.
 ```
 
 [Docs of openapi2aspida](https://github.com/aspida/openapi2aspida)
@@ -456,7 +473,7 @@ $ npx openapi2aspida --build
 Special characters are encoded as percent-encoding in the file name  
 Example `":"` -> `"%3A"`
 
-`apis/foo%3Abar.ts`
+`api/foo%3Abar.ts`
 
 ```ts
 export type Methods = {
@@ -472,7 +489,7 @@ With clients, `"%3A"` -> `"_3A"`
 
 ```typescript
 import aspida from "@aspida/axios"
-import api from "../apis/$api"
+import api from "../api/$api"
 ;(async () => {
   const client = api(aspida())
 
@@ -484,17 +501,14 @@ import api from "../apis/$api"
 
 ### Import only some endpoints
 
-If you don't need to use all of `apis/$api.ts` , you can split them up and import only part of them  
+If you don't need to use all of `api/$api.ts` , you can split them up and import only part of them  
 `outputEachDir` option generates `$api.ts` in each endpoint directory  
 `$api.ts` will not be generated under the directory containing the path variable
 
 `aspida.config.js`
 
 ```js
-module.exports = {
-  input: "apis",
-  outputEachDir: true
-}
+module.exports = { outputEachDir: true }
 ```
 
 Import only `$api.ts` of the endpoint you want to use and put it into Object
@@ -503,8 +517,8 @@ Import only `$api.ts` of the endpoint you want to use and put it into Object
 
 ```typescript
 import aspida from "@aspida/axios"
-import api0 from "../apis/v1/foo/$api"
-import api1 from "../apis/v2/bar/$api"
+import api0 from "../api/v1/foo/$api"
+import api1 from "../api/v2/bar/$api"
 ;(async () => {
   const aspidaClient = aspida()
   const client = {

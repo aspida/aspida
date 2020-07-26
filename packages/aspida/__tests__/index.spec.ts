@@ -1,12 +1,12 @@
 import fs from 'fs'
 import build from '../src/buildTemplate'
-import getConfig from '../src/getConfig'
+import { getConfigs } from '../src/getConfigs'
 
 const basePath = 'packages/aspida'
 
 describe('cli test', () => {
   test('main', () => {
-    const { input, baseURL, trailingSlash, outputEachDir } = getConfig(
+    const { input, baseURL, trailingSlash, outputEachDir } = getConfigs(
       `${basePath}/aspida.config.js`
     )[0]
     const inputDir = `${basePath}/${input}`
@@ -28,7 +28,7 @@ describe('cli test', () => {
   })
 
   test('outputEachDir', () => {
-    const { input, baseURL, trailingSlash, outputEachDir } = getConfig(
+    const { input, baseURL, trailingSlash, outputEachDir } = getConfigs(
       `${basePath}/aspida.config.js`
     )[1]
     const inputDir = `${basePath}/${input}`
