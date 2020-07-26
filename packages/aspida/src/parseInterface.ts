@@ -220,7 +220,7 @@ const parseMethods = (text: string): Method[] => {
   return methods
 }
 
-export default (text: string, name: string): Method[] | null => {
+export const parse = (text: string, name: string): Method[] | null => {
   const interfaceRegExp = new RegExp(`(^|\n)export (interface ${name}|type ${name} ?=) ?{`)
   if (!interfaceRegExp.test(text)) return null
 

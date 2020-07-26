@@ -52,6 +52,8 @@ export type AspidaClient<Config> = {
 }
 
 export { getConfigs } from './getConfigs'
+export { version, build, watch } from './commands'
+export { parse } from './parseInterface'
 
 export const headersToObject = (headers: Headers): any =>
   [...headers.entries()].reduce((prev, [key, val]) => ({ ...prev, [key]: val }), {})
