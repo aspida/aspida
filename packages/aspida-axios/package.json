@@ -1,6 +1,6 @@
 {
   "name": "@aspida/axios",
-  "version": "0.9.5",
+  "version": "0.10.0",
   "description": "axios client for aspida",
   "author": "Solufa <solufa2020@gmail.com>",
   "license": "MIT",
@@ -21,9 +21,10 @@
   },
   "keywords": [
     "aspida",
+    "typescript",
     "axios"
   ],
   "dependencies": {
-    "aspida": "^0.19.4"
+    "aspida": "^0.20.0"
   }
 }

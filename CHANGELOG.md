@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.20.0](https://github.com/aspida/aspida/compare/v0.19.4...v0.20.0) (2020-07-27)
+
+
+### Features
+
+* **aspida:** add Node.js APIs ([e906667](https://github.com/aspida/aspida/commit/e90666741a42157502a65ce9093f36e325a0f1d9))
+* arrow crlf ([3ea3e66](https://github.com/aspida/aspida/commit/3ea3e663c484b8748c494525fea3de205b2d61aa))
+
+
+### Bug Fixes
+
+* separete commands from root ([0f5ea53](https://github.com/aspida/aspida/commit/0f5ea532da320655a13b9ab8d483758e2eb35c7a))
+* type of toAxiosResponse ([243ee79](https://github.com/aspida/aspida/commit/243ee7988a2b20eedf5ee71aa4fde5b97f9f8d1f))
+* **deps:** [security] bump lodash from 4.17.15 to 4.17.19 ([c56b052](https://github.com/aspida/aspida/commit/c56b05205b45f7d4b3fa841699a0ba6597bc927a))
+* **deps:** bump chokidar from 3.4.0 to 3.4.1 ([a249dcd](https://github.com/aspida/aspida/commit/a249dcd291cbe894ffa323172951f5654bd2eb23))
+
+
+### Refactors
+
+* **aspida:** clarify cli command ([12325c3](https://github.com/aspida/aspida/commit/12325c3331ccef0ba0440b189c647d4624b453ff))
+* **mock:** clarify cli command ([00b116b](https://github.com/aspida/aspida/commit/00b116b63d599def8b7a85d4fd790cfc3e7dfce5))
+* **mock:** clarify cli command ([1c73d6b](https://github.com/aspida/aspida/commit/1c73d6b743d2e8f7c648a58d45a3f092958cc0d0))
+
+
+### Documentation
+
+* **aspida:** update README ([676337e](https://github.com/aspida/aspida/commit/676337eeff103e34b4404b224301864cce3d56e0))
+* **mock:** update README ([823d03f](https://github.com/aspida/aspida/commit/823d03fccfc02a72fdf26a87a37217049112e2a8))
+* update README ([30d4ae5](https://github.com/aspida/aspida/commit/30d4ae55a33ca76e70bd3527f7a21fa151cf9597))
+
 ### [0.19.4](https://github.com/aspida/aspida/compare/v0.19.3...v0.19.4) (2020-06-27)
 
 
