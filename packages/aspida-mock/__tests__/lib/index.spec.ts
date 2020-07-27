@@ -11,11 +11,6 @@ describe('cli', () => {
     expect(console.log).toHaveBeenCalled()
 
     spyLog.mockReset()
-
-    run([])
-    expect(console.log).not.toHaveBeenCalled()
-
-    spyLog.mockReset()
     spyLog.mockRestore()
   })
 
@@ -45,7 +40,7 @@ describe('cli', () => {
         outputEachDir: false
       })
 
-      expect(text).toBe(result)
+      expect(text).toBe(result.includes('\r\n') ? result.replace(/\r\n/g, '\n') : result)
       expect(filePath).toBe(resultFilePath)
     })
   })

@@ -6,12 +6,12 @@
   "scripts": {
     "dev:aspida": "npm run build:aspida && cd packages/aspida && node bin/index.js --build",
     "dev:mock": "npm run build:mock && cd packages/aspida-mock && aspida -b && node bin/index.js --build",
-    "build:aspida": "npm run rimraf -- aspida && cd packages/aspida && tsc --project tsconfig.build.json",
-    "build:axios": "npm run rimraf -- aspida-axios && cd packages/aspida-axios && tsc --project tsconfig.build.json",
-    "build:fetch": "npm run rimraf -- aspida-fetch && cd packages/aspida-fetch && tsc --project tsconfig.build.json",
-    "build:node-fetch": "npm run rimraf -- aspida-node-fetch && cd packages/aspida-node-fetch && tsc --project tsconfig.build.json",
-    "build:ky": "npm run rimraf -- aspida-ky && cd packages/aspida-ky && tsc --project tsconfig.build.json",
-    "build:mock": "npm run rimraf -- aspida-mock && cd packages/aspida-mock && tsc --project tsconfig.build.json",
+    "build:aspida": "npm run rimraf -- aspida && tsc -p packages/aspida",
+    "build:axios": "npm run rimraf -- aspida-axios && tsc -p packages/aspida-axios",
+    "build:fetch": "npm run rimraf -- aspida-fetch && tsc -p packages/aspida-fetch",
+    "build:node-fetch": "npm run rimraf -- aspida-node-fetch && tsc -p packages/aspida-node-fetch",
+    "build:ky": "npm run rimraf -- aspida-ky && tsc -p packages/aspida-ky",
+    "build:mock": "npm run rimraf -- aspida-mock && tsc -p packages/aspida-mock",
     "lint": "eslint --ext .js,.ts --ignore-path .gitignore .",
     "lint:fix": "npm run lint -- --fix",
     "release": "standard-version --skip.tag",
@@ -20,7 +20,7 @@
     "release:patch": "npm run release -- --release-as patch",
     "rimraf": "node -e \"require('fs').rmdirSync('packages/' + process.argv[1] + '/dist', { recursive: true })\"",
     "test": "jest",
-    "typecheck": "npm run build:aspida && npm run build:mock && npm run build:axios && tsc --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "eslintConfig": {
     "env": {
@@ -53,6 +53,7 @@
     "arrowParens": "avoid",
     "singleQuote": true,
     "trailingComma": "none",
+    "endOfLine": "auto",
     "overrides": [
       {
         "files": [
@@ -67,7 +68,7 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.7",
-    "@types/jest": "^26.0.5",
+    "@types/jest": "^26.0.7",
     "@types/minimist": "^1.2.0",
     "@types/node-fetch": "^2.5.7",
     "@typescript-eslint/eslint-plugin": "2.34.0",
@@ -77,7 +78,7 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-jest": "^23.18.0",
+    "eslint-plugin-jest": "^23.18.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-promise": "^4.2.1",

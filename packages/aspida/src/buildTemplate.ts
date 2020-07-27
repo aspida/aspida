@@ -1,12 +1,7 @@
 import path from 'path'
-import { BaseConfig } from './getConfig'
+import { AspidaConfig } from './getConfigs'
 import createTemplateValues from './createTemplateValues'
 import { getDirentTree, DirentTree } from './getDirentTree'
-
-export type Template = {
-  text: string
-  filePath: string
-}
 
 const listNotIndexFiles = (tree: DirentTree): string[] => {
   return [
@@ -69,7 +64,7 @@ export default api
   return { text, filePath: path.posix.join(tree.path, '$api.ts') }
 }
 
-export default ({ input, baseURL, trailingSlash, outputEachDir }: BaseConfig): Template[] => {
+export default ({ input, baseURL, trailingSlash, outputEachDir }: AspidaConfig) => {
   const direntTree = getDirentTree(input)
   const templates = [createTemplate(direntTree, baseURL, trailingSlash, '')]
 

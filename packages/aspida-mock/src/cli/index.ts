@@ -1,26 +1,23 @@
+import path from 'path'
 import minimist from 'minimist'
-import getBaseConfig, { BaseConfig } from 'aspida/dist/getConfig'
-import write from './writeRouteFile'
-import watch from 'aspida/dist/cli/watchInputDir'
-import { options } from 'aspida/dist/cli'
-import { Build, Watch, CommandToBuild } from './build'
-import { Command, nullCommand } from 'aspida/dist/cli/command'
-import { version as versionCommand } from 'aspida/dist/cli/version'
-
-const getBuildCommandFactory = (configs: BaseConfig[]) =>
-  CommandToBuild.getFactory(configs, { write, watch })
+import { getConfigs } from 'aspida/dist/commands'
+import build from './buildRouteFile'
+import write from 'aspida/dist/writeRouteFile'
+import watch from 'aspida/dist/watchInputDir'
 
 export const run = (args: string[]) => {
-  const argv = minimist(args, options)
+  const argv = minimist(args, {
+    string: ['version', 'config', 'watch'],
+    alias: { v: 'version', c: 'config', w: 'watch' }
+  })
 
-  const commands: Command[] = [
-    argv.version !== undefined ? versionCommand : nullCommand,
-    argv.build !== undefined || argv.watch !== undefined
-      ? getBuildCommandFactory(getBaseConfig(argv.config)).create(
-          argv.watch !== undefined ? new Watch() : new Build()
-        )
-      : nullCommand
-  ]
-
-  commands.forEach(c => c.exec())
+  ;(argv.version !== undefined
+    ? () => console.log(`v${require(path.join(__dirname, '../../package.json')).version}`)
+    : argv.watch !== undefined
+    ? () =>
+        getConfigs(argv.config).forEach(config => {
+          write(build(config))
+          watch(config.input, () => write(build(config)))
+        })
+    : () => getConfigs(argv.config).map(build).forEach(write))()
 }

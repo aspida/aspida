@@ -4,6 +4,14 @@
     "declarationMap": true,
     "downlevelIteration": true,
     "experimentalDecorators": true,
+    "baseUrl": ".",
+    "paths": {
+      "aspida": ["packages/aspida/src"],
+      "aspida/dist/*": ["packages/aspida/src/*"],
+      "aspida-mock": ["packages/aspida-mock/src"],
+      "@aspida/axios": ["packages/aspida-axios/src"],
+      "@aspida/axios/dist/*": ["packages/aspida-axios/src/*"]
+    },
     "esModuleInterop": true,
     "lib": ["esnext", "dom", "dom.iterable"],
     "module": "commonjs",
@@ -12,5 +20,6 @@
     "strict": true,
     "strictPropertyInitialization": false,
     "target": "es5"
-  }
+  },
+  "exclude": ["node_modules", "packages/**/node_modules", "packages/**/dist"]
 }

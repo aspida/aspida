@@ -1,12 +1,12 @@
 import fs from 'fs'
 import build from '../src/buildTemplate'
-import getConfig from '../src/getConfig'
+import { getConfigs } from '../src/getConfigs'
 
 const basePath = 'packages/aspida'
 
 describe('cli test', () => {
   test('main', () => {
-    const { input, baseURL, trailingSlash, outputEachDir } = getConfig(
+    const { input, baseURL, trailingSlash, outputEachDir } = getConfigs(
       `${basePath}/aspida.config.js`
     )[0]
     const inputDir = `${basePath}/${input}`
@@ -23,12 +23,12 @@ describe('cli test', () => {
       })
 
       expect(filePath).toBe(resultFilePath)
-      expect(text).toBe(result)
+      expect(text).toBe(result.includes('\r\n') ? result.replace(/\r\n/g, '\n') : result)
     })
   })
 
   test('outputEachDir', () => {
-    const { input, baseURL, trailingSlash, outputEachDir } = getConfig(
+    const { input, baseURL, trailingSlash, outputEachDir } = getConfigs(
       `${basePath}/aspida.config.js`
     )[1]
     const inputDir = `${basePath}/${input}`
@@ -53,7 +53,9 @@ describe('cli test', () => {
       const targetTemplate = templates.filter(t => t.filePath === apiPath)[0]
       expect(targetTemplate).not.toBeUndefined()
       const result = fs.readFileSync(apiPath, 'utf8')
-      expect(targetTemplate.text).toBe(result)
+      expect(targetTemplate.text).toBe(
+        result.includes('\r\n') ? result.replace(/\r\n/g, '\n') : result
+      )
     })
   })
 })

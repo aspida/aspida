@@ -73,10 +73,10 @@ const body = await client.v1.users.$post({ body: { name: "taro" } })
 
 ## 手順
 
-1. エンドポイントのディレクトリ構造を apis ディレクトリに再現する
+1. エンドポイントのディレクトリ構造を api ディレクトリに再現する
 1. "Methods" という名前で Type alias を export する
-1. npm scripts で aspida --build を起動
-1. API 型定義ファイル apis/\$api.ts が生成されるのでアプリケーションで import して HTTP リクエストを行う
+1. npm scripts で "aspida" を呼び出す
+1. API 型定義ファイル api/\$api.ts が生成されるのでアプリケーションで import して HTTP リクエストを行う
 
 ## 入門
 
@@ -94,10 +94,10 @@ const body = await client.v1.users.$post({ body: { name: "taro" } })
   $ yarn add @aspida/axios axios
   ```
 
-### apis ディレクトリを作成する
+### api ディレクトリを作成する
 
 ```sh
-$ mkdir apis
+$ mkdir api
 ```
 
 ### エンドポイントの型定義ファイルを作成する
@@ -105,7 +105,7 @@ $ mkdir apis
 - GET: /v1/users/?limit={number}
 - POST: /v1/users
 
-  `apis/v1/users/index.ts`
+  `api/v1/users/index.ts`
 
   ```typescript
   type User = {
@@ -135,7 +135,7 @@ $ mkdir apis
 - GET: /v1/users/\${userId}
 - PUT: /v1/users/\${userId}
 
-  `apis/v1/users/_userId@number.ts`
+  `api/v1/users/_userId@number.ts`
 
   アンダースコアから始まるパス変数「userId」の型を「@number」で指定する  
   @での指定がない場合、パス変数の型のデフォルトは「number | string」
@@ -168,7 +168,7 @@ $ mkdir apis
 ```json
 {
   "scripts": {
-    "api:build": "aspida --build"
+    "api:build": "aspida"
   }
 }
 ```
@@ -176,7 +176,7 @@ $ mkdir apis
 ```sh
 $ npm run api:build
 
-> apis/$api.ts was built successfully.
+> api/$api.ts was built successfully.
 ```
 
 ### アプリケーションから HTTP リクエストを行う
@@ -185,7 +185,7 @@ $ npm run api:build
 
 ```typescript
 import aspida from "@aspida/axios"
-import api from "../apis/$api"
+import api from "../api/$api"
 ;(async () => {
   const userId = 0
   const limit = 10
@@ -196,12 +196,12 @@ import api from "../apis/$api"
   const res = await client.v1.users.get({ query: { limit } })
   console.log(res)
   // req -> GET: /v1/users/?limit=10
-  // res -> { status: 200, body: [{ id: 0, name: 'taro' }], headers: {...} }
+  // res -> { status: 200, body: [{ id: 0, name: "taro" }], headers: {...} }
 
   const user = await client.v1.users._userId(userId).$get()
   console.log(user)
   // req -> GET: /v1/users/0
-  // res -> { id: 0, name: 'taro' }
+  // res -> { id: 0, name: "taro" }
 })()
 ```
 
@@ -228,15 +228,6 @@ import api from "../apis/$api"
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td nowrap><code>--build</code><br /><code>-b</code></td>
-      <td></td>
-      <td></td>
-      <td>
-        aspida のルーティングに必要な
-        <code>$api.ts</code> を生成
-      </td>
-    </tr>
     <tr>
       <td nowrap><code>--config</code><br /><code>-c</code></td>
       <td><code>string</code></td>
@@ -265,14 +256,48 @@ import api from "../apis/$api"
 
 | Option        | Type    | Default       | Description                                        |
 | ------------- | ------- | ------------- | -------------------------------------------------- |
-| input         | string  | "apis", "api" | エンドポイントの型定義ルートディレクトリを指定     |
+| input         | string  | "api", "apis" | エンドポイントの型定義ルートディレクトリを指定     |
 | baseURL       | string  | ""            | リクエスト時の baseURL を指定                      |
 | trailingSlash | boolean | false         | リクエスト URL の末尾に `/` を付与                 |
 | outputEachDir | boolean | false         | `$api.ts` を各エンドポイントのディレクトリにも生成 |
 
+## Node.js API
+
+```ts
+import { build, watch, version } from "aspida/dist/commands"
+
+console.log(version()) // 0.1.0
+
+build()
+build("./app/aspida.config.js")
+build({ input: "api1" })
+build([
+  { baseURL: "https://example.com/v1" },
+  {
+    input: "api2",
+    baseURL: "https://example.com/v2",
+    trailingSlash: true,
+    outputEachDir: true
+  }
+])
+
+watch()
+watch("./app/aspida.config.js")
+watch({ input: "api1" })
+watch([
+  { baseURL: "https://example.com/v1" },
+  {
+    input: "api2",
+    baseURL: "https://example.com/v2",
+    trailingSlash: true,
+    outputEachDir: true
+  }
+])
+```
+
 ## Tips
 
-### 型定義ファイルを置くディレクトリを apis 以外に変更する
+### 型定義ファイルを置くディレクトリを api 以外に変更する
 
 設定ファイルをプロジェクトのルートに作成する
 
@@ -285,13 +310,16 @@ module.exports = { input: "src" }
 baseURL を設定ファイルで指定する
 
 ```javascript
-module.exports = { input: "apis", baseURL: "https://example.com/api" }
+module.exports = { baseURL: "https://example.com/api" }
 ```
 
 複数の API エンドポイントを型定義したい場合は配列で指定する
 
 ```javascript
-module.exports = [{ input: "api1" }, { input: "api2", baseURL: "https://example.com/api" }]
+module.exports = [
+  { input: "api1" },
+  { input: "api2", baseURL: "https://example.com/api" }
+]
 ```
 
 ### GET パラメータを手動でシリアライズする
@@ -305,7 +333,7 @@ aspida は GET パラメータのシリアライズを HTTP クライアント�
 import axios from "axios"
 import qs from "qs"
 import aspida from "@aspida/axios"
-import api from "../apis/$api"
+import api from "../api/$api"
 ;(async () => {
   const client = api(
     aspida(axios, { paramsSerializer: params => qs.stringify(params, { indices: false }) })
@@ -317,13 +345,13 @@ import api from "../apis/$api"
   })
   console.log(users)
   // req -> GET: /v1/users/?ids=1&ids=2&ids=3
-  // res -> [{ id: 1, name: 'taro1' }, { id: 2, name: 'taro2' }, { id: 3, name: 'taro3' }]
+  // res -> [{ id: 1, name: "taro1" }, { id: 2, name: "taro2" }, { id: 3, name: "taro3" }]
 })()
 ```
 
 ### FormData を POST する
 
-`apis/v1/users/index.ts`
+`api/v1/users/index.ts`
 
 ```typescript
 export type Methods = {
@@ -347,7 +375,7 @@ export type Methods = {
 
 ```typescript
 import aspida from "@aspida/axios"
-import api from "../apis/$api"
+import api from "../api/$api"
 ;(async () => {
   const client = api(aspida())
 
@@ -359,13 +387,13 @@ import api from "../apis/$api"
   })
   console.log(user)
   // req -> POST: /v1/users
-  // res -> { id: 0, name: 'taro' }
+  // res -> { id: 0, name: "taro" }
 })()
 ```
 
 ### URLSearchParams を POST する
 
-`apis/v1/users/index.ts`
+`api/v1/users/index.ts`
 
 ```typescript
 export type Methods = {
@@ -388,20 +416,20 @@ export type Methods = {
 
 ```typescript
 import aspida from "@aspida/axios"
-import api from "../apis/$api"
+import api from "../api/$api"
 ;(async () => {
   const client = api(aspida())
 
   const user = await client.v1.users.$post({ body: { name: "taro" } })
   console.log(user)
   // req -> POST: /v1/users
-  // res -> { id: 0, name: 'taro' }
+  // res -> { id: 0, name: "taro" }
 })()
 ```
 
 ### レスポンスを ArrayBuffer で受け取る
 
-`apis/v1/users/index.ts`
+`api/v1/users/index.ts`
 
 ```typescript
 export type Methods = {
@@ -419,7 +447,7 @@ export type Methods = {
 
 ```typescript
 import aspida from "@aspida/axios"
-import api from "../apis/$api"
+import api from "../api/$api"
 ;(async () => {
   const client = api(aspida())
 
@@ -432,20 +460,13 @@ import api from "../apis/$api"
 
 ### OpenAPI / Swagger から変換する
 
-`aspida.config.js`
-
-```js
-module.exports = {
-  input: "apis", // "input" of aspida is "output" for openapi2aspida
-  openapi: { inputFile: "https://petstore.swagger.io/v2/swagger.json" } // Compatible with yaml/json of OpenAPI3.0/Swagger2.0
-}
-```
+OpenAPI3.0/Swagger2.0のyaml/jsonに対応
 
 `tarminal`
 
 ```sh
-$ npx openapi2aspida --build
-# apis/$api.ts was built successfully.
+$ npx openapi2aspida -i https://petstore.swagger.io/v2/swagger.json
+# api/$api.ts was built successfully.
 ```
 
 [openapi2aspida ドキュメント](https://github.com/aspida/openapi2aspida)
@@ -455,7 +476,7 @@ $ npx openapi2aspida --build
 特殊文字はパーセントエンコーディングしてファイル名に指定する  
 例 `":"` -> `"%3A"`
 
-`apis/foo%3Abar.ts`
+`api/foo%3Abar.ts`
 
 ```ts
 export type Methods = {
@@ -471,7 +492,7 @@ export type Methods = {
 
 ```typescript
 import aspida from "@aspida/axios"
-import api from "../apis/$api"
+import api from "../api/$api"
 ;(async () => {
   const client = api(aspida())
 
@@ -483,17 +504,14 @@ import api from "../apis/$api"
 
 ### 一部のエンドポイントのみ import する
 
-`apis/$api.ts` の全てを使う必要がない場合、分割して一部のみ import できる  
+`api/$api.ts` の全てを使う必要がない場合、分割して一部のみ import できる  
 `outputEachDir` オプションで各エンドポイントのディレクトリに `$api.ts` が生成される  
 パス変数を含むディレクトリ配下に `$api.ts` は生成されない
 
 `aspida.config.js`
 
 ```js
-module.exports = {
-  input: "apis",
-  outputEachDir: true
-}
+module.exports = { outputEachDir: true }
 ```
 
 使いたいエンドポイントの `$api.ts` のみを import してオブジェクトにまとめる
@@ -502,8 +520,8 @@ module.exports = {
 
 ```typescript
 import aspida from "@aspida/axios"
-import api0 from "../apis/v1/foo/$api"
-import api1 from "../apis/v2/bar/$api"
+import api0 from "../api/v1/foo/$api"
+import api1 from "../api/v2/bar/$api"
 ;(async () => {
   const aspidaClient = aspida()
   const client = {

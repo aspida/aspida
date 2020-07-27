@@ -9,11 +9,8 @@ jobs:
     strategy:
       matrix:
         node-version: [12, 14]
-        os: [macos-latest, windows-latest, ubuntu-latest]
+        os: [windows-latest, ubuntu-latest]
     steps:
-      - name: Disable autocrlf
-        run: git config --global core.autocrlf false
-        if: matrix.os == 'windows-latest'
       - uses: actions/checkout@v2
       - name: setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
@@ -65,7 +62,11 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: yarn build:mock
+      - run: cd packages/aspida-mock && npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: yarn build:axios
+        if: always()
       - run: cd packages/aspida-axios && npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

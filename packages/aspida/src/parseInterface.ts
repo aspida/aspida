@@ -85,7 +85,7 @@ const countIgnored = (text: string): number => {
       }
 
       cursor += 1
-    } else if (/[^ \n;,]/.test(first)) {
+    } else if (/[^ \r\n;,]/.test(first)) {
       break
     }
 
@@ -220,7 +220,7 @@ const parseMethods = (text: string): Method[] => {
   return methods
 }
 
-export default (text: string, name: string): Method[] | null => {
+export const parse = (text: string, name: string): Method[] | null => {
   const interfaceRegExp = new RegExp(`(^|\n)export (interface ${name}|type ${name} ?=) ?{`)
   if (!interfaceRegExp.test(text)) return null
 
