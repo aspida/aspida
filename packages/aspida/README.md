@@ -265,31 +265,35 @@ import api from "../api/$api"
 ## Node.js API
 
 ```ts
-import { build, watch, version } from "aspida"
+import { build, watch, version } from "aspida/dist/commands"
 
 console.log(version()) // 0.1.0
 
 build()
 build("./app/aspida.config.js")
 build({ input: "api1" })
-build({ baseURL: "https://example.com/v1" })
-build({
-  input: "api2",
-  baseURL: "https://example.com/v2",
-  trailingSlash: true,
-  outputEachDir: true
-})
+build([
+  { baseURL: "https://example.com/v1" },
+  {
+    input: "api2",
+    baseURL: "https://example.com/v2",
+    trailingSlash: true,
+    outputEachDir: true
+  }
+])
 
 watch()
 watch("./app/aspida.config.js")
 watch({ input: "api1" })
-watch({ baseURL: "https://example.com/v1" })
-watch({
-  input: "api2",
-  baseURL: "https://example.com/v2",
-  trailingSlash: true,
-  outputEachDir: true
-})
+watch([
+  { baseURL: "https://example.com/v1" },
+  {
+    input: "api2",
+    baseURL: "https://example.com/v2",
+    trailingSlash: true,
+    outputEachDir: true
+  }
+])
 ```
 
 ## Tips
