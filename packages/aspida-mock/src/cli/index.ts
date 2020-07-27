@@ -1,6 +1,6 @@
 import path from 'path'
 import minimist from 'minimist'
-import { getConfigs } from 'aspida'
+import { getConfigs } from 'aspida/dist/commands'
 import build from './buildRouteFile'
 import write from 'aspida/dist/writeRouteFile'
 import watch from 'aspida/dist/watchInputDir'

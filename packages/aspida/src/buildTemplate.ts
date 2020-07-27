@@ -1,5 +1,5 @@
 import path from 'path'
-import { AspidaConfig } from './'
+import { AspidaConfig } from './getConfigs'
 import createTemplateValues from './createTemplateValues'
 import { getDirentTree, DirentTree } from './getDirentTree'
 

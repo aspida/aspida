@@ -1,6 +1,12 @@
 import fs from 'fs'
 import path from 'path'
-import { AspidaConfig } from './'
+
+export type AspidaConfig = {
+  input: string
+  baseURL: string
+  trailingSlash: boolean
+  outputEachDir: boolean
+}
 
 const defaultConfig: AspidaConfig = {
   input: ['api', 'apis'].find(input => fs.existsSync(input)) ?? 'api',
