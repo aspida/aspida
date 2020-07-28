@@ -8,7 +8,7 @@ export const run = (args: string[]) => {
   })
 
   ;(argv.version !== undefined
-    ? () => console.log(`v${version()}`)
+    ? () => console.log(`v${version}`)
     : argv.watch !== undefined
     ? watch
     : build)(argv.config)

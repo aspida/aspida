@@ -265,9 +265,9 @@ import api from "../api/$api"
 ## Node.js API
 
 ```ts
-import { build, watch, version } from "aspida/dist/commands"
+import { version, build, watch } from "aspida/dist/commands"
 
-console.log(version()) // 0.1.0
+console.log(version) // 0.x.y
 
 build()
 build("./app/aspida.config.js")
