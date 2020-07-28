@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.20.2](https://github.com/aspida/aspida/compare/v0.20.1...v0.20.2) (2020-07-28)
+
+
+### Bug Fixes
+
+* version command for depth of dist ([3e724da](https://github.com/aspida/aspida/commit/3e724dabc07688b950f93c55dc2fcd1c44debd44))
+
 ### [0.20.1](https://github.com/aspida/aspida/compare/v0.20.0...v0.20.1) (2020-07-28)
 
 

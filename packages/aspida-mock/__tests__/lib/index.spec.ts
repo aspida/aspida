@@ -1,4 +1,5 @@
 import fs from 'fs'
+import { version } from '../../package.json'
 import { run } from '../../src/cli'
 import build from '../../src/cli/buildRouteFile'
 
@@ -8,7 +9,7 @@ describe('cli', () => {
     const args = ['--version']
 
     run(args)
-    expect(console.log).toHaveBeenCalled()
+    expect(console.log).toHaveBeenCalledWith(`v${version}`)
 
     spyLog.mockReset()
     spyLog.mockRestore()

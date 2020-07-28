@@ -267,7 +267,7 @@ import api from "../api/$api"
 ```ts
 import { version, build, watch } from "aspida/dist/commands"
 
-console.log(version) // 0.x.y
+console.log(version()) // 0.x.y
 
 build()
 build("./app/aspida.config.js")

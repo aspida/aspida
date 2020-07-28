@@ -1,10 +1,16 @@
 import fs from 'fs'
+import packageJson from '../package.json'
 import build from '../src/buildTemplate'
 import { getConfigs } from '../src/getConfigs'
+import { version } from '../src/commands'
 
 const basePath = 'packages/aspida'
 
 describe('cli test', () => {
+  test('version command', () => {
+    expect(version()).toBe(packageJson.version)
+  })
+
   test('main', () => {
     const { input, baseURL, trailingSlash, outputEachDir } = getConfigs(
       `${basePath}/aspida.config.js`

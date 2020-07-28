@@ -26,6 +26,6 @@
     "ky-universal"
   ],
   "dependencies": {
-    "aspida": "^0.20.1"
+    "aspida": "^0.20.2"
   }
 }
