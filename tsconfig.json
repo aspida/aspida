@@ -4,6 +4,7 @@
     "declarationMap": true,
     "downlevelIteration": true,
     "experimentalDecorators": true,
+    "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
       "aspida": ["packages/aspida/src"],
