@@ -10,13 +10,13 @@ export const run = (args: string[]) => {
     alias: { v: 'version', c: 'config', w: 'watch' }
   })
 
-  ;(argv.version !== undefined
-    ? () => console.log(`v${require('../../package.json').version}`)
+  // eslint-disable-next-line no-unused-expressions
+  argv.version !== undefined
+    ? console.log(`v${require('../../package.json').version}`)
     : argv.watch !== undefined
-    ? () =>
-        getConfigs(argv.config).forEach(config => {
-          write(build(config))
-          watch(config.input, () => write(build(config)))
-        })
-    : () => getConfigs(argv.config).map(build).forEach(write))()
+    ? getConfigs(argv.config).forEach(config => {
+        write(build(config))
+        watch(config.input, () => write(build(config)))
+      })
+    : getConfigs(argv.config).map(build).forEach(write)
 }

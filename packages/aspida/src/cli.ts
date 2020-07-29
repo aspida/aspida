@@ -7,9 +7,10 @@ export const run = (args: string[]) => {
     alias: { v: 'version', c: 'config', w: 'watch' }
   })
 
-  ;(argv.version !== undefined
-    ? () => console.log(`v${version()}`)
+  // eslint-disable-next-line no-unused-expressions
+  argv.version !== undefined
+    ? console.log(`v${version()}`)
     : argv.watch !== undefined
-    ? watch
-    : build)(argv.config)
+    ? watch(argv.config)
+    : build(argv.config)
 }
