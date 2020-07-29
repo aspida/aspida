@@ -1,4 +1,3 @@
-import path from 'path'
 import minimist from 'minimist'
 import { getConfigs } from 'aspida/dist/commands'
 import build from './buildRouteFile'
@@ -12,7 +11,7 @@ export const run = (args: string[]) => {
   })
 
   ;(argv.version !== undefined
-    ? () => console.log(`v${require(path.join(__dirname, '../../package.json')).version}`)
+    ? () => console.log(`v${require('../../package.json').version}`)
     : argv.watch !== undefined
     ? () =>
         getConfigs(argv.config).forEach(config => {
