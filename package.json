@@ -43,6 +43,10 @@
     "root": true,
     "rules": {
       "@typescript-eslint/explicit-function-return-type": "off",
+      "@typescript-eslint/ban-ts-comment": "off",
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+      "@typescript-eslint/no-var-requires": "off",
+      "@typescript-eslint/ban-types": "off",
       "@typescript-eslint/camelcase": "off",
       "@typescript-eslint/no-explicit-any": "off"
     }
@@ -70,8 +74,8 @@
     "@types/jest": "^26.0.9",
     "@types/minimist": "^1.2.0",
     "@types/node-fetch": "^2.5.7",
-    "@typescript-eslint/eslint-plugin": "2.34.0",
-    "@typescript-eslint/parser": "^2.34.0",
+    "@typescript-eslint/eslint-plugin": "^3.8.0",
+    "@typescript-eslint/parser": "^3.8.0",
     "axios": "^0.19.2",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.11.0",
