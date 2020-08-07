@@ -1,10 +1,10 @@
-import { getConfigs } from './getConfigs'
+import { getConfigs, AspidaConfig } from './getConfigs'
 import buildTemplate from './buildTemplate'
 import writeRouteFile from './writeRouteFile'
 import watchInputDir from './watchInputDir'
 
-export { getConfigs, AspidaConfig } from './getConfigs'
 export { parse } from './parseInterface'
+export { getConfigs, AspidaConfig }
 
 export const version = (): string => require('../package.json').version
 
