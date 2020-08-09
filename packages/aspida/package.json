@@ -24,6 +24,7 @@
     "ajax"
   ],
   "dependencies": {
+    "@types/minimist": "^1.2.0",
     "chokidar": "^3.4.2",
     "minimist": "^1.2.5"
   }
