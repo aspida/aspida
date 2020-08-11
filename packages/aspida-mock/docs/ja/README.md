@@ -72,7 +72,7 @@
 
 aspida の型定義ファイルで mockMethods を export する
 
-`apis/users.ts`
+`apis/users/index.ts`
 
 <!-- prettier-ignore -->
 ```ts
@@ -167,7 +167,7 @@ export default mockMiddleware([
 ])
 ```
 
-`api/users.ts`
+`api/users/index.ts`
 
 <!-- prettier-ignore -->
 ```ts

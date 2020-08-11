@@ -135,7 +135,7 @@ $ mkdir api
 - GET: /v1/users/\${userId}
 - PUT: /v1/users/\${userId}
 
-  `api/v1/users/_userId@number.ts`
+  `api/v1/users/_userId@number/index.ts`
 
   Specify the type of path variable “userId” starting with underscore with “@number”  
   If not specified with @, the default path variable type is "number | string"
@@ -477,7 +477,7 @@ $ npx openapi2aspida -i https://petstore.swagger.io/v2/swagger.json
 Special characters are encoded as percent-encoding in the file name  
 Example `":"` -> `"%3A"`
 
-`api/foo%3Abar.ts`
+`api/foo%3Abar/index.ts`
 
 ```ts
 export type Methods = {
