@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.20.3](https://github.com/aspida/aspida/compare/v0.20.2...v0.20.3) (2020-08-11)
+
+
+### Bug Fixes
+
+* add @types/minimist to deps of aspida ([26d69c4](https://github.com/aspida/aspida/commit/26d69c40caf5adf64f1708deca67356eceb37a25))
+* **deps:** bump chokidar from 3.4.1 to 3.4.2 ([94d07d1](https://github.com/aspida/aspida/commit/94d07d16f3474a78e97336d60d70dd32e22fb5fb))
+
+
+### Documentation
+
+* update README ([6f9efdb](https://github.com/aspida/aspida/commit/6f9efdb5fd2993cd172c545bab44a5c0768166a9))
+
 ### [0.20.2](https://github.com/aspida/aspida/compare/v0.20.1...v0.20.2) (2020-07-28)
 
 
