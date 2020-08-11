@@ -135,7 +135,7 @@ $ mkdir api
 - GET: /v1/users/\${userId}
 - PUT: /v1/users/\${userId}
 
-  `api/v1/users/_userId@number.ts`
+  `api/v1/users/_userId@number/index.ts`
 
   アンダースコアから始まるパス変数「userId」の型を「@number」で指定する  
   @での指定がない場合、パス変数の型のデフォルトは「number | string」
@@ -476,7 +476,7 @@ $ npx openapi2aspida -i https://petstore.swagger.io/v2/swagger.json
 特殊文字はパーセントエンコーディングしてファイル名に指定する  
 例 `":"` -> `"%3A"`
 
-`api/foo%3Abar.ts`
+`api/foo%3Abar/index.ts`
 
 ```ts
 export type Methods = {

@@ -72,7 +72,7 @@
 
 Export mockMethods in aspida type definition file.
 
-`api/users.ts`
+`api/users/index.ts`
 
 <!-- prettier-ignore -->
 ```ts
@@ -167,7 +167,7 @@ export default mockMiddleware([
 ])
 ```
 
-`api/users.ts`
+`api/users/index.ts`
 
 <!-- prettier-ignore -->
 ```ts
