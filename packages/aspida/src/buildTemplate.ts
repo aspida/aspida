@@ -56,7 +56,9 @@ const createTemplate = (
 ) => {
   const { api, imports, pathes } = createTemplateValues(tree, basePath, trailingSlash)
   const text = `/* eslint-disable */
-import { AspidaClient${api.includes('BasicHeaders') ? ', BasicHeaders' : ''} } from 'aspida'
+import { AspidaClient${api.includes('BasicHeaders') ? ', BasicHeaders' : ''}${
+    api.includes('dataToURLString') ? ', dataToURLString' : ''
+  } } from 'aspida'
 <% types %><% imports %>
 ${['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'PATCH', 'OPTIONS']
   .filter(m => api.includes(`, ${m}, option`))

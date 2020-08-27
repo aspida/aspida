@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { AspidaClient } from 'aspida'
+import { AspidaClient, dataToURLString } from 'aspida'
 import { Methods as Methods0 } from '.'
 
 const GET = 'GET'
@@ -16,7 +16,9 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
     post: (option: { body?: Methods0['post']['reqBody'], query: Methods0['post']['query'], config?: T }) =>
       fetch<Methods0['post']['resBody']>(prefix, PATH0, POST, option, 'URLSearchParams').json(),
     $post: (option: { body?: Methods0['post']['reqBody'], query: Methods0['post']['query'], config?: T }) =>
-      fetch<Methods0['post']['resBody']>(prefix, PATH0, POST, option, 'URLSearchParams').json().then(r => r.body)
+      fetch<Methods0['post']['resBody']>(prefix, PATH0, POST, option, 'URLSearchParams').json().then(r => r.body),
+    $path: (option?: { method?: 'get'; query: Methods0['get']['query'] } | { method: 'post'; query: Methods0['post']['query'] }) =>
+      `${prefix}${PATH0}${option?.query ? `?${dataToURLString(option.query)}` : ''}`
   }
 }
 

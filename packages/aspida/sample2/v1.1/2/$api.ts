@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { AspidaClient } from 'aspida'
+import { AspidaClient, dataToURLString } from 'aspida'
 import * as ApiTypes from '../../@types'
 import { Methods as Methods0 } from './_hogeId@HogeId/entries.json'
 import { Methods as Methods1 } from './_hogeId@HogeId/test-4'
@@ -28,7 +28,8 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
           get: (option?: { config?: T }) =>
             fetch<Methods0['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).json(),
           $get: (option?: { config?: T }) =>
-            fetch<Methods0['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).json().then(r => r.body)
+            fetch<Methods0['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).json().then(r => r.body),
+          $path: () => `${prefix}${prefix0}${PATH1}`
         },
         test_4: {
           _fugaId: (val1: number | string) => {
@@ -50,7 +51,9 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
               delete: (option: { query: Methods2['delete']['query'], config?: T }) =>
                 fetch<Methods2['delete']['resBody']>(prefix, `${prefix1}${PATH3}`, DELETE, option).json(),
               $delete: (option: { query: Methods2['delete']['query'], config?: T }) =>
-                fetch<Methods2['delete']['resBody']>(prefix, `${prefix1}${PATH3}`, DELETE, option).json().then(r => r.body)
+                fetch<Methods2['delete']['resBody']>(prefix, `${prefix1}${PATH3}`, DELETE, option).json().then(r => r.body),
+              $path: (option?: { method?: 'get'; query: Methods2['get']['query'] } | { method: 'post'; query: Methods2['post']['query'] } | { method: 'put'; query: Methods2['put']['query'] } | { method: 'delete'; query: Methods2['delete']['query'] }) =>
+                `${prefix}${prefix1}${PATH3}${option?.query ? `?${dataToURLString(option.query)}` : ''}`
             }
           },
           fuga_aa: {
@@ -69,7 +72,9 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
             delete: (option: { body: Methods3['delete']['reqBody'], query: Methods3['delete']['query'], config?: T }) =>
               fetch<Methods3['delete']['resBody']>(prefix, `${prefix0}${PATH4}`, DELETE, option).json(),
             $delete: (option: { body: Methods3['delete']['reqBody'], query: Methods3['delete']['query'], config?: T }) =>
-              fetch<Methods3['delete']['resBody']>(prefix, `${prefix0}${PATH4}`, DELETE, option).json().then(r => r.body)
+              fetch<Methods3['delete']['resBody']>(prefix, `${prefix0}${PATH4}`, DELETE, option).json().then(r => r.body),
+            $path: (option?: { method?: 'get'; query: Methods3['get']['query'] } | { method: 'post'; query: Methods3['post']['query'] } | { method: 'put'; query: Methods3['put']['query'] } | { method: 'delete'; query: Methods3['delete']['query'] }) =>
+              `${prefix}${prefix0}${PATH4}${option?.query ? `?${dataToURLString(option.query)}` : ''}`
           },
           get: (option: { query: Methods1['get']['query'], config?: T }) =>
             fetch<void>(prefix, `${prefix0}${PATH2}`, GET, option).send(),
@@ -86,7 +91,9 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
           delete: (option: { query: Methods1['delete']['query'], config?: T }) =>
             fetch<Methods1['delete']['resBody']>(prefix, `${prefix0}${PATH2}`, DELETE, option).json(),
           $delete: (option: { query: Methods1['delete']['query'], config?: T }) =>
-            fetch<Methods1['delete']['resBody']>(prefix, `${prefix0}${PATH2}`, DELETE, option).json().then(r => r.body)
+            fetch<Methods1['delete']['resBody']>(prefix, `${prefix0}${PATH2}`, DELETE, option).json().then(r => r.body),
+          $path: (option?: { method?: 'get'; query: Methods1['get']['query'] } | { method: 'post'; query: Methods1['post']['query'] } | { method: 'put'; query: Methods1['put']['query'] } | { method: 'delete'; query: Methods1['delete']['query'] }) =>
+            `${prefix}${prefix0}${PATH2}${option?.query ? `?${dataToURLString(option.query)}` : ''}`
         }
       }
     },
@@ -97,7 +104,9 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
         get: (option: { query?: Methods4['get']['query'], headers: Methods4['get']['reqHeaders'], config?: T }) =>
           fetch<Methods4['get']['resBody']>(prefix, `${prefix2}${PATH3}`, GET, option).json(),
         $get: (option: { query?: Methods4['get']['query'], headers: Methods4['get']['reqHeaders'], config?: T }) =>
-          fetch<Methods4['get']['resBody']>(prefix, `${prefix2}${PATH3}`, GET, option).json().then(r => r.body)
+          fetch<Methods4['get']['resBody']>(prefix, `${prefix2}${PATH3}`, GET, option).json().then(r => r.body),
+        $path: (option?: { method?: 'get'; query: Methods4['get']['query'] }) =>
+          `${prefix}${prefix2}${PATH3}${option?.query ? `?${dataToURLString(option.query)}` : ''}`
       }
     }
   }
