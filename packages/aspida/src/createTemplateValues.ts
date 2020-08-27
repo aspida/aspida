@@ -1,4 +1,3 @@
-import path from 'path'
 import createMethods from './createMethodsString'
 import { Method } from './parseInterface'
 import { DirentTree } from './getDirentTree'
@@ -42,9 +41,9 @@ export default (direntTree: DirentTree, basePath: string, trailingSlash: boolean
   ): string => {
     const props = tree.children
       .map(dirent => {
-        const file = dirent.name
-        const basename = path.basename(file, '.ts')
-        const hasVal = file.startsWith('_')
+        const filename = dirent.name
+        const basename = dirent.isDir ? filename : filename.replace(/\.ts$/, '')
+        const hasVal = filename.startsWith('_')
         let valFn = `${indent}${basename
           .replace(/[^a-zA-Z0-9$_]/g, '_')
           .replace(/^(\d)/, '$$$1')}: {\n<% next %>\n${indent}}`
@@ -79,19 +78,19 @@ export default (direntTree: DirentTree, basePath: string, trailingSlash: boolean
 
         if (dirent.isDir) {
           const methodsOfIndexTsFile =
-            tree.children.find(c => c.name === `${file}.ts`) ??
+            tree.children.find(c => c.name === `${filename}.ts`) ??
             dirent.tree.children.find(c => c.name === 'index.ts')
 
           return createApiString(
             dirent.tree,
-            `${importBasePath}/${file}`,
+            `${importBasePath}/${filename}`,
             `${indent}${hasVal ? '  ' : ''}  `,
             newPrefix,
             newUrl,
             valFn.replace('<% next %>', '<% props %>'),
             methodsOfIndexTsFile?.isDir === false
               ? getMethodsString(
-                  `${importBasePath}/${file}`,
+                  `${importBasePath}/${filename}`,
                   methodsOfIndexTsFile.methods,
                   `${indent}${hasVal ? '  ' : ''}`,
                   newPrefix,
@@ -99,7 +98,7 @@ export default (direntTree: DirentTree, basePath: string, trailingSlash: boolean
                 )
               : undefined
           )
-        } else if (file !== 'index.ts' && tree.children.every(d => d.name !== basename)) {
+        } else if (filename !== 'index.ts' && tree.children.every(d => d.name !== basename)) {
           return valFn.replace(
             '<% next %>',
             getMethodsString(

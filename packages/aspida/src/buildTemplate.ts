@@ -3,23 +3,50 @@ import { AspidaConfig } from './getConfigs'
 import createTemplateValues from './createTemplateValues'
 import { getDirentTree, DirentTree } from './getDirentTree'
 
-const listNotIndexFiles = (tree: DirentTree): string[] => {
-  return [
-    ...tree.children
-      .filter(c => !c.name.startsWith('_') && !c.isDir && c.name !== 'index.ts')
-      .map(
-        c =>
-          `${path.posix.join(tree.path, c.name)} -> ${path.posix.join(
-            tree.path,
-            c.name.replace('.ts', ''),
-            'index.ts'
-          )}`
-      ),
-    ...tree.children
-      .map(c => (!c.name.startsWith('_') && c.isDir ? listNotIndexFiles(c.tree) : []))
-      .reduce((p, c) => [...p, ...c], [])
-  ]
-}
+const listNotIndexFiles = (tree: DirentTree): string[] => [
+  ...tree.children
+    .filter(c => !c.name.startsWith('_') && !c.isDir && c.name !== 'index.ts')
+    .map(
+      c =>
+        `${tree.path}/\u001b[31m${c.name}\u001b[0m -> \u001b[32m${c.name.replace(
+          '.ts',
+          ''
+        )}/index.ts\u001b[0m`
+    ),
+  ...tree.children
+    .map(c => (!c.name.startsWith('_') && c.isDir ? listNotIndexFiles(c.tree) : []))
+    .reduce((p, c) => [...p, ...c], [])
+]
+
+const listNamedFiles = (tree: DirentTree): string[] => [
+  ...tree.children
+    .filter(c => !c.isDir && c.name !== 'index.ts')
+    .map(
+      c =>
+        `${tree.path}/\u001b[31m${c.name}\u001b[0m -> \u001b[32m${c.name.replace(
+          '.ts',
+          ''
+        )}/index.ts\u001b[0m`
+    ),
+  ...tree.children
+    .map(c => (c.isDir ? listNamedFiles(c.tree) : []))
+    .reduce((p, c) => [...p, ...c], [])
+]
+
+const listTypeAliasFiles = (tree: DirentTree): string[] => [
+  ...tree.children
+    .filter(c => /_.+@[A-Z]/.test(c.name))
+    .map(
+      c =>
+        `${tree.path}/\u001b[31m${c.name}\u001b[0m -> \u001b[32m${c.name.replace(
+          /@.+?(.ts|$)/,
+          '@{number|string}$1'
+        )}\u001b[0m`
+    ),
+  ...tree.children
+    .map(c => (c.isDir ? listTypeAliasFiles(c.tree) : []))
+    .reduce((p, c) => [...p, ...c], [])
+]
 
 const createTemplate = (
   tree: DirentTree,
@@ -64,18 +91,18 @@ export default api
   return { text, filePath: path.posix.join(tree.path, '$api.ts') }
 }
 
-export default ({ input, baseURL, trailingSlash, outputEachDir }: AspidaConfig) => {
+export default (
+  { input, baseURL, trailingSlash, outputEachDir }: AspidaConfig,
+  isFirstBuild: boolean
+) => {
   const direntTree = getDirentTree(input)
   const templates = [createTemplate(direntTree, baseURL, trailingSlash, '')]
 
   if (outputEachDir) {
     const notIndexFiles = listNotIndexFiles(direntTree)
     if (notIndexFiles.length) {
-      console.error(
-        `Error on aspida: Since true is specified in outputEachDir at aspida.config.js, you need to rename the following files\n${notIndexFiles.join(
-          '\n'
-        )}\n`
-      )
+      console.log(`aspida \u001b[43m\u001b[31mERROR\u001b[0m Since true is specified in outputEachDir at aspida.config.js, you need to rename the following files
+  ${notIndexFiles.join('\n  ')}`)
 
       return []
     }
@@ -93,6 +120,21 @@ export default ({ input, baseURL, trailingSlash, outputEachDir }: AspidaConfig) 
     }
 
     appendTemplate(direntTree)
+  }
+
+  if (isFirstBuild) {
+    const namedFiles = listNamedFiles(direntTree)
+    const typeAliasFiles = listTypeAliasFiles(direntTree)
+
+    if (namedFiles.length) {
+      console.log(`aspida \u001b[43m\u001b[30mWARN\u001b[0m {endpoint}.ts format is deprecated. Please rename the following files
+  ${namedFiles.join('\n  ')}`)
+    }
+
+    if (typeAliasFiles.length) {
+      console.log(`aspida \u001b[43m\u001b[30mWARN\u001b[0m {endpoint}@{Type Alias}.ts format is deprecated. Please rename the following names
+  ${typeAliasFiles.join('\n  ')}`)
+    }
   }
 
   return templates
