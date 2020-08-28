@@ -14,20 +14,20 @@ import { Methods as Methods9 } from './v1.1/_articleId.json'
 import { Methods as Methods10 } from './v1.1/users/_userId@User[\'id\']'
 import { Methods as Methods11 } from './v2.0'
 
-const GET = 'GET'
-const POST = 'POST'
-const PUT = 'PUT'
-const DELETE = 'DELETE'
-const PATH0 = '/v1.1'
-const PATH1 = '/v1.1/2'
-const PATH2 = '/entries.json'
-const PATH3 = '/test-4'
-const PATH4 = '/test-4/fuga aa'
-const PATH5 = '/v1.1/3.1'
-const PATH6 = '/v1.1/users'
-const PATH7 = '/v2.0'
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const prefix = (baseURL === undefined ? 'https://example.com/api/' : baseURL).replace(/\/$/, '')
+  const PATH0 = '/v1.1'
+  const PATH1 = '/v1.1/2'
+  const PATH2 = '/entries.json'
+  const PATH3 = '/test-4'
+  const PATH4 = '/test-4/fuga aa'
+  const PATH5 = '/v1.1/3.1'
+  const PATH6 = '/v1.1/users'
+  const PATH7 = '/v2.0'
+  const GET = 'GET'
+  const POST = 'POST'
+  const PUT = 'PUT'
+  const DELETE = 'DELETE'
 
   return {
     _sampleId_json: (val0: number) => {

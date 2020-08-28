@@ -1,8 +1,17 @@
 import { mockMethods } from 'aspida-mock'
 
+/**
+ * 3.1 comment
+ */
 export type Methods = {
+  /**
+   * 3.1 get method comment
+   */
   get: {
     query?: { aa?: number }
+    /**
+     * 3.1 reqHeaders
+     */
     reqHeaders: {}
     resBody: { id: number }
   }

@@ -1,7 +1,8 @@
 import path from 'path'
 import { AspidaConfig } from './getConfigs'
 import createTemplateValues from './createTemplateValues'
-import { getDirentTree, DirentTree } from './getDirentTree'
+import createDocComment from './createDocComment'
+import { getDirentTree, DirentTree, FileData } from './getDirentTree'
 
 const listNotIndexFiles = (tree: DirentTree): string[] => [
   ...tree.children
@@ -60,12 +61,17 @@ import { AspidaClient${api.includes('BasicHeaders') ? ', BasicHeaders' : ''}${
     api.includes('dataToURLString') ? ', dataToURLString' : ''
   } } from 'aspida'
 <% types %><% imports %>
+
+${createDocComment(
+  '',
+  tree.children.find((c): c is FileData => !c.isDir && c.name === 'index.ts')?.doc
+)}const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
+  const prefix = (baseURL === undefined ? '<% baseURL %>' : baseURL).replace(/\\/$/, '')
+${pathes.map((p, i) => `  const PATH${i} = ${p}`).join('\n')}
 ${['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'PATCH', 'OPTIONS']
   .filter(m => api.includes(`, ${m}, option`))
-  .map(m => `\nconst ${m} = '${m}'`)
-  .join('')}${pathes.map((p, i) => `\nconst PATH${i} = ${p}`).join('')}
-const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
-  const prefix = (baseURL === undefined ? '<% baseURL %>' : baseURL).replace(/\\/$/, '')
+  .map(m => `  const ${m} = '${m}'`)
+  .join('\n')}
 
   return <% api %>
 }

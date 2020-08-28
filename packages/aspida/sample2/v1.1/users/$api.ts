@@ -3,12 +3,12 @@ import { AspidaClient, dataToURLString } from 'aspida'
 import * as ApiTypes from '../../@types'
 import { Methods as Methods0 } from './_userId@User[\'id\']'
 
-const GET = 'GET'
-const POST = 'POST'
-const PATH0 = '/v1.1/users/'
-const PATH1 = '/'
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const prefix = (baseURL === undefined ? '' : baseURL).replace(/\/$/, '')
+  const PATH0 = '/v1.1/users/'
+  const PATH1 = '/'
+  const GET = 'GET'
+  const POST = 'POST'
 
   return {
     _userId: (val0: ApiTypes.User['id']) => {

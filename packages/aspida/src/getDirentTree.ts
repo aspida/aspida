@@ -1,10 +1,11 @@
 import fs from 'fs'
-import { Method, parse } from './parseInterface'
+import { Doc, Method, parse } from './parseInterface'
 
-type FileData = {
+export type FileData = {
   name: string
   isDir: false
   methods: Method[]
+  doc?: Doc
 }
 
 type DirData = {
@@ -29,11 +30,16 @@ export const getDirentTree = (input: string) => {
           tree: getDirentTree(`${input}/${dirent.name}`)
         })
       } else if (dirent.name.endsWith('.ts')) {
-        const methods = parse(fs.readFileSync(`${input}/${dirent.name}`, 'utf8'), 'Methods')
+        const value = parse(fs.readFileSync(`${input}/${dirent.name}`, 'utf8'), 'Methods')
 
-        if (!methods || methods.every(({ props }) => !Object.keys(props).length)) return
+        if (!value?.methods.some(({ props }) => Object.keys(props).length)) return
 
-        tree.children.push({ name: dirent.name, isDir: false, methods })
+        tree.children.push({
+          name: dirent.name,
+          isDir: false,
+          methods: value.methods,
+          doc: value.doc
+        })
       }
     })
 

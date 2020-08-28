@@ -1,9 +1,10 @@
 import { LowerHttpMethod } from './'
 import { Method } from './parseInterface'
+import createDocComment from './createDocComment'
 
 export default (methods: Method[], indent: string, importName: string, path: string) =>
   [
-    ...methods.map(({ name, props }) => {
+    ...methods.map(({ name, props, doc }) => {
       const isOptionRequired =
         (props.query && !props.query.hasQuestion) ||
         (props.reqBody && !props.reqBody.hasQuestion) ||
@@ -61,9 +62,9 @@ export default (methods: Method[], indent: string, importName: string, path: str
         )}>(prefix, ${path}, ${name.toUpperCase()}${request()}).${resMethodName()}()`
       ]
 
-      return `${indent}  ${name}: ${tmpChanks[0]}
+      return `${createDocComment(`${indent}  `, doc, props)}${indent}  ${name}: ${tmpChanks[0]}
 ${indent}    ${tmpChanks[1]},
-${indent}  $${name}: ${tmpChanks[0]}
+${createDocComment(`${indent}  `, doc, props)}${indent}  $${name}: ${tmpChanks[0]}
 ${indent}    ${tmpChanks[1]}.then(r => r.body)`
     }),
     methods.filter(({ props }) => props.query).length

@@ -2,10 +2,10 @@
 import { AspidaClient, dataToURLString } from 'aspida'
 import { Methods as Methods0 } from '.'
 
-const GET = 'GET'
-const PATH0 = '/v2.0/'
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const prefix = (baseURL === undefined ? '' : baseURL).replace(/\/$/, '')
+  const PATH0 = '/v2.0/'
+  const GET = 'GET'
 
   return {
     get: (option: { query: Methods0['get']['query'], headers: Methods0['get']['reqHeaders'], config?: T }) =>

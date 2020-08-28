@@ -11,20 +11,20 @@ import { Methods as Methods6 } from './3.1'
 import { Methods as Methods7 } from './_articleId.json'
 import { Methods as Methods8 } from './users/_userId@User[\'id\']'
 
-const GET = 'GET'
-const POST = 'POST'
-const PUT = 'PUT'
-const DELETE = 'DELETE'
-const PATH0 = '/v1.1/'
-const PATH1 = '/v1.1/2/'
-const PATH2 = '/entries.json/'
-const PATH3 = '/test-4/'
-const PATH4 = '/'
-const PATH5 = '/test-4/fuga aa/'
-const PATH6 = '/v1.1/3.1/'
-const PATH7 = '/v1.1/users/'
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const prefix = (baseURL === undefined ? '' : baseURL).replace(/\/$/, '')
+  const PATH0 = '/v1.1/'
+  const PATH1 = '/v1.1/2/'
+  const PATH2 = '/entries.json/'
+  const PATH3 = '/test-4/'
+  const PATH4 = '/'
+  const PATH5 = '/test-4/fuga aa/'
+  const PATH6 = '/v1.1/3.1/'
+  const PATH7 = '/v1.1/users/'
+  const GET = 'GET'
+  const POST = 'POST'
+  const PUT = 'PUT'
+  const DELETE = 'DELETE'
 
   return {
     $2: {
@@ -40,6 +40,9 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
             $path: () => `${prefix}${prefix0}${PATH2}`
           },
           test_4: {
+            /**
+             * _fugaId comment
+             */
             _fugaId: (val1: number | string) => {
               const prefix1 = `${prefix0}${PATH3}${val1}`
 
@@ -56,8 +59,16 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
                   fetch<Methods3['put']['resBody']>(prefix, `${prefix1}${PATH4}`, PUT, option).json(),
                 $put: (option: { query: Methods3['put']['query'], config?: T }) =>
                   fetch<Methods3['put']['resBody']>(prefix, `${prefix1}${PATH4}`, PUT, option).json().then(r => r.body),
+                /**
+                 * _fugaId delete method
+                 * @returns _fugaId resBody
+                 */
                 delete: (option: { query: Methods3['delete']['query'], config?: T }) =>
                   fetch<Methods3['delete']['resBody']>(prefix, `${prefix1}${PATH4}`, DELETE, option).json(),
+                /**
+                 * _fugaId delete method
+                 * @returns _fugaId resBody
+                 */
                 $delete: (option: { query: Methods3['delete']['query'], config?: T }) =>
                   fetch<Methods3['delete']['resBody']>(prefix, `${prefix1}${PATH4}`, DELETE, option).json().then(r => r.body),
                 $path: (option?: { method?: 'get'; query: Methods3['get']['query'] } | { method: 'post'; query: Methods3['post']['query'] } | { method: 'put'; query: Methods3['put']['query'] } | { method: 'delete'; query: Methods3['delete']['query'] }) =>
@@ -118,9 +129,20 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
         }
       }
     },
+    /**
+     * 3.1 comment
+     */
     $3_1: {
+      /**
+       * 3.1 get method comment
+       * @param option.headers - 3.1 reqHeaders
+       */
       get: (option: { query?: Methods6['get']['query'], headers: Methods6['get']['reqHeaders'], config?: T }) =>
         fetch<Methods6['get']['resBody']>(prefix, PATH6, GET, option).json(),
+      /**
+       * 3.1 get method comment
+       * @param option.headers - 3.1 reqHeaders
+       */
       $get: (option: { query?: Methods6['get']['query'], headers: Methods6['get']['reqHeaders'], config?: T }) =>
         fetch<Methods6['get']['resBody']>(prefix, PATH6, GET, option).json().then(r => r.body),
       post: (option: { body?: Methods6['post']['reqBody'], query: Methods6['post']['query'], config?: T }) =>

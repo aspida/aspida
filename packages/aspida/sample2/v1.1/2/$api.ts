@@ -7,17 +7,17 @@ import { Methods as Methods2 } from './_hogeId@HogeId/test-4/_fugaId'
 import { Methods as Methods3 } from './_hogeId@HogeId/test-4/fuga aa'
 import { Methods as Methods4 } from './_hogeId@number'
 
-const GET = 'GET'
-const POST = 'POST'
-const PUT = 'PUT'
-const DELETE = 'DELETE'
-const PATH0 = '/v1.1/2/'
-const PATH1 = '/entries.json/'
-const PATH2 = '/test-4/'
-const PATH3 = '/'
-const PATH4 = '/test-4/fuga aa/'
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const prefix = (baseURL === undefined ? '' : baseURL).replace(/\/$/, '')
+  const PATH0 = '/v1.1/2/'
+  const PATH1 = '/entries.json/'
+  const PATH2 = '/test-4/'
+  const PATH3 = '/'
+  const PATH4 = '/test-4/fuga aa/'
+  const GET = 'GET'
+  const POST = 'POST'
+  const PUT = 'PUT'
+  const DELETE = 'DELETE'
 
   return {
     _hogeId_0: (val0: ApiTypes.HogeId) => {
@@ -32,6 +32,9 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
           $path: () => `${prefix}${prefix0}${PATH1}`
         },
         test_4: {
+          /**
+           * _fugaId comment
+           */
           _fugaId: (val1: number | string) => {
             const prefix1 = `${prefix0}${PATH2}${val1}`
 
@@ -48,8 +51,16 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
                 fetch<Methods2['put']['resBody']>(prefix, `${prefix1}${PATH3}`, PUT, option).json(),
               $put: (option: { query: Methods2['put']['query'], config?: T }) =>
                 fetch<Methods2['put']['resBody']>(prefix, `${prefix1}${PATH3}`, PUT, option).json().then(r => r.body),
+              /**
+               * _fugaId delete method
+               * @returns _fugaId resBody
+               */
               delete: (option: { query: Methods2['delete']['query'], config?: T }) =>
                 fetch<Methods2['delete']['resBody']>(prefix, `${prefix1}${PATH3}`, DELETE, option).json(),
+              /**
+               * _fugaId delete method
+               * @returns _fugaId resBody
+               */
               $delete: (option: { query: Methods2['delete']['query'], config?: T }) =>
                 fetch<Methods2['delete']['resBody']>(prefix, `${prefix1}${PATH3}`, DELETE, option).json().then(r => r.body),
               $path: (option?: { method?: 'get'; query: Methods2['get']['query'] } | { method: 'post'; query: Methods2['post']['query'] } | { method: 'put'; query: Methods2['put']['query'] } | { method: 'delete'; query: Methods2['delete']['query'] }) =>
