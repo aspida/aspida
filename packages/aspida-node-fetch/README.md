@@ -1,11 +1,4 @@
 # @aspida/node-fetch
-
-| [aspida] | [aspida-mock] | [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] | @aspida/node-fetch |
-| -------- | ------------- | --------------- | ------------ | --------------- | ------------------ |
-
-
-<br />
-<br />
 <br />
 <br />
 <br />
@@ -31,7 +24,7 @@
   <a href="https://dependabot.com">
     <img src="https://api.dependabot.com/badges/status?host=github&repo=aspida/aspida" alt="Dependabot Status" />
   </a>
-  <a href="https://github.com/aspida/aspida/blob/master/packages/aspida-fetch/LICENSE">
+  <a href="https://github.com/aspida/aspida/blob/master/packages/aspida-node-fetch/LICENSE">
     <img src="https://img.shields.io/npm/l/@aspida/fetch" alt="License" />
   </a>
 </div>
@@ -89,10 +82,4 @@ const client = api(aspida(fetch, fetchConfig))
 
 ## License
 
-aspida-fetch is licensed under a [MIT License](https://github.com/aspida/aspida/blob/master/packages/aspida-fetch/LICENSE).
-
-[aspida]: https://github.com/aspida/aspida/tree/master/packages/aspida
-[aspida-mock]: https://github.com/aspida/aspida/tree/master/packages/aspida-mock
-[@aspida/axios]: https://github.com/aspida/aspida/tree/master/packages/aspida-axios
-[@aspida/ky]: https://github.com/aspida/aspida/tree/master/packages/aspida-ky
-[@aspida/fetch]: https://github.com/aspida/aspida/tree/master/packages/aspida-fetch
+@aspida/node-fetch is licensed under a [MIT License](https://github.com/aspida/aspida/blob/master/packages/aspida-node-fetch/LICENSE).
