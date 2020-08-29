@@ -932,10 +932,10 @@ asn1@~0.2.3:
   dependencies:
     safer-buffer "~2.1.0"
 
-aspida-mock@^0.7.1:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/aspida-mock/-/aspida-mock-0.7.1.tgz#8a1f83f12fbe61fde4bc78e545f52bad688181ce"
-  integrity sha512-TXI1+A+E89rQmSyukaYMNeXnmXM1bdji05d7QbOkSOjKzb2kcglAnPyMcDYYL4Dj+FHwwCd9BOucbls+tmVivQ==
+aspida-mock@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/aspida-mock/-/aspida-mock-0.8.0.tgz#59c6101406355558f97caeec975df8a1b04bd0a5"
+  integrity sha512-Pv1rrvV83IoDl9OTc4Ehfm/z5ECKZnCYM7BTOtsVV7xMP5/PY9HFkyuPW770rdhD+vfAWQE6swQQRrqfWe1KsA==
 
 assert-plus@1.0.0, assert-plus@^1.0.0:
   version "1.0.0"
