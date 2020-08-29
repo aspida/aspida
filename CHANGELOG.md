@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.21.0](https://github.com/aspida/aspida/compare/v0.20.3...v0.21.0) (2020-08-29)
+
+
+### Features
+
+* add $path for SWR ([1102b15](https://github.com/aspida/aspida/commit/1102b152882f9799f840271f059f01e73694f5ba))
+* add warnings ([617fe42](https://github.com/aspida/aspida/commit/617fe4200e277ae36f2ddd955b87e5553b62e765))
+* support tsdoc comment ([a1e6248](https://github.com/aspida/aspida/commit/a1e6248fc3c28892b86684fa17df6342abc2fcdc))
+
+
+### Documentation
+
+* update README ([667fe51](https://github.com/aspida/aspida/commit/667fe515bba657cde66754f4025660bda8be80db))
+
 ### [0.20.3](https://github.com/aspida/aspida/compare/v0.20.2...v0.20.3) (2020-08-11)
 
 
