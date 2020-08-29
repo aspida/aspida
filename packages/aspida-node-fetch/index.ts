@@ -25,7 +25,9 @@ export default (client = fetch, config?: FetchConfig): AspidaClient<FetchConfig>
     const send = <V>(fn: (res: Response) => Promise<V>) => async () => {
       const request = optionToRequest(params, type)
       const res = await client(
-        `${baseURL}${url}${request?.query ? `?${dataToURLString(request.query)}` : ''}`,
+        `${request?.config?.baseURL ?? baseURL}${url}${
+          request?.query ? `?${dataToURLString(request.query)}` : ''
+        }`,
         {
           method,
           ...config,
