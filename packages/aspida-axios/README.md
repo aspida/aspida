@@ -1,11 +1,4 @@
 # @aspida/axios
-
-| [aspida] | [aspida-mock] | @aspida/axios | [@aspida/ky] | [@aspida/fetch] | [@aspida/node-fetch] |
-| -------- | ------------- | ------------- | ------------ | --------------- | -------------------- |
-
-
-<br />
-<br />
 <br />
 <br />
 <br />
@@ -87,10 +80,4 @@ const client = api(aspida(axios, axiosConfig))
 
 ## License
 
-aspida-axios is licensed under a [MIT License](https://github.com/aspida/aspida/blob/master/packages/aspida-axios/LICENSE).
-
-[aspida]: https://github.com/aspida/aspida/tree/master/packages/aspida
-[aspida-mock]: https://github.com/aspida/aspida/tree/master/packages/aspida-mock
-[@aspida/ky]: https://github.com/aspida/aspida/tree/master/packages/aspida-ky
-[@aspida/fetch]: https://github.com/aspida/aspida/tree/master/packages/aspida-fetch
-[@aspida/node-fetch]: https://github.com/aspida/aspida/tree/master/packages/aspida-node-fetch
+@aspida/axios is licensed under a [MIT License](https://github.com/aspida/aspida/blob/master/packages/aspida-axios/LICENSE).

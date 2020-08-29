@@ -1,11 +1,17 @@
 import { LowerHttpMethod, AspidaMethodParams } from './'
 
 type MethodsProperties = keyof AspidaMethodParams
-type Prop = { value: string; hasQuestion: boolean }
+type Prop = {
+  value: string
+  hasQuestion: boolean
+  doc?: Doc
+}
 
+export type Doc = string[]
 export type Method = {
   name: LowerHttpMethod
   props: Partial<Record<MethodsProperties, Prop>>
+  doc?: Doc
 }
 
 const quoteRegExp = /['"]/
@@ -66,24 +72,24 @@ const countIgnored = (text: string): number => {
   let isMultiComment = false
 
   while (cursor < length) {
-    const [first, second] = text.slice(cursor)
+    const [first, second, third] = text.slice(cursor)
 
     if (isLineComment) {
       if (first === '\n') {
         isLineComment = false
       }
     } else if (isMultiComment) {
-      if (first === '*' && second === '/') {
+      if (`${first}${second}` === '*/') {
         cursor += 1
         isMultiComment = false
       }
-    } else if (first === '/') {
-      if (second === '/') {
-        isLineComment = true
-      } else {
-        isMultiComment = true
-      }
-
+    } else if (`${first}${second}${third}` === '/**') {
+      break
+    } else if (`${first}${second}` === '//') {
+      isLineComment = true
+      cursor += 1
+    } else if (`${first}${second}` === '/*') {
+      isMultiComment = true
       cursor += 1
     } else if (/[^ \r\n;,]/.test(first)) {
       break
@@ -93,6 +99,20 @@ const countIgnored = (text: string): number => {
   }
 
   return cursor
+}
+
+const parseDoc = (text: string) => {
+  if (!text.startsWith('/**')) return
+
+  const endsIndex = text.indexOf('*/') + 2
+
+  return {
+    values: text
+      .split(/(\r?\n? +)?\*\//)[0]
+      .replace(/^\/\*\*(\r?\n +\*)? ?/, '')
+      .split(/\r?\n +\* ?/),
+    length: endsIndex + countIgnored(text.slice(endsIndex))
+  }
 }
 
 const parseTypeName = (text: string): { value: string; length: number } => {
@@ -138,10 +158,16 @@ const parseObject = (text: string): { value: string; length: number } => {
 }
 
 const parseProp = (text: string): { name: MethodsProperties; value: Prop; length: number } => {
+  let cursor = 0
+  const doc = parseDoc(text)
+  if (doc) {
+    cursor += doc.length
+  }
+
   const { length } = text
-  const name = parseName(text)
-  const prop: Prop = { value: '', hasQuestion: name.hasQuestion }
-  let cursor = name.length
+  const name = parseName(text.slice(cursor))
+  const prop: Prop = { value: '', hasQuestion: name.hasQuestion, doc: doc?.values }
+  cursor += name.length
 
   while (cursor < length) {
     cursor += countIgnored(text.slice(cursor))
@@ -183,9 +209,15 @@ const parseProp = (text: string): { name: MethodsProperties; value: Prop; length
 }
 
 const parseMethod = (text: string): { value: Method; length: number } => {
+  let cursor = 0
+  const doc = parseDoc(text)
+  if (doc) {
+    cursor += doc.length
+  }
+
   const { length } = text
-  const methodName = parseName(text)
-  let cursor = methodName.length
+  const methodName = parseName(text.slice(cursor))
+  cursor += methodName.length
   const props: Method['props'] = {}
 
   cursor += countIgnored(text.slice(cursor)) + 1 // '{'
@@ -200,7 +232,10 @@ const parseMethod = (text: string): { value: Method; length: number } => {
 
   cursor += 1 // '}'
 
-  return { value: { name: methodName.value as LowerHttpMethod, props }, length: cursor }
+  return {
+    value: { name: methodName.value as LowerHttpMethod, props, doc: doc?.values },
+    length: cursor
+  }
 }
 
 const parseMethods = (text: string): Method[] => {
@@ -220,12 +255,19 @@ const parseMethods = (text: string): Method[] => {
   return methods
 }
 
-export const parse = (text: string, name: string): Method[] | null => {
-  const interfaceRegExp = new RegExp(`(^|\n)export (interface ${name}|type ${name} ?=) ?{`)
+export const parse = (text: string, name: string): { methods: Method[]; doc?: Doc } | null => {
+  const interfaceRegExp = new RegExp(`(^|\r?\n)export (interface ${name}|type ${name} ?=) ?{`)
   if (!interfaceRegExp.test(text)) return null
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const methods = parseMethods(text.split(interfaceRegExp).pop()!)
+  const [d, ...m] = text.split(interfaceRegExp)
+  const methods = parseMethods(m[m.length - 1])
 
-  return methods.length ? methods : null
+  return methods.length
+    ? {
+        methods,
+        doc: /\/\*\*[\s\S]+\*\/$/.test(d)
+          ? parseDoc(d.slice(d.lastIndexOf('/**')))?.values
+          : undefined
+      }
+    : null
 }

@@ -3,13 +3,11 @@
     "declaration": true,
     "declarationMap": true,
     "downlevelIteration": true,
-    "experimentalDecorators": true,
     "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
       "aspida": ["packages/aspida/src"],
       "aspida/dist/*": ["packages/aspida/src/*"],
-      "aspida-mock": ["packages/aspida-mock/src"],
       "@aspida/axios": ["packages/aspida-axios/src"],
       "@aspida/axios/dist/*": ["packages/aspida-axios/src/*"]
     },

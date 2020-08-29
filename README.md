@@ -1,9 +1,4 @@
-| aspida | [aspida-mock] | [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] | [@aspida/node-fetch] |
-| ------ | ------------- | --------------- | ------------ | --------------- | -------------------- |
-
-
-<br />
-<br />
+# aspida
 <br />
 <br />
 <br />
@@ -65,7 +60,6 @@ const body = await client.v1.users.$post({ body: { name: "taro" } })
 - Path, URL query, header, body, and response can all specify the type
 - FormData / URLSearchParams content can also specify the type
 - HTTP client supports axios / ky / ky-universal / fetch / node-fetch
-- Path definition is the same naming convention as Nuxt.js pages
 
 <br />
 <img src="https://aspida.github.io/aspida/assets/images/vscode.gif" width="720" alt="vscode" />
@@ -209,12 +203,12 @@ import api from "../api/$api"
 
 **[aspida - DEV Community](https://dev.to/t/aspida)**
 
-### Learn more about HTTP clients
+### aspida official HTTP clients
 
-- **[aspida-axios](https://github.com/aspida/aspida/tree/develop/packages/aspida-axios#readme)**
-- **[aspida-ky](https://github.com/aspida/aspida/tree/develop/packages/aspida-ky#readme)**
-- **[aspida-fetch](https://github.com/aspida/aspida/tree/develop/packages/aspida-fetch#readme)**
-- **[aspida-node-fetch](https://github.com/aspida/aspida/tree/develop/packages/aspida-node-fetch#readme)**
+- **[@aspida/axios](https://github.com/aspida/aspida/tree/master/packages/aspida-axios#readme)**
+- **[@aspida/ky](https://github.com/aspida/aspida/tree/master/packages/aspida-ky#readme)**
+- **[@aspida/fetch](https://github.com/aspida/aspida/tree/master/packages/aspida-fetch#readme)**
+- **[@aspida/node-fetch](https://github.com/aspida/aspida/tree/master/packages/aspida-node-fetch#readme)**
 
 ## Command Line Interface Options
 
@@ -298,6 +292,20 @@ watch([
 
 ## Tips
 
+1. [Change the directory where type definition file is placed to other than "api"](#tips1)
+1. [Serialize GET parameters manually](#tips2)
+1. [POST with FormData](#tips3)
+1. [POST with URLSearchParams](#tips4)
+1. [Receive response with ArrayBuffer](#tips5)
+1. [Convert from OpenAPI / Swagger](#tips6)
+1. [Define endpoints that contain special characters](#tips7)
+1. [Import only some endpoints](#tips8)
+1. [Retrieve endpoint URL string](#tips9)
+1. [Reflect TSDoc comments](#tips10)
+1. [Use mock](#tips11)
+
+<a id="tips1"></a>
+
 ### Change the directory where type definition file is placed to other than "api"
 
 Create a configuration file at the root of the project
@@ -322,6 +330,8 @@ module.exports = [
   { input: "api2", baseURL: "https://example.com/api" }
 ]
 ```
+
+<a id="tips2"></a>
 
 ### Serialize GET parameters manually
 
@@ -349,6 +359,8 @@ import api from "../api/$api"
   // res -> [{ id: 1, name: "taro1" }, { id: 2, name: "taro2" }, { id: 3, name: "taro3" }]
 })()
 ```
+
+<a id="tips3"></a>
 
 ### POST with FormData
 
@@ -392,6 +404,8 @@ import api from "../api/$api"
 })()
 ```
 
+<a id="tips4"></a>
+
 ### POST with URLSearchParams
 
 `api/v1/users/index.ts`
@@ -428,6 +442,8 @@ import api from "../api/$api"
 })()
 ```
 
+<a id="tips5"></a>
+
 ### Receive response with ArrayBuffer
 
 `api/v1/users/index.ts`
@@ -459,6 +475,8 @@ import api from "../api/$api"
 })()
 ```
 
+<a id="tips6"></a>
+
 ### Convert from OpenAPI / Swagger
 
 Compatible with yaml/json of OpenAPI3.0/Swagger2.0
@@ -471,6 +489,8 @@ $ npx openapi2aspida -i https://petstore.swagger.io/v2/swagger.json
 ```
 
 [Docs of openapi2aspida](https://github.com/aspida/openapi2aspida)
+
+<a id="tips7"></a>
 
 ### Define endpoints that contain special characters
 
@@ -502,6 +522,8 @@ import api from "../api/$api"
   // req -> GET: /foo%3Abar (= /foo:bar)
 })()
 ```
+
+<a id="tips8"></a>
 
 ### Import only some endpoints
 
@@ -535,6 +557,111 @@ import api1 from "../api/v2/bar/$api"
 })()
 ```
 
+<a id="tips9"></a>
+
+### Retrieve endpoint URL string
+
+`src/index.ts`
+
+```ts
+import aspida from "@aspida/axios"
+import api from "../api/$api"
+;(async () => {
+  const client = api(aspida())
+
+  console.log(client.v1.users.$path())
+  // /v1/users
+
+  console.log(client.vi.users.$path({ query: { limit: 10 } }))
+  // /v1/users?limit=10
+
+  console.log(client.vi.users.$path({
+    method: 'post',
+    query: { id: 1 }
+  }))
+  // /v1/users?id=1
+})()
+```
+
+<a id="tips10"></a>
+
+### Reflect TSDoc comments
+
+`api/index.ts`
+
+```ts
+/**
+ * root comment
+ * 
+ * @remarks
+ * root remarks comment
+ */
+export type Methods = {
+  /**
+   * post method comment
+   * 
+   * @remarks
+   * post method remarks comment
+   */
+  post: {
+    /** post query comment */
+    query: { limit: number }
+
+    /** post reqHeaders comment */
+    reqHeaders: { token: string }
+
+    reqFormat: FormData
+    /** post reqBody comment */
+    reqBody: UserCreation
+
+    /**
+     * post resBody comment1
+     * post resBody comment2
+     */
+    resBody: User
+  }
+}
+```
+
+```sh
+$ npm run api:build
+```
+
+`api/$api.ts`
+
+```ts
+/**
+ * root comment
+ * 
+ * @remarks
+ * root remarks comment
+ */
+const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
+  return {
+    /**
+     * post method comment
+     * 
+     * @remarks
+     * post method remarks comment
+     * 
+     * @param option.query - post query comment
+     * @param option.headers - post reqHeaders comment
+     * @param option.body - post reqBody comment
+     * @returns post resBody comment1
+     * post resBody comment2
+     */
+    $post: (option: { body: Methods0['post']['reqBody'], query: Methods0['post']['query'], headers: Methods0['post']['reqHeaders'], config?: T }) =>
+      fetch<Methods0['post']['resBody']>(prefix, PATH0, POST, option).json().then(r => r.body)
+  }
+}
+```
+
+<a id="tips11"></a>
+
+### Use mock
+
+**[GitHub aspida/aspida-mock](https://github.com/aspida/aspida-mock)**
+
 ## Support
 
 <a href="https://twitter.com/solufa2020">
@@ -544,9 +671,3 @@ import api1 from "../api/v2/bar/$api"
 ## License
 
 aspida is licensed under a [MIT License](https://github.com/aspida/aspida/blob/master/packages/aspida/LICENSE).
-
-[aspida-mock]: https://github.com/aspida/aspida/tree/master/packages/aspida-mock
-[@aspida/axios]: https://github.com/aspida/aspida/tree/master/packages/aspida-axios
-[@aspida/ky]: https://github.com/aspida/aspida/tree/master/packages/aspida-ky
-[@aspida/fetch]: https://github.com/aspida/aspida/tree/master/packages/aspida-fetch
-[@aspida/node-fetch]: https://github.com/aspida/aspida/tree/master/packages/aspida-node-fetch

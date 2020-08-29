@@ -1,9 +1,4 @@
-| aspida | [aspida-mock] | [@aspida/axios] | [@aspida/ky] | [@aspida/fetch] | [@aspida/node-fetch] |
-| ------ | ------------- | --------------- | ------------ | --------------- | -------------------- |
-
-
-<br />
-<br />
+# aspida
 <br />
 <br />
 <br />
@@ -65,7 +60,6 @@ const body = await client.v1.users.$post({ body: { name: "taro" } })
 - パス・URL クエリ・ヘッダー・ボディ・レスポンス全てに型を指定できる
 - FormData / URLSearchParams の内容にも型を指定できる
 - HTTP クライアントは axios / ky / ky-universal / fetch / node-fetch に対応
-- パス定義は Nuxt.js の pages と同じ命名規則
 
 <br />
 <img src="https://aspida.github.io/aspida/assets/images/vscode.gif" width="720" alt="vscode" />
@@ -209,12 +203,12 @@ import api from "../api/$api"
 
 **[aspida - Qiita](https://qiita.com/tags/aspida)**
 
-### HTTP クライアントについてもっと詳しく
+### aspida 公式 HTTP クライアント
 
-- **[aspida-axios](https://github.com/aspida/aspida/tree/develop/packages/aspida-axios#readme)**
-- **[aspida-ky](https://github.com/aspida/aspida/tree/develop/packages/aspida-ky#readme)**
-- **[aspida-fetch](https://github.com/aspida/aspida/tree/develop/packages/aspida-fetch#readme)**
-- **[aspida-node-fetch](https://github.com/aspida/aspida/tree/develop/packages/aspida-node-fetch#readme)**
+- **[@aspida/axios](https://github.com/aspida/aspida/tree/master/packages/aspida-axios#readme)**
+- **[@aspida/ky](https://github.com/aspida/aspida/tree/master/packages/aspida-ky#readme)**
+- **[@aspida/fetch](https://github.com/aspida/aspida/tree/master/packages/aspida-fetch#readme)**
+- **[@aspida/node-fetch](https://github.com/aspida/aspida/tree/master/packages/aspida-node-fetch#readme)**
 
 ## Command Line Interface のオプション
 
@@ -297,6 +291,20 @@ watch([
 
 ## Tips
 
+1. [型定義ファイルを置くディレクトリを api 以外に変更する](#tips1)
+1. [GET パラメータを手動でシリアライズする](#tips2)
+1. [FormData を POST する](#tips3)
+1. [URLSearchParams を POST する](#tips4)
+1. [レスポンスを ArrayBuffer で受け取る](#tips5)
+1. [OpenAPI / Swagger から変換する](#tips6)
+1. [特殊文字を含む URL を定義する](#tips7)
+1. [一部のエンドポイントのみ import する](#tips8)
+1. [エンドポイントの URL 文字列を取得する](#tips9)
+1. [TSDoc コメントを記載する](#tips10)
+1. [モックを利用する](#tips11)
+
+<a id="tips1"></a>
+
 ### 型定義ファイルを置くディレクトリを api 以外に変更する
 
 設定ファイルをプロジェクトのルートに作成する
@@ -321,6 +329,8 @@ module.exports = [
   { input: "api2", baseURL: "https://example.com/api" }
 ]
 ```
+
+<a id="tips2"></a>
 
 ### GET パラメータを手動でシリアライズする
 
@@ -348,6 +358,8 @@ import api from "../api/$api"
   // res -> [{ id: 1, name: "taro1" }, { id: 2, name: "taro2" }, { id: 3, name: "taro3" }]
 })()
 ```
+
+<a id="tips3"></a>
 
 ### FormData を POST する
 
@@ -391,6 +403,8 @@ import api from "../api/$api"
 })()
 ```
 
+<a id="tips4"></a>
+
 ### URLSearchParams を POST する
 
 `api/v1/users/index.ts`
@@ -427,6 +441,8 @@ import api from "../api/$api"
 })()
 ```
 
+<a id="tips5"></a>
+
 ### レスポンスを ArrayBuffer で受け取る
 
 `api/v1/users/index.ts`
@@ -458,6 +474,8 @@ import api from "../api/$api"
 })()
 ```
 
+<a id="tips6"></a>
+
 ### OpenAPI / Swagger から変換する
 
 OpenAPI3.0/Swagger2.0のyaml/jsonに対応
@@ -470,6 +488,8 @@ $ npx openapi2aspida -i https://petstore.swagger.io/v2/swagger.json
 ```
 
 [openapi2aspida ドキュメント](https://github.com/aspida/openapi2aspida)
+
+<a id="tips7"></a>
 
 ### 特殊文字を含む URL を定義する
 
@@ -501,6 +521,8 @@ import api from "../api/$api"
   // req -> GET: /foo%3Abar (= /foo:bar)
 })()
 ```
+
+<a id="tips8"></a>
 
 ### 一部のエンドポイントのみ import する
 
@@ -534,6 +556,111 @@ import api1 from "../api/v2/bar/$api"
 })()
 ```
 
+<a id="tips9"></a>
+
+### エンドポイントの URL 文字列を取得する
+
+`src/index.ts`
+
+```ts
+import aspida from "@aspida/axios"
+import api from "../api/$api"
+;(async () => {
+  const client = api(aspida())
+
+  console.log(client.v1.users.$path())
+  // /v1/users
+
+  console.log(client.vi.users.$path({ query: { limit: 10 } }))
+  // /v1/users?limit=10
+
+  console.log(client.vi.users.$path({
+    method: 'post',
+    query: { id: 1 }
+  }))
+  // /v1/users?id=1
+})()
+```
+
+<a id="tips10"></a>
+
+### TSDoc コメントを記載する
+
+`api/index.ts`
+
+```ts
+/**
+ * root comment
+ * 
+ * @remarks
+ * root remarks comment
+ */
+export type Methods = {
+  /**
+   * post method comment
+   * 
+   * @remarks
+   * post method remarks comment
+   */
+  post: {
+    /** post query comment */
+    query: { limit: number }
+
+    /** post reqHeaders comment */
+    reqHeaders: { token: string }
+
+    reqFormat: FormData
+    /** post reqBody comment */
+    reqBody: UserCreation
+
+    /**
+     * post resBody comment1
+     * post resBody comment2
+     */
+    resBody: User
+  }
+}
+```
+
+```sh
+$ npm run api:build
+```
+
+`api/$api.ts`
+
+```ts
+/**
+ * root comment
+ * 
+ * @remarks
+ * root remarks comment
+ */
+const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
+  return {
+    /**
+     * post method comment
+     * 
+     * @remarks
+     * post method remarks comment
+     * 
+     * @param option.query - post query comment
+     * @param option.headers - post reqHeaders comment
+     * @param option.body - post reqBody comment
+     * @returns post resBody comment1
+     * post resBody comment2
+     */
+    $post: (option: { body: Methods0['post']['reqBody'], query: Methods0['post']['query'], headers: Methods0['post']['reqHeaders'], config?: T }) =>
+      fetch<Methods0['post']['resBody']>(prefix, PATH0, POST, option).json().then(r => r.body)
+  }
+}
+```
+
+<a id="tips11"></a>
+
+### モックを利用する
+
+**[GitHub aspida/aspida-mock](https://github.com/aspida/aspida-mock)**
+
 ## サポート
 
 <a href="https://twitter.com/m_mitsuhide">
@@ -543,9 +670,3 @@ import api1 from "../api/v2/bar/$api"
 ## ライセンス
 
 aspida is licensed under a [MIT License](https://github.com/aspida/aspida/blob/master/packages/aspida/LICENSE).
-
-[aspida-mock]: https://github.com/aspida/aspida/tree/master/packages/aspida-mock
-[@aspida/axios]: https://github.com/aspida/aspida/tree/master/packages/aspida-axios
-[@aspida/ky]: https://github.com/aspida/aspida/tree/master/packages/aspida-ky
-[@aspida/fetch]: https://github.com/aspida/aspida/tree/master/packages/aspida-fetch
-[@aspida/node-fetch]: https://github.com/aspida/aspida/tree/master/packages/aspida-node-fetch

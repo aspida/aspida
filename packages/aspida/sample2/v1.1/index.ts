@@ -1,5 +1,3 @@
-import { mockMethods } from 'aspida-mock'
-
 export type Methods = {
   get: {
     // test
@@ -10,8 +8,3 @@ export type Methods = {
     resBody: Array<{ aa: number } | { bb: Array<string> }>
   }
 }
-
-export default mockMethods<Methods>({
-  // @ts-expect-error
-  get: ({ query }) => (query ? { status: 201, resBody: query } : { status: 403 })
-})

@@ -1,8 +1,15 @@
-import { mockMethods } from 'aspida-mock'
-
+/**
+ * 3.1 comment
+ */
 export type Methods = {
+  /**
+   * 3.1 get method comment
+   */
   get: {
     query?: { aa?: number }
+    /**
+     * 3.1 reqHeaders
+     */
     reqHeaders: {}
     resBody: { id: number }
   }
@@ -14,8 +21,3 @@ export type Methods = {
     resBody: { id: number }
   }
 }
-
-export default mockMethods<Methods>({
-  get: ({ query }) => (query?.aa ? { status: 200, resBody: { id: query.aa } } : { status: 403 }),
-  post: ({ reqBody }) => (reqBody?.name ? { status: 204, resBody: { id: 11 } } : { status: 500 })
-})

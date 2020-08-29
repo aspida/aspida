@@ -21,12 +21,15 @@ describe('cli test', () => {
     inputs.forEach(inputPath => {
       const resultFilePath = `${inputDir}/$api.ts`
       const result = fs.readFileSync(resultFilePath, 'utf8')
-      const [{ filePath, text }] = build({
-        input: inputPath,
-        baseURL,
-        trailingSlash,
-        outputEachDir
-      })
+      const [{ filePath, text }] = build(
+        {
+          input: inputPath,
+          baseURL,
+          trailingSlash,
+          outputEachDir
+        },
+        false
+      )
 
       expect(filePath).toBe(resultFilePath)
       expect(text).toBe(result.replace(/\r/g, ''))
@@ -46,12 +49,15 @@ describe('cli test', () => {
         )
         .filter(name => name.endsWith('$api.ts'))
 
-    const templates = build({
-      input: inputDir,
-      baseURL,
-      trailingSlash,
-      outputEachDir
-    })
+    const templates = build(
+      {
+        input: inputDir,
+        baseURL,
+        trailingSlash,
+        outputEachDir
+      },
+      false
+    )
     const apiFiles = listApiFiles(inputDir)
     expect(templates).toHaveLength(apiFiles.length)
 

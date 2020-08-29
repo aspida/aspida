@@ -1,9 +1,10 @@
 import { LowerHttpMethod } from './'
 import { Method } from './parseInterface'
+import createDocComment from './createDocComment'
 
 export default (methods: Method[], indent: string, importName: string, path: string) =>
-  methods
-    .map(({ name, props }) => {
+  [
+    ...methods.map(({ name, props, doc }) => {
       const isOptionRequired =
         (props.query && !props.query.hasQuestion) ||
         (props.reqBody && !props.reqBody.hasQuestion) ||
@@ -61,9 +62,25 @@ export default (methods: Method[], indent: string, importName: string, path: str
         )}>(prefix, ${path}, ${name.toUpperCase()}${request()}).${resMethodName()}()`
       ]
 
-      return `${indent}  ${name}: ${tmpChanks[0]}
+      return `${createDocComment(`${indent}  `, doc, props)}${indent}  ${name}: ${tmpChanks[0]}
 ${indent}    ${tmpChanks[1]},
-${indent}  $${name}: ${tmpChanks[0]}
+${createDocComment(`${indent}  `, doc, props)}${indent}  $${name}: ${tmpChanks[0]}
 ${indent}    ${tmpChanks[1]}.then(r => r.body)`
-    })
-    .join(',\n')
+    }),
+    methods.filter(({ props }) => props.query).length
+      ? `${indent}  $path: (option?: ${methods
+          .filter(({ props }) => props.query)
+          .map(
+            ({ name }) =>
+              `{ method${
+                name === 'get' ? '?' : ''
+              }: '${name}'; query: ${importName}['${name}']['query'] }`
+          )
+          .join(' | ')}) =>
+${indent}    \`\${prefix}\${${
+          path.startsWith('`') ? path.slice(3, -2) : path
+        }}\${option?.query ? \`?\${dataToURLString(option.query)}\` : ''}\``
+      : `${indent}  $path: () => \`\${prefix}\${${
+          path.startsWith('`') ? path.slice(3, -2) : path
+        }}\``
+  ].join(',\n')

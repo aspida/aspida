@@ -1,5 +1,6 @@
-import { mockMethods } from 'aspida-mock'
-
+/**
+ * _fugaId comment
+ */
 export type Methods = {
   get: {
     query?: { aa?: number }
@@ -19,13 +20,14 @@ export type Methods = {
     resBody: { id: number }
   }
 
+  /**
+   * _fugaId delete method
+   */
   delete: {
     query: { aa: number }
+    /**
+     * _fugaId resBody
+     */
     resBody: { id: number }
   }
 }
-
-export default mockMethods<Methods>({
-  get: ({ query }) => (query?.aa ? { status: 200, resBody: { id: query.aa } } : { status: 403 }),
-  delete: ({ query }) => (query.aa ? { status: 204, resBody: { id: 11 } } : { status: 500 })
-})
