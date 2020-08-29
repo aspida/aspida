@@ -659,7 +659,7 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
 
 ### モックを利用する
 
-**[GitHub aspida/aspida-mock](https://github.com/aspida/aspida-mock)**
+**[GitHub aspida/aspida-mock](https://github.com/aspida/aspida-mock/tree/master/docs/ja)**
 
 ## サポート
 
