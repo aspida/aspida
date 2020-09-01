@@ -56,7 +56,7 @@
 ```typescript
 import ky from "ky"
 import aspida from "@aspida/ky"
-import api from "../apis/$api"
+import api from "../api/$api"
 
 const kyConfig = { timeout: 3000, prefixUrl: "https://example.com/api" }
 const client = api(aspida(ky, kyConfig))

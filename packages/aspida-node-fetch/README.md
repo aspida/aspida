@@ -57,8 +57,8 @@
 
 ```typescript
 import fetch from "node-fetch"
-import aspida from "@aspida/fetch"
-import api from "../apis/$api"
+import aspida from "@aspida/node-fetch"
+import api from "../api/$api"
 
 const fetchConfig = { baseURL: "https://example.com/api" }
 const client = api(aspida(fetch, fetchConfig))

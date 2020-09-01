@@ -56,7 +56,7 @@
 ```typescript
 import axios from "axios"
 import aspida from "@aspida/axios"
-import api from "../apis/$api"
+import api from "../api/$api"
 
 const axiosConfig = { timeout: 3000, baseURL: "https://example.com/api" }
 const client = api(aspida(axios, axiosConfig))

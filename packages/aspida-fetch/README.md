@@ -55,7 +55,7 @@
 
 ```typescript
 import aspida from "@aspida/fetch"
-import api from "../apis/$api"
+import api from "../api/$api"
 
 const fetchConfig = { credentials: "include", baseURL: "https://example.com/api" }
 const client = api(aspida(fetch, fetchConfig))
