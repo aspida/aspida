@@ -10,7 +10,7 @@ export type Methods = {
     /**
      * 3.1 reqHeaders
      */
-    reqHeaders: {}
+    reqHeaders?: {}
     resBody: { id: number }
   }
 
