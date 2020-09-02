@@ -95,11 +95,13 @@ function Profile() {
 
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
-  return <>
-    <div>Status: {data.status}</div>
-    <div>Headers: {JSON.stringify(data.headers)}</div>
-    <div>Name: {data.body.name}</div>
-  </>
+  return (
+    <>
+      <div>Status: {data.status}</div>
+      <div>Headers: {JSON.stringify(data.headers)}</div>
+      <div>Name: {data.body.name}</div>
+    </>
+  )
 }
 ```
 
