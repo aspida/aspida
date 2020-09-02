@@ -76,12 +76,12 @@
     "@types/jest": "^26.0.12",
     "@types/node-fetch": "^2.5.7",
     "@types/react-dom": "^16.9.8",
-    "@typescript-eslint/eslint-plugin": "^3.10.1",
+    "@typescript-eslint/eslint-plugin": "^4.0.1",
     "@typescript-eslint/parser": "^3.10.1",
     "@vue/composition-api": "^1.0.0-beta.11",
     "aspida-mock": "^0.8.0",
     "axios": "^0.20.0",
-    "eslint": "^7.8.0",
+    "eslint": "^7.8.1",
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.22.0",
@@ -99,10 +99,10 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "standard-version": "^9.0.0",
-    "swr": "^0.3.1",
+    "swr": "^0.3.2",
     "swrv": "^0.7.3",
     "ts-jest": "^25.5.1",
-    "typescript": "^3.9.7",
+    "typescript": "^4.0.2",
     "vue": "^2.6.12"
   }
 }
