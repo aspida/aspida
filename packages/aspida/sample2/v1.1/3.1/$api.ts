@@ -16,13 +16,13 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
      * 3.1 get method comment
      * @param option.headers - 3.1 reqHeaders
      */
-    get: (option: { query?: Methods0['get']['query'], headers: Methods0['get']['reqHeaders'], config?: T }) =>
+    get: (option?: { query?: Methods0['get']['query'], headers?: Methods0['get']['reqHeaders'], config?: T }) =>
       fetch<Methods0['get']['resBody']>(prefix, PATH0, GET, option).json(),
     /**
      * 3.1 get method comment
      * @param option.headers - 3.1 reqHeaders
      */
-    $get: (option: { query?: Methods0['get']['query'], headers: Methods0['get']['reqHeaders'], config?: T }) =>
+    $get: (option?: { query?: Methods0['get']['query'], headers?: Methods0['get']['reqHeaders'], config?: T }) =>
       fetch<Methods0['get']['resBody']>(prefix, PATH0, GET, option).json().then(r => r.body),
     post: (option: { body?: Methods0['post']['reqBody'], query: Methods0['post']['query'], config?: T }) =>
       fetch<Methods0['post']['resBody']>(prefix, PATH0, POST, option, 'URLSearchParams').json(),

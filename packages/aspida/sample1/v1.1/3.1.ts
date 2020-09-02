@@ -3,7 +3,7 @@ import { mockMethods } from 'aspida-mock'
 export type Methods = {
   get: {
     query?: { aa?: number }
-    reqHeaders: {}
+    reqHeaders?: {}
     resBody: { id: number }
   }
 

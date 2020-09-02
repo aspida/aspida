@@ -3,11 +3,22 @@ const { pathsToModuleNameMapper } = require('ts-jest/utils')
 const { compilerOptions } = require('./tsconfig')
 
 module.exports = {
-  preset: 'ts-jest',
-  testEnvironment: 'node',
-  testPathIgnorePatterns: ['sample1', 'sample2'],
-  coveragePathIgnorePatterns: ['sample1', 'sample2', 'dist'],
-  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
-    prefix: '<rootDir>/'
-  })
+  projects: [
+    {
+      preset: 'ts-jest',
+      testEnvironment: 'node',
+      testPathIgnorePatterns: ['sample1', 'sample2', 'tsx$'],
+      coveragePathIgnorePatterns: ['sample1', 'sample2', 'dist'],
+      moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
+        prefix: '<rootDir>/'
+      })
+    },
+    {
+      preset: 'ts-jest',
+      testMatch: ['**/__tests__/**/*.tsx'],
+      moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
+        prefix: '<rootDir>/'
+      })
+    }
+  ]
 }

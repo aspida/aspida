@@ -21,9 +21,6 @@
   <a href="https://lgtm.com/projects/g/aspida/aspida/context:javascript">
     <img src="https://img.shields.io/lgtm/grade/javascript/g/aspida/aspida.svg" alt="Language grade: JavaScript" />
   </a>
-  <a href="https://dependabot.com">
-    <img src="https://api.dependabot.com/badges/status?host=github&repo=aspida/aspida" alt="Dependabot Status" />
-  </a>
   <a href="https://github.com/aspida/aspida/blob/master/packages/aspida/LICENSE">
     <img src="https://img.shields.io/npm/l/aspida" alt="License" />
   </a>
@@ -303,6 +300,8 @@ watch([
 1. [Retrieve endpoint URL string](#tips9)
 1. [Reflect TSDoc comments](#tips10)
 1. [Use mock](#tips11)
+1. [Use with SWR (React Hooks)](#tips12)
+1. [Use with SWRV (Vue Composition API)](#tips13)
 
 <a id="tips1"></a>
 
@@ -660,7 +659,19 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
 
 ### Use mock
 
-**[GitHub aspida/aspida-mock](https://github.com/aspida/aspida-mock)**
+**[GitHub aspida-mock](https://github.com/aspida/aspida-mock)**
+
+<a id="tips12"></a>
+
+### Use with SWR (React Hooks)
+
+**[GitHub @aspida/swr](https://github.com/aspida/aspida/tree/master/packages/aspida-swr#readme)**
+
+<a id="tips13"></a>
+
+### Use with SWRV (Vue Composition API)
+
+**[GitHub @aspida/swrv](https://github.com/aspida/aspida/tree/master/packages/aspida-swrv#readme)**
 
 ## Support
 

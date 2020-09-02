@@ -4,12 +4,10 @@
     "declarationMap": true,
     "downlevelIteration": true,
     "resolveJsonModule": true,
+    "jsx": "react",
     "baseUrl": ".",
     "paths": {
-      "aspida": ["packages/aspida/src"],
-      "aspida/dist/*": ["packages/aspida/src/*"],
-      "@aspida/axios": ["packages/aspida-axios/src"],
-      "@aspida/axios/dist/*": ["packages/aspida-axios/src/*"]
+      "aspida": ["packages/aspida/src"]
     },
     "esModuleInterop": true,
     "lib": ["esnext", "dom", "dom.iterable"],

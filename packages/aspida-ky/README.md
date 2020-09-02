@@ -21,9 +21,6 @@
   <a href="https://lgtm.com/projects/g/aspida/aspida/context:javascript">
     <img src="https://img.shields.io/lgtm/grade/javascript/g/aspida/aspida.svg" alt="Language grade: JavaScript" />
   </a>
-  <a href="https://dependabot.com">
-    <img src="https://api.dependabot.com/badges/status?host=github&repo=aspida/aspida" alt="Dependabot Status" />
-  </a>
   <a href="https://github.com/aspida/aspida/blob/master/packages/aspida-ky/LICENSE">
     <img src="https://img.shields.io/npm/l/@aspida/ky" alt="License" />
   </a>
@@ -56,7 +53,7 @@
 ```typescript
 import ky from "ky"
 import aspida from "@aspida/ky"
-import api from "../apis/$api"
+import api from "../api/$api"
 
 const kyConfig = { timeout: 3000, prefixUrl: "https://example.com/api" }
 const client = api(aspida(ky, kyConfig))

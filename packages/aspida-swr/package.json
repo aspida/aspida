@@ -1,0 +1,30 @@
+{
+  "name": "@aspida/swr",
+  "version": "0.1.0",
+  "description": "SWR wrapper for aspida",
+  "author": "Solufa <solufa2020@gmail.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "homepage": "https://github.com/aspida/aspida/tree/master/packages/aspida-swr#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aspida/aspida.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aspida/aspida/issues"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "aspida",
+    "typescript",
+    "swr"
+  ],
+  "dependencies": {
+    "aspida": "^0.21.0"
+  }
+}

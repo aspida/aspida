@@ -21,9 +21,6 @@
   <a href="https://lgtm.com/projects/g/aspida/aspida/context:javascript">
     <img src="https://img.shields.io/lgtm/grade/javascript/g/aspida/aspida.svg" alt="Language grade: JavaScript" />
   </a>
-  <a href="https://dependabot.com">
-    <img src="https://api.dependabot.com/badges/status?host=github&repo=aspida/aspida" alt="Dependabot Status" />
-  </a>
   <a href="https://github.com/aspida/aspida/blob/master/packages/aspida/LICENSE">
     <img src="https://img.shields.io/npm/l/aspida" alt="License" />
   </a>
@@ -302,6 +299,8 @@ watch([
 1. [エンドポイントの URL 文字列を取得する](#tips9)
 1. [TSDoc コメントを記載する](#tips10)
 1. [モックを利用する](#tips11)
+1. [SWR (React Hooks) と併用する](#tips12)
+1. [SWRV (Vue Composition API) と併用する](#tips13)
 
 <a id="tips1"></a>
 
@@ -659,7 +658,19 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
 
 ### モックを利用する
 
-**[GitHub aspida/aspida-mock](https://github.com/aspida/aspida-mock/tree/master/docs/ja)**
+**[GitHub aspida-mock](https://github.com/aspida/aspida-mock/tree/master/docs/ja)**
+
+<a id="tips12"></a>
+
+### SWR (React Hooks) と併用する
+
+**[GitHub @aspida/swr](https://github.com/aspida/aspida/tree/master/packages/aspida-swr#readme)**
+
+<a id="tips13"></a>
+
+### SWRV (Vue Composition API) と併用する
+
+**[GitHub @aspida/swrv](https://github.com/aspida/aspida/tree/master/packages/aspida-swrv#readme)**
 
 ## サポート
 

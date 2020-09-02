@@ -78,3 +78,11 @@ jobs:
       - run: cd packages/aspida-ky && npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: yarn build:swr
+      - run: cd packages/aspida-swr && npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: yarn build:swrv
+      - run: cd packages/aspida-swrv && npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
