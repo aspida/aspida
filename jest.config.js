@@ -7,8 +7,8 @@ module.exports = {
     {
       preset: 'ts-jest',
       testEnvironment: 'node',
-      testPathIgnorePatterns: ['sample1', 'sample2', 'tsx$'],
-      coveragePathIgnorePatterns: ['sample1', 'sample2', 'dist'],
+      testPathIgnorePatterns: ['tsx$'],
+      coveragePathIgnorePatterns: ['sample1', 'dist'],
       moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
         prefix: '<rootDir>/'
       })
@@ -16,6 +16,7 @@ module.exports = {
     {
       preset: 'ts-jest',
       testMatch: ['**/__tests__/**/*.tsx'],
+      coveragePathIgnorePatterns: ['sample1'],
       moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
         prefix: '<rootDir>/'
       })
