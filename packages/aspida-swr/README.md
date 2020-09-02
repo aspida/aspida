@@ -38,12 +38,18 @@
 
   ```sh
   $ npm install @aspida/swr @aspida/axios axios
+  # $ npm install @aspida/swr @aspida/fetch
+  # $ npm install @aspida/swr @aspida/node-fetch node-fetch
+  # $ npm install @aspida/swr @aspida/ky ky
   ```
 
 - Using [Yarn](https://yarnpkg.com/):
 
   ```sh
   $ yarn add @aspida/swr @aspida/axios axios
+  # $ yarn add @aspida/swr @aspida/fetch
+  # $ yarn add @aspida/swr @aspida/node-fetch node-fetch
+  # $ yarn add @aspida/swr @aspida/ky ky
   ```
 
 ### Make HTTP request from application
@@ -52,7 +58,7 @@
 
 ```tsx
 import useAspidaSWR from "@aspida/swr"
-import aspida from "@aspida/axios"
+import aspida from "@aspida/axios" // "@aspida/fetch", "@aspida/node-fetch", "@aspida/ky"
 import api from "../api/$api"
 
 const client = api(aspida())
@@ -75,7 +81,7 @@ function Profile() {
 
 ```tsx
 import useAspidaSWR from "@aspida/swr"
-import aspida from "@aspida/axios"
+import aspida from "@aspida/axios" // "@aspida/fetch", "@aspida/node-fetch", "@aspida/ky"
 import api from "../api/$api"
 
 const client = api(aspida())
@@ -105,7 +111,7 @@ function Profile() {
 
 ```tsx
 import useAspidaSWR from "@aspida/swr"
-import aspida from "@aspida/axios"
+import aspida from "@aspida/axios" // "@aspida/fetch", "@aspida/node-fetch", "@aspida/ky"
 import api from "../api/$api"
 
 const client = api(aspida())

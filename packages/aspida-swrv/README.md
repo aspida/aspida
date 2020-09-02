@@ -1,4 +1,4 @@
-# @aspida/swr
+# @aspida/swrv
 <br />
 <br />
 <br />
@@ -9,8 +9,8 @@
 <br />
 <br />
 <div align="center">
-  <a href="https://www.npmjs.com/package/@aspida/swr">
-    <img src="https://img.shields.io/npm/v/@aspida/swr" alt="npm version" />
+  <a href="https://www.npmjs.com/package/@aspida/swrv">
+    <img src="https://img.shields.io/npm/v/@aspida/swrv" alt="npm version" />
   </a>
   <a href="https://github.com/aspida/aspida/actions?query=workflow%3A%22Node.js+CI%22">
     <img src="https://github.com/aspida/aspida/workflows/Node.js%20CI/badge.svg?branch=master" alt="Node.js CI" />
@@ -21,12 +21,12 @@
   <a href="https://lgtm.com/projects/g/aspida/aspida/context:javascript">
     <img src="https://img.shields.io/lgtm/grade/javascript/g/aspida/aspida.svg" alt="Language grade: JavaScript" />
   </a>
-  <a href="https://github.com/aspida/aspida/blob/master/packages/aspida-swr/LICENSE">
-    <img src="https://img.shields.io/npm/l/@aspida/swr" alt="License" />
+  <a href="https://github.com/aspida/aspida/blob/master/packages/aspida-swrv/LICENSE">
+    <img src="https://img.shields.io/npm/l/@aspida/swrv" alt="License" />
   </a>
 </div>
 <br />
-<div align="center"><a href="https://swr.vercel.app/">SWR (React Hooks)</a> wrapper for <a href="https://github.com/aspida/aspida/">aspida</a>.</div>
+<div align="center"><a href="https://github.com/Kong/swrv">SWRV (Vue Composition API)</a> wrapper for <a href="https://github.com/aspida/aspida/">aspida</a>.</div>
 <br />
 <br />
 
@@ -37,94 +37,139 @@
 - Using [npm](https://www.npmjs.com/):
 
   ```sh
-  $ npm install @aspida/swr @aspida/axios axios
+  $ npm install @aspida/swrv @aspida/axios axios
+  # $ npm install @aspida/swrv @aspida/fetch
+  # $ npm install @aspida/swrv @aspida/node-fetch node-fetch
+  # $ npm install @aspida/swrv @aspida/ky ky
   ```
 
 - Using [Yarn](https://yarnpkg.com/):
 
   ```sh
-  $ yarn add @aspida/swr @aspida/axios axios
+  $ yarn add @aspida/swrv @aspida/axios axios
+  # $ yarn add @aspida/swrv @aspida/fetch
+  # $ yarn add @aspida/swrv @aspida/node-fetch node-fetch
+  # $ yarn add @aspida/swrv @aspida/ky ky
   ```
 
 ### Make HTTP request from application
 
 `src/index.ts`
 
-```tsx
-import useAspidaSWR from "@aspida/swr"
-import aspida from "@aspida/axios"
+```vue
+<template>
+  <div>
+    <div v-if="error">failed to load</div>
+    <div v-if="!data">loading...</div>
+    <div v-else>hello {{ data.name }}</div>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import useAspidaSWRV from "@aspida/swrv"
+import aspida from "@aspida/axios" // "@aspida/fetch", "@aspida/node-fetch", "@aspida/ky"
 import api from "../api/$api"
 
 const client = api(aspida())
 
-function Profile() {
-  const { data, error } = useAspidaSWR(
-    client.user._userId(123),
-    { query: { name: 'mario' } }
-  )
+export default defineComponent({
+  name: 'Profile',
 
-  if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
-  return <div>hello {data.name}!</div>
-}
+  setup() {
+    const { data, error } = useAspidaSWRV(
+      client.user._userId(123),
+      { query: { name: 'mario' } }
+    )
+
+    return { data, error }
+  }
+})
+</script>
 ```
 
 ### Get response body/status/headers
 
 `src/index.ts`
 
-```tsx
-import useAspidaSWR from "@aspida/swr"
-import aspida from "@aspida/axios"
+```vue
+<template>
+  <div>
+    <div v-if="error">failed to load</div>
+    <div v-if="!data">loading...</div>
+    <template v-else>
+      <div>Status: {{ data.status }}</div>
+      <div>Headers: {{ JSON.stringify(data.headers) }}</div>
+      <div>Name: {{ data.body.name }}</div>
+    </template>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import useAspidaSWRV from "@aspida/swrv"
+import aspida from "@aspida/axios" // "@aspida/fetch", "@aspida/node-fetch", "@aspida/ky"
 import api from "../api/$api"
 
 const client = api(aspida())
 
-function Profile() {
-  const { data, error } = useAspidaSWR(
-    client.user._userId(123),
-    'get',
-    { query: { name: 'mario' } }
-  )
+export default defineComponent({
+  name: 'Profile',
 
-  if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
-  return <>
-    <div>Status: {data.status}</div>
-    <div>Headers: {JSON.stringify(data.headers)}</div>
-    <div>Name: {data.body.name}</div>
-  </>
-}
+  setup() {
+    const { data, error } = useAspidaSWRV(
+      client.user._userId(123),
+    'get',
+      { query: { name: 'mario' } }
+    )
+
+    return { data, error }
+  }
+})
+</script>
 ```
 
-`useAspidaSWR(client.user._userId(123), { query })` is an alias of `useAspidaSWR(client.user._userId(123), "$get", { query })`
+`useAspidaSWRV(client.user._userId(123), { query })` is an alias of `useAspidaSWRV(client.user._userId(123), "$get", { query })`
 
-### Use with SWR options
+### Use with SWRV options
 
 `src/index.ts`
 
-```tsx
-import useAspidaSWR from "@aspida/swr"
-import aspida from "@aspida/axios"
+```vue
+<template>
+  <div>
+    <div v-if="error">failed to load</div>
+    <div v-if="!data">loading...</div>
+    <div v-else>hello {{ data.name }}</div>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import useAspidaSWRV from "@aspida/swrv"
+import aspida from "@aspida/axios" // "@aspida/fetch", "@aspida/node-fetch", "@aspida/ky"
 import api from "../api/$api"
 
 const client = api(aspida())
 
-function Profile() {
-  const { data, error } = useAspidaSWR(
-    client.user._userId(123),
-    {
-      query: { name: 'mario' },
-      revalidateOnMount: true,
-      initialData: { name: 'anonymous' }
-    }
-  )
+export default defineComponent({
+  name: 'Profile',
 
-  if (error) return <div>failed to load</div>
-  return <div>hello {data.name}!</div>
-}
+  setup() {
+    const { data, error } = useAspidaSWRV(
+      client.user._userId(123),
+      {
+        query: { name: 'mario' },
+        revalidateDebounce: 0
+      }
+    )
+
+    return { data, error }
+  }
+})
+</script>
 ```
 
 ## License
 
-@aspida/swr is licensed under a [MIT License](https://github.com/aspida/aspida/blob/master/packages/aspida-swr/LICENSE).
+@aspida/swrv is licensed under a [MIT License](https://github.com/aspida/aspida/blob/master/packages/aspida-swrv/LICENSE).

@@ -300,6 +300,8 @@ watch([
 1. [Retrieve endpoint URL string](#tips9)
 1. [Reflect TSDoc comments](#tips10)
 1. [Use mock](#tips11)
+1. [Use with SWR (React Hooks)](#tips12)
+1. [Use with SWRV (Vue Composition API)](#tips13)
 
 <a id="tips1"></a>
 
@@ -657,7 +659,19 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
 
 ### Use mock
 
-**[GitHub aspida/aspida-mock](https://github.com/aspida/aspida-mock)**
+**[GitHub aspida-mock](https://github.com/aspida/aspida-mock)**
+
+<a id="tips12"></a>
+
+### Use with SWR (React Hooks)
+
+**[GitHub @aspida/swr](https://github.com/aspida/aspida/tree/master/packages/aspida-swr#readme)**
+
+<a id="tips13"></a>
+
+### Use with SWRV (Vue Composition API)
+
+**[GitHub @aspida/swrv](https://github.com/aspida/aspida/tree/master/packages/aspida-swrv#readme)**
 
 ## Support
 

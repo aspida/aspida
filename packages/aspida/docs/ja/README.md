@@ -299,6 +299,8 @@ watch([
 1. [エンドポイントの URL 文字列を取得する](#tips9)
 1. [TSDoc コメントを記載する](#tips10)
 1. [モックを利用する](#tips11)
+1. [SWR (React Hooks) と併用する](#tips12)
+1. [SWRV (Vue Composition API) と併用する](#tips13)
 
 <a id="tips1"></a>
 
@@ -656,7 +658,19 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
 
 ### モックを利用する
 
-**[GitHub aspida/aspida-mock](https://github.com/aspida/aspida-mock/tree/master/docs/ja)**
+**[GitHub aspida-mock](https://github.com/aspida/aspida-mock/tree/master/docs/ja)**
+
+<a id="tips12"></a>
+
+### SWR (React Hooks) と併用する
+
+**[GitHub @aspida/swr](https://github.com/aspida/aspida/tree/master/packages/aspida-swr#readme)**
+
+<a id="tips13"></a>
+
+### SWRV (Vue Composition API) と併用する
+
+**[GitHub @aspida/swrv](https://github.com/aspida/aspida/tree/master/packages/aspida-swrv#readme)**
 
 ## サポート
 
