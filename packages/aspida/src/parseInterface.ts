@@ -1,5 +1,7 @@
 import { LowerHttpMethod, AspidaMethodParams } from './'
 
+export type Doc = string[]
+
 type MethodsProperties = keyof AspidaMethodParams
 type Prop = {
   value: string
@@ -7,7 +9,6 @@ type Prop = {
   doc?: Doc
 }
 
-export type Doc = string[]
 export type Method = {
   name: LowerHttpMethod
   props: Partial<Record<MethodsProperties, Prop>>

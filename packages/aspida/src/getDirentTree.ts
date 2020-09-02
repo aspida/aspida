@@ -11,6 +11,7 @@ export type FileData = {
 type DirData = {
   name: string
   isDir: true
+  // eslint-disable-next-line no-use-before-define
   tree: DirentTree
 }
 
