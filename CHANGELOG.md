@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.21.1](https://github.com/aspida/aspida/compare/v0.21.0...v0.21.1) (2020-09-06)
+
+
+### Features
+
+* add @aspida/swr ([4e286f1](https://github.com/aspida/aspida/commit/4e286f106b64b9cf12b22db49587f86d5982388f))
+* add @aspida/swrv ([a0e8cd2](https://github.com/aspida/aspida/commit/a0e8cd275acfe96296b4bc1f12634fb6dfede2f2))
+
+
+### Bug Fixes
+
+* delete $arrayTypeKeysName ([cd70722](https://github.com/aspida/aspida/commit/cd707224744b6d2198c230c911aa3d7a0eee6de4))
+* **fetch:** reflect baseURL config ([2efc3bd](https://github.com/aspida/aspida/commit/2efc3bd959e331bb5e64ef099e6f874ba003b8dc))
+
+
+### Documentation
+
+* fix sample code ([cde48a9](https://github.com/aspida/aspida/commit/cde48a96760d6fcccae8de4e4fd32b1fc0a1f62d))
+* update README ([b09cd7f](https://github.com/aspida/aspida/commit/b09cd7fd3c358b52b7f0a8293df53978934a8702))
+
 ## [0.21.0](https://github.com/aspida/aspida/compare/v0.20.3...v0.21.0) (2020-08-29)
 
 
