@@ -99,10 +99,10 @@ export default api
   return { text, filePath: path.posix.join(tree.path, '$api.ts') }
 }
 
-export default (
-  { input, baseURL, trailingSlash, outputEachDir }: AspidaConfig,
-  isFirstBuild: boolean
-) => {
+let prevNamedFiles: string[] = []
+let prevTypeAliasFiles: string[] = []
+
+export default ({ input, baseURL, trailingSlash, outputEachDir }: AspidaConfig) => {
   const direntTree = getDirentTree(input)
   const templates = [createTemplate(direntTree, baseURL, trailingSlash, '')]
 
@@ -130,20 +130,23 @@ export default (
     appendTemplate(direntTree)
   }
 
-  if (isFirstBuild) {
-    const namedFiles = listNamedFiles(direntTree)
-    const typeAliasFiles = listTypeAliasFiles(direntTree)
+  const namedFiles = listNamedFiles(direntTree)
+  const diffNamedFiles = namedFiles.filter(f => !prevNamedFiles.includes(f))
+  const typeAliasFiles = listTypeAliasFiles(direntTree)
+  const diffTypeAliasFiles = typeAliasFiles.filter(f => !prevTypeAliasFiles.includes(f))
 
-    if (namedFiles.length) {
-      console.log(`aspida \u001b[43m\u001b[30mWARN\u001b[0m {endpoint}.ts format is deprecated. Please rename the following files
-  ${namedFiles.join('\n  ')}`)
-    }
-
-    if (typeAliasFiles.length) {
-      console.log(`aspida \u001b[43m\u001b[30mWARN\u001b[0m {endpoint}@{Type Alias}.ts format is deprecated. Please rename the following names
-  ${typeAliasFiles.join('\n  ')}`)
-    }
+  if (diffNamedFiles.length) {
+    console.log(`aspida \u001b[43m\u001b[30mWARN\u001b[0m {endpoint}.ts format is deprecated. Please rename the following files
+  ${diffNamedFiles.join('\n  ')}`)
   }
+
+  if (diffTypeAliasFiles.length) {
+    console.log(`aspida \u001b[43m\u001b[30mWARN\u001b[0m {endpoint}@{Type Alias}.ts format is deprecated. Please rename the following names
+  ${diffTypeAliasFiles.join('\n  ')}`)
+  }
+
+  prevNamedFiles = namedFiles
+  prevTypeAliasFiles = typeAliasFiles
 
   return templates
 }
