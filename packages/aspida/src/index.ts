@@ -47,23 +47,15 @@ export type AspidaClient<Config> = {
 export const headersToObject = (headers: Headers): any =>
   [...headers.entries()].reduce((prev, [key, val]) => ({ ...prev, [key]: val }), {})
 
-export const $arrayTypeKeysName = '$arrayTypeKeys'
-
 export const dataToFormData = (data: Record<string, any>) => {
   const formData = new FormData()
-  const arrayTypeKeys = []
 
   for (const key in data) {
     if (Array.isArray(data[key])) {
-      arrayTypeKeys.push(key)
       data[key].forEach((d: any) => formData.append(key, d))
     } else {
       formData.append(key, data[key])
     }
-  }
-
-  if (arrayTypeKeys.length) {
-    formData.append($arrayTypeKeysName, arrayTypeKeys.join(','))
   }
 
   return formData
