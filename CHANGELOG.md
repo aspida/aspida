@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.21.3](https://github.com/aspida/aspida/compare/v0.21.2...v0.21.3) (2020-09-08)
+
+
+### Bug Fixes
+
+* remove optional chaining ([f32cb6e](https://github.com/aspida/aspida/commit/f32cb6e17ce3ebf909d79e238c6ef3326798714e))
+
 ### [0.21.2](https://github.com/aspida/aspida/compare/v0.21.1...v0.21.2) (2020-09-06)
 
 
