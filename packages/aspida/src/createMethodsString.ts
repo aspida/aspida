@@ -79,7 +79,7 @@ ${indent}    ${tmpChanks[1]}.then(r => r.body)`
           .join(' | ')}) =>
 ${indent}    \`\${prefix}\${${
           path.startsWith('`') ? path.slice(3, -2) : path
-        }}\${option?.query ? \`?\${dataToURLString(option.query)}\` : ''}\``
+        }}\${option && option.query ? \`?\${dataToURLString(option.query)}\` : ''}\``
       : `${indent}  $path: () => \`\${prefix}\${${
           path.startsWith('`') ? path.slice(3, -2) : path
         }}\``
