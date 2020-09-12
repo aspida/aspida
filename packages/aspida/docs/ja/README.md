@@ -2,10 +2,8 @@
 <br />
 <br />
 <br />
-<div align="center">
-  <img src="https://aspida.github.io/aspida/logos/svg/black.svg" alt="aspida" title="aspida" width="600" />
-</div>
 <br />
+<img src="https://aspida.github.io/aspida/logos/svg/black.svg" alt="aspida" title="aspida" width="1000" height="120" />
 <br />
 <br />
 <div align="center">
@@ -33,24 +31,6 @@
 </div>
 <br />
 <br />
-
-## 破壊的変更 (2020/06/16) :warning:
-
-aspida >= `0.18.0` でリクエストとレスポンスが持つプロパティ `data` が `body` に変わりました
-
-```typescript
-const { body } = await client.v1.users.post({ body: { name: "taro" } })
-
-const body = await client.v1.users.$post({ body: { name: "taro" } })
-```
-
-### この変更で影響を受けるモジュール
-
-- @aspida/axios >= `0.8.0`
-- @aspida/ky >= `0.6.0`
-- @aspida/fetch >= `0.6.0`
-- @aspida/node-fetch >= `0.5.0`
-- openapi2aspida >= `0.8.0`
 
 ## 特徴
 
