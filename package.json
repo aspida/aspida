@@ -77,7 +77,7 @@
     "@types/node-fetch": "^2.5.7",
     "@types/react-dom": "^16.9.8",
     "@typescript-eslint/eslint-plugin": "^4.0.1",
-    "@typescript-eslint/parser": "^4.0.1",
+    "@typescript-eslint/parser": "^4.1.0",
     "@vue/composition-api": "^1.0.0-beta.11",
     "aspida-mock": "^0.8.0",
     "axios": "^0.20.0",
