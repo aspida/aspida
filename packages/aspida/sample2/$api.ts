@@ -118,13 +118,13 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
                   `${prefix}${prefix1}${PATH5}${option && option.query ? `?${dataToURLString(option.query)}` : ''}`
               },
               get: (option: { query: Methods4['get']['query'], config?: T }) =>
-                fetch<void>(prefix, `${prefix1}${PATH4}`, GET, option).send(),
+                fetch(prefix, `${prefix1}${PATH4}`, GET, option).send(),
               $get: (option: { query: Methods4['get']['query'], config?: T }) =>
-                fetch<void>(prefix, `${prefix1}${PATH4}`, GET, option).send().then(r => r.body),
+                fetch(prefix, `${prefix1}${PATH4}`, GET, option).send().then(r => r.body),
               post: (option?: { body?: Methods4['post']['reqBody'], query?: Methods4['post']['query'], config?: T }) =>
-                fetch<void>(prefix, `${prefix1}${PATH4}`, POST, option).send(),
+                fetch(prefix, `${prefix1}${PATH4}`, POST, option).send(),
               $post: (option?: { body?: Methods4['post']['reqBody'], query?: Methods4['post']['query'], config?: T }) =>
-                fetch<void>(prefix, `${prefix1}${PATH4}`, POST, option).send().then(r => r.body),
+                fetch(prefix, `${prefix1}${PATH4}`, POST, option).send().then(r => r.body),
               put: (option?: { query?: Methods4['put']['query'], config?: T }) =>
                 fetch<Methods4['put']['resBody']>(prefix, `${prefix1}${PATH4}`, PUT, option).json(),
               $put: (option?: { query?: Methods4['put']['query'], config?: T }) =>
