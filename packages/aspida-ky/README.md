@@ -2,10 +2,8 @@
 <br />
 <br />
 <br />
-<div align="center">
-  <img src="https://aspida.github.io/aspida/logos/svg/black.svg" alt="aspida" title="aspida" width="600" />
-</div>
 <br />
+<img src="https://aspida.github.io/aspida/logos/svg/black.svg" alt="aspida" title="aspida" width="1000" height="120" />
 <br />
 <br />
 <div align="center">
