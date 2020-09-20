@@ -99,6 +99,13 @@ $ mkdir api
       }
 
       resBody: User
+      /**
+       * reqHeaders(?): ...
+       * reqFormat: ...
+       * status: ...
+       * resHeaders(?): ...
+       * polymorph: [...]
+       */
     }
   }
   ```
@@ -267,6 +274,14 @@ watch([
 ])
 ```
 
+## Ecosystem
+
+- [openapi2aspida](https://github.com/aspida/openapi2aspida) - Convert OpenAPI 3.0 and Swagger 2.0 definitions
+- [aspida-mock](https://github.com/aspida/aspida-mock) - TypeScript friendly RESTful API mock
+- [@aspida/swr](https://github.com/aspida/aspida/tree/master/packages/aspida-swr) - SWR (React Hooks) wrapper
+- [@aspida/swrv](https://github.com/aspida/aspida/tree/master/packages/aspida-swrv) - SWRV (Vue Composition API) wrapper
+- [eslint-plugin-aspida](https://github.com/ibuki2003/eslint-plugin-aspida) - Support writing aspida api definition
+
 ## Tips
 
 1. [Change the directory where type definition file is placed to other than "api"](#tips1)
@@ -274,14 +289,11 @@ watch([
 1. [POST with FormData](#tips3)
 1. [POST with URLSearchParams](#tips4)
 1. [Receive response with ArrayBuffer](#tips5)
-1. [Convert from OpenAPI / Swagger](#tips6)
+1. [Define polymorphic request](#tips6)
 1. [Define endpoints that contain special characters](#tips7)
 1. [Import only some endpoints](#tips8)
 1. [Retrieve endpoint URL string](#tips9)
 1. [Reflect TSDoc comments](#tips10)
-1. [Use mock](#tips11)
-1. [Use with SWR (React Hooks)](#tips12)
-1. [Use with SWRV (Vue Composition API)](#tips13)
 
 <a id="tips1"></a>
 
@@ -456,18 +468,66 @@ import api from "../api/$api"
 
 <a id="tips6"></a>
 
-### Convert from OpenAPI / Swagger
+### Define polymorphic request
 
-Compatible with yaml/json of OpenAPI3.0/Swagger2.0
+`api/users/index.ts`
 
-`tarminal`
+```ts
+type User = {
+  id: number
+  name: string
+}
 
-```sh
-$ npx openapi2aspida -i https://petstore.swagger.io/v2/swagger.json
-# api/$api.ts was built successfully.
+export interface Methods {
+  post: {
+    // common properties
+    reqFormat: FormData
+    /**
+     * query(?): ...
+     * reqHeaders(?): ...
+     * reqBody(?): ...
+     * status: ...
+     * resHeaders(?): ...
+     * resBody(?): ...
+     */
+    polymorph: [
+      // polymorphic types
+      {
+        reqBody: Omit<User, 'id'>
+        resBody: User
+        /**
+         * query(?): ...
+         * reqHeaders(?): ...
+         * status: ...
+         * resHeaders(?): ...
+         */
+      },
+      {
+        reqBody: Omit<User, 'id'>[]
+        resBody: User[]
+      }
+    ]
+  }
+}
 ```
 
-[Docs of openapi2aspida](https://github.com/aspida/openapi2aspida)
+`src/index.ts`
+
+```ts
+import aspida from "@aspida/axios"
+import api from "../api/$api"
+;(async () => {
+  const client = api(aspida())
+
+  const user = await client.users.$post({ body: { name: "taro" } })
+  console.log(user) // { id: 0, name: "taro" }
+
+  const users = await client.users.$post({
+    body: [{ name: "hanako" }, { name: "mario" }]
+  })
+  console.log(users) // [{ id: 1, name: "hanako" }, { id: 2, name: "mario" }]
+})()
+```
 
 <a id="tips7"></a>
 
@@ -634,24 +694,6 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   }
 }
 ```
-
-<a id="tips11"></a>
-
-### Use mock
-
-**[GitHub aspida-mock](https://github.com/aspida/aspida-mock)**
-
-<a id="tips12"></a>
-
-### Use with SWR (React Hooks)
-
-**[GitHub @aspida/swr](https://github.com/aspida/aspida/tree/master/packages/aspida-swr#readme)**
-
-<a id="tips13"></a>
-
-### Use with SWRV (Vue Composition API)
-
-**[GitHub @aspida/swrv](https://github.com/aspida/aspida/tree/master/packages/aspida-swrv#readme)**
 
 ## Support
 

@@ -99,6 +99,13 @@ $ mkdir api
       }
 
       resBody: User
+      /**
+       * reqHeaders(?): ...
+       * reqFormat: ...
+       * status: ...
+       * resHeaders(?): ...
+       * polymorph: [...]
+       */
     }
   }
   ```
@@ -266,6 +273,14 @@ watch([
 ])
 ```
 
+## Ecosystem
+
+- [openapi2aspida](https://github.com/aspida/openapi2aspida) - Convert OpenAPI 3.0 and Swagger 2.0 definitions
+- [aspida-mock](https://github.com/aspida/aspida-mock) - TypeScript friendly RESTful API mock
+- [@aspida/swr](https://github.com/aspida/aspida/tree/master/packages/aspida-swr) - SWR (React Hooks) wrapper
+- [@aspida/swrv](https://github.com/aspida/aspida/tree/master/packages/aspida-swrv) - SWRV (Vue Composition API) wrapper
+- [eslint-plugin-aspida](https://github.com/ibuki2003/eslint-plugin-aspida) - Support writing aspida api definition
+
 ## Tips
 
 1. [型定義ファイルを置くディレクトリを api 以外に変更する](#tips1)
@@ -273,14 +288,11 @@ watch([
 1. [FormData を POST する](#tips3)
 1. [URLSearchParams を POST する](#tips4)
 1. [レスポンスを ArrayBuffer で受け取る](#tips5)
-1. [OpenAPI / Swagger から変換する](#tips6)
+1. [Polymorphic request を定義する](#tips6)
 1. [特殊文字を含む URL を定義する](#tips7)
 1. [一部のエンドポイントのみ import する](#tips8)
 1. [エンドポイントの URL 文字列を取得する](#tips9)
 1. [TSDoc コメントを記載する](#tips10)
-1. [モックを利用する](#tips11)
-1. [SWR (React Hooks) と併用する](#tips12)
-1. [SWRV (Vue Composition API) と併用する](#tips13)
 
 <a id="tips1"></a>
 
@@ -455,18 +467,66 @@ import api from "../api/$api"
 
 <a id="tips6"></a>
 
-### OpenAPI / Swagger から変換する
+### Polymorphic request を定義する
 
-OpenAPI3.0/Swagger2.0のyaml/jsonに対応
+`api/users/index.ts`
 
-`tarminal`
+```ts
+type User = {
+  id: number
+  name: string
+}
 
-```sh
-$ npx openapi2aspida -i https://petstore.swagger.io/v2/swagger.json
-# api/$api.ts was built successfully.
+export interface Methods {
+  post: {
+    // common properties
+    reqFormat: FormData
+    /**
+     * query(?): ...
+     * reqHeaders(?): ...
+     * reqBody(?): ...
+     * status: ...
+     * resHeaders(?): ...
+     * resBody(?): ...
+     */
+    polymorph: [
+      // polymorphic types
+      {
+        reqBody: Omit<User, 'id'>
+        resBody: User
+        /**
+         * query(?): ...
+         * reqHeaders(?): ...
+         * status: ...
+         * resHeaders(?): ...
+         */
+      },
+      {
+        reqBody: Omit<User, 'id'>[]
+        resBody: User[]
+      }
+    ]
+  }
+}
 ```
 
-[openapi2aspida ドキュメント](https://github.com/aspida/openapi2aspida)
+`src/index.ts`
+
+```ts
+import aspida from "@aspida/axios"
+import api from "../api/$api"
+;(async () => {
+  const client = api(aspida())
+
+  const user = await client.users.$post({ body: { name: "taro" } })
+  console.log(user) // { id: 0, name: "taro" }
+
+  const users = await client.users.$post({
+    body: [{ name: "hanako" }, { name: "mario" }]
+  })
+  console.log(users) // [{ id: 1, name: "hanako" }, { id: 2, name: "mario" }]
+})()
+```
 
 <a id="tips7"></a>
 
@@ -633,24 +693,6 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   }
 }
 ```
-
-<a id="tips11"></a>
-
-### モックを利用する
-
-**[GitHub aspida-mock](https://github.com/aspida/aspida-mock/tree/master/docs/ja)**
-
-<a id="tips12"></a>
-
-### SWR (React Hooks) と併用する
-
-**[GitHub @aspida/swr](https://github.com/aspida/aspida/tree/master/packages/aspida-swr#readme)**
-
-<a id="tips13"></a>
-
-### SWRV (Vue Composition API) と併用する
-
-**[GitHub @aspida/swrv](https://github.com/aspida/aspida/tree/master/packages/aspida-swrv#readme)**
 
 ## サポート
 
