@@ -45,7 +45,7 @@ export default (client = fetch, config?: FetchConfig): AspidaClient<FetchConfig>
     }
 
     return {
-      send: send(() => Promise.resolve(null)),
+      send: send(() => Promise.resolve()),
       json: send(res => res.json()),
       text: send(res => res.text()),
       arrayBuffer: send(res => res.arrayBuffer()),

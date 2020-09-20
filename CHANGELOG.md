@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.22.0](https://github.com/aspida/aspida/compare/v0.21.3...v0.22.0) (2020-09-20)
+
+
+### Features
+
+* add polymorphic types ([ce35cc7](https://github.com/aspida/aspida/commit/ce35cc7ea698ccd97e181c2657e1a5d6f1abb2e7))
+
+
+### Documentation
+
+* update README ([22e5823](https://github.com/aspida/aspida/commit/22e5823e6aaf0ced765170231bfbd28773c15983))
+* update README ([860eca2](https://github.com/aspida/aspida/commit/860eca204e9bf86c2aebaa8d6ac7a569d38e9aa5))
+* update README ([b7498d6](https://github.com/aspida/aspida/commit/b7498d62ff0b54faa7cd3aa3f655314321f0e24f))
+
 ### [0.21.3](https://github.com/aspida/aspida/compare/v0.21.2...v0.21.3) (2020-09-08)
 
 

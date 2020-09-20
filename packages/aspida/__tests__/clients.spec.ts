@@ -9,6 +9,8 @@ const app = express()
 const client = api(axiosClient(undefined, { baseURL: `http://localhost:${port}` }))
 let server: Server
 
+app.use(express.json())
+
 beforeEach(fn => {
   server = app.listen(port, fn)
 })
@@ -36,10 +38,24 @@ test('aspida response string', async () => {
   })
 
   const text = 'test'
-  const target = await client.v2_0.$get({
+  const target = client.v2_0.$get({
     query: { val: text },
     headers: { 'content-type': 'text/plain' }
   })
 
-  expect(target).toBe(text)
+  await expect(target).resolves.toBe(text)
+})
+
+test('polymorphic request', async () => {
+  app.get('/polymorphism/users', (req, res) => {
+    res.send(req.body)
+  })
+
+  const body = { id: 1 }
+  const target: Promise<typeof body> = client.polymorphism.users.$get({ body })
+  await expect(target).resolves.toMatchObject(body)
+
+  const body1 = [{ id: 1 }]
+  const target1: Promise<typeof body1> = client.polymorphism.users.$get({ body: body1 })
+  await expect(target1).resolves.toMatchObject(body1)
 })

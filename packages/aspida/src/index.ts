@@ -12,7 +12,7 @@ export type AspidaRequest<Config = any> = {
   config?: Config
 }
 
-export type AspidaResponse<T, U, V> = {
+export type AspidaResponse<T = void, U = BasicHeaders, V = HttpStatusOk> = {
   status: V
   headers: U
   originalResponse: any
@@ -35,7 +35,7 @@ export type AspidaClient<Config> = {
     params?: AspidaParams<Config>,
     type?: RequestType
   ) => {
-    send(): Promise<AspidaResponse<null, U, V>>
+    send(): Promise<AspidaResponse<void, U, V>>
     json(): Promise<AspidaResponse<T, U, V>>
     text(): Promise<AspidaResponse<string, U, V>>
     arrayBuffer(): Promise<AspidaResponse<ArrayBuffer, U, V>>

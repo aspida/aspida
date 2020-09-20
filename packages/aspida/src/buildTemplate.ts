@@ -57,9 +57,9 @@ const createTemplate = (
 ) => {
   const { api, imports, pathes } = createTemplateValues(tree, basePath, trailingSlash)
   const text = `/* eslint-disable */
-import { AspidaClient${api.includes('BasicHeaders') ? ', BasicHeaders' : ''}${
-    api.includes('dataToURLString') ? ', dataToURLString' : ''
-  } } from 'aspida'
+import { AspidaClient${api.includes('AspidaResponse') ? ', AspidaResponse' : ''}${
+    api.includes('BasicHeaders') ? ', BasicHeaders' : ''
+  }${api.includes('dataToURLString') ? ', dataToURLString' : ''} } from 'aspida'
 <% types %><% imports %>
 
 ${createDocComment(

@@ -16,7 +16,7 @@ module.exports = {
     {
       preset: 'ts-jest',
       testMatch: ['**/__tests__/**/*.tsx'],
-      coveragePathIgnorePatterns: ['sample1'],
+      coveragePathIgnorePatterns: ['sample1', 'dist'],
       moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
         prefix: '<rootDir>/'
       })

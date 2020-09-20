@@ -2,10 +2,8 @@
 <br />
 <br />
 <br />
-<div align="center">
-  <img src="https://aspida.github.io/aspida/logos/svg/black.svg" alt="aspida" title="aspida" width="600" />
-</div>
 <br />
+<img src="https://aspida.github.io/aspida/logos/svg/black.svg" alt="aspida" title="aspida" width="1000" height="120" />
 <br />
 <br />
 <div align="center">
@@ -37,19 +35,19 @@
 - Using [npm](https://www.npmjs.com/):
 
   ```sh
-  $ npm install @aspida/swr @aspida/axios axios
-  # $ npm install @aspida/swr @aspida/fetch
-  # $ npm install @aspida/swr @aspida/node-fetch node-fetch
-  # $ npm install @aspida/swr @aspida/ky ky
+  $ npm install @aspida/swr @aspida/axios swr axios
+  # $ npm install @aspida/swr @aspida/fetch swr
+  # $ npm install @aspida/swr @aspida/node-fetch swr node-fetch
+  # $ npm install @aspida/swr @aspida/ky swr ky
   ```
 
 - Using [Yarn](https://yarnpkg.com/):
 
   ```sh
-  $ yarn add @aspida/swr @aspida/axios axios
-  # $ yarn add @aspida/swr @aspida/fetch
-  # $ yarn add @aspida/swr @aspida/node-fetch node-fetch
-  # $ yarn add @aspida/swr @aspida/ky ky
+  $ yarn add @aspida/swr @aspida/axios swr axios
+  # $ yarn add @aspida/swr @aspida/fetch swr
+  # $ yarn add @aspida/swr @aspida/node-fetch swr node-fetch
+  # $ yarn add @aspida/swr @aspida/ky swr ky
   ```
 
 ### Make HTTP request from application
