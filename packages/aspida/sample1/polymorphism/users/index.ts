@@ -1,4 +1,11 @@
 export interface Methods {
+  get: {
+    polymorph: [
+      { reqBody: { id: number }; resBody: { id: number } },
+      { reqBody: { id: number }[]; resBody: { id: number }[] }
+    ]
+  }
+
   post: {
     query?: { count: number }
     reqFormat: FormData

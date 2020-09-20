@@ -67,9 +67,41 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
               }
               return $getRequest
             })(),
+            post: (() => {
+              function postRequest(option: { body: Methods3['post']['polymorph'][0]['reqBody'], config?: T }): Promise<AspidaResponse<Methods3['post']['polymorph'][0]['resBody']>>
+              function postRequest(option: { body: Methods3['post']['polymorph'][1]['reqBody'], config?: T }): Promise<AspidaResponse<Methods3['post']['polymorph'][1]['resBody']>>
+              function postRequest(option: any) {
+                return fetch(prefix, prefix1, POST, option, 'FormData').json()
+              }
+              return postRequest
+            })(),
+            $post: (() => {
+              function $postRequest(option: { body: Methods3['post']['polymorph'][0]['reqBody'], config?: T }): Promise<Methods3['post']['polymorph'][0]['resBody']>
+              function $postRequest(option: { body: Methods3['post']['polymorph'][1]['reqBody'], config?: T }): Promise<Methods3['post']['polymorph'][1]['resBody']>
+              function $postRequest(option: any) {
+                return fetch(prefix, prefix1, POST, option, 'FormData').json().then(r => r.body)
+              }
+              return $postRequest
+            })(),
             $path: () => `${prefix}${prefix1}`
           }
         },
+        get: (() => {
+          function getRequest(option: { body: Methods2['get']['polymorph'][0]['reqBody'], config?: T }): Promise<AspidaResponse<Methods2['get']['polymorph'][0]['resBody']>>
+          function getRequest(option: { body: Methods2['get']['polymorph'][1]['reqBody'], config?: T }): Promise<AspidaResponse<Methods2['get']['polymorph'][1]['resBody']>>
+          function getRequest(option: any) {
+            return fetch(prefix, PATH0, GET, option).json()
+          }
+          return getRequest
+        })(),
+        $get: (() => {
+          function $getRequest(option: { body: Methods2['get']['polymorph'][0]['reqBody'], config?: T }): Promise<Methods2['get']['polymorph'][0]['resBody']>
+          function $getRequest(option: { body: Methods2['get']['polymorph'][1]['reqBody'], config?: T }): Promise<Methods2['get']['polymorph'][1]['resBody']>
+          function $getRequest(option: any) {
+            return fetch(prefix, PATH0, GET, option).json().then(r => r.body)
+          }
+          return $getRequest
+        })(),
         post: (() => {
           function postRequest(option: { body: Methods2['post']['polymorph'][0]['reqBody'], query?: Methods2['post']['query'], config?: T }): Promise<AspidaResponse<Methods2['post']['polymorph'][0]['resBody']>>
           function postRequest(option: { body: Methods2['post']['polymorph'][1]['reqBody'], query?: Methods2['post']['query'], config?: T }): Promise<AspidaResponse<Methods2['post']['polymorph'][1]['resBody']>>

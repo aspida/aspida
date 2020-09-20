@@ -1,3 +1,9 @@
+type User = {
+  id: number
+  name: string
+  icon: File
+}
+
 export interface Methods {
   get: {
     polymorph: [
@@ -6,6 +12,20 @@ export interface Methods {
         reqBody: { id: string }
         resBody: string
         resHeaders: { token: string }
+      }
+    ]
+  }
+
+  post: {
+    reqFormat: FormData
+    polymorph: [
+      {
+        reqBody: Omit<User, 'id'>
+        resBody: User
+      },
+      {
+        reqBody: Omit<User, 'id'>[]
+        resBody: User[]
       }
     ]
   }
