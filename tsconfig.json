@@ -10,9 +10,7 @@
       "aspida": ["packages/aspida/src"]
     },
     "esModuleInterop": true,
-    "lib": ["esnext", "dom", "dom.iterable"],
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "lib": ["esnext", "dom.iterable"],
     "sourceMap": true,
     "strict": true,
     "strictPropertyInitialization": false,
