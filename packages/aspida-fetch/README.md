@@ -10,6 +10,9 @@
   <a href="https://www.npmjs.com/package/@aspida/fetch">
     <img src="https://img.shields.io/npm/v/@aspida/fetch" alt="npm version" />
   </a>
+  <a href="https://www.npmjs.com/package/@aspida/fetch">
+    <img src="https://img.shields.io/npm/dm/@aspida/fetch" alt="npm download" />
+  </a>
   <a href="https://github.com/aspida/aspida/actions?query=workflow%3A%22Node.js+CI%22">
     <img src="https://github.com/aspida/aspida/workflows/Node.js%20CI/badge.svg?branch=master" alt="Node.js CI" />
   </a>
@@ -18,9 +21,6 @@
   </a>
   <a href="https://lgtm.com/projects/g/aspida/aspida/context:javascript">
     <img src="https://img.shields.io/lgtm/grade/javascript/g/aspida/aspida.svg" alt="Language grade: JavaScript" />
-  </a>
-  <a href="https://github.com/aspida/aspida/blob/master/packages/aspida-fetch/LICENSE">
-    <img src="https://img.shields.io/npm/l/@aspida/fetch" alt="License" />
   </a>
 </div>
 <br />
