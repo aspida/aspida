@@ -78,7 +78,7 @@
     "@types/react-dom": "^16.9.8",
     "@typescript-eslint/eslint-plugin": "^4.4.0",
     "@typescript-eslint/parser": "^4.4.0",
-    "@vue/composition-api": "^1.0.0-beta.15",
+    "@vue/composition-api": "^1.0.0-beta.16",
     "aspida-mock": "^0.8.2",
     "axios": "^0.20.0",
     "eslint": "^7.10.0",
