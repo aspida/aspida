@@ -10,6 +10,9 @@
   <a href="https://www.npmjs.com/package/aspida">
     <img src="https://img.shields.io/npm/v/aspida" alt="npm version" />
   </a>
+  <a href="https://www.npmjs.com/package/aspida">
+    <img src="https://img.shields.io/npm/dm/aspida" alt="npm download" />
+  </a>
   <a href="https://github.com/aspida/aspida/actions?query=workflow%3A%22Node.js+CI%22">
     <img src="https://github.com/aspida/aspida/workflows/Node.js%20CI/badge.svg?branch=master" alt="Node.js CI" />
   </a>
@@ -18,9 +21,6 @@
   </a>
   <a href="https://lgtm.com/projects/g/aspida/aspida/context:javascript">
     <img src="https://img.shields.io/lgtm/grade/javascript/g/aspida/aspida.svg" alt="Language grade: JavaScript" />
-  </a>
-  <a href="https://github.com/aspida/aspida/blob/master/packages/aspida/LICENSE">
-    <img src="https://img.shields.io/npm/l/aspida" alt="License" />
   </a>
 </div>
 <br />
@@ -277,6 +277,7 @@ watch([
 
 - [openapi2aspida](https://github.com/aspida/openapi2aspida) - Convert OpenAPI 3.0 and Swagger 2.0 definitions
 - [aspida-mock](https://github.com/aspida/aspida-mock) - TypeScript friendly RESTful API mock
+- [frourio](https://github.com/frouriojs/frourio) - Frourio is a perfectly type-checkable REST framework for TypeScript
 - [@aspida/swr](https://github.com/aspida/aspida/tree/master/packages/aspida-swr) - SWR (React Hooks) wrapper
 - [@aspida/swrv](https://github.com/aspida/aspida/tree/master/packages/aspida-swrv) - SWRV (Vue Composition API) wrapper
 - [eslint-plugin-aspida](https://github.com/ibuki2003/eslint-plugin-aspida) - Support writing aspida api definition
