@@ -1,6 +1,6 @@
 {
   "name": "@aspida/ky",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "description": "ky client for aspida",
   "author": "Solufa <solufa2020@gmail.com>",
   "license": "MIT",
@@ -26,6 +26,6 @@
     "ky-universal"
   ],
   "dependencies": {
-    "aspida": "^0.22.0"
+    "aspida": "^0.22.1"
   }
 }

@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.22.1](https://github.com/aspida/aspida/compare/v0.22.0...v0.22.1) (2020-10-15)
+
+
+### Bug Fixes
+
+* delete namedFiles warning ([0a0b265](https://github.com/aspida/aspida/commit/0a0b2651d700fe4506fba7f6a8b113ea085a6bcf))
+
+
+### Documentation
+
+* update ja README ([4c54c3c](https://github.com/aspida/aspida/commit/4c54c3cd87633d100773408eeab333d5d4ff433a))
+
 ## [0.22.0](https://github.com/aspida/aspida/compare/v0.21.3...v0.22.0) (2020-09-20)
 
 
