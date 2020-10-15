@@ -19,21 +19,6 @@ const listNotIndexFiles = (tree: DirentTree): string[] => [
     .reduce((p, c) => [...p, ...c], [])
 ]
 
-const listNamedFiles = (tree: DirentTree): string[] => [
-  ...tree.children
-    .filter(c => !c.isDir && c.name !== 'index.ts')
-    .map(
-      c =>
-        `${tree.path}/\u001b[31m${c.name}\u001b[0m -> \u001b[32m${c.name.replace(
-          '.ts',
-          ''
-        )}/index.ts\u001b[0m`
-    ),
-  ...tree.children
-    .map(c => (c.isDir ? listNamedFiles(c.tree) : []))
-    .reduce((p, c) => [...p, ...c], [])
-]
-
 const listTypeAliasFiles = (tree: DirentTree): string[] => [
   ...tree.children
     .filter(c => /_.+@[A-Z]/.test(c.name))
@@ -99,7 +84,6 @@ export default api
   return { text, filePath: path.posix.join(tree.path, '$api.ts') }
 }
 
-let prevNamedFiles: string[] = []
 let prevTypeAliasFiles: string[] = []
 
 export default ({ input, baseURL, trailingSlash, outputEachDir }: AspidaConfig) => {
@@ -130,22 +114,14 @@ export default ({ input, baseURL, trailingSlash, outputEachDir }: AspidaConfig) 
     appendTemplate(direntTree)
   }
 
-  const namedFiles = listNamedFiles(direntTree)
-  const diffNamedFiles = namedFiles.filter(f => !prevNamedFiles.includes(f))
   const typeAliasFiles = listTypeAliasFiles(direntTree)
   const diffTypeAliasFiles = typeAliasFiles.filter(f => !prevTypeAliasFiles.includes(f))
-
-  if (diffNamedFiles.length) {
-    console.log(`aspida \u001b[43m\u001b[30mWARN\u001b[0m {endpoint}.ts format is deprecated. Please rename the following files
-  ${diffNamedFiles.join('\n  ')}`)
-  }
 
   if (diffTypeAliasFiles.length) {
     console.log(`aspida \u001b[43m\u001b[30mWARN\u001b[0m {endpoint}@{Type Alias}.ts format is deprecated. Please rename the following names
   ${diffTypeAliasFiles.join('\n  ')}`)
   }
 
-  prevNamedFiles = namedFiles
   prevTypeAliasFiles = typeAliasFiles
 
   return templates

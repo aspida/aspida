@@ -235,7 +235,7 @@ import api from "../api/$api"
 
 | Option        | Type    | Default       | Description                                           |
 | ------------- | ------- | ------------- | ----------------------------------------------------- |
-| input         | string  | "api", "apis" | Specifies the endpoint type definition root directory |
+| input         | string  | "api"         | Specifies the endpoint type definition root directory |
 | baseURL       | string  | ""            | Specify baseURL of the request                        |
 | trailingSlash | boolean | false         | Append `/` to the request URL                         |
 | outputEachDir | boolean | false         | Generate `$api.ts` in each endpoint directory         |
