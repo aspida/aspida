@@ -234,7 +234,7 @@ import api from "../api/$api"
 
 | Option        | Type    | Default       | Description                                        |
 | ------------- | ------- | ------------- | -------------------------------------------------- |
-| input         | string  | "api", "apis" | エンドポイントの型定義ルートディレクトリを指定     |
+| input         | string  | "api"         | エンドポイントの型定義ルートディレクトリを指定     |
 | baseURL       | string  | ""            | リクエスト時の baseURL を指定                      |
 | trailingSlash | boolean | false         | リクエスト URL の末尾に `/` を付与                 |
 | outputEachDir | boolean | false         | `$api.ts` を各エンドポイントのディレクトリにも生成 |
