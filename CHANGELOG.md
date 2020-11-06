@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.22.2](https://github.com/aspida/aspida/compare/v0.22.1...v0.22.2) (2020-11-06)
+
+
+### Bug Fixes
+
+* remove flatMap for node v10 ([e738cc4](https://github.com/aspida/aspida/commit/e738cc433e5b00380cb65002674072fb2c0718c1))
+
 ### [0.22.1](https://github.com/aspida/aspida/compare/v0.22.0...v0.22.1) (2020-10-15)
 
 

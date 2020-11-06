@@ -114,6 +114,8 @@ export default (direntTree: DirentTree, basePath: string, trailingSlash: boolean
             )
           )}`
         }
+
+        return null
       })
       .filter((p): p is string => !!p)
 
