@@ -41,8 +41,12 @@ describe('cli test', () => {
     const listApiFiles = (dir: string): string[] =>
       fs
         .readdirSync(dir, { withFileTypes: true })
-        .flatMap(dirent =>
-          dirent.isFile() ? [`${dir}/${dirent.name}`] : listApiFiles(`${dir}/${dirent.name}`)
+        .reduce<string[]>(
+          (prev, dirent) => [
+            ...prev,
+            ...(dirent.isFile() ? [`${dir}/${dirent.name}`] : listApiFiles(`${dir}/${dirent.name}`))
+          ],
+          []
         )
         .filter(name => name.endsWith('$api.ts'))
 

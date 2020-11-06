@@ -9,7 +9,7 @@ export const version = (): string => require('../package.json').version
 
 export const build = (config?: Parameters<typeof getConfigs>[0]) =>
   getConfigs(config)
-    .flatMap(c => buildTemplate(c))
+    .reduce<ReturnType<typeof buildTemplate>>((prev, c) => [...prev, ...buildTemplate(c)], [])
     .forEach(writeRouteFile)
 
 export const watch = (config?: Parameters<typeof getConfigs>[0]) =>
