@@ -53,7 +53,7 @@ describe('optional query', () => {
     expect(vm.$el.textContent).toBe('hello, ')
 
     await tick(vm, 2)
-    await timeout(0)
+    await timeout(20)
 
     expect(vm.$el.textContent).toEqual('hello, 0')
   })
@@ -86,7 +86,7 @@ describe('optional query', () => {
     expect(vm.$el.textContent).toBe('hello, ')
 
     await tick(vm, 2)
-    await timeout(0)
+    await timeout(20)
 
     expect(vm.$el.textContent).toEqual('hello, 1')
   })
@@ -104,7 +104,7 @@ describe('optional query', () => {
     expect(vm.$el.textContent).toBe('hello, ')
 
     await tick(vm, 2)
-    await timeout(0)
+    await timeout(20)
 
     expect(vm.$el.textContent).toEqual('hello, 0')
   })
@@ -122,7 +122,7 @@ describe('optional query', () => {
     expect(vm.$el.textContent).toBe('hello, ')
 
     await tick(vm, 2)
-    await timeout(0)
+    await timeout(20)
 
     expect(vm.$el.textContent).toEqual('hello, 1')
   })
@@ -143,7 +143,7 @@ describe('required query', () => {
     expect(vm.$el.textContent).toBe('hello, ')
 
     await tick(vm, 2)
-    await timeout(0)
+    await timeout(20)
 
     expect(vm.$el.textContent).toEqual('hello, none')
   })
@@ -164,7 +164,7 @@ describe('required query', () => {
     expect(vm.$el.textContent).toBe('hello, ')
 
     await tick(vm, 2)
-    await timeout(0)
+    await timeout(20)
 
     expect(vm.$el.textContent).toEqual('hello, aa')
   })
@@ -200,7 +200,7 @@ describe('required query', () => {
     expect(vm.$el.textContent).toBe('hello, ')
 
     await tick(vm, 2)
-    await timeout(0)
+    await timeout(20)
 
     expect(vm.$el.textContent).toEqual('hello, none')
   })
@@ -221,7 +221,7 @@ describe('required query', () => {
     expect(vm.$el.textContent).toBe('hello, /')
 
     await tick(vm, 2)
-    await timeout(0)
+    await timeout(20)
 
     expect(vm.$el.textContent).toEqual('hello, aa/aa')
   })
