@@ -5995,10 +5995,10 @@ swr@^0.3.8:
   dependencies:
     dequal "2.0.2"
 
-swrv@0.7.7:
-  version "0.7.7"
-  resolved "https://registry.yarnpkg.com/swrv/-/swrv-0.7.7.tgz#c486198007e1e9edf27e8e966c7872cac7dd1bbd"
-  integrity sha512-hOmpkPG1oVp8cZdDxQ1OPLK6/0dyzInAuwl8hxbNM3QPdhG1gdAbog3xOaV2swBLmVV32ZsOe3JsOoidePpBzA==
+swrv@0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/swrv/-/swrv-0.8.1.tgz#4cd35a887d938e18687c92f61b265c6182a83ecb"
+  integrity sha512-tcYN+GE/IYOsXEY8UYAMAFJqbzNXIggXmGeC3WE8tC/vAYyciWyKgxfGVG5IyTX41050HwaP8y7/QRAjBLwqmw==
 
 symbol-tree@^3.2.4:
   version "3.2.4"
