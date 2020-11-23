@@ -82,7 +82,7 @@
     "@vue/composition-api": "^1.0.0-beta.19",
     "aspida-mock": "^0.8.2",
     "axios": "^0.21.0",
-    "eslint": "^7.12.1",
+    "eslint": "^7.14.0",
     "eslint-config-prettier": "^6.15.0",
     "eslint-config-standard": "^16.0.1",
     "eslint-plugin-import": "^2.22.1",
