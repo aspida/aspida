@@ -36,7 +36,7 @@
 
 - Path, URL query, header, body, and response can all specify the type
 - FormData / URLSearchParams content can also specify the type
-- HTTP client supports axios / ky / ky-universal / fetch / node-fetch
+- HTTP client supports axios / fetch / node-fetch
 
 <br />
 <img src="https://aspida.github.io/aspida/assets/images/vscode.gif" width="720" alt="vscode" />
@@ -190,7 +190,6 @@ import api from "../api/$api"
 ### aspida official HTTP clients
 
 - **[@aspida/axios](https://github.com/aspida/aspida/tree/master/packages/aspida-axios#readme)**
-- **[@aspida/ky](https://github.com/aspida/aspida/tree/master/packages/aspida-ky#readme)**
 - **[@aspida/fetch](https://github.com/aspida/aspida/tree/master/packages/aspida-fetch#readme)**
 - **[@aspida/node-fetch](https://github.com/aspida/aspida/tree/master/packages/aspida-node-fetch#readme)**
 

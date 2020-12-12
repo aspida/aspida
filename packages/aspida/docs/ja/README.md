@@ -36,7 +36,7 @@
 
 - パス・URL クエリ・ヘッダー・ボディ・レスポンス全てに型を指定できる
 - FormData / URLSearchParams の内容にも型を指定できる
-- HTTP クライアントは axios / ky / ky-universal / fetch / node-fetch に対応
+- HTTP クライアントは axios / fetch / node-fetch に対応
 
 <br />
 <img src="https://aspida.github.io/aspida/assets/images/vscode.gif" width="720" alt="vscode" />
@@ -190,7 +190,6 @@ import api from "../api/$api"
 ### aspida 公式 HTTP クライアント
 
 - **[@aspida/axios](https://github.com/aspida/aspida/tree/master/packages/aspida-axios#readme)**
-- **[@aspida/ky](https://github.com/aspida/aspida/tree/master/packages/aspida-ky#readme)**
 - **[@aspida/fetch](https://github.com/aspida/aspida/tree/master/packages/aspida-fetch#readme)**
 - **[@aspida/node-fetch](https://github.com/aspida/aspida/tree/master/packages/aspida-node-fetch#readme)**
 
