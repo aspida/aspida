@@ -1,11 +1,6 @@
 # @aspida/swrv
 <br />
-<br />
-<br />
-<br />
-<img src="https://aspida.github.io/aspida/logos/svg/black.svg" alt="aspida" title="aspida" width="1000" height="120" />
-<br />
-<br />
+<img src="https://aspida.github.io/aspida/logos/png/logo.png" alt="aspida" title="aspida" />
 <div align="center">
   <a href="https://www.npmjs.com/package/@aspida/swrv">
     <img src="https://img.shields.io/npm/v/@aspida/swrv" alt="npm version" />

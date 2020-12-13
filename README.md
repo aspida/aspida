@@ -1,11 +1,6 @@
 # aspida
 <br />
-<br />
-<br />
-<br />
-<img src="https://aspida.github.io/aspida/logos/svg/black.svg" alt="aspida" title="aspida" width="1000" height="120" />
-<br />
-<br />
+<img src="https://aspida.github.io/aspida/logos/png/logo.png" alt="aspida" title="aspida" />
 <div align="center">
   <a href="https://www.npmjs.com/package/aspida">
     <img src="https://img.shields.io/npm/v/aspida" alt="npm version" />
@@ -183,10 +178,6 @@ import api from "../api/$api"
 })()
 ```
 
-### Read more posts by DEV Community
-
-**[aspida - DEV Community](https://dev.to/t/aspida)**
-
 ### aspida official HTTP clients
 
 - **[@aspida/axios](https://github.com/aspida/aspida/tree/master/packages/aspida-axios#readme)**
@@ -277,7 +268,7 @@ watch([
 
 - [openapi2aspida](https://github.com/aspida/openapi2aspida) - Convert OpenAPI 3.0 and Swagger 2.0 definitions
 - [aspida-mock](https://github.com/aspida/aspida-mock) - TypeScript friendly RESTful API mock
-- [frourio](https://github.com/frouriojs/frourio) - Frourio is a perfectly type-checkable REST framework for TypeScript
+- [frourio](https://frourio.io/) - Fast and type-safe full stack framework, for TypeScript TypeScript
 - [@aspida/swr](https://github.com/aspida/aspida/tree/master/packages/aspida-swr) - SWR (React Hooks) wrapper
 - [@aspida/swrv](https://github.com/aspida/aspida/tree/master/packages/aspida-swrv) - SWRV (Vue Composition API) wrapper
 - [eslint-plugin-aspida](https://github.com/ibuki2003/eslint-plugin-aspida) - Support writing aspida api definition
