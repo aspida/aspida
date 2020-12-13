@@ -42,7 +42,7 @@ function useAspidaSWR<
   U extends { [K in keyof T]: T[K] extends (option: any) => Promise<any> ? K : never }[keyof T]
 >(api: T, key: U, ...option: Parameters<T[U]>) {
   const method = typeof key === 'string' ? key : '$get'
-  const opt = typeof key === 'string' ? option[0] : key
+  const opt = typeof key === 'string' ? (option as any)[0] : key
 
   return useSWR<ReturnType<T[U]> extends Promise<infer S> ? S : never>(
     [api.$path(opt), method],
