@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/aspida/aspida/compare/v1.0.0...v1.1.0) (2020-12-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove ApiTypes
+
+### Features
+
+* remove ApiTypes ([524ea6a](https://github.com/aspida/aspida/commit/524ea6a239696f83dfef680cd41ab9c596cccf25))
+
 ## [1.0.0](https://github.com/aspida/aspida/compare/v0.22.2...v1.0.0) (2020-12-13)
 
 

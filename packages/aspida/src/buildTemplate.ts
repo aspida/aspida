@@ -19,21 +19,6 @@ const listNotIndexFiles = (tree: DirentTree): string[] => [
     .reduce((p, c) => [...p, ...c], [])
 ]
 
-const listTypeAliasFiles = (tree: DirentTree): string[] => [
-  ...tree.children
-    .filter(c => /_.+@[A-Z]/.test(c.name))
-    .map(
-      c =>
-        `${tree.path}/\u001b[31m${c.name}\u001b[0m -> \u001b[32m${c.name.replace(
-          /@.+?(.ts|$)/,
-          '@{number|string}$1'
-        )}\u001b[0m`
-    ),
-  ...tree.children
-    .map(c => (c.isDir ? listTypeAliasFiles(c.tree) : []))
-    .reduce((p, c) => [...p, ...c], [])
-]
-
 const createTemplate = (
   tree: DirentTree,
   baseURL: string,
@@ -45,7 +30,7 @@ const createTemplate = (
 import { AspidaClient${api.includes('AspidaResponse') ? ', AspidaResponse' : ''}${
     api.includes('BasicHeaders') ? ', BasicHeaders' : ''
   }${api.includes('dataToURLString') ? ', dataToURLString' : ''} } from 'aspida'
-<% types %><% imports %>
+<% imports %>
 
 ${createDocComment(
   '',
@@ -64,27 +49,12 @@ ${['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'PATCH', 'OPTIONS']
 export type ApiInstance = ReturnType<typeof api>
 export default api
 `
-    .replace(
-      '<% types %>',
-      api.includes(': ApiTypes.')
-        ? `import * as ApiTypes from '${
-            basePath
-              ? basePath
-                  .split('/')
-                  .map(() => '')
-                  .join('../')
-              : './'
-          }@types'\n`
-        : ''
-    )
     .replace('<% imports %>', imports.join('\n'))
     .replace('<% api %>', api)
     .replace('<% baseURL %>', baseURL)
 
   return { text, filePath: path.posix.join(tree.path, '$api.ts') }
 }
-
-let prevTypeAliasFiles: string[] = []
 
 export default ({ input, baseURL, trailingSlash, outputEachDir }: AspidaConfig) => {
   const direntTree = getDirentTree(input)
@@ -113,16 +83,6 @@ export default ({ input, baseURL, trailingSlash, outputEachDir }: AspidaConfig) 
 
     appendTemplate(direntTree)
   }
-
-  const typeAliasFiles = listTypeAliasFiles(direntTree)
-  const diffTypeAliasFiles = typeAliasFiles.filter(f => !prevTypeAliasFiles.includes(f))
-
-  if (diffTypeAliasFiles.length) {
-    console.log(`aspida \u001b[43m\u001b[30mWARN\u001b[0m {endpoint}@{Type Alias}.ts format is deprecated. Please rename the following names
-  ${diffTypeAliasFiles.join('\n  ')}`)
-  }
-
-  prevTypeAliasFiles = typeAliasFiles
 
   return templates
 }
