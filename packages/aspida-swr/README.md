@@ -1,11 +1,6 @@
 # @aspida/swr
 <br />
-<br />
-<br />
-<br />
-<img src="https://aspida.github.io/aspida/logos/svg/black.svg" alt="aspida" title="aspida" width="1000" height="120" />
-<br />
-<br />
+<img src="https://aspida.github.io/aspida/logos/png/logo.png" alt="aspida" title="aspida" />
 <div align="center">
   <a href="https://www.npmjs.com/package/@aspida/swr">
     <img src="https://img.shields.io/npm/v/@aspida/swr" alt="npm version" />
@@ -38,7 +33,6 @@
   $ npm install @aspida/swr @aspida/axios swr axios
   # $ npm install @aspida/swr @aspida/fetch swr
   # $ npm install @aspida/swr @aspida/node-fetch swr node-fetch
-  # $ npm install @aspida/swr @aspida/ky swr ky
   ```
 
 - Using [Yarn](https://yarnpkg.com/):
@@ -47,7 +41,6 @@
   $ yarn add @aspida/swr @aspida/axios swr axios
   # $ yarn add @aspida/swr @aspida/fetch swr
   # $ yarn add @aspida/swr @aspida/node-fetch swr node-fetch
-  # $ yarn add @aspida/swr @aspida/ky swr ky
   ```
 
 ### Make HTTP request from application
@@ -56,7 +49,7 @@
 
 ```tsx
 import useAspidaSWR from "@aspida/swr"
-import aspida from "@aspida/axios" // "@aspida/fetch", "@aspida/node-fetch", "@aspida/ky"
+import aspida from "@aspida/axios" // "@aspida/fetch", "@aspida/node-fetch"
 import api from "../api/$api"
 
 const client = api(aspida())
@@ -79,7 +72,7 @@ function Profile() {
 
 ```tsx
 import useAspidaSWR from "@aspida/swr"
-import aspida from "@aspida/axios" // "@aspida/fetch", "@aspida/node-fetch", "@aspida/ky"
+import aspida from "@aspida/axios" // "@aspida/fetch", "@aspida/node-fetch"
 import api from "../api/$api"
 
 const client = api(aspida())
@@ -111,7 +104,7 @@ function Profile() {
 
 ```tsx
 import useAspidaSWR from "@aspida/swr"
-import aspida from "@aspida/axios" // "@aspida/fetch", "@aspida/node-fetch", "@aspida/ky"
+import aspida from "@aspida/axios" // "@aspida/fetch", "@aspida/node-fetch"
 import api from "../api/$api"
 
 const client = api(aspida())

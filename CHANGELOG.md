@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/aspida/aspida/compare/v0.22.2...v1.0.0) (2020-12-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* delete @aspida/ky
+
+### Features
+
+* delete @aspida/ky ([b97e155](https://github.com/aspida/aspida/commit/b97e1555c721d7ae6003b8edbefa8a8d78379275))
+
+
+### Refactors
+
+* clarify types of swr and swrv ([d716ee4](https://github.com/aspida/aspida/commit/d716ee440ce0011e465a16a8dca8ef0b4e2b7138))
+
 ### [0.22.2](https://github.com/aspida/aspida/compare/v0.22.1...v0.22.2) (2020-11-06)
 
 

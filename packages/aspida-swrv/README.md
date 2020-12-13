@@ -1,11 +1,6 @@
 # @aspida/swrv
 <br />
-<br />
-<br />
-<br />
-<img src="https://aspida.github.io/aspida/logos/svg/black.svg" alt="aspida" title="aspida" width="1000" height="120" />
-<br />
-<br />
+<img src="https://aspida.github.io/aspida/logos/png/logo.png" alt="aspida" title="aspida" />
 <div align="center">
   <a href="https://www.npmjs.com/package/@aspida/swrv">
     <img src="https://img.shields.io/npm/v/@aspida/swrv" alt="npm version" />
@@ -38,7 +33,6 @@
   $ npm install @aspida/swrv @aspida/axios swrv axios
   # $ npm install @aspida/swrv @aspida/fetch swrv
   # $ npm install @aspida/swrv @aspida/node-fetch swrv node-fetch
-  # $ npm install @aspida/swrv @aspida/ky swrv ky
   ```
 
 - Using [Yarn](https://yarnpkg.com/):
@@ -47,7 +41,6 @@
   $ yarn add @aspida/swrv @aspida/axios swrv axios
   # $ yarn add @aspida/swrv @aspida/fetch swrv
   # $ yarn add @aspida/swrv @aspida/node-fetch swrv node-fetch
-  # $ yarn add @aspida/swrv @aspida/ky swrv ky
   ```
 
 ### Make HTTP request from application
@@ -66,7 +59,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import useAspidaSWRV from "@aspida/swrv"
-import aspida from "@aspida/axios" // "@aspida/fetch", "@aspida/node-fetch", "@aspida/ky"
+import aspida from "@aspida/axios" // "@aspida/fetch", "@aspida/node-fetch"
 import api from "../api/$api"
 
 const client = api(aspida())
@@ -106,7 +99,7 @@ export default defineComponent({
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import useAspidaSWRV from "@aspida/swrv"
-import aspida from "@aspida/axios" // "@aspida/fetch", "@aspida/node-fetch", "@aspida/ky"
+import aspida from "@aspida/axios" // "@aspida/fetch", "@aspida/node-fetch"
 import api from "../api/$api"
 
 const client = api(aspida())
@@ -145,7 +138,7 @@ export default defineComponent({
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import useAspidaSWRV from "@aspida/swrv"
-import aspida from "@aspida/axios" // "@aspida/fetch", "@aspida/node-fetch", "@aspida/ky"
+import aspida from "@aspida/axios" // "@aspida/fetch", "@aspida/node-fetch"
 import api from "../api/$api"
 
 const client = api(aspida())

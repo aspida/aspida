@@ -38,7 +38,7 @@ describe('optional query', () => {
     }
     const { container } = render(<Page />)
     expect(container.textContent).toMatchInlineSnapshot(`""`)
-    await waitForDomChange({ container })
+    await waitForDomChange({ container: container as HTMLElement })
     expect(container.textContent).toMatchInlineSnapshot(`"1"`)
   })
 
@@ -54,7 +54,7 @@ describe('optional query', () => {
     }
     const { container } = render(<Page />)
     expect(container.textContent).toMatchInlineSnapshot(`"2"`)
-    await waitForDomChange({ container })
+    await waitForDomChange({ container: container as HTMLElement })
     expect(container.textContent).toMatchInlineSnapshot(`"0"`)
   })
 
@@ -66,7 +66,7 @@ describe('optional query', () => {
     }
     const { container } = render(<Page />)
     expect(container.textContent).toMatchInlineSnapshot(`""`)
-    await waitForDomChange({ container })
+    await waitForDomChange({ container: container as HTMLElement })
     expect(container.textContent).toMatchInlineSnapshot(`"2"`)
   })
 
@@ -78,7 +78,7 @@ describe('optional query', () => {
     }
     const { container } = render(<Page />)
     expect(container.textContent).toMatchInlineSnapshot(`""`)
-    await waitForDomChange({ container })
+    await waitForDomChange({ container: container as HTMLElement })
     expect(container.textContent).toMatchInlineSnapshot(`"1"`)
   })
 
@@ -90,7 +90,7 @@ describe('optional query', () => {
     }
     const { container } = render(<Page />)
     expect(container.textContent).toMatchInlineSnapshot(`""`)
-    await waitForDomChange({ container })
+    await waitForDomChange({ container: container as HTMLElement })
     expect(container.textContent).toMatchInlineSnapshot(`"2"`)
   })
 })
@@ -105,7 +105,7 @@ describe('required query', () => {
     }
     const { container } = render(<Page />)
     expect(container.textContent).toMatchInlineSnapshot(`""`)
-    await waitForDomChange({ container })
+    await waitForDomChange({ container: container as HTMLElement })
     expect(container.textContent).toMatchInlineSnapshot(`"none"`)
   })
 
@@ -120,7 +120,7 @@ describe('required query', () => {
     }
     const { container } = render(<Page />)
     expect(container.textContent).toMatchInlineSnapshot(`""`)
-    await waitForDomChange({ container })
+    await waitForDomChange({ container: container as HTMLElement })
     expect(container.textContent).toMatchInlineSnapshot(`"aa"`)
   })
 
@@ -130,15 +130,14 @@ describe('required query', () => {
         query: { val: 'bb' },
         headers: { 'content-type': 'text/plain' },
         revalidateOnMount: true,
-        // @ts-expect-error
-        initialData: 1
+        initialData: '1'
       })
 
       return <div>{a.data}</div>
     }
     const { container } = render(<Page />)
     expect(container.textContent).toMatchInlineSnapshot(`"1"`)
-    await waitForDomChange({ container })
+    await waitForDomChange({ container: container as HTMLElement })
     expect(container.textContent).toMatchInlineSnapshot(`"bb"`)
   })
 
@@ -171,7 +170,7 @@ describe('required query', () => {
     }
     const { container } = render(<Page />)
     expect(container.textContent).toMatchInlineSnapshot(`"a/b"`)
-    await waitForDomChange({ container })
+    await waitForDomChange({ container: container as HTMLElement })
     expect(container.textContent).toMatchInlineSnapshot(`"none/"`)
   })
 
@@ -190,7 +189,7 @@ describe('required query', () => {
     }
     const { container } = render(<Page />)
     expect(container.textContent).toMatchInlineSnapshot(`"/"`)
-    await waitForDomChange({ container })
+    await waitForDomChange({ container: container as HTMLElement })
     expect(container.textContent).toMatchInlineSnapshot(`"aa/aa"`)
   })
 })

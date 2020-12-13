@@ -3,7 +3,7 @@
 <br />
 <br />
 <br />
-<img src="https://aspida.github.io/aspida/logos/svg/black.svg" alt="aspida" title="aspida" width="1000" height="120" />
+<img src="https://aspida.github.io/aspida/logos/png/logo.png" alt="aspida" title="aspida" width="1000" height="120" />
 <br />
 <br />
 <div align="center">
@@ -36,7 +36,7 @@
 
 - Path, URL query, header, body, and response can all specify the type
 - FormData / URLSearchParams content can also specify the type
-- HTTP client supports axios / ky / ky-universal / fetch / node-fetch
+- HTTP client supports axios / fetch / node-fetch
 
 <br />
 <img src="https://aspida.github.io/aspida/assets/images/vscode.gif" width="720" alt="vscode" />
@@ -183,14 +183,9 @@ import api from "../api/$api"
 })()
 ```
 
-### Read more posts by DEV Community
-
-**[aspida - DEV Community](https://dev.to/t/aspida)**
-
 ### aspida official HTTP clients
 
 - **[@aspida/axios](https://github.com/aspida/aspida/tree/master/packages/aspida-axios#readme)**
-- **[@aspida/ky](https://github.com/aspida/aspida/tree/master/packages/aspida-ky#readme)**
 - **[@aspida/fetch](https://github.com/aspida/aspida/tree/master/packages/aspida-fetch#readme)**
 - **[@aspida/node-fetch](https://github.com/aspida/aspida/tree/master/packages/aspida-node-fetch#readme)**
 
@@ -278,7 +273,7 @@ watch([
 
 - [openapi2aspida](https://github.com/aspida/openapi2aspida) - Convert OpenAPI 3.0 and Swagger 2.0 definitions
 - [aspida-mock](https://github.com/aspida/aspida-mock) - TypeScript friendly RESTful API mock
-- [frourio](https://github.com/frouriojs/frourio) - Frourio is a perfectly type-checkable REST framework for TypeScript
+- [frourio](https://frourio.io/) - Fast and type-safe full stack framework, for TypeScript TypeScript
 - [@aspida/swr](https://github.com/aspida/aspida/tree/master/packages/aspida-swr) - SWR (React Hooks) wrapper
 - [@aspida/swrv](https://github.com/aspida/aspida/tree/master/packages/aspida-swrv) - SWRV (Vue Composition API) wrapper
 - [eslint-plugin-aspida](https://github.com/ibuki2003/eslint-plugin-aspida) - Support writing aspida api definition
