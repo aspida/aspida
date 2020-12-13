@@ -18,7 +18,7 @@ beforeEach(fn => {
 afterEach(fn => server.close(fn))
 
 test('aspida response status 404', async () => {
-  const target = client.v1_1.$2._hogeId_0('hoge').entries_json
+  const target = client.v1_1.$2._hogeId_string('hoge').entries_json
   await expect(target.get()).rejects.toHaveProperty('response.status', 404)
 })
 
@@ -28,7 +28,7 @@ test('path value', async () => {
   })
 
   const text = 'hoge'
-  const target = client.v1_1.$2._hogeId_0(text).entries_json
+  const target = client.v1_1.$2._hogeId_string(text).entries_json
   await expect(target.$get()).resolves.toMatchObject([{ id: 0, title: text }])
 })
 

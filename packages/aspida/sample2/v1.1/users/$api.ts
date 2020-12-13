@@ -1,7 +1,6 @@
 /* eslint-disable */
 import { AspidaClient, dataToURLString } from 'aspida'
-import * as ApiTypes from '../../@types'
-import { Methods as Methods0 } from './_userId@User[\'id\']'
+import { Methods as Methods0 } from './_userId@string'
 
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const prefix = (baseURL === undefined ? '' : baseURL).replace(/\/$/, '')
@@ -11,7 +10,7 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const POST = 'POST'
 
   return {
-    _userId: (val0: ApiTypes.User['id']) => {
+    _userId: (val0: string) => {
       const prefix0 = `${PATH0}${val0}`
 
       return {

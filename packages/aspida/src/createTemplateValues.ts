@@ -52,12 +52,7 @@ export default (direntTree: DirentTree, basePath: string, trailingSlash: boolean
         let newUrl = `${url}/${basename}`
 
         if (hasVal) {
-          let [valName, valType = 'number | string'] = basename.split('@')
-
-          if (/^[A-Z]/.test(valType)) {
-            valType = `ApiTypes.${valType}`
-          }
-
+          const [valName, valType] = basename.split('@')
           const prevUrl = `'${url}${trailingSlash ? '/' : ''}'`
           if (url.length && !pathes.includes(prevUrl)) pathes.push(prevUrl)
 
@@ -72,8 +67,10 @@ export default (direntTree: DirentTree, basePath: string, trailingSlash: boolean
           newPrefix = `prefix${valCount}`
           newUrl = ''
           valFn = `${indent}${valName.replace(/\./g, '_')}${
-            duplicatedNames.length > 1 ? `_${duplicatedNames.indexOf(dirent)}` : ''
-          }: (val${valCount}: ${valType}) => {\n${indent}  const ${newPrefix} = ${prefixVal}\n\n${indent}  return {\n<% next %>\n${indent}  }\n${indent}}`
+            duplicatedNames.length > 1 && valType ? `_${valType}` : ''
+          }: (val${valCount}: ${
+            valType ?? 'number | string'
+          }) => {\n${indent}  const ${newPrefix} = ${prefixVal}\n\n${indent}  return {\n<% next %>\n${indent}  }\n${indent}}`
           valCount += 1
         }
 
