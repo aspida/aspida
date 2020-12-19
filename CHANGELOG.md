@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/aspida/aspida/compare/v1.1.0...v1.1.1) (2020-12-19)
+
+
+### Bug Fixes
+
+* add types property to package.json ([957c798](https://github.com/aspida/aspida/commit/957c79837c4bc91c672df6574b1a1d5512c22615))
+
 ## [1.1.0](https://github.com/aspida/aspida/compare/v1.0.0...v1.1.0) (2020-12-13)
 
 
