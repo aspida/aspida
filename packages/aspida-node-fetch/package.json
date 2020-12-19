@@ -5,6 +5,7 @@
   "author": "Solufa <solufa2020@gmail.com>",
   "license": "MIT",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "homepage": "https://github.com/aspida/aspida/tree/master/packages/aspida-node-fetch#readme",
   "repository": {
     "type": "git",
