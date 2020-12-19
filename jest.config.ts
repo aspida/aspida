@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const { pathsToModuleNameMapper } = require('ts-jest/utils')
-const { compilerOptions } = require('./tsconfig')
+import type { Config } from '@jest/types'
+import { pathsToModuleNameMapper } from 'ts-jest/utils'
+import { compilerOptions } from './tsconfig.json'
 
-module.exports = {
+const config: { projects: Config.InitialOptions[] } = {
   projects: [
     {
       preset: 'ts-jest',
@@ -23,3 +23,5 @@ module.exports = {
     }
   ]
 }
+
+export default config

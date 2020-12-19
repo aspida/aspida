@@ -1,11 +1,6 @@
 # aspida
 <br />
-<br />
-<br />
-<br />
-<img src="https://aspida.github.io/aspida/logos/png/logo.png" alt="aspida" title="aspida" width="1000" height="120" />
-<br />
-<br />
+<img src="https://aspida.github.io/aspida/logos/png/logo.png" alt="aspida" title="aspida" />
 <div align="center">
   <a href="https://www.npmjs.com/package/aspida">
     <img src="https://img.shields.io/npm/v/aspida" alt="npm version" />
