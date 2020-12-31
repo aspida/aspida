@@ -1,0 +1,31 @@
+{
+  "name": "@aspida/react-query",
+  "version": "1.1.1",
+  "description": "React Query wrapper for aspida",
+  "author": "Solufa <solufa2020@gmail.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "homepage": "https://github.com/aspida/aspida/tree/master/packages/aspida-react-query#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aspida/aspida.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aspida/aspida/issues"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "aspida",
+    "typescript",
+    "react-query"
+  ],
+  "dependencies": {
+    "aspida": "^1.1.1"
+  }
+}
