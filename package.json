@@ -100,7 +100,7 @@
     "react-dom": "^17.0.1",
     "react-query": "^3.5.6",
     "standard-version": "^9.0.0",
-    "swr": "^0.3.9",
+    "swr": "^0.3.11",
     "swrv": "^0.8.2",
     "ts-jest": "^26.4.4",
     "ts-node": "^9.1.1",
