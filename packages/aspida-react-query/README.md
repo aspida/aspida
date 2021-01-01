@@ -2,11 +2,11 @@
 <br />
 <img src="https://aspida.github.io/aspida/logos/png/logo.png" alt="aspida" title="aspida" />
 <div align="center">
-  <a href="https://www.npmjs.com/package/@aspida/swr">
-    <img src="https://img.shields.io/npm/v/@aspida/swr" alt="npm version" />
+  <a href="https://www.npmjs.com/package/@aspida/react-query">
+    <img src="https://img.shields.io/npm/v/@aspida/react-query" alt="npm version" />
   </a>
-  <a href="https://www.npmjs.com/package/@aspida/swr">
-    <img src="https://img.shields.io/npm/dm/@aspida/swr" alt="npm download" />
+  <a href="https://www.npmjs.com/package/@aspida/react-query">
+    <img src="https://img.shields.io/npm/dm/@aspida/react-query" alt="npm download" />
   </a>
   <a href="https://github.com/aspida/aspida/actions?query=workflow%3A%22Node.js+CI%22">
     <img src="https://github.com/aspida/aspida/workflows/Node.js%20CI/badge.svg?branch=master" alt="Node.js CI" />
@@ -19,7 +19,7 @@
   </a>
 </div>
 <br />
-<div align="center"><a href="https://swr.vercel.app/">SWR (React Hooks)</a> wrapper for <a href="https://github.com/aspida/aspida/">aspida</a>.</div>
+<div align="center"><a href="https://react-query.tanstack.com/">React Query</a> wrapper for <a href="https://github.com/aspida/aspida/">aspida</a>.</div>
 <br />
 <br />
 
@@ -30,17 +30,17 @@
 - Using [npm](https://www.npmjs.com/):
 
   ```sh
-  $ npm install @aspida/swr @aspida/axios swr axios
-  # $ npm install @aspida/swr @aspida/fetch swr
-  # $ npm install @aspida/swr @aspida/node-fetch swr node-fetch
+  $ npm install @aspida/react-query @aspida/axios react-query axios
+  # $ npm install @aspida/react-query @aspida/fetch react-query
+  # $ npm install @aspida/react-query @aspida/node-fetch react-query node-fetch
   ```
 
 - Using [Yarn](https://yarnpkg.com/):
 
   ```sh
-  $ yarn add @aspida/swr @aspida/axios swr axios
-  # $ yarn add @aspida/swr @aspida/fetch swr
-  # $ yarn add @aspida/swr @aspida/node-fetch swr node-fetch
+  $ yarn add @aspida/react-query @aspida/axios react-query axios
+  # $ yarn add @aspida/react-query @aspida/fetch react-query
+  # $ yarn add @aspida/react-query @aspida/node-fetch react-query node-fetch
   ```
 
 ### Make HTTP request from application
@@ -48,22 +48,65 @@
 `src/index.ts`
 
 ```tsx
-import useAspidaSWR from "@aspida/swr"
+import { useMutation, QueryClient, QueryClientProvider } from 'react-query'
+import { useAspidaQuery } from "@aspida/react-query"
 import aspida from "@aspida/axios" // "@aspida/fetch", "@aspida/node-fetch"
 import api from "../api/$api"
 
 const client = api(aspida())
+const queryClient = new QueryClient()
 
-function Profile() {
-  const { data, error } = useAspidaSWR(
-    client.user._userId(123),
-    { query: { name: 'mario' } }
+function App() {
+  return (
+    // Provide the client to your App
+    <QueryClientProvider client={queryClient}>
+      <Todos />
+    </QueryClientProvider>
   )
-
-  if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
-  return <div>hello {data.name}!</div>
 }
+
+function postTodo(body: { id: number; title: string }) {
+  return client.todos.$post({ body })
+}
+
+function Todos() {
+  // Access the client
+  const queryClient = useQueryClient()
+
+  // Queries
+  const query = useAspidaQuery(client.todos, { query: { limit: 10 }})
+
+  // Mutations
+  const mutation = useMutation(postTodo, {
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries(client.todos.$path({ query: { limit: 10 }}))
+    },
+  })
+
+  return (
+    <div>
+      <ul>
+        {query.data.map(todo => (
+          <li key={todo.id}>{todo.title}</li>
+        ))}
+      </ul>
+
+      <button
+        onClick={() => {
+          mutation.mutate({
+            id: Date.now(),
+            title: 'Do Laundry',
+          })
+        }}
+      >
+        Add Todo
+      </button>
+    </div>
+  )
+}
+
+render(<App />, document.getElementById('root'))
 ```
 
 ### Get response body/status/headers
@@ -71,14 +114,24 @@ function Profile() {
 `src/index.ts`
 
 ```tsx
-import useAspidaSWR from "@aspida/swr"
+import { useMutation, QueryClient, QueryClientProvider } from 'react-query'
+import { useAspidaQuery } from "@aspida/react-query"
 import aspida from "@aspida/axios" // "@aspida/fetch", "@aspida/node-fetch"
 import api from "../api/$api"
 
 const client = api(aspida())
+const queryClient = new QueryClient()
+
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Profile />
+    </QueryClientProvider>
+  )
+}
 
 function Profile() {
-  const { data, error } = useAspidaSWR(
+  const { data, error } = useAspidaQuery(
     client.user._userId(123),
     'get',
     { query: { name: 'mario' } }
@@ -94,27 +147,39 @@ function Profile() {
     </>
   )
 }
+
+render(<App />, document.getElementById('root'))
 ```
 
-`useAspidaSWR(client.user._userId(123), { query })` is an alias of `useAspidaSWR(client.user._userId(123), "$get", { query })`
+`useAspidaQuery(client.user._userId(123), { query })` is an alias of `useAspidaQuery(client.user._userId(123), "$get", { query })`
 
-### Use with SWR options
+### Use with React Query options
 
 `src/index.ts`
 
 ```tsx
-import useAspidaSWR from "@aspida/swr"
+import { useMutation, QueryClient, QueryClientProvider } from 'react-query'
+import { useAspidaQuery } from "@aspida/react-query"
 import aspida from "@aspida/axios" // "@aspida/fetch", "@aspida/node-fetch"
 import api from "../api/$api"
 
 const client = api(aspida())
+const queryClient = new QueryClient()
+
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Profile />
+    </QueryClientProvider>
+  )
+}
 
 function Profile() {
-  const { data, error } = useAspidaSWR(
+  const { data, error } = useAspidaQuery(
     client.user._userId(123),
     {
       query: { name: 'mario' },
-      revalidateOnMount: true,
+      refetchOnMount: true,
       initialData: { name: 'anonymous' }
     }
   )
@@ -122,8 +187,10 @@ function Profile() {
   if (error) return <div>failed to load</div>
   return <div>hello {data.name}!</div>
 }
+
+render(<App />, document.getElementById('root'))
 ```
 
 ## License
 
-@aspida/swr is licensed under a [MIT License](https://github.com/aspida/aspida/blob/master/packages/aspida-swr/LICENSE).
+@aspida/react-query is licensed under a [MIT License](https://github.com/aspida/aspida/blob/master/packages/aspida-react-query/LICENSE).
