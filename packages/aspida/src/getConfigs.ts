@@ -5,6 +5,7 @@ export type AspidaConfig = {
   input: string
   baseURL: string
   trailingSlash: boolean
+  decodeSpecialChars: boolean
   outputEachDir: boolean
 }
 
@@ -12,6 +13,7 @@ const defaultConfig: AspidaConfig = {
   input: ['api', 'apis'].find(input => fs.existsSync(input)) ?? 'api',
   baseURL: '',
   trailingSlash: false,
+  decodeSpecialChars: false,
   outputEachDir: false
 }
 

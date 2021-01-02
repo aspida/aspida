@@ -23,7 +23,8 @@ const createTemplate = (
   tree: DirentTree,
   baseURL: string,
   trailingSlash: boolean,
-  basePath: string
+  basePath: string,
+  decodeSpecialChars: boolean
 ) => {
   const { api, imports, pathes } = createTemplateValues(tree, basePath, trailingSlash)
   const text = `/* eslint-disable */
@@ -37,7 +38,9 @@ ${createDocComment(
   tree.children.find((c): c is FileData => !c.isDir && c.name === 'index.ts')?.doc
 )}const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const prefix = (baseURL === undefined ? '<% baseURL %>' : baseURL).replace(/\\/$/, '')
-${pathes.map((p, i) => `  const PATH${i} = ${p}`).join('\n')}
+${pathes
+  .map((p, i) => `  const PATH${i} = ${decodeSpecialChars ? decodeURIComponent(p) : p}`)
+  .join('\n')}
 ${['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'PATCH', 'OPTIONS']
   .filter(m => api.includes(`, ${m}, option`))
   .map(m => `  const ${m} = '${m}'`)
@@ -56,9 +59,15 @@ export default api
   return { text, filePath: path.posix.join(tree.path, '$api.ts') }
 }
 
-export default ({ input, baseURL, trailingSlash, outputEachDir }: AspidaConfig) => {
+export default ({
+  input,
+  baseURL,
+  trailingSlash,
+  decodeSpecialChars,
+  outputEachDir
+}: AspidaConfig) => {
   const direntTree = getDirentTree(input)
-  const templates = [createTemplate(direntTree, baseURL, trailingSlash, '')]
+  const templates = [createTemplate(direntTree, baseURL, trailingSlash, '', decodeSpecialChars)]
 
   if (outputEachDir) {
     const notIndexFiles = listNotIndexFiles(direntTree)
@@ -74,7 +83,13 @@ export default ({ input, baseURL, trailingSlash, outputEachDir }: AspidaConfig) 
         if (!c.isDir || c.name.startsWith('_')) return
 
         templates.push(
-          createTemplate(c.tree, baseURL, trailingSlash, c.tree.path.replace(input, ''))
+          createTemplate(
+            c.tree,
+            baseURL,
+            trailingSlash,
+            c.tree.path.replace(input, ''),
+            decodeSpecialChars
+          )
         )
 
         appendTemplate(c.tree)
