@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { AspidaClient, AspidaResponse, BasicHeaders, dataToURLString } from 'aspida'
 import { Methods as Methods0 } from '.'
-import { Methods as Methods1 } from './_sampleId.json@number'
+import { Methods as Methods1 } from './_sampleId@number.json'
 import { Methods as Methods2 } from './foo%3Abar'
 import { Methods as Methods3 } from './polymorphism/users'
 import { Methods as Methods4 } from './polymorphism/users/_userId'
@@ -19,7 +19,7 @@ import { Methods as Methods15 } from './v2.0'
 
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const prefix = (baseURL === undefined ? 'https://example.com/api/' : baseURL).replace(/\/$/, '')
-  const PATH0 = '/foo%3Abar'
+  const PATH0 = '/foo:bar'
   const PATH1 = '/polymorphism/users'
   const PATH2 = '/v1.1'
   const PATH3 = '/v1.1/2'

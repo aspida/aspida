@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { AspidaClient, BasicHeaders, dataToURLString } from 'aspida'
 import { Methods as Methods0 } from '.'
-import { Methods as Methods1 } from './_sampleId.json@number'
+import { Methods as Methods1 } from './_sampleId@number.json'
 import { Methods as Methods2 } from './foo%3Abar'
 import { Methods as Methods3 } from './v1.1'
 import { Methods as Methods4 } from './v1.1/2/_hogeId'
