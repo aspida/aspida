@@ -4,11 +4,15 @@ type Options<T extends (option: any) => Promise<any>> = Parameters<
   Parameters<T> extends [Parameters<T>[0]]
     ? (
         option: Parameters<T>[0] &
-          ConfigInterface<ReturnType<T> extends Promise<infer S> ? S : never>
+          ConfigInterface<ReturnType<T> extends Promise<infer S> ? S : never> & {
+            enabled?: boolean
+          }
       ) => void
     : (
         option?: Parameters<T>[0] &
-          ConfigInterface<ReturnType<T> extends Promise<infer S> ? S : never>
+          ConfigInterface<ReturnType<T> extends Promise<infer S> ? S : never> & {
+            enabled?: boolean
+          }
       ) => void
 >
 
@@ -34,7 +38,11 @@ function useAspidaSWR<
   const method = typeof key === 'string' ? key : '$get'
   const opt = typeof key === 'string' ? (option as any)[0] : key
 
-  return useSWR([api.$path(opt), method], () => api[method](opt), opt)
+  return useSWR(
+    opt?.enabled === false ? null : [api.$path(opt), method],
+    () => api[method](opt),
+    opt
+  )
 }
 
 export default useAspidaSWR
