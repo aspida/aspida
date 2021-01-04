@@ -32,12 +32,11 @@ export default (direntTree: DirentTree, basePath: string, trailingSlash: boolean
     )
   }
 
-  let valCount = 0
-
   const createApiString = (
     tree: DirentTree,
     importBasePath: string,
     indent: string,
+    dirDeps: number,
     prefix: string,
     url: string,
     text: string,
@@ -76,16 +75,15 @@ export default (direntTree: DirentTree, basePath: string, trailingSlash: boolean
           const duplicatedNames = tree.children.filter(d => d.name.startsWith(valName))
           const prefixVal = `\`${prefix ? `\${${prefix}}` : ''}${
             url.length ? `\${PATH${pathes.indexOf(prevUrl)}}` : ''
-          }${url.length && trailingSlash ? '' : '/'}\${val${valCount}}${postfix}\``
+          }${url.length && trailingSlash ? '' : '/'}\${val${dirDeps}}${postfix}\``
 
-          newPrefix = `prefix${valCount}`
+          newPrefix = `prefix${dirDeps}`
           newUrl = ''
           valFn = `${indent}${valName}${
             duplicatedNames.length > 1 && valType ? `_${valType}` : ''
-          }${postfix.replace(/[^a-zA-Z0-9$_]/g, '_')}: (val${valCount}: ${
+          }${postfix.replace(/[^a-zA-Z0-9$_]/g, '_')}: (val${dirDeps}: ${
             valType ?? 'number | string'
           }) => {\n${indent}  const ${newPrefix} = ${prefixVal}\n\n${indent}  return {\n<% next %>\n${indent}  }\n${indent}}`
-          valCount += 1
         }
 
         const fallbackSpecialCharsProp = (text: string) =>
@@ -112,6 +110,7 @@ export default (direntTree: DirentTree, basePath: string, trailingSlash: boolean
               dirent.tree,
               `${importBasePath}/${filename}`,
               `${indent}${hasVal ? '  ' : ''}  `,
+              dirDeps + 1,
               newPrefix,
               newUrl,
               `${createDocComment(indent, (<FileData>methodsOfIndexTsFile)?.doc)}${valFn.replace(
@@ -164,6 +163,7 @@ export default (direntTree: DirentTree, basePath: string, trailingSlash: boolean
     direntTree,
     '.',
     '    ',
+    0,
     '',
     basePath,
     `{\n<% props %>\n  }`,
