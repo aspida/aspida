@@ -26,6 +26,6 @@
     "react-query"
   ],
   "dependencies": {
-    "aspida": "^1.1.1"
+    "aspida": "^1.2.0"
   }
 }
