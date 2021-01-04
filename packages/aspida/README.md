@@ -269,6 +269,7 @@ watch([
 - [openapi2aspida](https://github.com/aspida/openapi2aspida) - Convert OpenAPI 3.0 and Swagger 2.0 definitions
 - [aspida-mock](https://github.com/aspida/aspida-mock) - TypeScript friendly RESTful API mock
 - [frourio](https://frourio.io/) - Fast and type-safe full stack framework, for TypeScript TypeScript
+- [@aspida/react-query](https://github.com/aspida/aspida/tree/master/packages/aspida-react-query) - React Query wrapper
 - [@aspida/swr](https://github.com/aspida/aspida/tree/master/packages/aspida-swr) - SWR (React Hooks) wrapper
 - [@aspida/swrv](https://github.com/aspida/aspida/tree/master/packages/aspida-swrv) - SWRV (Vue Composition API) wrapper
 - [eslint-plugin-aspida](https://github.com/ibuki2003/eslint-plugin-aspida) - Support writing aspida api definition
@@ -537,7 +538,17 @@ export type Methods = {
 }
 ```
 
-With clients, `"%3A"` -> `"_3A"`
+`api/users/_userId@number%3Aread/index.ts`
+
+```ts
+export type Methods = {
+  get: {
+    resBody: User
+  }
+}
+```
+
+With clients, `"%3A"` -> `":"`
 
 `src/index.ts`
 
@@ -547,9 +558,13 @@ import api from "../api/$api"
 ;(async () => {
   const client = api(aspida())
 
-  const message = await client.foo_3Abar.$get()
+  const message = await client.foo_bar.$get()
   console.log(message)
-  // req -> GET: /foo%3Abar (= /foo:bar)
+  // req -> GET: /foo:bar
+
+  const user = await client.users._userId_read(1).$get()
+  console.log(user)
+  // req -> GET: /users/1:read
 })()
 ```
 
