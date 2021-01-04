@@ -161,6 +161,20 @@ export default defineComponent({
 </script>
 ```
 
+### Conditional Fetching
+
+If you use the `enabled = false` option, AspidaSWRV will not start the request.
+
+```ts
+const { data: user } = useAspidaSWRV(client.user)
+const { data } = useAspidaSWRV(client.articles, { query: { userId: user?.id ?? 0 }, enabled: !!user })
+// is an alias of 
+const { data } = useSWRV(
+  user ? [client.articles.$path({ query: { userId: user.id }}), '$get'] : null,
+  () => client.articles.$get({ query: { userId: user.id }})
+)
+```
+
 ## License
 
 @aspida/swrv is licensed under a [MIT License](https://github.com/aspida/aspida/blob/master/packages/aspida-swrv/LICENSE).

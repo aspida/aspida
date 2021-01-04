@@ -124,6 +124,20 @@ function Profile() {
 }
 ```
 
+### Conditional Fetching
+
+If you use the `enabled = false` option, AspidaSWR will not start the request.
+
+```ts
+const { data: user } = useAspidaSWR(client.user)
+const { data } = useAspidaSWR(client.articles, { query: { userId: user?.id ?? 0 }, enabled: !!user })
+// is an alias of 
+const { data } = useSWR(
+  user ? [client.articles.$path({ query: { userId: user.id }}), '$get'] : null,
+  () => client.articles.$get({ query: { userId: user.id }})
+)
+```
+
 ## License
 
 @aspida/swr is licensed under a [MIT License](https://github.com/aspida/aspida/blob/master/packages/aspida-swr/LICENSE).

@@ -1,12 +1,12 @@
 {
-  "name": "@aspida/fetch",
-  "version": "1.2.0",
-  "description": "fetch client for aspida",
+  "name": "@aspida/react-query",
+  "version": "0.1.0",
+  "description": "React Query wrapper for aspida",
   "author": "Solufa <solufa2020@gmail.com>",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "homepage": "https://github.com/aspida/aspida/tree/master/packages/aspida-fetch#readme",
+  "homepage": "https://github.com/aspida/aspida/tree/master/packages/aspida-react-query#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aspida/aspida.git"
@@ -23,7 +23,7 @@
   "keywords": [
     "aspida",
     "typescript",
-    "fetch"
+    "react-query"
   ],
   "dependencies": {
     "aspida": "^1.2.0"

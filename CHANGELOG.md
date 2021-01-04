@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/aspida/aspida/compare/v1.1.1...v1.2.0) (2021-01-04)
+
+
+### Features
+
+* add aspida-react-query ([870d706](https://github.com/aspida/aspida/commit/870d706e0e43a8e9d7d4a94af4cd97460a04b5c0))
+* add decodeSpecialChars option ([f09c76a](https://github.com/aspida/aspida/commit/f09c76a0fcb7c71bdf46def6bbe0d201033e393a))
+* automatically decode special characters ([b2cdea6](https://github.com/aspida/aspida/commit/b2cdea64490948e53462f87cd678891e833ae9e9))
+* decode client property/method ([c4968b8](https://github.com/aspida/aspida/commit/c4968b871be6055c2c74fe1f8d52738aede79df2))
+* **swr/swrv:** add enabled option ([e73aeb9](https://github.com/aspida/aspida/commit/e73aeb9219884a1095aafb9897da03ff0c3b79d3))
+
 ### [1.1.1](https://github.com/aspida/aspida/compare/v1.1.0...v1.1.1) (2020-12-19)
 
 

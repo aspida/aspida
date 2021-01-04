@@ -154,7 +154,7 @@ ${indent}    ${tmpChanks[1]},
 ${createDocComment(`${indent}  `, doc, props)}${indent}  $${name}: ${tmpChanks[0]}
 ${indent}    ${tmpChanks[1]}.then(r => r.body)`
     }),
-    methods.filter(({ props }) => props.query).length
+    (methods.filter(({ props }) => props.query).length
       ? `${indent}  $path: (option?: ${methods
           .filter(({ props }) => props.query)
           .map(
@@ -170,6 +170,9 @@ ${indent}    \`\${prefix}\${${
       : `${indent}  $path: () => \`\${prefix}\${${
           path.startsWith('`') ? path.slice(3, -2) : path
         }}\``
+    )
+      // eslint-disable-next-line no-template-curly-in-string
+      .replace("${''}", '')
   ]
     .join(',\n')
     .replace(/, BasicHeaders>/g, '>')

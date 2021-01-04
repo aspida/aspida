@@ -3,6 +3,9 @@ import createDocComment from './createDocComment'
 import { DirentTree, FileData } from './getDirentTree'
 import { Method } from './parseInterface'
 
+const toJSValidString = (text: string) =>
+  text.replace(/[^a-zA-Z0-9$_]/g, '_').replace(/^(\d)/, '$$$1')
+
 export default (direntTree: DirentTree, basePath: string, trailingSlash: boolean) => {
   const imports: string[] = []
   const pathes: string[] = []
@@ -15,7 +18,7 @@ export default (direntTree: DirentTree, basePath: string, trailingSlash: boolean
   ) => {
     const importName = `Methods${imports.length}`
     imports.push(`import { Methods as ${importName} } from '${filepath.replace(/'/g, "\\'")}'`)
-    let newPath = `'${newUrl}${trailingSlash ? '/' : ''}'`
+    let newPath = `'${decodeURIComponent(newUrl)}${trailingSlash ? '/' : ''}'`
     if (newPath.length > 2) {
       if (!pathes.includes(newPath)) pathes.push(newPath)
       newPath = `PATH${pathes.indexOf(newPath)}`
@@ -29,12 +32,11 @@ export default (direntTree: DirentTree, basePath: string, trailingSlash: boolean
     )
   }
 
-  let valCount = 0
-
   const createApiString = (
     tree: DirentTree,
     importBasePath: string,
     indent: string,
+    dirDeps: number,
     prefix: string,
     url: string,
     text: string,
@@ -45,71 +47,100 @@ export default (direntTree: DirentTree, basePath: string, trailingSlash: boolean
         const filename = dirent.name
         const basename = dirent.isDir ? filename : filename.replace(/\.ts$/, '')
         const hasVal = filename.startsWith('_')
-        let valFn = `${indent}${basename
-          .replace(/[^a-zA-Z0-9$_]/g, '_')
-          .replace(/^(\d)/, '$$$1')}: {\n<% next %>\n${indent}}`
+        let valFn = `${indent}${toJSValidString(
+          decodeURIComponent(basename)
+        )}: {\n<% next %>\n${indent}}`
         let newPrefix = prefix
         let newUrl = `${url}/${basename}`
 
         if (hasVal) {
-          const [valName, valType] = basename.split('@')
-          const prevUrl = `'${url}${trailingSlash ? '/' : ''}'`
+          const valPathRegExp = /^_[a-zA-Z][a-zA-Z0-9]*(@number|@string)?((\.|%[0-9a-fA-F]{2})[a-zA-Z0-9]+)?$/
+          if (!valPathRegExp.test(basename)) {
+            throw new Error(
+              `aspida \u001b[43m\u001b[31mERROR\u001b[0m '${basename}' does not match '${valPathRegExp.toString()}'.`
+            )
+          }
+
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          const valName = basename.match(/^_[a-zA-Z][a-zA-Z0-9]*/)![0]
+          const valType = basename.replace(valName, '').startsWith('@')
+            ? basename.split('@')[1].slice(0, 6)
+            : null
+          const postfix = decodeURIComponent(
+            basename.replace(valName, '').replace(valType ? `@${valType}` : '', '')
+          )
+          const prevUrl = `'${decodeURIComponent(url)}${trailingSlash ? '/' : ''}'`
           if (url.length && !pathes.includes(prevUrl)) pathes.push(prevUrl)
 
           const duplicatedNames = tree.children.filter(d => d.name.startsWith(valName))
           const prefixVal = `\`${prefix ? `\${${prefix}}` : ''}${
             url.length ? `\${PATH${pathes.indexOf(prevUrl)}}` : ''
-          }${url.length && trailingSlash ? '' : '/'}\${val${valCount}}${valName.replace(
-            /^[^.]+/,
-            ''
-          )}\``
+          }${url.length && trailingSlash ? '' : '/'}\${val${dirDeps}}${postfix}\``
 
-          newPrefix = `prefix${valCount}`
+          newPrefix = `prefix${dirDeps}`
           newUrl = ''
-          valFn = `${indent}${valName.replace(/\./g, '_')}${
+          valFn = `${indent}${valName}${
             duplicatedNames.length > 1 && valType ? `_${valType}` : ''
-          }: (val${valCount}: ${
+          }${postfix.replace(/[^a-zA-Z0-9$_]/g, '_')}: (val${dirDeps}: ${
             valType ?? 'number | string'
           }) => {\n${indent}  const ${newPrefix} = ${prefixVal}\n\n${indent}  return {\n<% next %>\n${indent}  }\n${indent}}`
-          valCount += 1
         }
+
+        const fallbackSpecialCharsProp = (text: string) =>
+          /%[0-9a-fA-F]{2}/.test(basename)
+            ? `${text},\n${text.replace(
+                /^( +?)[^ ]+?:/,
+                `$1/**\n$1 * @deprecated \`${toJSValidString(
+                  basename.replace(/(@number|@string)/, '')
+                )}\` has been deprecated.\n$1 * Use \`${toJSValidString(
+                  decodeURIComponent(basename.replace(/(@number|@string)/, ''))
+                )}\` instead\n$1 */\n$1${toJSValidString(
+                  basename.replace(/(@number|@string)/, '')
+                )}:`
+              )}`
+            : text
 
         if (dirent.isDir) {
           const methodsOfIndexTsFile =
             tree.children.find(c => c.name === `${filename}.ts`) ??
             dirent.tree.children.find(c => c.name === 'index.ts')
 
-          return createApiString(
-            dirent.tree,
-            `${importBasePath}/${filename}`,
-            `${indent}${hasVal ? '  ' : ''}  `,
-            newPrefix,
-            newUrl,
-            `${createDocComment(indent, (<FileData>methodsOfIndexTsFile)?.doc)}${valFn.replace(
-              '<% next %>',
-              '<% props %>'
-            )}`,
-            methodsOfIndexTsFile?.isDir === false
-              ? getMethodsString(
-                  `${importBasePath}/${filename}`,
-                  methodsOfIndexTsFile.methods,
-                  `${indent}${hasVal ? '  ' : ''}`,
-                  newPrefix,
-                  newUrl
-                )
-              : undefined
+          return fallbackSpecialCharsProp(
+            createApiString(
+              dirent.tree,
+              `${importBasePath}/${filename}`,
+              `${indent}${hasVal ? '  ' : ''}  `,
+              dirDeps + 1,
+              newPrefix,
+              newUrl,
+              `${createDocComment(indent, (<FileData>methodsOfIndexTsFile)?.doc)}${valFn.replace(
+                '<% next %>',
+                '<% props %>'
+              )}`,
+              methodsOfIndexTsFile?.isDir === false
+                ? getMethodsString(
+                    `${importBasePath}/${filename}`,
+                    methodsOfIndexTsFile.methods,
+                    `${indent}${hasVal ? '  ' : ''}`,
+                    newPrefix,
+                    newUrl
+                  )
+                : undefined
+            )
           )
         } else if (filename !== 'index.ts' && tree.children.every(d => d.name !== basename)) {
-          return `${createDocComment(indent, dirent.doc)}${valFn.replace(
-            '<% next %>',
-            getMethodsString(
-              `${importBasePath}/${basename}`,
-              dirent.methods,
-              `${indent}${hasVal ? '  ' : ''}`,
-              newPrefix,
-              newUrl
-            )
-          )}`
+          return fallbackSpecialCharsProp(
+            `${createDocComment(indent, dirent.doc)}${valFn.replace(
+              '<% next %>',
+              getMethodsString(
+                `${importBasePath}/${basename}`,
+                dirent.methods,
+                `${indent}${hasVal ? '  ' : ''}`,
+                newPrefix,
+                newUrl
+              )
+            )}`
+          )
         }
 
         return null
@@ -132,6 +163,7 @@ export default (direntTree: DirentTree, basePath: string, trailingSlash: boolean
     direntTree,
     '.',
     '    ',
+    0,
     '',
     basePath,
     `{\n<% props %>\n  }`,
