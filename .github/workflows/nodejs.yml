@@ -70,6 +70,10 @@ jobs:
       - run: cd packages/aspida-node-fetch && npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: yarn build:react-query
+      - run: cd packages/aspida-react-query && npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: yarn build:swr
       - run: cd packages/aspida-swr && npm publish
         env:
