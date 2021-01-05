@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.1](https://github.com/aspida/aspida/compare/v1.2.0...v1.2.1) (2021-01-05)
+
+
+### Bug Fixes
+
+* escape path parameter name ([a9f7438](https://github.com/aspida/aspida/commit/a9f74384a4a007c8938666763c87e13b80284735))
+
 ## [1.2.0](https://github.com/aspida/aspida/compare/v1.1.1...v1.2.0) (2021-01-04)
 
 

@@ -3,18 +3,19 @@ import { AspidaClient, BasicHeaders, dataToURLString } from 'aspida'
 import { Methods as Methods0 } from '.'
 import { Methods as Methods1 } from './_sampleId@number.json'
 import { Methods as Methods2 } from './foo%3Abar'
-import { Methods as Methods3 } from './foo%3Abar/_fooId@number%40create'
-import { Methods as Methods4 } from './v1.1'
-import { Methods as Methods5 } from './v1.1/2/_hogeId'
-import { Methods as Methods6 } from './v1.1/2/_hogeId@number'
-import { Methods as Methods7 } from './v1.1/2/_hogeId@string/entries.json'
-import { Methods as Methods8 } from './v1.1/2/_hogeId@string/test-4'
-import { Methods as Methods9 } from './v1.1/2/_hogeId@string/test-4/_fugaId'
-import { Methods as Methods10 } from './v1.1/2/_hogeId@string/test-4/fuga aa'
-import { Methods as Methods11 } from './v1.1/3.1'
-import { Methods as Methods12 } from './v1.1/_articleId.json'
-import { Methods as Methods13 } from './v1.1/users/_userId@string'
-import { Methods as Methods14 } from './v2.0'
+import { Methods as Methods3 } from './foo%3Abar/_bar_id@string.json'
+import { Methods as Methods4 } from './foo%3Abar/_fooId@number%40create'
+import { Methods as Methods5 } from './v1.1'
+import { Methods as Methods6 } from './v1.1/2/_hogeId'
+import { Methods as Methods7 } from './v1.1/2/_hogeId@number'
+import { Methods as Methods8 } from './v1.1/2/_hogeId@string/entries.json'
+import { Methods as Methods9 } from './v1.1/2/_hogeId@string/test-4'
+import { Methods as Methods10 } from './v1.1/2/_hogeId@string/test-4/_fugaId'
+import { Methods as Methods11 } from './v1.1/2/_hogeId@string/test-4/fuga aa'
+import { Methods as Methods12 } from './v1.1/3.1'
+import { Methods as Methods13 } from './v1.1/_articleId.json'
+import { Methods as Methods14 } from './v1.1/users/_userId@string'
+import { Methods as Methods15 } from './v2.0'
 
 /**
  * root comment
@@ -52,14 +53,25 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
       }
     },
     foo_bar: {
-      _fooId_create: (val1: number) => {
-        const prefix1 = `${PATH1}${val1}@create`
+      _bar_id_json: (val1: string) => {
+        const prefix1 = `${PATH1}${val1}.json`
 
         return {
           get: (option?: { config?: T }) =>
             fetch<Methods3['get']['resBody']>(prefix, `${prefix1}${PATH0}`, GET, option).text(),
           $get: (option?: { config?: T }) =>
             fetch<Methods3['get']['resBody']>(prefix, `${prefix1}${PATH0}`, GET, option).text().then(r => r.body),
+          $path: () => `${prefix}${prefix1}${PATH0}`
+        }
+      },
+      _fooId_create: (val1: number) => {
+        const prefix1 = `${PATH1}${val1}@create`
+
+        return {
+          get: (option?: { config?: T }) =>
+            fetch<Methods4['get']['resBody']>(prefix, `${prefix1}${PATH0}`, GET, option).text(),
+          $get: (option?: { config?: T }) =>
+            fetch<Methods4['get']['resBody']>(prefix, `${prefix1}${PATH0}`, GET, option).text().then(r => r.body),
           $path: () => `${prefix}${prefix1}${PATH0}`
         }
       },
@@ -72,9 +84,9 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
 
         return {
           get: (option?: { config?: T }) =>
-            fetch<Methods3['get']['resBody']>(prefix, `${prefix1}${PATH0}`, GET, option).text(),
+            fetch<Methods4['get']['resBody']>(prefix, `${prefix1}${PATH0}`, GET, option).text(),
           $get: (option?: { config?: T }) =>
-            fetch<Methods3['get']['resBody']>(prefix, `${prefix1}${PATH0}`, GET, option).text().then(r => r.body),
+            fetch<Methods4['get']['resBody']>(prefix, `${prefix1}${PATH0}`, GET, option).text().then(r => r.body),
           $path: () => `${prefix}${prefix1}${PATH0}`
         }
       },
@@ -89,14 +101,25 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
      * Use `foo_bar` instead
      */
     foo_3Abar: {
-      _fooId_create: (val1: number) => {
-        const prefix1 = `${PATH1}${val1}@create`
+      _bar_id_json: (val1: string) => {
+        const prefix1 = `${PATH1}${val1}.json`
 
         return {
           get: (option?: { config?: T }) =>
             fetch<Methods3['get']['resBody']>(prefix, `${prefix1}${PATH0}`, GET, option).text(),
           $get: (option?: { config?: T }) =>
             fetch<Methods3['get']['resBody']>(prefix, `${prefix1}${PATH0}`, GET, option).text().then(r => r.body),
+          $path: () => `${prefix}${prefix1}${PATH0}`
+        }
+      },
+      _fooId_create: (val1: number) => {
+        const prefix1 = `${PATH1}${val1}@create`
+
+        return {
+          get: (option?: { config?: T }) =>
+            fetch<Methods4['get']['resBody']>(prefix, `${prefix1}${PATH0}`, GET, option).text(),
+          $get: (option?: { config?: T }) =>
+            fetch<Methods4['get']['resBody']>(prefix, `${prefix1}${PATH0}`, GET, option).text().then(r => r.body),
           $path: () => `${prefix}${prefix1}${PATH0}`
         }
       },
@@ -109,9 +132,9 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
 
         return {
           get: (option?: { config?: T }) =>
-            fetch<Methods3['get']['resBody']>(prefix, `${prefix1}${PATH0}`, GET, option).text(),
+            fetch<Methods4['get']['resBody']>(prefix, `${prefix1}${PATH0}`, GET, option).text(),
           $get: (option?: { config?: T }) =>
-            fetch<Methods3['get']['resBody']>(prefix, `${prefix1}${PATH0}`, GET, option).text().then(r => r.body),
+            fetch<Methods4['get']['resBody']>(prefix, `${prefix1}${PATH0}`, GET, option).text().then(r => r.body),
           $path: () => `${prefix}${prefix1}${PATH0}`
         }
       },
@@ -128,9 +151,9 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
 
           return {
             get: (option?: { config?: T }) =>
-              fetch<Methods5['get']['resBody']>(prefix, `${prefix2}${PATH0}`, GET, option).json(),
+              fetch<Methods6['get']['resBody']>(prefix, `${prefix2}${PATH0}`, GET, option).json(),
             $get: (option?: { config?: T }) =>
-              fetch<Methods5['get']['resBody']>(prefix, `${prefix2}${PATH0}`, GET, option).json().then(r => r.body),
+              fetch<Methods6['get']['resBody']>(prefix, `${prefix2}${PATH0}`, GET, option).json().then(r => r.body),
             $path: () => `${prefix}${prefix2}${PATH0}`
           }
         },
@@ -138,11 +161,11 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
           const prefix2 = `${PATH3}${val2}`
 
           return {
-            get: (option: { query?: Methods6['get']['query'], headers: Methods6['get']['reqHeaders'], config?: T }) =>
-              fetch<Methods6['get']['resBody']>(prefix, `${prefix2}${PATH0}`, GET, option).json(),
-            $get: (option: { query?: Methods6['get']['query'], headers: Methods6['get']['reqHeaders'], config?: T }) =>
-              fetch<Methods6['get']['resBody']>(prefix, `${prefix2}${PATH0}`, GET, option).json().then(r => r.body),
-            $path: (option?: { method?: 'get'; query: Methods6['get']['query'] }) =>
+            get: (option: { query?: Methods7['get']['query'], headers: Methods7['get']['reqHeaders'], config?: T }) =>
+              fetch<Methods7['get']['resBody']>(prefix, `${prefix2}${PATH0}`, GET, option).json(),
+            $get: (option: { query?: Methods7['get']['query'], headers: Methods7['get']['reqHeaders'], config?: T }) =>
+              fetch<Methods7['get']['resBody']>(prefix, `${prefix2}${PATH0}`, GET, option).json().then(r => r.body),
+            $path: (option?: { method?: 'get'; query: Methods7['get']['query'] }) =>
               `${prefix}${prefix2}${PATH0}${option && option.query ? `?${dataToURLString(option.query)}` : ''}`
           }
         },
@@ -152,9 +175,9 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
           return {
             entries_json: {
               get: (option?: { config?: T }) =>
-                fetch<Methods7['get']['resBody']>(prefix, `${prefix2}${PATH4}`, GET, option).json(),
+                fetch<Methods8['get']['resBody']>(prefix, `${prefix2}${PATH4}`, GET, option).json(),
               $get: (option?: { config?: T }) =>
-                fetch<Methods7['get']['resBody']>(prefix, `${prefix2}${PATH4}`, GET, option).json().then(r => r.body),
+                fetch<Methods8['get']['resBody']>(prefix, `${prefix2}${PATH4}`, GET, option).json().then(r => r.body),
               $path: () => `${prefix}${prefix2}${PATH4}`
             },
             test_4: {
@@ -165,71 +188,71 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
                 const prefix4 = `${prefix2}${PATH5}${val4}`
 
                 return {
-                  get: (option?: { query?: Methods9['get']['query'], config?: T }) =>
-                    fetch<Methods9['get']['resBody']>(prefix, `${prefix4}${PATH0}`, GET, option).json(),
-                  $get: (option?: { query?: Methods9['get']['query'], config?: T }) =>
-                    fetch<Methods9['get']['resBody']>(prefix, `${prefix4}${PATH0}`, GET, option).json().then(r => r.body),
-                  post: (option: { body?: Methods9['post']['reqBody'], query: Methods9['post']['query'], config?: T }) =>
-                    fetch<Methods9['post']['resBody']>(prefix, `${prefix4}${PATH0}`, POST, option).json(),
-                  $post: (option: { body?: Methods9['post']['reqBody'], query: Methods9['post']['query'], config?: T }) =>
-                    fetch<Methods9['post']['resBody']>(prefix, `${prefix4}${PATH0}`, POST, option).json().then(r => r.body),
-                  put: (option: { query: Methods9['put']['query'], config?: T }) =>
-                    fetch<Methods9['put']['resBody']>(prefix, `${prefix4}${PATH0}`, PUT, option).json(),
-                  $put: (option: { query: Methods9['put']['query'], config?: T }) =>
-                    fetch<Methods9['put']['resBody']>(prefix, `${prefix4}${PATH0}`, PUT, option).json().then(r => r.body),
+                  get: (option?: { query?: Methods10['get']['query'], config?: T }) =>
+                    fetch<Methods10['get']['resBody']>(prefix, `${prefix4}${PATH0}`, GET, option).json(),
+                  $get: (option?: { query?: Methods10['get']['query'], config?: T }) =>
+                    fetch<Methods10['get']['resBody']>(prefix, `${prefix4}${PATH0}`, GET, option).json().then(r => r.body),
+                  post: (option: { body?: Methods10['post']['reqBody'], query: Methods10['post']['query'], config?: T }) =>
+                    fetch<Methods10['post']['resBody']>(prefix, `${prefix4}${PATH0}`, POST, option).json(),
+                  $post: (option: { body?: Methods10['post']['reqBody'], query: Methods10['post']['query'], config?: T }) =>
+                    fetch<Methods10['post']['resBody']>(prefix, `${prefix4}${PATH0}`, POST, option).json().then(r => r.body),
+                  put: (option: { query: Methods10['put']['query'], config?: T }) =>
+                    fetch<Methods10['put']['resBody']>(prefix, `${prefix4}${PATH0}`, PUT, option).json(),
+                  $put: (option: { query: Methods10['put']['query'], config?: T }) =>
+                    fetch<Methods10['put']['resBody']>(prefix, `${prefix4}${PATH0}`, PUT, option).json().then(r => r.body),
                   /**
                    * _fugaId delete method
                    * @returns _fugaId resBody
                    */
-                  delete: (option: { query: Methods9['delete']['query'], config?: T }) =>
-                    fetch<Methods9['delete']['resBody']>(prefix, `${prefix4}${PATH0}`, DELETE, option).json(),
+                  delete: (option: { query: Methods10['delete']['query'], config?: T }) =>
+                    fetch<Methods10['delete']['resBody']>(prefix, `${prefix4}${PATH0}`, DELETE, option).json(),
                   /**
                    * _fugaId delete method
                    * @returns _fugaId resBody
                    */
-                  $delete: (option: { query: Methods9['delete']['query'], config?: T }) =>
-                    fetch<Methods9['delete']['resBody']>(prefix, `${prefix4}${PATH0}`, DELETE, option).json().then(r => r.body),
-                  $path: (option?: { method?: 'get'; query: Methods9['get']['query'] } | { method: 'post'; query: Methods9['post']['query'] } | { method: 'put'; query: Methods9['put']['query'] } | { method: 'delete'; query: Methods9['delete']['query'] }) =>
+                  $delete: (option: { query: Methods10['delete']['query'], config?: T }) =>
+                    fetch<Methods10['delete']['resBody']>(prefix, `${prefix4}${PATH0}`, DELETE, option).json().then(r => r.body),
+                  $path: (option?: { method?: 'get'; query: Methods10['get']['query'] } | { method: 'post'; query: Methods10['post']['query'] } | { method: 'put'; query: Methods10['put']['query'] } | { method: 'delete'; query: Methods10['delete']['query'] }) =>
                     `${prefix}${prefix4}${PATH0}${option && option.query ? `?${dataToURLString(option.query)}` : ''}`
                 }
               },
               fuga_aa: {
-                get: (option: { query: Methods10['get']['query'], config?: T }) =>
-                  fetch<Methods10['get']['resBody']>(prefix, `${prefix2}${PATH6}`, GET, option).json(),
-                $get: (option: { query: Methods10['get']['query'], config?: T }) =>
-                  fetch<Methods10['get']['resBody']>(prefix, `${prefix2}${PATH6}`, GET, option).json().then(r => r.body),
-                post: (option: { body?: Methods10['post']['reqBody'], query: Methods10['post']['query'], config?: T }) =>
-                  fetch<Methods10['post']['resBody']>(prefix, `${prefix2}${PATH6}`, POST, option).json(),
-                $post: (option: { body?: Methods10['post']['reqBody'], query: Methods10['post']['query'], config?: T }) =>
-                  fetch<Methods10['post']['resBody']>(prefix, `${prefix2}${PATH6}`, POST, option).json().then(r => r.body),
-                put: (option: { query: Methods10['put']['query'], config?: T }) =>
-                  fetch<Methods10['put']['resBody']>(prefix, `${prefix2}${PATH6}`, PUT, option).json(),
-                $put: (option: { query: Methods10['put']['query'], config?: T }) =>
-                  fetch<Methods10['put']['resBody']>(prefix, `${prefix2}${PATH6}`, PUT, option).json().then(r => r.body),
-                delete: (option: { body: Methods10['delete']['reqBody'], query: Methods10['delete']['query'], config?: T }) =>
-                  fetch<Methods10['delete']['resBody']>(prefix, `${prefix2}${PATH6}`, DELETE, option).json(),
-                $delete: (option: { body: Methods10['delete']['reqBody'], query: Methods10['delete']['query'], config?: T }) =>
-                  fetch<Methods10['delete']['resBody']>(prefix, `${prefix2}${PATH6}`, DELETE, option).json().then(r => r.body),
-                $path: (option?: { method?: 'get'; query: Methods10['get']['query'] } | { method: 'post'; query: Methods10['post']['query'] } | { method: 'put'; query: Methods10['put']['query'] } | { method: 'delete'; query: Methods10['delete']['query'] }) =>
+                get: (option: { query: Methods11['get']['query'], config?: T }) =>
+                  fetch<Methods11['get']['resBody']>(prefix, `${prefix2}${PATH6}`, GET, option).json(),
+                $get: (option: { query: Methods11['get']['query'], config?: T }) =>
+                  fetch<Methods11['get']['resBody']>(prefix, `${prefix2}${PATH6}`, GET, option).json().then(r => r.body),
+                post: (option: { body?: Methods11['post']['reqBody'], query: Methods11['post']['query'], config?: T }) =>
+                  fetch<Methods11['post']['resBody']>(prefix, `${prefix2}${PATH6}`, POST, option).json(),
+                $post: (option: { body?: Methods11['post']['reqBody'], query: Methods11['post']['query'], config?: T }) =>
+                  fetch<Methods11['post']['resBody']>(prefix, `${prefix2}${PATH6}`, POST, option).json().then(r => r.body),
+                put: (option: { query: Methods11['put']['query'], config?: T }) =>
+                  fetch<Methods11['put']['resBody']>(prefix, `${prefix2}${PATH6}`, PUT, option).json(),
+                $put: (option: { query: Methods11['put']['query'], config?: T }) =>
+                  fetch<Methods11['put']['resBody']>(prefix, `${prefix2}${PATH6}`, PUT, option).json().then(r => r.body),
+                delete: (option: { body: Methods11['delete']['reqBody'], query: Methods11['delete']['query'], config?: T }) =>
+                  fetch<Methods11['delete']['resBody']>(prefix, `${prefix2}${PATH6}`, DELETE, option).json(),
+                $delete: (option: { body: Methods11['delete']['reqBody'], query: Methods11['delete']['query'], config?: T }) =>
+                  fetch<Methods11['delete']['resBody']>(prefix, `${prefix2}${PATH6}`, DELETE, option).json().then(r => r.body),
+                $path: (option?: { method?: 'get'; query: Methods11['get']['query'] } | { method: 'post'; query: Methods11['post']['query'] } | { method: 'put'; query: Methods11['put']['query'] } | { method: 'delete'; query: Methods11['delete']['query'] }) =>
                   `${prefix}${prefix2}${PATH6}${option && option.query ? `?${dataToURLString(option.query)}` : ''}`
               },
-              get: (option: { query: Methods8['get']['query'], config?: T }) =>
+              get: (option: { query: Methods9['get']['query'], config?: T }) =>
                 fetch(prefix, `${prefix2}${PATH5}`, GET, option).send(),
-              $get: (option: { query: Methods8['get']['query'], config?: T }) =>
+              $get: (option: { query: Methods9['get']['query'], config?: T }) =>
                 fetch(prefix, `${prefix2}${PATH5}`, GET, option).send().then(r => r.body),
-              post: (option?: { body?: Methods8['post']['reqBody'], query?: Methods8['post']['query'], config?: T }) =>
+              post: (option?: { body?: Methods9['post']['reqBody'], query?: Methods9['post']['query'], config?: T }) =>
                 fetch(prefix, `${prefix2}${PATH5}`, POST, option).send(),
-              $post: (option?: { body?: Methods8['post']['reqBody'], query?: Methods8['post']['query'], config?: T }) =>
+              $post: (option?: { body?: Methods9['post']['reqBody'], query?: Methods9['post']['query'], config?: T }) =>
                 fetch(prefix, `${prefix2}${PATH5}`, POST, option).send().then(r => r.body),
-              put: (option?: { query?: Methods8['put']['query'], config?: T }) =>
-                fetch<Methods8['put']['resBody']>(prefix, `${prefix2}${PATH5}`, PUT, option).json(),
-              $put: (option?: { query?: Methods8['put']['query'], config?: T }) =>
-                fetch<Methods8['put']['resBody']>(prefix, `${prefix2}${PATH5}`, PUT, option).json().then(r => r.body),
-              delete: (option: { query: Methods8['delete']['query'], config?: T }) =>
-                fetch<Methods8['delete']['resBody']>(prefix, `${prefix2}${PATH5}`, DELETE, option).json(),
-              $delete: (option: { query: Methods8['delete']['query'], config?: T }) =>
-                fetch<Methods8['delete']['resBody']>(prefix, `${prefix2}${PATH5}`, DELETE, option).json().then(r => r.body),
-              $path: (option?: { method?: 'get'; query: Methods8['get']['query'] } | { method: 'post'; query: Methods8['post']['query'] } | { method: 'put'; query: Methods8['put']['query'] } | { method: 'delete'; query: Methods8['delete']['query'] }) =>
+              put: (option?: { query?: Methods9['put']['query'], config?: T }) =>
+                fetch<Methods9['put']['resBody']>(prefix, `${prefix2}${PATH5}`, PUT, option).json(),
+              $put: (option?: { query?: Methods9['put']['query'], config?: T }) =>
+                fetch<Methods9['put']['resBody']>(prefix, `${prefix2}${PATH5}`, PUT, option).json().then(r => r.body),
+              delete: (option: { query: Methods9['delete']['query'], config?: T }) =>
+                fetch<Methods9['delete']['resBody']>(prefix, `${prefix2}${PATH5}`, DELETE, option).json(),
+              $delete: (option: { query: Methods9['delete']['query'], config?: T }) =>
+                fetch<Methods9['delete']['resBody']>(prefix, `${prefix2}${PATH5}`, DELETE, option).json().then(r => r.body),
+              $path: (option?: { method?: 'get'; query: Methods9['get']['query'] } | { method: 'post'; query: Methods9['post']['query'] } | { method: 'put'; query: Methods9['put']['query'] } | { method: 'delete'; query: Methods9['delete']['query'] }) =>
                 `${prefix}${prefix2}${PATH5}${option && option.query ? `?${dataToURLString(option.query)}` : ''}`
             }
           }
@@ -243,19 +266,19 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
          * 3.1 get method comment
          * @param option.headers - 3.1 reqHeaders
          */
-        get: (option?: { query?: Methods11['get']['query'], headers?: Methods11['get']['reqHeaders'], config?: T }) =>
-          fetch<Methods11['get']['resBody']>(prefix, PATH7, GET, option).json(),
+        get: (option?: { query?: Methods12['get']['query'], headers?: Methods12['get']['reqHeaders'], config?: T }) =>
+          fetch<Methods12['get']['resBody']>(prefix, PATH7, GET, option).json(),
         /**
          * 3.1 get method comment
          * @param option.headers - 3.1 reqHeaders
          */
-        $get: (option?: { query?: Methods11['get']['query'], headers?: Methods11['get']['reqHeaders'], config?: T }) =>
-          fetch<Methods11['get']['resBody']>(prefix, PATH7, GET, option).json().then(r => r.body),
-        post: (option: { body?: Methods11['post']['reqBody'], query: Methods11['post']['query'], config?: T }) =>
-          fetch<Methods11['post']['resBody']>(prefix, PATH7, POST, option, 'URLSearchParams').json(),
-        $post: (option: { body?: Methods11['post']['reqBody'], query: Methods11['post']['query'], config?: T }) =>
-          fetch<Methods11['post']['resBody']>(prefix, PATH7, POST, option, 'URLSearchParams').json().then(r => r.body),
-        $path: (option?: { method?: 'get'; query: Methods11['get']['query'] } | { method: 'post'; query: Methods11['post']['query'] }) =>
+        $get: (option?: { query?: Methods12['get']['query'], headers?: Methods12['get']['reqHeaders'], config?: T }) =>
+          fetch<Methods12['get']['resBody']>(prefix, PATH7, GET, option).json().then(r => r.body),
+        post: (option: { body?: Methods12['post']['reqBody'], query: Methods12['post']['query'], config?: T }) =>
+          fetch<Methods12['post']['resBody']>(prefix, PATH7, POST, option, 'URLSearchParams').json(),
+        $post: (option: { body?: Methods12['post']['reqBody'], query: Methods12['post']['query'], config?: T }) =>
+          fetch<Methods12['post']['resBody']>(prefix, PATH7, POST, option, 'URLSearchParams').json().then(r => r.body),
+        $path: (option?: { method?: 'get'; query: Methods12['get']['query'] } | { method: 'post'; query: Methods12['post']['query'] }) =>
           `${prefix}${PATH7}${option && option.query ? `?${dataToURLString(option.query)}` : ''}`
       },
       _articleId_json: (val1: number | string) => {
@@ -263,9 +286,9 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
 
         return {
           get: (option?: { config?: T }) =>
-            fetch<Methods12['get']['resBody']>(prefix, `${prefix1}${PATH0}`, GET, option).json(),
+            fetch<Methods13['get']['resBody']>(prefix, `${prefix1}${PATH0}`, GET, option).json(),
           $get: (option?: { config?: T }) =>
-            fetch<Methods12['get']['resBody']>(prefix, `${prefix1}${PATH0}`, GET, option).json().then(r => r.body),
+            fetch<Methods13['get']['resBody']>(prefix, `${prefix1}${PATH0}`, GET, option).json().then(r => r.body),
           $path: () => `${prefix}${prefix1}${PATH0}`
         }
       },
@@ -274,32 +297,32 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
           const prefix2 = `${PATH8}${val2}`
 
           return {
-            get: (option: { query: Methods13['get']['query'], headers: Methods13['get']['reqHeaders'], config?: T }) =>
-              fetch<Methods13['get']['resBody']>(prefix, `${prefix2}${PATH0}`, GET, option).json(),
-            $get: (option: { query: Methods13['get']['query'], headers: Methods13['get']['reqHeaders'], config?: T }) =>
-              fetch<Methods13['get']['resBody']>(prefix, `${prefix2}${PATH0}`, GET, option).json().then(r => r.body),
-            post: (option: { query: Methods13['post']['query'], config?: T }) =>
-              fetch<Methods13['post']['resBody']>(prefix, `${prefix2}${PATH0}`, POST, option).json(),
-            $post: (option: { query: Methods13['post']['query'], config?: T }) =>
-              fetch<Methods13['post']['resBody']>(prefix, `${prefix2}${PATH0}`, POST, option).json().then(r => r.body),
-            $path: (option?: { method?: 'get'; query: Methods13['get']['query'] } | { method: 'post'; query: Methods13['post']['query'] }) =>
+            get: (option: { query: Methods14['get']['query'], headers: Methods14['get']['reqHeaders'], config?: T }) =>
+              fetch<Methods14['get']['resBody']>(prefix, `${prefix2}${PATH0}`, GET, option).json(),
+            $get: (option: { query: Methods14['get']['query'], headers: Methods14['get']['reqHeaders'], config?: T }) =>
+              fetch<Methods14['get']['resBody']>(prefix, `${prefix2}${PATH0}`, GET, option).json().then(r => r.body),
+            post: (option: { query: Methods14['post']['query'], config?: T }) =>
+              fetch<Methods14['post']['resBody']>(prefix, `${prefix2}${PATH0}`, POST, option).json(),
+            $post: (option: { query: Methods14['post']['query'], config?: T }) =>
+              fetch<Methods14['post']['resBody']>(prefix, `${prefix2}${PATH0}`, POST, option).json().then(r => r.body),
+            $path: (option?: { method?: 'get'; query: Methods14['get']['query'] } | { method: 'post'; query: Methods14['post']['query'] }) =>
               `${prefix}${prefix2}${PATH0}${option && option.query ? `?${dataToURLString(option.query)}` : ''}`
           }
         }
       },
-      get: (option?: { query?: Methods4['get']['query'], config?: T }) =>
-        fetch<Methods4['get']['resBody'], BasicHeaders, Methods4['get']['status']>(prefix, PATH2, GET, option).json(),
-      $get: (option?: { query?: Methods4['get']['query'], config?: T }) =>
-        fetch<Methods4['get']['resBody'], BasicHeaders, Methods4['get']['status']>(prefix, PATH2, GET, option).json().then(r => r.body),
-      $path: (option?: { method?: 'get'; query: Methods4['get']['query'] }) =>
+      get: (option?: { query?: Methods5['get']['query'], config?: T }) =>
+        fetch<Methods5['get']['resBody'], BasicHeaders, Methods5['get']['status']>(prefix, PATH2, GET, option).json(),
+      $get: (option?: { query?: Methods5['get']['query'], config?: T }) =>
+        fetch<Methods5['get']['resBody'], BasicHeaders, Methods5['get']['status']>(prefix, PATH2, GET, option).json().then(r => r.body),
+      $path: (option?: { method?: 'get'; query: Methods5['get']['query'] }) =>
         `${prefix}${PATH2}${option && option.query ? `?${dataToURLString(option.query)}` : ''}`
     },
     v2_0: {
-      get: (option: { query: Methods14['get']['query'], headers: Methods14['get']['reqHeaders'], config?: T }) =>
-        fetch<Methods14['get']['resBody'], Methods14['get']['resHeaders'], Methods14['get']['status']>(prefix, PATH9, GET, option).text(),
-      $get: (option: { query: Methods14['get']['query'], headers: Methods14['get']['reqHeaders'], config?: T }) =>
-        fetch<Methods14['get']['resBody'], Methods14['get']['resHeaders'], Methods14['get']['status']>(prefix, PATH9, GET, option).text().then(r => r.body),
-      $path: (option?: { method?: 'get'; query: Methods14['get']['query'] }) =>
+      get: (option: { query: Methods15['get']['query'], headers: Methods15['get']['reqHeaders'], config?: T }) =>
+        fetch<Methods15['get']['resBody'], Methods15['get']['resHeaders'], Methods15['get']['status']>(prefix, PATH9, GET, option).text(),
+      $get: (option: { query: Methods15['get']['query'], headers: Methods15['get']['reqHeaders'], config?: T }) =>
+        fetch<Methods15['get']['resBody'], Methods15['get']['resHeaders'], Methods15['get']['status']>(prefix, PATH9, GET, option).text().then(r => r.body),
+      $path: (option?: { method?: 'get'; query: Methods15['get']['query'] }) =>
         `${prefix}${PATH9}${option && option.query ? `?${dataToURLString(option.query)}` : ''}`
     },
     /**

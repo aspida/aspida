@@ -3,6 +3,10 @@ import createDocComment from './createDocComment'
 import { DirentTree, FileData } from './getDirentTree'
 import { Method } from './parseInterface'
 
+const valNameRegExpStr = '^_[a-zA-Z][a-zA-Z0-9_]*'
+const valNameRegExp = new RegExp(valNameRegExpStr)
+const valTypeRegExpStr = '(@number|@string)'
+const valTypeRegExp = new RegExp(valTypeRegExpStr)
 const toJSValidString = (text: string) =>
   text.replace(/[^a-zA-Z0-9$_]/g, '_').replace(/^(\d)/, '$$$1')
 
@@ -54,7 +58,9 @@ export default (direntTree: DirentTree, basePath: string, trailingSlash: boolean
         let newUrl = `${url}/${basename}`
 
         if (hasVal) {
-          const valPathRegExp = /^_[a-zA-Z][a-zA-Z0-9]*(@number|@string)?((\.|%[0-9a-fA-F]{2})[a-zA-Z0-9]+)?$/
+          const valPathRegExp = new RegExp(
+            `${valNameRegExpStr}${valTypeRegExpStr}?((\\.|%[0-9a-fA-F]{2})[a-zA-Z0-9]+)?$`
+          )
           if (!valPathRegExp.test(basename)) {
             throw new Error(
               `aspida \u001b[43m\u001b[31mERROR\u001b[0m '${basename}' does not match '${valPathRegExp.toString()}'.`
@@ -62,7 +68,7 @@ export default (direntTree: DirentTree, basePath: string, trailingSlash: boolean
           }
 
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          const valName = basename.match(/^_[a-zA-Z][a-zA-Z0-9]*/)![0]
+          const valName = basename.match(valNameRegExp)![0]
           const valType = basename.replace(valName, '').startsWith('@')
             ? basename.split('@')[1].slice(0, 6)
             : null
@@ -79,9 +85,9 @@ export default (direntTree: DirentTree, basePath: string, trailingSlash: boolean
 
           newPrefix = `prefix${dirDeps}`
           newUrl = ''
-          valFn = `${indent}${valName}${
+          valFn = `${indent}${toJSValidString(valName)}${
             duplicatedNames.length > 1 && valType ? `_${valType}` : ''
-          }${postfix.replace(/[^a-zA-Z0-9$_]/g, '_')}: (val${dirDeps}: ${
+          }${toJSValidString(postfix)}: (val${dirDeps}: ${
             valType ?? 'number | string'
           }) => {\n${indent}  const ${newPrefix} = ${prefixVal}\n\n${indent}  return {\n<% next %>\n${indent}  }\n${indent}}`
         }
@@ -91,12 +97,10 @@ export default (direntTree: DirentTree, basePath: string, trailingSlash: boolean
             ? `${text},\n${text.replace(
                 /^( +?)[^ ]+?:/,
                 `$1/**\n$1 * @deprecated \`${toJSValidString(
-                  basename.replace(/(@number|@string)/, '')
+                  basename.replace(valTypeRegExp, '')
                 )}\` has been deprecated.\n$1 * Use \`${toJSValidString(
-                  decodeURIComponent(basename.replace(/(@number|@string)/, ''))
-                )}\` instead\n$1 */\n$1${toJSValidString(
-                  basename.replace(/(@number|@string)/, '')
-                )}:`
+                  decodeURIComponent(basename.replace(valTypeRegExp, ''))
+                )}\` instead\n$1 */\n$1${toJSValidString(basename.replace(valTypeRegExp, ''))}:`
               )}`
             : text
 

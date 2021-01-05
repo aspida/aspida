@@ -1,7 +1,8 @@
 /* eslint-disable */
 import { AspidaClient } from 'aspida'
 import { Methods as Methods0 } from '.'
-import { Methods as Methods1 } from './_fooId@number%40create'
+import { Methods as Methods1 } from './_bar_id@string.json'
+import { Methods as Methods2 } from './_fooId@number%40create'
 
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const prefix = (baseURL === undefined ? '' : baseURL).replace(/\/$/, '')
@@ -10,14 +11,25 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const GET = 'GET'
 
   return {
-    _fooId_create: (val0: number) => {
-      const prefix0 = `${PATH0}${val0}@create`
+    _bar_id_json: (val0: string) => {
+      const prefix0 = `${PATH0}${val0}.json`
 
       return {
         get: (option?: { config?: T }) =>
           fetch<Methods1['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).text(),
         $get: (option?: { config?: T }) =>
           fetch<Methods1['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).text().then(r => r.body),
+        $path: () => `${prefix}${prefix0}${PATH1}`
+      }
+    },
+    _fooId_create: (val0: number) => {
+      const prefix0 = `${PATH0}${val0}@create`
+
+      return {
+        get: (option?: { config?: T }) =>
+          fetch<Methods2['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).text(),
+        $get: (option?: { config?: T }) =>
+          fetch<Methods2['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).text().then(r => r.body),
         $path: () => `${prefix}${prefix0}${PATH1}`
       }
     },
@@ -30,9 +42,9 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
 
       return {
         get: (option?: { config?: T }) =>
-          fetch<Methods1['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).text(),
+          fetch<Methods2['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).text(),
         $get: (option?: { config?: T }) =>
-          fetch<Methods1['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).text().then(r => r.body),
+          fetch<Methods2['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).text().then(r => r.body),
         $path: () => `${prefix}${prefix0}${PATH1}`
       }
     },

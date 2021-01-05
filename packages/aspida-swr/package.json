@@ -1,6 +1,6 @@
 {
   "name": "@aspida/swr",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "SWR wrapper for aspida",
   "author": "Solufa <solufa2020@gmail.com>",
   "license": "MIT",
@@ -26,6 +26,6 @@
     "swr"
   ],
   "dependencies": {
-    "aspida": "^1.2.0"
+    "aspida": "^1.2.1"
   }
 }
