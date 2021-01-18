@@ -99,7 +99,7 @@
     "prettier": "^2.2.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-query": "^3.5.9",
+    "react-query": "^3.5.16",
     "standard-version": "^9.1.0",
     "swr": "^0.3.11",
     "swrv": "^0.9.1",
