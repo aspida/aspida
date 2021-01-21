@@ -47,13 +47,13 @@ export type AspidaClient<Config> = {
 export const headersToObject = (headers: Headers): any =>
   [...headers.entries()].reduce((prev, [key, val]) => ({ ...prev, [key]: val }), {})
 
-export const dataToFormData = (data: Record<string, any>) => {
+const dataToFormData = (data: Record<string, any>) => {
   const formData = new FormData()
 
   for (const key in data) {
     if (Array.isArray(data[key])) {
       data[key].forEach((d: any) => formData.append(key, d))
-    } else {
+    } else if (data[key] != null) {
       formData.append(key, data[key])
     }
   }
@@ -78,6 +78,7 @@ const encode = (str: Parameters<typeof encodeURIComponent>[0]) =>
 
 export const dataToURLString = (data: Record<string, any>) =>
   Object.keys(data)
+    .filter(key => data[key] != null)
     .map(key =>
       Array.isArray(data[key])
         ? data[key].map((v: string) => `${encode(key)}=${encode(v)}`).join('&')
