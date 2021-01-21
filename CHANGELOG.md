@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/aspida/aspida/compare/v1.2.1...v1.3.0) (2021-01-21)
+
+
+### Features
+
+* filter nullish value from query and FromData ([9aeb54b](https://github.com/aspida/aspida/commit/9aeb54bee311efc9a5b7ca8a39dec0943f1a1999))
+
+
+### Bug Fixes
+
+* update chokidar@3.5.1 ([efb6781](https://github.com/aspida/aspida/commit/efb678181bc00b3d4859ed7f136ec40bdb562b4c))
+
 ### [1.2.1](https://github.com/aspida/aspida/compare/v1.2.0...v1.2.1) (2021-01-05)
 
 
