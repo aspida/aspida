@@ -48,7 +48,7 @@
 `src/index.ts`
 
 ```tsx
-import { useMutation, QueryClient, QueryClientProvider } from 'react-query'
+import { useQueryClient, useMutation, QueryClient, QueryClientProvider } from 'react-query'
 import { useAspidaQuery } from "@aspida/react-query"
 import aspida from "@aspida/axios" // "@aspida/fetch", "@aspida/node-fetch"
 import api from "../api/$api"
