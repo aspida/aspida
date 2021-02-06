@@ -11,6 +11,13 @@ import fetch, { RequestInit, Response } from 'node-fetch'
 
 type FetchConfig = RequestInit & {
   baseURL?: string
+  throwHttpErrors?: boolean
+}
+
+export class HTTPError extends Error {
+  constructor(public response: Response) {
+    super(`HTTP Error: ${response.status} ${response.statusText}`)
+  }
 }
 
 export default (client = fetch, config?: FetchConfig): AspidaClient<FetchConfig> => ({
@@ -35,7 +42,7 @@ export default (client = fetch, config?: FetchConfig): AspidaClient<FetchConfig>
           body: request?.httpBody,
           headers: { ...config?.headers, ...request?.config?.headers, ...request?.headers }
         }
-      )
+      ).then(res => (!res.ok && config?.throwHttpErrors ? Promise.reject(new HTTPError(res)) : res))
 
       return {
         status: res.status as any,

@@ -44,10 +44,15 @@
 `src/index.ts`
 
 ```typescript
-import aspida from "@aspida/fetch"
+import aspida, { HTTPError } from "@aspida/fetch"
 import api from "../api/$api"
 
-const fetchConfig = { credentials: "include", baseURL: "https://example.com/api" }
+const fetchConfig = {
+  credentials: "include",
+  baseURL: "https://example.com/api",
+  throwHttpErrors: true // throw an error on 4xx/5xx, default is false
+}
+
 const client = api(aspida(fetch, fetchConfig))
 ;(async () => {
   const userId = 0
@@ -60,10 +65,18 @@ const client = api(aspida(fetch, fetchConfig))
   // req -> GET: https://example.com/api/v1/users/?limit=10
   // res -> { status: 200, data: [{ id: 0, name: "mario" }], headers: {...} }
 
-  const user = await client.v1.users._userId(userId).$get()
-  console.log(user)
-  // req -> GET: https://example.com/api/v1/users/0
-  // res -> { id: 0, name: "mario" }
+  try {
+    const user = await client.v1.users._userId(userId).$get()
+    console.log(user)
+    // req -> GET: https://example.com/api/v1/users/0
+    // res -> { id: 0, name: "mario" }
+  } catch (e: HTTPError | Error) {
+    if (e instanceof HTTPError) {
+      console.log(e.response instanceof Response) // true
+    } else {
+      console.log(e.message)
+    }
+  }
 })()
 ```
 
