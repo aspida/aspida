@@ -72,7 +72,7 @@ const client = api(aspida(fetch, fetchConfig))
     console.log(user)
     // req -> GET: https://example.com/api/v1/users/0
     // res -> { id: 0, name: "mario" }
-  } catch (e: HTTPError | Error) {
+  } catch (e) {
     if (e instanceof HTTPError) {
       console.log(e.response instanceof Response) // true
     } else {
