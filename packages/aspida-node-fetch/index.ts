@@ -17,6 +17,7 @@ type FetchConfig = RequestInit & {
 export class HTTPError extends Error {
   constructor(public response: Response) {
     super(`HTTP Error: ${response.status} ${response.statusText}`)
+    Object.setPrototypeOf(this, new.target.prototype)
   }
 }
 

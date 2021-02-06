@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](https://github.com/aspida/aspida/compare/v1.4.0...v1.4.1) (2021-02-06)
+
+
+### Bug Fixes
+
+* **fetch/node-fetch:** set prototype to HTTPError ([d3fb87e](https://github.com/aspida/aspida/commit/d3fb87e0ebdf41502e777345c4f9ac939a8c5cf7))
+
 ## [1.4.0](https://github.com/aspida/aspida/compare/v1.3.0...v1.4.0) (2021-02-06)
 
 
