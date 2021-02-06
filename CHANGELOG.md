@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/aspida/aspida/compare/v1.3.0...v1.4.0) (2021-02-06)
+
+
+### Features
+
+* **fetch:** add throwHttpErrors option ([d896b44](https://github.com/aspida/aspida/commit/d896b446dccdb2519fce453824ebb9edbd54cdad))
+* **node-fetch:** add throwHttpErrors option ([318ab56](https://github.com/aspida/aspida/commit/318ab567fea2035039adb0329c1318f76ce4462d))
+
 ## [1.3.0](https://github.com/aspida/aspida/compare/v1.2.1...v1.3.0) (2021-01-21)
 
 
