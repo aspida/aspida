@@ -9,7 +9,7 @@ import {
 } from 'aspida'
 import fetch, { RequestInit, Response } from 'node-fetch'
 
-type FetchConfig = RequestInit & {
+export type FetchConfig = RequestInit & {
   baseURL?: string
   throwHttpErrors?: boolean
 }
