@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/aspida/aspida/compare/v1.4.1...v1.5.0) (2021-02-11)
+
+
+### Features
+
+* **fetch/node-fetch:** export FetchConfig Type ([43377f3](https://github.com/aspida/aspida/commit/43377f3fdf4c817fb14922fab7bdbc673e048b33))
+
 ### [1.4.1](https://github.com/aspida/aspida/compare/v1.4.0...v1.4.1) (2021-02-06)
 
 

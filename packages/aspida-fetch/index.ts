@@ -8,7 +8,7 @@ import {
   headersToObject
 } from 'aspida'
 
-type FetchConfig = RequestInit & {
+export type FetchConfig = RequestInit & {
   baseURL?: string
   throwHttpErrors?: boolean
 }
