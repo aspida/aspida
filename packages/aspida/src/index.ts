@@ -90,7 +90,7 @@ export const optionToRequest = (
   option?: AspidaParams,
   type?: RequestType
 ): AspidaRequest | undefined => {
-  if (!option?.body) return option
+  if (option?.body === undefined) return option
 
   let httpBody
   const headers: BasicHeaders = {}
