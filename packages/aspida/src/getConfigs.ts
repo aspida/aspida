@@ -6,13 +6,15 @@ export type AspidaConfig = {
   baseURL: string
   trailingSlash: boolean
   outputEachDir: boolean
+  outputMode: 'all' | 'normalOnly' | 'aliasOnly'
 }
 
 const defaultConfig: AspidaConfig = {
   input: ['api', 'apis'].find(input => fs.existsSync(input)) ?? 'api',
   baseURL: '',
   trailingSlash: false,
-  outputEachDir: false
+  outputEachDir: false,
+  outputMode: 'all'
 }
 
 type PartialConfig = Partial<AspidaConfig> | Partial<AspidaConfig>[]

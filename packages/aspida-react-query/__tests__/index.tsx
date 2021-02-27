@@ -4,9 +4,9 @@ import { render, act } from '@testing-library/react'
 import { mockClient, mockMethods } from 'aspida-mock'
 import fetchClient from '../../aspida-node-fetch'
 import { useAspidaQuery } from '../index'
-import api from '../../aspida/sample1/$api'
-import { Methods as Methods0 } from '../../aspida/sample1/v1.1'
-import { Methods as Methods1 } from '../../aspida/sample1/v2.0'
+import api from '../../aspida/samples/basic/$api'
+import { Methods as Methods0 } from '../../aspida/samples/basic/v1.1'
+import { Methods as Methods1 } from '../../aspida/samples/basic/v2.0'
 
 const adapter = mockClient(fetchClient())
 const client = api(adapter)

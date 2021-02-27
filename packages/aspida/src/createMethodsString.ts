@@ -1,5 +1,6 @@
 import { Method } from './parseInterface'
 import createDocComment from './createDocComment'
+import { AspidaConfig } from './commands'
 
 const genReqBody = ({ name, props }: Method, importName: string, index: number) =>
   props.polymorph?.[index].reqBody
@@ -110,7 +111,13 @@ const genPolymorphReturnVal = (method: Method, indent: string, path: string) =>
     { ...method.props, ...method.props.polymorph?.find(p => p.reqBody) }
   )}).${genResMethodName({ ...method.props, ...method.props.polymorph?.find(p => p.reqBody) })}()`
 
-export default (methods: Method[], indent: string, importName: string, path: string) =>
+export default (
+  methods: Method[],
+  indent: string,
+  importName: string,
+  path: string,
+  outputMode: AspidaConfig['outputMode']
+) =>
   [
     ...methods.map(method => {
       const { name, props, doc } = method
@@ -148,11 +155,25 @@ export default (methods: Method[], indent: string, importName: string, path: str
         `${genOption(method, importName)} =>`,
         genReturnVal(method, importName, path)
       ]
+      const methodChanks: string[] = []
 
-      return `${createDocComment(`${indent}  `, doc, props)}${indent}  ${name}: ${tmpChanks[0]}
-${indent}    ${tmpChanks[1]},
-${createDocComment(`${indent}  `, doc, props)}${indent}  $${name}: ${tmpChanks[0]}
-${indent}    ${tmpChanks[1]}.then(r => r.body)`
+      if (outputMode !== 'aliasOnly') {
+        methodChanks.push(
+          `${createDocComment(`${indent}  `, doc, props)}${indent}  ${name}: ${
+            tmpChanks[0]
+          }\n${indent}    ${tmpChanks[1]}`
+        )
+      }
+
+      if (outputMode !== 'normalOnly') {
+        methodChanks.push(
+          `${createDocComment(`${indent}  `, doc, props)}${indent}  $${name}: ${
+            tmpChanks[0]
+          }\n${indent}    ${tmpChanks[1]}.then(r => r.body)`
+        )
+      }
+
+      return methodChanks.join(',\n')
     }),
     (methods.filter(({ props }) => props.query).length
       ? `${indent}  $path: (option?: ${methods
