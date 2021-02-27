@@ -25,8 +25,10 @@
     "ajax"
   ],
   "dependencies": {
+    "@types/form-data": "^2.5.0",
     "@types/minimist": "^1.2.1",
     "chokidar": "^3.5.1",
+    "form-data": "^4.0.0",
     "minimist": "^1.2.5"
   }
 }
