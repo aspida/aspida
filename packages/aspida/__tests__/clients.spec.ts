@@ -2,7 +2,7 @@
 import { Server } from 'http'
 import express from 'express'
 import axiosClient from '../../aspida-axios/src'
-import api from '../sample1/$api'
+import api from '../samples/basic/$api'
 
 const port = 11111
 const app = express()

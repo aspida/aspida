@@ -3,9 +3,9 @@ import VueCompositionApi from '@vue/composition-api'
 import { mockClient, mockMethods } from 'aspida-mock'
 import fetchClient from '../../aspida-node-fetch'
 import useAspidaSWRV from '../index'
-import api from '../../aspida/sample1/$api'
-import { Methods as Methods0 } from '../../aspida/sample1/v1.1/3.1'
-import { Methods as Methods1 } from '../../aspida/sample1/v2.0'
+import api from '../../aspida/samples/basic/$api'
+import { Methods as Methods0 } from '../../aspida/samples/basic/v1.1/3.1'
+import { Methods as Methods1 } from '../../aspida/samples/basic/v2.0'
 
 const Vue: VueConstructor = require('vue/dist/vue.common.js')
 

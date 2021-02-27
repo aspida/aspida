@@ -12,7 +12,7 @@ describe('cli test', () => {
   })
 
   test('main', () => {
-    const { input, baseURL, trailingSlash, outputEachDir } = getConfigs(
+    const { input, baseURL, trailingSlash, outputEachDir, outputMode } = getConfigs(
       `${basePath}/aspida.config.js`
     )[0]
     const inputDir = `${basePath}/${input}`
@@ -25,7 +25,8 @@ describe('cli test', () => {
         input: inputPath,
         baseURL,
         trailingSlash,
-        outputEachDir
+        outputEachDir,
+        outputMode
       })
 
       expect(filePath).toBe(resultFilePath)
@@ -34,7 +35,7 @@ describe('cli test', () => {
   })
 
   test('outputEachDir', () => {
-    const { input, baseURL, trailingSlash, outputEachDir } = getConfigs(
+    const { input, baseURL, trailingSlash, outputEachDir, outputMode } = getConfigs(
       `${basePath}/aspida.config.js`
     )[1]
     const inputDir = `${basePath}/${input}`
@@ -54,7 +55,8 @@ describe('cli test', () => {
       input: inputDir,
       baseURL,
       trailingSlash,
-      outputEachDir
+      outputEachDir,
+      outputMode
     })
     const apiFiles = listApiFiles(inputDir)
     expect(templates).toHaveLength(apiFiles.length)

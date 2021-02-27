@@ -1,5 +1,5 @@
 import { MockRoute, mockMethods, mockMiddleware } from 'aspida-mock'
-import api from '../../aspida/sample1/$api'
+import api from '../../aspida/samples/basic/$api'
 import mockClient from '../src/mockClient'
 
 describe('initialize', () => {

@@ -23,9 +23,10 @@ const createTemplate = (
   tree: DirentTree,
   baseURL: string,
   trailingSlash: boolean,
-  basePath: string
+  basePath: string,
+  outputMode: AspidaConfig['outputMode']
 ) => {
-  const { api, imports, pathes } = createTemplateValues(tree, basePath, trailingSlash)
+  const { api, imports, pathes } = createTemplateValues(tree, basePath, trailingSlash, outputMode)
   const text = `/* eslint-disable */
 import { AspidaClient${api.includes('AspidaResponse') ? ', AspidaResponse' : ''}${
     api.includes('BasicHeaders') ? ', BasicHeaders' : ''
@@ -56,9 +57,9 @@ export default api
   return { text, filePath: path.posix.join(tree.path, '$api.ts') }
 }
 
-export default ({ input, baseURL, trailingSlash, outputEachDir }: AspidaConfig) => {
+export default ({ input, baseURL, trailingSlash, outputEachDir, outputMode }: AspidaConfig) => {
   const direntTree = getDirentTree(input)
-  const templates = [createTemplate(direntTree, baseURL, trailingSlash, '')]
+  const templates = [createTemplate(direntTree, baseURL, trailingSlash, '', outputMode)]
 
   if (outputEachDir) {
     const notIndexFiles = listNotIndexFiles(direntTree)
@@ -74,7 +75,7 @@ export default ({ input, baseURL, trailingSlash, outputEachDir }: AspidaConfig) 
         if (!c.isDir || c.name.startsWith('_')) return
 
         templates.push(
-          createTemplate(c.tree, baseURL, trailingSlash, c.tree.path.replace(input, ''))
+          createTemplate(c.tree, baseURL, trailingSlash, c.tree.path.replace(input, ''), outputMode)
         )
 
         appendTemplate(c.tree)

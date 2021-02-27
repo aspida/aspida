@@ -1,3 +1,5 @@
+import NodeFormData from 'form-data'
+
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD' | 'PATCH' | 'OPTIONS'
 export type LowerHttpMethod = 'get' | 'post' | 'put' | 'delete' | 'head' | 'patch' | 'options'
 export type RequestType = 'FormData' | 'URLSearchParams' | 'ArrayBuffer' | 'Blob' | 'string' | 'any'
@@ -47,9 +49,7 @@ export type AspidaClient<Config> = {
 export const headersToObject = (headers: Headers): any =>
   [...headers.entries()].reduce((prev, [key, val]) => ({ ...prev, [key]: val }), {})
 
-const dataToFormData = (data: Record<string, any>) => {
-  const formData = new FormData()
-
+const appendDataToFormData = (data: Record<string, any>, formData: FormData | NodeFormData) => {
   for (const key in data) {
     if (Array.isArray(data[key])) {
       data[key].forEach((d: any) => formData.append(key, d))
@@ -86,18 +86,26 @@ export const dataToURLString = (data: Record<string, any>) =>
     )
     .join('&')
 
+const hasFormData = typeof FormData !== 'undefined'
+
 export const optionToRequest = (
   option?: AspidaParams,
   type?: RequestType
 ): AspidaRequest | undefined => {
-  if (!option?.body) return option
+  if (option?.body === undefined) return option
 
   let httpBody
-  const headers: BasicHeaders = {}
+  let headers: BasicHeaders = {}
 
   switch (type) {
     case 'FormData':
-      httpBody = dataToFormData(option.body)
+      if (hasFormData) {
+        httpBody = appendDataToFormData(option.body, new FormData())
+      } else {
+        const formData = new NodeFormData()
+        httpBody = appendDataToFormData(option.body, formData)
+        headers = formData.getHeaders()
+      }
       break
     case 'URLSearchParams':
       httpBody = dataToURLString(option.body)
