@@ -223,12 +223,13 @@ import api from "../api/$api"
 
 ## Options of aspida.config.js
 
-| Option        | Type    | Default       | Description                                           |
-| ------------- | ------- | ------------- | ----------------------------------------------------- |
-| input         | string  | "api"         | Specifies the endpoint type definition root directory |
-| baseURL       | string  | ""            | Specify baseURL of the request                        |
-| trailingSlash | boolean | false         | Append `/` to the request URL                         |
-| outputEachDir | boolean | false         | Generate `$api.ts` in each endpoint directory         |
+| Option               | Type                                 | Default       | Description                                           |
+| -------------------- | ------------------------------------ | ------------- | ----------------------------------------------------- |
+| input                | string                               | "api"         | Specifies the endpoint type definition root directory |
+| baseURL              | string                               | ""            | Specify baseURL of the request                        |
+| trailingSlash        | boolean                              | false         | Append `/` to the request URL                         |
+| outputEachDir        | boolean                              | false         | Generate `$api.ts` in each endpoint directory         |
+| outputMode (>=1.6.0) | "all" \| "normalOnly" \| "aliasOnly" | "all"         | Output either `get` or `$get` for compression         |
 
 ## Node.js API
 
