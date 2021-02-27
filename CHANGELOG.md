@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](https://github.com/aspida/aspida/compare/v1.5.0...v1.6.0) (2021-02-27)
+
+
+### Features
+
+* add form-data ([7c178f9](https://github.com/aspida/aspida/commit/7c178f908d57fa7c4ebf8f5118e0a9c029eb4f9a))
+* add outputMode option ([b7157f6](https://github.com/aspida/aspida/commit/b7157f6c4a3a1e37b81d8d735f0e341fc773071b))
+
+
+### Bug Fixes
+
+* catch all top level falsy values correctly ([#645](https://github.com/aspida/aspida/issues/645)) ([6fa51d1](https://github.com/aspida/aspida/commit/6fa51d13cfe1336f8b1d21798301e6d804b47e7e))
+
 ## [1.5.0](https://github.com/aspida/aspida/compare/v1.4.1...v1.5.0) (2021-02-11)
 
 
