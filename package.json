@@ -34,8 +34,7 @@
       "plugin:react/recommended",
       "plugin:jest/recommended",
       "plugin:prettier/recommended",
-      "prettier/@typescript-eslint",
-      "prettier/standard"
+      "prettier"
     ],
     "parserOptions": {
       "ecmaVersion": 2018,
@@ -78,13 +77,13 @@
     "@types/jest": "^26.0.20",
     "@types/node-fetch": "^2.5.8",
     "@types/react-dom": "^17.0.1",
-    "@typescript-eslint/eslint-plugin": "^4.15.1",
-    "@typescript-eslint/parser": "^4.15.1",
+    "@typescript-eslint/eslint-plugin": "^4.15.2",
+    "@typescript-eslint/parser": "^4.15.2",
     "@vue/composition-api": "^1.0.0-rc.2",
     "aspida-mock": "^0.8.2",
     "axios": "^0.21.1",
     "eslint": "^7.20.0",
-    "eslint-config-prettier": "^7.2.0",
+    "eslint-config-prettier": "^8.1.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^24.1.5",
@@ -99,13 +98,13 @@
     "prettier": "^2.2.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-query": "^3.9.8",
+    "react-query": "^3.12.0",
     "standard-version": "^9.1.1",
     "swr": "^0.4.2",
     "swrv": "^0.9.3",
-    "ts-jest": "^26.5.1",
+    "ts-jest": "^26.5.2",
     "ts-node": "^9.1.1",
-    "typescript": "^4.1.5",
+    "typescript": "^4.2.2",
     "vue": "^2.6.12"
   }
 }
