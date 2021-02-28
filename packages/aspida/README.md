@@ -353,6 +353,8 @@ import api from "../api/$api"
 `api/v1/users/index.ts`
 
 ```typescript
+import type { ReadStream } from 'fs'
+
 export type Methods = {
   post: {
     reqFormat: FormData
