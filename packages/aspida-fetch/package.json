@@ -1,6 +1,6 @@
 {
   "name": "@aspida/fetch",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "fetch client for aspida",
   "author": "Solufa <solufa2020@gmail.com>",
   "license": "MIT",
@@ -26,6 +26,6 @@
     "fetch"
   ],
   "dependencies": {
-    "aspida": "^1.6.0"
+    "aspida": "^1.6.1"
   }
 }

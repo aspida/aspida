@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.1](https://github.com/aspida/aspida/compare/v1.6.0...v1.6.1) (2021-02-28)
+
+
+### Bug Fixes
+
+* remove @types/form-data ([3da7c27](https://github.com/aspida/aspida/commit/3da7c2742518d90d9beaaa3c8b755824f7621642))
+
 ## [1.6.0](https://github.com/aspida/aspida/compare/v1.5.0...v1.6.0) (2021-02-27)
 
 
