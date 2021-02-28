@@ -247,7 +247,8 @@ build([
     input: "api2",
     baseURL: "https://example.com/v2",
     trailingSlash: true,
-    outputEachDir: true
+    outputEachDir: true,
+    outputMode: 'all'
   }
 ])
 
@@ -260,7 +261,8 @@ watch([
     input: "api2",
     baseURL: "https://example.com/v2",
     trailingSlash: true,
-    outputEachDir: true
+    outputEachDir: true,
+    outputMode: 'all'
   }
 ])
 ```
@@ -357,7 +359,7 @@ export type Methods = {
 
     reqBody: {
       name: string
-      icon: Blob
+      icon: File | ReadStream
     }
 
     resBody: {
@@ -379,7 +381,30 @@ import api from "../api/$api"
   const user = await client.v1.users.$post({
     body: {
       name: "taro",
-      icon: imageBlob
+      icon: imageFile
+    }
+  })
+  console.log(user)
+  // req -> POST: h/v1/users
+  // res -> { id: 0, name: "taro" }
+})()
+```
+
+Post in Node.js (>=1.6.0)
+
+`src/index.ts`
+
+```typescript
+import fs from 'fs'
+import aspida from "@aspida/axios"
+import api from "../api/$api"
+;(async () => {
+  const client = api(aspida())
+  const fileName = 'images/sample.jpg'
+  const user = await client.v1.users.$post({
+    body: {
+      name: "taro",
+      icon: fs.createReadStream(fileName)
     }
   })
   console.log(user)
