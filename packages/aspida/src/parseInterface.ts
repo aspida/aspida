@@ -283,7 +283,7 @@ const parseMethod = (text: string): { value: Method; length: number } => {
   }
 }
 
-const parseMethods = (text: string): Method[] => {
+const parseMethods = (text: string): { methods: Method[]; cursor: number } => {
   const { length } = text
   const methods: Method[] = []
   let cursor = 0
@@ -297,22 +297,28 @@ const parseMethods = (text: string): Method[] => {
     methods.push(method.value)
   }
 
-  return methods
+  return { methods, cursor }
 }
 
-export const parse = (text: string, name: string): { methods: Method[]; doc?: Doc } | null => {
-  const interfaceRegExp = new RegExp(`(^|\r?\n)export (interface ${name}|type ${name} ?=) ?{`)
+export const parse = (
+  text: string,
+  name: string
+): { methods: Method[]; doc?: Doc; $textForApiTypes: string } | null => {
+  const interfaceRegExp = new RegExp(`(^|\r?\n)(export )(interface ${name}|type ${name} ?=)( ?{)`)
   if (!interfaceRegExp.test(text)) return null
 
   const [d, ...m] = text.split(interfaceRegExp)
-  const methods = parseMethods(m[m.length - 1])
+  const { methods, cursor } = parseMethods(m[m.length - 1])
+  const docText = d.slice(d.lastIndexOf('/**'))
 
   return methods.length
     ? {
         methods,
-        doc: /\/\*\*[\s\S]+\*\/$/.test(d)
-          ? parseDoc(d.slice(d.lastIndexOf('/**')))?.values
-          : undefined
+        doc: /\/\*\*[\s\S]+\*\/$/.test(d) ? parseDoc(docText)?.values : undefined,
+        $textForApiTypes: `${docText}${m.slice(0, -1).join('')}${m[m.length - 1].slice(
+          0,
+          cursor + 1
+        )}`
       }
     : null
 }
