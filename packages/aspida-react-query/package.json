@@ -1,6 +1,6 @@
 {
   "name": "@aspida/react-query",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "description": "React Query wrapper for aspida",
   "author": "Solufa <solufa2020@gmail.com>",
   "license": "MIT",
@@ -26,6 +26,6 @@
     "react-query"
   ],
   "dependencies": {
-    "aspida": "^1.6.1"
+    "aspida": "^1.6.2"
   }
 }
