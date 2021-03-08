@@ -6,6 +6,7 @@ export type FileData = {
   isDir: false
   methods: Method[]
   doc?: Doc
+  $textForApiTypes: string
 }
 
 type DirData = {
@@ -38,8 +39,7 @@ export const getDirentTree = (input: string) => {
         tree.children.push({
           name: dirent.name,
           isDir: false,
-          methods: value.methods,
-          doc: value.doc
+          ...value
         })
       }
     })
