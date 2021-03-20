@@ -2,7 +2,6 @@ import createMethods from './createMethodsString'
 import createDocComment from './createDocComment'
 import { DirentTree, FileData } from './getDirentTree'
 import { Method } from './parseInterface'
-import { AspidaConfig } from './commands'
 
 const valNameRegExpStr = '^_[a-zA-Z][a-zA-Z0-9_]*'
 const valNameRegExp = new RegExp(valNameRegExpStr)
@@ -11,12 +10,7 @@ const valTypeRegExp = new RegExp(valTypeRegExpStr)
 const toJSValidString = (text: string) =>
   text.replace(/[^a-zA-Z0-9$_]/g, '_').replace(/^(\d)/, '$$$1')
 
-export default (
-  direntTree: DirentTree,
-  basePath: string,
-  trailingSlash: boolean,
-  outputMode: AspidaConfig['outputMode']
-) => {
+export default (direntTree: DirentTree, basePath: string, trailingSlash: boolean) => {
   const imports: string[] = []
   const pathes: string[] = []
   const getMethodsString = (
@@ -38,8 +32,7 @@ export default (
       methods,
       indent,
       importName,
-      newPrefix && newPath.length > 2 ? `\`\${${newPrefix}}\${${newPath}}\`` : newPrefix || newPath,
-      outputMode
+      newPrefix && newPath.length > 2 ? `\`\${${newPrefix}}\${${newPath}}\`` : newPrefix || newPath
     )
   }
 

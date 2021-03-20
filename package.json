@@ -5,7 +5,9 @@
   ],
   "scripts": {
     "dev:aspida": "npm run build:aspida && cd packages/aspida && node bin/index.js --build",
+    "dev:aspida-v2": "npm run build:aspida-v2 && cd packages/aspida-v2 && node bin/index.js --build",
     "build:aspida": "npm run rimraf -- aspida && tsc -p packages/aspida",
+    "build:aspida-v2": "npm run rimraf -- aspida-v2 && tsc -p packages/aspida-v2",
     "build:axios": "npm run rimraf -- aspida-axios && tsc -p packages/aspida-axios",
     "build:fetch": "npm run rimraf -- aspida-fetch && tsc -p packages/aspida-fetch",
     "build:node-fetch": "npm run rimraf -- aspida-node-fetch && tsc -p packages/aspida-node-fetch",

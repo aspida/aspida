@@ -1,5 +1,5 @@
 {
-  "name": "aspida",
+  "name": "aspida-v2",
   "version": "1.6.3",
   "description": "TypeScript friendly HTTP client wrapper for the browser and node.js",
   "author": "Solufa <solufa2020@gmail.com>",
