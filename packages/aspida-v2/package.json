@@ -1,0 +1,33 @@
+{
+  "name": "aspida",
+  "version": "1.6.3",
+  "description": "TypeScript friendly HTTP client wrapper for the browser and node.js",
+  "author": "Solufa <solufa2020@gmail.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": "bin/index.js",
+  "homepage": "https://github.com/aspida/aspida#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aspida/aspida.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aspida/aspida/issues"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "typescript",
+    "xhr",
+    "http",
+    "ajax"
+  ],
+  "dependencies": {
+    "@types/minimist": "^1.2.1",
+    "chokidar": "^3.5.1",
+    "form-data": "^4.0.0",
+    "minimist": "^1.2.5"
+  }
+}
