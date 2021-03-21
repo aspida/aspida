@@ -1,5 +1,5 @@
-import { Method } from './parseInterface'
 import createDocComment from './createDocComment'
+import type { Method } from './parseInterface'
 
 const genReqBody = ({ name, props }: Method, importName: string) =>
   props.reqBody

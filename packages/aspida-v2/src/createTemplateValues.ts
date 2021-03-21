@@ -1,7 +1,7 @@
 import createMethods from './createMethodsString'
 import createDocComment from './createDocComment'
-import { DirentTree, FileData } from './getDirentTree'
-import { Method } from './parseInterface'
+import type { DirentTree, FileData } from './getDirentTree'
+import type { Method } from './parseInterface'
 
 const valNameRegExpStr = '^_[a-zA-Z][a-zA-Z0-9_]*'
 const valNameRegExp = new RegExp(valNameRegExpStr)

@@ -1,4 +1,4 @@
-import { Doc, Method } from './parseInterface'
+import type { Doc, Method } from './parseInterface'
 
 const propList = [
   { type: 'query', label: '@param option.query -' },

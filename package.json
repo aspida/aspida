@@ -17,9 +17,9 @@
     "lint": "eslint --ext .js,.ts --ignore-path .gitignore .",
     "lint:fix": "npm run lint -- --fix",
     "release": "standard-version --skip.tag",
-    "release:major": "npm run release -- --release-as major",
-    "release:minor": "npm run release -- --release-as minor",
-    "release:patch": "npm run release -- --release-as patch",
+    "release:major": "npm run release -- --release-as major && npm run dev:aspida-v2 && git add . && git commit --amend --no-edit",
+    "release:minor": "npm run release -- --release-as minor && npm run dev:aspida-v2 && git add . && git commit --amend --no-edit",
+    "release:patch": "npm run release -- --release-as patch && npm run dev:aspida-v2 && git add . && git commit --amend --no-edit",
     "rimraf": "node -e \"require('fs').rmdirSync('packages/' + process.argv[1] + '/dist', { recursive: true })\"",
     "test": "jest",
     "typecheck": "tsc --noEmit"

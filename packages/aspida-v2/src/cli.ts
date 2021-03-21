@@ -1,5 +1,5 @@
 import minimist from 'minimist'
-import { version, build, watch } from './commands'
+import { version, build, write, watch } from './'
 
 export const run = (args: string[]) => {
   const argv = minimist(args, {
@@ -12,5 +12,5 @@ export const run = (args: string[]) => {
     ? console.log(`v${version()}`)
     : argv.watch !== undefined
     ? watch(argv.config)
-    : build(argv.config)
+    : build(argv.config).forEach(write)
 }

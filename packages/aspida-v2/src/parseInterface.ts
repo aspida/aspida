@@ -1,4 +1,4 @@
-import { LowerHttpMethod, AspidaMethodParams } from './'
+import type { LowerHttpMethod, AspidaMethodParams } from './'
 
 export type Doc = string[]
 
