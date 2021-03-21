@@ -12,7 +12,7 @@ type MethodProps = Partial<Record<MethodsProperties, Prop>>
 
 export type Method = {
   name: LowerHttpMethod
-  props: MethodProps & { polymorph?: MethodProps[] }
+  props: MethodProps
   doc?: Doc
 }
 
@@ -159,43 +159,7 @@ const parseObject = (text: string): { value: string; length: number } => {
   return { value, length: cursor }
 }
 
-const parseTaple = (text: string): { value: MethodProps[]; length: number } => {
-  let cursor = 1 // '['
-  const { length } = text
-  const propsList: MethodProps[] = []
-
-  while (text[cursor] !== ']' && cursor < length) {
-    const props: MethodProps = {}
-
-    cursor += countIgnored(text.slice(cursor)) + 1 // '{'
-    cursor += countIgnored(text.slice(cursor))
-
-    while (text[cursor] !== '}' && cursor < length) {
-      const prop = parseProp(text.slice(cursor)) as {
-        name: MethodsProperties
-        value: Prop
-        length: number
-      }
-
-      cursor += prop.length
-      props[prop.name] = prop.value
-    }
-
-    cursor += 1 // '}'
-    cursor += countIgnored(text.slice(cursor))
-    propsList.push(props)
-  }
-
-  cursor += countIgnored(text.slice(cursor))
-  cursor += 1 // ']'
-  return { value: propsList, length: cursor + countIgnored(text.slice(cursor)) }
-}
-
-const parseProp = (
-  text: string
-):
-  | { name: MethodsProperties; value: Prop; length: number }
-  | { name: 'polymorph'; value: MethodProps[]; length: number } => {
+const parseProp = (text: string): { name: MethodsProperties; value: Prop; length: number } => {
   let cursor = 0
   const doc = parseDoc(text)
   if (doc) {
@@ -205,12 +169,6 @@ const parseProp = (
   const { length } = text
   const name = parseName(text.slice(cursor))
   cursor += name.length
-
-  if (name.value === 'polymorph') {
-    cursor += countIgnored(text.slice(cursor))
-    const val = parseTaple(text.slice(cursor))
-    return { name: 'polymorph', value: val.value, length: cursor + val.length }
-  }
 
   const prop: Prop = { value: '', hasQuestion: name.hasQuestion, doc: doc?.values }
 
