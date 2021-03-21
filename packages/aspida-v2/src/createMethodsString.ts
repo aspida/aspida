@@ -25,7 +25,7 @@ const genOption = (method: Method, importName: string) => {
   return `(option${isOptionRequired ? '' : '?'}: {${genReqBody(method, importName)}${genQuery(
     method,
     importName
-  )}${genReqHeaders(method, importName)} config?: FetchConfig })`
+  )}${genReqHeaders(method, importName)} config?: RequestInit })`
 }
 
 const genResBody = ({ name, props }: Method, importName: string) =>
@@ -50,18 +50,18 @@ const genRequest = (props: Method['props']) =>
 
 const genResMethodName = (props: Method['props']) =>
   !props.resBody
-    ? 'send'
+    ? 'void'
     : ({ ArrayBuffer: 'arrayBuffer', Blob: 'blob', string: 'text', FormData: 'formData' } as {
         [key: string]: string
       })[props.resBody.value] || 'json'
 
 const genReturnVal = (method: Method, importName: string, path: string) =>
-  `fetch<${genResBody(method, importName)}, ${genResHeaders(method, importName)}${genStatus(
+  `send<${genResBody(method, importName)}, ${genResHeaders(method, importName)}${genStatus(
     method,
     importName
-  )}>(prefix, ${path}, ${method.name.toUpperCase()}${genRequest(method.props)}).${genResMethodName(
+  )}>(f, ${method.name.toUpperCase()}, prefix, ${path}, '${genResMethodName(
     method.props
-  )}()`
+  )}'${genRequest(method.props)})`
 
 export default (methods: Method[], indent: string, importName: string, path: string) =>
   [
@@ -76,7 +76,7 @@ export default (methods: Method[], indent: string, importName: string, path: str
       methodChanks.push(
         `${createDocComment(`${indent}  `, doc, props)}${indent}  $${name}: ${
           tmpChanks[0]
-        }\n${indent}    ${tmpChanks[1]}.then(r => r.body)`
+        }\n${indent}    ${tmpChanks[1]}`
       )
 
       return methodChanks.join(',\n')

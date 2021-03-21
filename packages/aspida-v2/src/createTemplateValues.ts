@@ -21,7 +21,7 @@ export default (direntTree: DirentTree, basePath: string, trailingSlash: boolean
     newUrl: string
   ) => {
     const importName = `Methods${imports.length}`
-    imports.push(`import { Methods as ${importName} } from '${filepath.replace(/'/g, "\\'")}'`)
+    imports.push(`import type { Methods as ${importName} } from '${filepath.replace(/'/g, "\\'")}'`)
     let newPath = `'${decodeURIComponent(newUrl)}${trailingSlash ? '/' : ''}'`
     if (newPath.length > 2) {
       if (!pathes.includes(newPath)) pathes.push(newPath)

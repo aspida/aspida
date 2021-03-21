@@ -5,8 +5,10 @@
   "author": "Solufa <solufa2020@gmail.com>",
   "license": "MIT",
   "main": "dist/index.js",
+  "module": "",
   "types": "dist/index.d.ts",
   "bin": "bin/index.js",
+  "sideEffects": false,
   "homepage": "https://github.com/aspida/aspida#readme",
   "repository": {
     "type": "git",
@@ -27,7 +29,6 @@
   "dependencies": {
     "@types/minimist": "^1.2.1",
     "chokidar": "^3.5.1",
-    "form-data": "^4.0.0",
     "minimist": "^1.2.5"
   }
 }
