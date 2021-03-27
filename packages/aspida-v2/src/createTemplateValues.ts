@@ -3,10 +3,6 @@ import createDocComment from './createDocComment'
 import type { DirentTree, FileData } from './getDirentTree'
 import type { Method } from './parseInterface'
 
-const valNameRegExpStr = '^_[a-zA-Z][a-zA-Z0-9_]*'
-const valNameRegExp = new RegExp(valNameRegExpStr)
-const valTypeRegExpStr = '(@number|@string)'
-const valTypeRegExp = new RegExp(valTypeRegExpStr)
 const toJSValidString = (text: string) =>
   text.replace(/[^a-zA-Z0-9$_]/g, '_').replace(/^(\d)/, '$$$1')
 
@@ -50,7 +46,7 @@ export default (direntTree: DirentTree, basePath: string, trailingSlash: boolean
       .map(dirent => {
         const filename = dirent.name
         const basename = dirent.isDir ? filename : filename.replace(/\.ts$/, '')
-        const hasVal = filename.startsWith('_')
+        const hasVal = filename.startsWith('[')
         let valFn = `${indent}${toJSValidString(
           decodeURIComponent(basename)
         )}: {\n<% next %>\n${indent}}`
@@ -58,27 +54,13 @@ export default (direntTree: DirentTree, basePath: string, trailingSlash: boolean
         let newUrl = `${url}/${basename}`
 
         if (hasVal) {
-          const valPathRegExp = new RegExp(
-            `${valNameRegExpStr}${valTypeRegExpStr}?((\\.|%[0-9a-fA-F]{2})[a-zA-Z0-9]+)?$`
-          )
-          if (!valPathRegExp.test(basename)) {
-            throw new Error(
-              `aspida \u001b[43m\u001b[31mERROR\u001b[0m '${basename}' does not match '${valPathRegExp.toString()}'.`
-            )
-          }
-
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          const valName = basename.match(valNameRegExp)![0]
-          const valType = basename.replace(valName, '').startsWith('@')
-            ? basename.split('@')[1].slice(0, 6)
-            : null
-          const postfix = decodeURIComponent(
-            basename.replace(valName, '').replace(valType ? `@${valType}` : '', '')
-          )
+          const [slug, valName, valType] = basename.match(/^\[([a-zA-Z][a-zA-Z0-9_]*)@?(.+?)?]/)!
+          const postfix = decodeURIComponent(basename.replace(slug, ''))
           const prevUrl = `'${decodeURIComponent(url)}${trailingSlash ? '/' : ''}'`
           if (url.length && !pathes.includes(prevUrl)) pathes.push(prevUrl)
 
-          const duplicatedNames = tree.children.filter(d => d.name.startsWith(valName))
+          const duplicatedNames = tree.children.filter(d => d.name.startsWith(`[${valName}@`))
           const prefixVal = `\`${prefix ? `\${${prefix}}` : ''}${
             url.length ? `\${PATH${pathes.indexOf(prevUrl)}}` : ''
           }${url.length && trailingSlash ? '' : '/'}\${val${dirDeps}}${postfix}\``
@@ -92,59 +74,43 @@ export default (direntTree: DirentTree, basePath: string, trailingSlash: boolean
           }) => {\n${indent}  const ${newPrefix} = ${prefixVal}\n\n${indent}  return {\n<% next %>\n${indent}  }\n${indent}}`
         }
 
-        const fallbackSpecialCharsProp = (text: string) =>
-          /%[0-9a-fA-F]{2}/.test(basename)
-            ? `${text},\n${text.replace(
-                /^( +?)[^ ]+?:/,
-                `$1/**\n$1 * @deprecated \`${toJSValidString(
-                  basename.replace(valTypeRegExp, '')
-                )}\` has been deprecated.\n$1 * Use \`${toJSValidString(
-                  decodeURIComponent(basename.replace(valTypeRegExp, ''))
-                )}\` instead\n$1 */\n$1${toJSValidString(basename.replace(valTypeRegExp, ''))}:`
-              )}`
-            : text
-
         if (dirent.isDir) {
           const methodsOfIndexTsFile =
             tree.children.find(c => c.name === `${filename}.ts`) ??
             dirent.tree.children.find(c => c.name === 'index.ts')
 
-          return fallbackSpecialCharsProp(
-            createApiString(
-              dirent.tree,
-              `${importBasePath}/${filename}`,
-              `${indent}${hasVal ? '  ' : ''}  `,
-              dirDeps + 1,
-              newPrefix,
-              newUrl,
-              `${createDocComment(indent, (<FileData>methodsOfIndexTsFile)?.doc)}${valFn.replace(
-                '<% next %>',
-                '<% props %>'
-              )}`,
-              methodsOfIndexTsFile?.isDir === false
-                ? getMethodsString(
-                    `${importBasePath}/${filename}`,
-                    methodsOfIndexTsFile.methods,
-                    `${indent}${hasVal ? '  ' : ''}`,
-                    newPrefix,
-                    newUrl
-                  )
-                : undefined
-            )
+          return createApiString(
+            dirent.tree,
+            `${importBasePath}/${filename}`,
+            `${indent}${hasVal ? '  ' : ''}  `,
+            dirDeps + 1,
+            newPrefix,
+            newUrl,
+            `${createDocComment(indent, (<FileData>methodsOfIndexTsFile)?.doc)}${valFn.replace(
+              '<% next %>',
+              '<% props %>'
+            )}`,
+            methodsOfIndexTsFile?.isDir === false
+              ? getMethodsString(
+                  `${importBasePath}/${filename}`,
+                  methodsOfIndexTsFile.methods,
+                  `${indent}${hasVal ? '  ' : ''}`,
+                  newPrefix,
+                  newUrl
+                )
+              : undefined
           )
         } else if (filename !== 'index.ts' && tree.children.every(d => d.name !== basename)) {
-          return fallbackSpecialCharsProp(
-            `${createDocComment(indent, dirent.doc)}${valFn.replace(
-              '<% next %>',
-              getMethodsString(
-                `${importBasePath}/${basename}`,
-                dirent.methods,
-                `${indent}${hasVal ? '  ' : ''}`,
-                newPrefix,
-                newUrl
-              )
-            )}`
-          )
+          return `${createDocComment(indent, dirent.doc)}${valFn.replace(
+            '<% next %>',
+            getMethodsString(
+              `${importBasePath}/${basename}`,
+              dirent.methods,
+              `${indent}${hasVal ? '  ' : ''}`,
+              newPrefix,
+              newUrl
+            )
+          )}`
         }
 
         return null

@@ -7,7 +7,7 @@ import type { AspidaConfig } from './getConfigs'
 
 const listNotIndexFiles = (tree: DirentTree): string[] => [
   ...tree.children
-    .filter(c => !c.name.startsWith('_') && !c.isDir && c.name !== 'index.ts')
+    .filter(c => !c.name.startsWith('[') && !c.isDir && c.name !== 'index.ts')
     .map(
       c =>
         `${tree.path}/\u001b[31m${c.name}\u001b[0m -> \u001b[32m${c.name.replace(
@@ -16,7 +16,7 @@ const listNotIndexFiles = (tree: DirentTree): string[] => [
         )}/index.ts\u001b[0m`
     ),
   ...tree.children
-    .map(c => (!c.name.startsWith('_') && c.isDir ? listNotIndexFiles(c.tree) : []))
+    .map(c => (!c.name.startsWith('[') && c.isDir ? listNotIndexFiles(c.tree) : []))
     .reduce((p, c) => [...p, ...c], [])
 ]
 
