@@ -66,8 +66,6 @@ const dataToURLString = (data: Record<string, any>) => {
   return searchParams.toString()
 }
 
-const hasFormData = typeof FormData !== 'undefined'
-
 const optionToRequest = (
   option?: AspidaParams,
   type?: RequestType
@@ -79,7 +77,7 @@ const optionToRequest = (
 
   switch (type) {
     case 'FormData':
-      if (hasFormData) {
+      if (typeof FormData !== 'undefined') {
         httpBody = appendDataToFormData(option.body, new FormData())
       } else {
         const formData = new (require('form-data'))()
@@ -141,8 +139,8 @@ const send = async <T = void, U = BasicHeaders, V = HttpStatusOk>(
  * @remarks
  * root remarks comment
  */
-const api = (init?: { baseURL?: string; fetch?: typeof fetch; config?: RequestInit}) => {
-  const f = init?.fetch ?? fetch
+export const createApi = (init?: { baseURL?: string; fetch?: typeof fetch; config?: RequestInit}) => {
+  const f = init?.fetch ?? (typeof fetch !== 'undefined' ? fetch : require('node-fetch'))
   const prefix = (init?.baseURL ?? '').replace(/\/$/, '')
   const PATH0 = '/foo:bar'
   const PATH1 = '/v1.1'
@@ -347,5 +345,5 @@ const api = (init?: { baseURL?: string; fetch?: typeof fetch; config?: RequestIn
   }
 }
 
-export type ApiInstance = ReturnType<typeof api>
-export default api
+export * from './@constants'
+export const api = createApi()

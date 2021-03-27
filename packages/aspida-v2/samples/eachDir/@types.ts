@@ -1,0 +1,1 @@
+export type Sample = number
