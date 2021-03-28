@@ -17,24 +17,13 @@ import type { Methods as Methods13 } from './v1.1/[articleId].json'
 import type { Methods as Methods14 } from './v1.1/users/[userId@string]'
 import type { Methods as Methods15 } from './v2.0'
 
-type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD' | 'PATCH' | 'OPTIONS'
-type RequestType = 'FormData' | 'URLSearchParams' | 'ArrayBuffer' | 'Blob' | 'string' | 'any'
-type HttpStatusOk = 200 | 201 | 202 | 203 | 204 | 205 | 206
 type BasicHeaders = Record<string, string>
 
-type AspidaRequest = {
-  query?: any
-  headers?: any
-  httpBody?: any
-  body?: any
-  config?: RequestInit
-}
-
-type AspidaParams = {
+type Params = {
   query?: any
   headers?: any
   body?: any
-  config?: RequestInit
+  init?: RequestInit
 }
 
 const headersToObject = (headers: Headers): any =>
@@ -67,70 +56,97 @@ const dataToURLString = (data: Record<string, any>) => {
 }
 
 const optionToRequest = (
-  option?: AspidaParams,
-  type?: RequestType
-): AspidaRequest | undefined => {
-  if (option?.body === undefined) return option
+  method: string,
+  params?: Params,
+  format?: BodyInit
+): RequestInit => {
+  if (!params) return { method }
 
-  let httpBody
+  let body
   let headers: BasicHeaders = {}
 
-  switch (type) {
+  switch (format) {
+    case undefined:
+      break;
     case 'FormData':
       if (typeof FormData !== 'undefined') {
-        httpBody = appendDataToFormData(option.body, new FormData())
+        body = appendDataToFormData(params.body, new FormData())
       } else {
         const formData = new (require('form-data'))()
-        httpBody = appendDataToFormData(option.body, formData)
+        body = appendDataToFormData(params.body, formData)
         headers = formData.getHeaders()
       }
       break
     case 'URLSearchParams':
-      httpBody = dataToURLString(option.body)
+      body = dataToURLString(params.body)
       headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8'
       break
     case 'ArrayBuffer':
     case 'string':
     case 'Blob':
-    case 'any':
-      httpBody = option.body
+      body = params.body
       break
     default:
-      httpBody = JSON.stringify(option.body)
+      body = JSON.stringify(params.body)
       headers['Content-Type'] = 'application/json;charset=utf-8'
       break
   }
 
-  return { httpBody, ...option, headers: { ...headers, ...option.headers } }
+  return { ...params.init, method, body, headers: { ...headers, ...params.init?.headers, ...params.headers } }
 }
 
-const send = async <T = void, U = BasicHeaders, V = HttpStatusOk>(
+type ServerData = { status: number; headers: BasicHeaders; body?: any }
+
+type NormalizedResponse<Success extends ServerData, Failure extends ServerData> =
+  | { isSuccess: true; stream: Response['body']; data: Success }
+  | { isSuccess: false; isFailure: true; stream: Response['body']; data: Failure }
+  | { isSuccess: false; isFailure: false; err: Error };
+
+const send = async <Success extends ServerData = { status: number; headers: BasicHeaders }, Failure extends ServerData = { status: number; headers: BasicHeaders }>(
   client: typeof fetch,
-  method: HttpMethod,
+  method: string,
   baseURL: string,
   url: string,
   resType: 'json' | 'text' | 'arrayBuffer' | 'blob' | 'formData' | 'void',
-  params?: AspidaParams,
-  type?: RequestType
-) => {
-  const request = optionToRequest(params, type)
-  const res = await client(
-    `${baseURL}${url}${
-      request?.query ? `?${dataToURLString(request.query)}` : ''
-    }`,
-    {
-      method,
-      ...request?.config,
-      body: request?.httpBody,
-      headers: { ...request?.config?.headers, ...request?.headers }
-    }
-  )
+  params?: Params,
+  format?: BodyInit
+): Promise<NormalizedResponse<Success, Failure>> => {
+  try {
+    const res = await client(
+      `${baseURL}${url}${
+        params?.query ? `?${dataToURLString(params.query)}` : ''
+      }`,
+      optionToRequest(method, params, format)
+    )
 
-  return {
-    status: res.status as any,
-    headers: headersToObject(res.headers),
-    body: resType === 'void' ? undefined : await res[resType]()
-  } as { status: V, headers: U, body: T }
+    if (res.ok) {
+      return {
+        isSuccess: true,
+        stream: res.body,
+        data: {
+          status: res.status,
+          headers: headersToObject(res.headers),
+          body: resType === 'void' ? undefined : await res[resType](),
+        } as Success
+      };
+    } else {
+      return {
+        isSuccess: false,
+        isFailure: true,
+        stream: res.body,
+        data: {
+          status: res.status,
+          headers: headersToObject(res.headers),
+        } as Failure
+      };
+    }
+  } catch (err) {
+    return {
+      isSuccess: false,
+      isFailure: false,
+      err,
+    };
+  }
 }
 
 /**
@@ -139,9 +155,9 @@ const send = async <T = void, U = BasicHeaders, V = HttpStatusOk>(
  * @remarks
  * root remarks comment
  */
-export const createApi = (init?: { baseURL?: string; fetch?: typeof fetch; config?: RequestInit}) => {
-  const f = init?.fetch ?? (typeof fetch !== 'undefined' ? fetch : require('node-fetch'))
-  const prefix = (init?.baseURL ?? '').replace(/\/$/, '')
+export const createApi = (config?: { baseURL?: string; trailingSlash?: boolean; init?: RequestInit}) => {
+  const f = typeof fetch !== 'undefined' ? fetch : require('node-fetch')
+  const prefix = (config?.baseURL ?? '').replace(/\/$/, '')
   const PATH0 = '/foo:bar'
   const PATH1 = '/v1.1'
   const PATH2 = '/v1.1/2'
