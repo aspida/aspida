@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0](https://github.com/aspida/aspida/compare/v1.6.3...v1.7.0) (2021-04-22)
+
+
+### Features
+
+* add prettier-ignore comments ([355cf49](https://github.com/aspida/aspida/commit/355cf4900af69e32aefd2b39abff7ea52514007e))
+
 ### [1.6.3](https://github.com/aspida/aspida/compare/v1.6.2...v1.6.3) (2021-03-08)
 
 
