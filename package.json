@@ -4,7 +4,7 @@
     "packages/*"
   ],
   "scripts": {
-    "dev:aspida": "npm run build:aspida && cd packages/aspida && node bin/index.js --build",
+    "dev": "npm run build:aspida && cd packages/aspida && node bin/index.js --build",
     "build:aspida": "npm run rimraf -- aspida && tsc -p packages/aspida",
     "build:axios": "npm run rimraf -- aspida-axios && tsc -p packages/aspida-axios",
     "build:fetch": "npm run rimraf -- aspida-fetch && tsc -p packages/aspida-fetch",
@@ -12,7 +12,7 @@
     "build:react-query": "npm run rimraf -- aspida-react-query && tsc -p packages/aspida-react-query",
     "build:swr": "npm run rimraf -- aspida-swr && tsc -p packages/aspida-swr",
     "build:swrv": "npm run rimraf -- aspida-swrv && tsc -p packages/aspida-swrv",
-    "lint": "eslint --ext .js,.ts --ignore-path .gitignore .",
+    "lint": "eslint --ext .js,.ts --ignore-path .gitignore . && prettier --check ./**/*.ts",
     "lint:fix": "npm run lint -- --fix",
     "release": "standard-version --skip.tag",
     "release:major": "npm run release -- --release-as major",
@@ -33,7 +33,6 @@
       "plugin:@typescript-eslint/recommended",
       "plugin:react/recommended",
       "plugin:jest/recommended",
-      "plugin:prettier/recommended",
       "prettier"
     ],
     "parserOptions": {
@@ -88,7 +87,6 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^24.3.2",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-promise": "^4.3.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-standard": "^5.0.0",

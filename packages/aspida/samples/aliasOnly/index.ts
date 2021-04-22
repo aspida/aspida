@@ -1,7 +1,8 @@
 /* eslint-disable */
+// prettier-ignore
 /**
  * root comment
- * 
+ *
  * @remarks
  * root remarks comment
  */
