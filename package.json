@@ -12,7 +12,7 @@
     "build:react-query": "npm run rimraf -- aspida-react-query && tsc -p packages/aspida-react-query",
     "build:swr": "npm run rimraf -- aspida-swr && tsc -p packages/aspida-swr",
     "build:swrv": "npm run rimraf -- aspida-swrv && tsc -p packages/aspida-swrv",
-    "lint": "eslint --ext .js,.ts --ignore-path .gitignore . && prettier --check ./**/*.ts",
+    "lint": "eslint --ext .js,.ts --ignore-path .gitignore . && prettier --check \"./**/*.ts\"",
     "lint:fix": "npm run lint -- --fix",
     "release": "standard-version --skip.tag",
     "release:major": "npm run release -- --release-as major",
