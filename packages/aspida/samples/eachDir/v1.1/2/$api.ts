@@ -1,12 +1,20 @@
 /* eslint-disable */
+// prettier-ignore
 import { AspidaClient, dataToURLString } from 'aspida'
+// prettier-ignore
 import { Methods as Methods0 } from './_hogeId'
+// prettier-ignore
 import { Methods as Methods1 } from './_hogeId@number'
+// prettier-ignore
 import { Methods as Methods2 } from './_hogeId@string/entries.json'
+// prettier-ignore
 import { Methods as Methods3 } from './_hogeId@string/test-4'
+// prettier-ignore
 import { Methods as Methods4 } from './_hogeId@string/test-4/_fugaId'
+// prettier-ignore
 import { Methods as Methods5 } from './_hogeId@string/test-4/fuga aa'
 
+// prettier-ignore
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const prefix = (baseURL === undefined ? '' : baseURL).replace(/\/$/, '')
   const PATH0 = '/v1.1/2/'
@@ -134,5 +142,7 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   }
 }
 
+// prettier-ignore
 export type ApiInstance = ReturnType<typeof api>
+// prettier-ignore
 export default api

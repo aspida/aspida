@@ -12,7 +12,7 @@ export default (indent: string, doc: Doc = [], props?: Method['props']) =>
     ? `${indent}/**${
         doc.length
           ? `
-${indent} * ${doc.join(`\n${indent} * `)}`
+${indent} * ${doc.join(`\n${indent} * `).replace(/ \n/g, '\n')}`
           : ''
       }${propList.some(p => props?.[p.type]?.doc) ? '\n' : ''}${propList
         .filter(p => props?.[p.type]?.doc)
