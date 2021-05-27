@@ -85,9 +85,11 @@ const genRequest = (props: Method['props']) =>
 const genResMethodName = (props: Method['props']) =>
   !props.resBody
     ? 'send'
-    : ({ ArrayBuffer: 'arrayBuffer', Blob: 'blob', string: 'text', FormData: 'formData' } as {
-        [key: string]: string
-      })[props.resBody.value] || 'json'
+    : (
+        { ArrayBuffer: 'arrayBuffer', Blob: 'blob', string: 'text', FormData: 'formData' } as {
+          [key: string]: string
+        }
+      )[props.resBody.value] || 'json'
 
 const genReturnVal = (method: Method, importName: string, path: string) =>
   `fetch<${genResBody(method, importName)}, ${genResHeaders(method, importName)}${genStatus(

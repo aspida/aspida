@@ -1,9 +1,14 @@
 export type Methods = {
   get: {
     // test
-    query?: ({ aa: number /*
+    query?: (
+      | {
+          aa: number /*
     test { aa }
-    */ } | { bb: string[] })[]
+    */
+        }
+      | { bb: string[] }
+    )[]
     status: 200
     resBody: Array<{ aa: number } | { bb: Array<string> }>
   }
