@@ -64,9 +64,9 @@ function useAspidaSWR<
   )
 }
 
-type KeyLoader<Data = any> = (
+type KeyLoader<Method = any, Data = any> = (
   path: string,
-  method: string,
+  method: Method,
   index: number,
   previousPageData: Data | null
 ) => ReturnType<SWRKeyLoader>
@@ -77,7 +77,7 @@ export function useAspidaSWRInfinite<
     $path: (option?: any) => string
   }
 >(
-  getKey: KeyLoader<ResponseData<T['$get']>>,
+  getKey: KeyLoader<'$get', ResponseData<T['$get']>>,
   api: T,
   ...option: InfiniteOptions<T['$get']>
 ): SWRInfiniteResponse<ResponseData<T['$get']>, any>
@@ -85,7 +85,7 @@ export function useAspidaSWRInfinite<
   T extends Record<string, any> & { $path: (option?: any) => string },
   U extends { [K in keyof T]: T[K] extends (option: any) => Promise<any> ? K : never }[keyof T]
 >(
-  getKey: KeyLoader<ResponseData<T[U]>>,
+  getKey: KeyLoader<U, ResponseData<T[U]>>,
   api: T,
   key: U,
   ...option: InfiniteOptions<T[U]>
@@ -97,10 +97,12 @@ export function useAspidaSWRInfinite<
   const method = typeof key === 'string' ? key : '$get'
   const opt = typeof key === 'string' ? (option as any)[0] : key
 
-  const swrGetKey: SWRKeyLoader = (index, previousPageData) =>
-    opt?.enabled === false ? null : getKey(api.$path(opt), method, index, previousPageData)
-
-  return useSWRInfinite(swrGetKey, () => api[method](opt), opt)
+  return useSWRInfinite(
+    (...args: Parameters<SWRKeyLoader>) =>
+      opt?.enabled === false ? null : getKey(api.$path(opt), method, ...args),
+    () => api[method](opt),
+    opt
+  )
 }
 
 export default useAspidaSWR
