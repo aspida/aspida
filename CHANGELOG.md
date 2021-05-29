@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.1](https://github.com/aspida/aspida/compare/v1.7.0...v1.7.1) (2021-05-29)
+
+
+### Refactors
+
+* **aspida-swr:** fix to avoid using deprecated types ([#677](https://github.com/aspida/aspida/issues/677)) ([8b94ffa](https://github.com/aspida/aspida/commit/8b94ffa0ed5ace2231ca0f0f8a7769d98417b7a6))
+
 ## [1.7.0](https://github.com/aspida/aspida/compare/v1.6.3...v1.7.0) (2021-04-22)
 
 
