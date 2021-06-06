@@ -1,4 +1,3 @@
-/* eslint-disable jest/no-done-callback */
 import { Server } from 'http'
 import express from 'express'
 import axiosClient from '../../aspida-axios/src'
@@ -11,11 +10,13 @@ let server: Server
 
 app.use(express.json())
 
-beforeEach(fn => {
-  server = app.listen(port, fn)
-})
+beforeEach(() => new Promise((resolve) => {
+  server = app.listen(port, resolve)
+}))
 
-afterEach(fn => server.close(fn))
+afterEach(() => new Promise((resolve) => {
+  server.close(resolve)
+}))
 
 test('aspida response status 404', async () => {
   const target = client.v1_1.$2._hogeId_string('hoge').entries_json
