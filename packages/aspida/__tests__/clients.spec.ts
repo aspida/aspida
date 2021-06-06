@@ -10,13 +10,19 @@ let server: Server
 
 app.use(express.json())
 
-beforeEach(() => new Promise((resolve) => {
-  server = app.listen(port, resolve)
-}))
+beforeEach(
+  () =>
+    new Promise(resolve => {
+      server = app.listen(port, resolve)
+    })
+)
 
-afterEach(() => new Promise((resolve) => {
-  server.close(resolve)
-}))
+afterEach(
+  () =>
+    new Promise(resolve => {
+      server.close(resolve)
+    })
+)
 
 test('aspida response status 404', async () => {
   const target = client.v1_1.$2._hogeId_string('hoge').entries_json
