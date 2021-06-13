@@ -30,28 +30,32 @@ export default (client = fetch, config?: FetchConfig): AspidaClient<FetchConfig>
     params?: AspidaParams<FetchConfig>,
     type?: RequestType
   ) {
-    const send = <V>(fn: (res: Response) => Promise<V>) => async () => {
-      const request = optionToRequest(params, type)
-      const res = await client(
-        `${request?.config?.baseURL ?? baseURL}${url}${
-          request?.query ? `?${dataToURLString(request.query)}` : ''
-        }`,
-        {
-          method,
-          ...config,
-          ...request?.config,
-          body: request?.httpBody,
-          headers: { ...config?.headers, ...request?.config?.headers, ...request?.headers }
-        }
-      ).then(res => (!res.ok && config?.throwHttpErrors ? Promise.reject(new HTTPError(res)) : res))
+    const send =
+      <V>(fn: (res: Response) => Promise<V>) =>
+      async () => {
+        const request = optionToRequest(params, type)
+        const res = await client(
+          `${request?.config?.baseURL ?? baseURL}${url}${
+            request?.query ? `?${dataToURLString(request.query)}` : ''
+          }`,
+          {
+            method,
+            ...config,
+            ...request?.config,
+            body: request?.httpBody,
+            headers: { ...config?.headers, ...request?.config?.headers, ...request?.headers }
+          }
+        ).then(res =>
+          !res.ok && config?.throwHttpErrors ? Promise.reject(new HTTPError(res)) : res
+        )
 
-      return {
-        status: res.status as any,
-        headers: headersToObject(res.headers as any),
-        originalResponse: res,
-        body: await fn(res)
+        return {
+          status: res.status as any,
+          headers: headersToObject(res.headers as any),
+          originalResponse: res,
+          body: await fn(res)
+        }
       }
-    }
 
     return {
       send: send(() => Promise.resolve()),

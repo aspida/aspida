@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { mockMethods } from 'aspida-mock'
 
+// prettier-ignore
 export type Methods = {
   get: {
     reqHeaders?:

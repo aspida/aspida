@@ -65,15 +65,17 @@ const encode = (str: Parameters<typeof encodeURIComponent>[0]) =>
   encodeURIComponent(str).replace(
     /[!'()~]|%20|%00/g,
     match =>
-      (({
-        '!': '%21',
-        "'": '%27',
-        '(': '%28',
-        ')': '%29',
-        '~': '%7E',
-        '%20': '+',
-        '%00': '\x00'
-      } as Record<string, string>)[match])
+      ((
+        {
+          '!': '%21',
+          "'": '%27',
+          '(': '%28',
+          ')': '%29',
+          '~': '%7E',
+          '%20': '+',
+          '%00': '\x00'
+        } as Record<string, string>
+      )[match])
   )
 
 export const dataToURLString = (data: Record<string, any>) =>

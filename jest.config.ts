@@ -6,7 +6,6 @@ const config: { projects: Config.InitialOptions[] } = {
   projects: [
     {
       preset: 'ts-jest',
-      testEnvironment: 'node',
       testPathIgnorePatterns: ['tsx$'],
       coveragePathIgnorePatterns: ['sample1', 'dist'],
       moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
@@ -15,6 +14,7 @@ const config: { projects: Config.InitialOptions[] } = {
     },
     {
       preset: 'ts-jest',
+      testEnvironment: 'jsdom',
       testMatch: ['**/__tests__/**/*.tsx'],
       coveragePathIgnorePatterns: ['sample1', 'dist'],
       moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {

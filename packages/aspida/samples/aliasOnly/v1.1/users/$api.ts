@@ -1,7 +1,10 @@
 /* eslint-disable */
+// prettier-ignore
 import { AspidaClient, dataToURLString } from 'aspida'
+// prettier-ignore
 import { Methods as Methods0 } from './_userId@string'
 
+// prettier-ignore
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const prefix = (baseURL === undefined ? '' : baseURL).replace(/\/$/, '')
   const PATH0 = '/v1.1/users'
@@ -24,5 +27,7 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   }
 }
 
+// prettier-ignore
 export type ApiInstance = ReturnType<typeof api>
+// prettier-ignore
 export default api
