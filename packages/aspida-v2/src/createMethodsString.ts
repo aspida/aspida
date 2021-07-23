@@ -1,74 +1,71 @@
 import createDocComment from './createDocComment'
 import type { Method } from './parseInterface'
 
-const genReqBody = ({ name, props }: Method, importName: string) =>
-  props.reqBody
-    ? ` body${props.reqBody.hasQuestion ? '?' : ''}: ${importName}['${name}']['reqBody'],`
+const genReqBody = ({ name, req }: Method, importName: string) =>
+  req?.body
+    ? ` body${req.body.hasQuestion ? '?' : ''}: ${importName}['${name}']['req']['body'],`
     : ''
 
-const genQuery = ({ name, props }: Method, importName: string) =>
-  props.query
-    ? ` query${props.query.hasQuestion ? '?' : ''}: ${importName}['${name}']['query'],`
+const genQuery = ({ name, req }: Method, importName: string) =>
+  req?.query
+    ? ` query${req.query.hasQuestion ? '?' : ''}: ${importName}['${name}']['req']['query'],`
     : ''
 
-const genReqHeaders = ({ name, props }: Method, importName: string) =>
-  props.reqHeaders
-    ? ` headers${props.reqHeaders.hasQuestion ? '?' : ''}: ${importName}['${name}']['reqHeaders'],`
+const genReqHeaders = ({ name, req }: Method, importName: string) =>
+  req?.headers
+    ? ` headers${req.headers.hasQuestion ? '?' : ''}: ${importName}['${name}']['req']['headers'],`
     : ''
 
 const genOption = (method: Method, importName: string) => {
   const isOptionRequired =
-    method.props.query?.hasQuestion === false ||
-    method.props.reqBody?.hasQuestion === false ||
-    method.props.reqHeaders?.hasQuestion === false
+    method.req?.query?.hasQuestion === false ||
+    method.req?.body?.hasQuestion === false ||
+    method.req?.headers?.hasQuestion === false
 
   return `(option${isOptionRequired ? '' : '?'}: {${genReqBody(method, importName)}${genQuery(
     method,
     importName
-  )}${genReqHeaders(method, importName)} config?: RequestInit })`
+  )}${genReqHeaders(method, importName)} init?: RequestInit })`
 }
 
-const genResBody = ({ name, props }: Method, importName: string) =>
-  props.resBody ? `${importName}['${name}']['resBody']` : 'void'
+const genRes = ({ name, res }: Method, importName: string) =>
+  res ? `${importName}['${name}']['res']` : '{}'
 
-const genResHeaders = ({ name, props }: Method, importName: string) =>
-  props.resHeaders ? `${importName}['${name}']['resHeaders']` : 'BasicHeaders'
+const genErr = ({ name, err }: Method, importName: string) =>
+  err ? `, ${importName}['${name}']['err']` : ''
 
-const genStatus = ({ name, props }: Method, importName: string) =>
-  props.status ? `, ${importName}['${name}']['status']` : ''
-
-const genRequest = (props: Method['props']) =>
+const genRequest = ({ req }: Method) =>
   `, option${
-    !props.reqBody
+    !req?.body
       ? ''
-      : props.reqFormat
-      ? `, '${props.reqFormat.value}'`
-      : props.reqBody && /^(ArrayBuffer|Blob|string)$/.test(props.reqBody.value)
-      ? `, '${props.reqBody.value}'`
+      : req?.format
+      ? `, '${req?.format.value}'`
+      : req.body && /^(ArrayBuffer|Blob|string)$/.test(req.body.value)
+      ? `, '${req.body.value}'`
       : ''
   }`
 
-const genResMethodName = (props: Method['props']) =>
-  !props.resBody
+const genResMethodName = ({ res }: Method) =>
+  !res?.body
     ? 'void'
     : (
         { ArrayBuffer: 'arrayBuffer', Blob: 'blob', string: 'text', FormData: 'formData' } as {
           [key: string]: string
         }
-      )[props.resBody.value] || 'json'
+      )[res.body.value] || 'json'
 
 const genReturnVal = (method: Method, importName: string, path: string) =>
-  `send<${genResBody(method, importName)}, ${genResHeaders(method, importName)}${genStatus(
+  `send<${genRes(method, importName)}${genErr(
     method,
     importName
-  )}>(f, ${method.name.toUpperCase()}, prefix, ${path}, '${genResMethodName(
-    method.props
-  )}'${genRequest(method.props)})`
+  )}>(f, ${method.name.toUpperCase()}, prefix, ${path}, '${genResMethodName(method)}'${genRequest(
+    method
+  )})`
 
 export default (methods: Method[], indent: string, importName: string, path: string) =>
   [
     ...methods.map(method => {
-      const { name, props, doc } = method
+      const { name, doc, ...params } = method
       const tmpChanks = [
         `${genOption(method, importName)} =>`,
         genReturnVal(method, importName, path)
@@ -76,21 +73,21 @@ export default (methods: Method[], indent: string, importName: string, path: str
       const methodChanks: string[] = []
 
       methodChanks.push(
-        `${createDocComment(`${indent}  `, doc, props)}${indent}  $${name}: ${
+        `${createDocComment(`${indent}  `, doc, params)}${indent}  $${name}: ${
           tmpChanks[0]
         }\n${indent}    ${tmpChanks[1]}`
       )
 
       return methodChanks.join(',\n')
     }),
-    (methods.filter(({ props }) => props.query).length
+    (methods.filter(({ req }) => req?.query).length
       ? `${indent}  $path: (option?: ${methods
-          .filter(({ props }) => props.query)
+          .filter(({ req }) => req?.query)
           .map(
             ({ name }) =>
               `{ method${
                 name === 'get' ? '?' : ''
-              }: '${name}'; query: ${importName}['${name}']['query'] }`
+              }: '${name}'; query: ${importName}['${name}']['req']['query'] }`
           )
           .join(' | ')}) =>
 ${indent}    \`\${prefix}\${${

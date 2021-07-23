@@ -1,18 +1,20 @@
-import type { LowerHttpMethod, AspidaMethodParams } from './'
+import type { LowerHttpMethod, MethodParams } from './'
 
 export type Doc = string[]
 
-type MethodsProperties = keyof AspidaMethodParams
+type MethodsProperties = keyof MethodParams
 type Prop = {
   value: string
   hasQuestion: boolean
   doc?: Doc
 }
-type MethodProps = Partial<Record<MethodsProperties, Prop>>
+type MethodProps<T extends Record<string, any>> = Partial<Record<keyof T, Prop>>
 
 export type Method = {
   name: LowerHttpMethod
-  props: MethodProps
+  req?: MethodProps<Required<MethodParams>['req']>
+  res?: MethodProps<Required<MethodParams>['res']>
+  err?: MethodProps<Required<MethodParams>['err']>
   doc?: Doc
 }
 
@@ -211,6 +213,38 @@ const parseProp = (text: string): { name: MethodsProperties; value: Prop; length
   return { name: name.value as MethodsProperties, value: prop, length: cursor }
 }
 
+const parseParams = (
+  text: string
+): { value: Partial<Pick<Method, 'req' | 'res' | 'err'>>; length: number } => {
+  let cursor = 0
+  const value: Record<string, any> = {}
+  const { length } = text
+
+  while (cursor < length) {
+    cursor += countIgnored(text.slice(cursor))
+    if (text[cursor] === '}') break
+
+    const name = parseName(text.slice(cursor))
+    cursor += name.length
+    cursor += countIgnored(text.slice(cursor)) + 1 // '{'
+    cursor += countIgnored(text.slice(cursor))
+
+    const props: Record<string, Prop> = {}
+
+    while (text[cursor] !== '}' && cursor < length) {
+      const prop = parseProp(text.slice(cursor))
+
+      cursor += prop.length
+      props[prop.name] = prop.value
+    }
+
+    cursor += 1 // '}'
+    value[name.value] = props
+  }
+
+  return { value, length: cursor }
+}
+
 const parseMethod = (text: string): { value: Method; length: number } => {
   let cursor = 0
   const doc = parseDoc(text)
@@ -218,25 +252,16 @@ const parseMethod = (text: string): { value: Method; length: number } => {
     cursor += doc.length
   }
 
-  const { length } = text
   const methodName = parseName(text.slice(cursor))
   cursor += methodName.length
-  const props: Method['props'] = {}
-
   cursor += countIgnored(text.slice(cursor)) + 1 // '{'
   cursor += countIgnored(text.slice(cursor))
-
-  while (text[cursor] !== '}' && cursor < length) {
-    const prop = parseProp(text.slice(cursor))
-
-    cursor += prop.length
-    props[prop.name] = prop.value as any
-  }
-
-  cursor += 1 // '}'
+  const params = parseParams(text.slice(cursor))
+  cursor += params.length
+  cursor += countIgnored(text.slice(cursor)) + 1 // '}'
 
   return {
-    value: { name: methodName.value as LowerHttpMethod, props, doc: doc?.values },
+    value: { name: methodName.value as LowerHttpMethod, ...params.value, doc: doc?.values },
     length: cursor
   }
 }
@@ -262,7 +287,9 @@ export const parse = (
   text: string,
   name: string
 ): { methods: Method[]; doc?: Doc; $textForApiTypes: string } | null => {
-  const interfaceRegExp = new RegExp(`(^|\r?\n)(export )(interface ${name}|type ${name} ?=)( ?{)`)
+  const interfaceRegExp = new RegExp(
+    `(^|\r?\n)(export )(interface ${name}|type ${name} ?=)( ?AspidaMethods<{)`
+  )
   if (!interfaceRegExp.test(text)) return null
 
   const [d, ...m] = text.split(interfaceRegExp)

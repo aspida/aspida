@@ -112,7 +112,7 @@ const optionToRequest = (
   return { ...params.init, method, body, headers: { ...headers, ...params.init?.headers, ...params.headers } }
 }
 
-type ServerData = { status: number; headers: BasicHeaders; body?: any }
+type ServerData = { status?: number; headers?: BasicHeaders; body?: any }
 
 type NormalizedResponse<Success extends ServerData, Failure extends ServerData> =
   | { isSuccess: true; stream: Response['body']; data: Success }

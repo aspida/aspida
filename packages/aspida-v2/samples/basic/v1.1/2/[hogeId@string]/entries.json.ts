@@ -1,8 +1,12 @@
-export type Methods = {
+import { AspidaMethods } from 'aspida-v2'
+
+export type Methods = AspidaMethods<{
   get: {
-    resBody: {
-      id: number
-      title: string
-    }[]
+    res: {
+      body: {
+        id: number
+        title: string
+      }[]
+    }
   }
-}
+}>

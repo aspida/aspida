@@ -4,6 +4,5 @@ module.exports = [
     baseURL: 'https://example.com/api/',
     trailingSlash: false
   },
-  { input: 'samples/eachDir', trailingSlash: true, outputEachDir: true },
-  { input: 'samples/aliasOnly', outputEachDir: true }
+  { input: 'samples/eachDir', trailingSlash: true, outputEachDir: true }
 ]

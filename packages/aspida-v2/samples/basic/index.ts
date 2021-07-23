@@ -1,50 +1,94 @@
 /* eslint-disable */
-import { mockMethods } from 'aspida-mock'
-
 // prettier-ignore
-export type Methods = {
+import { AspidaMethods } from 'aspida-v2'
+/**
+ * root comment
+ *
+ * @remarks
+ * root remarks comment
+ */
+export type Methods = AspidaMethods<{
+  /**
+   * get method comment
+   *
+   * @remarks
+   * get method remarks comment
+   */
   get: {
-    reqHeaders?:
+    req: {
+      headers?:
+        | {
+            'access-token': string
+          }
+        | {
+            'x-auth-token': string
+          }
+      query?: { aa: number }
+    }
+    res:
       | {
-          'access-token': string
+          status: 200
+          headers: {}
+          body: FormData
         }
       | {
-          'x-auth-token': string
+          status: 201
+          headers: {}
         }
-    query?: { aa: number };
-    resBody: FormData
-  };
-
-  post: {
-    'reqHeaders'?:
-      & {
-          'access-token': string
+    err:
+      | {
+          status: 402
+          headers: {}
+          body: { message: string }
         }
-      & {
-          'x-auth-token': string
+      | {
+          status: 405
+          headers: {}
+          body: { message: string }
         }
-    query: { aa: number }
-    reqBody: { val: number }
-    resBody: ArrayBuffer;
   }
 
+  post: {
+    req: {
+      headers?: {
+        'access-token': string
+      } & {
+        'x-auth-token': string
+      }
+      query: { aa: number }
+      /** body comment */
+      body: { val: number }
+    }
+    res: {
+      body: ArrayBuffer
+    }
+  }
+
+  /**
+   * put method comment
+   */
   put: {
-    query: { aa: number }
-    status: 200
-    resBody?: { aa: number }
-    resHeaders: { token: string }
+    req: {
+      /**
+       * query comment
+       */
+      query: { aa: number }
+    }
+    res: {
+      status: 200
+      /** returns comment */
+      body?: { aa: number }
+      headers: { token: string }
+    }
   }
 
   delete: {
-    query: { aa: number }
-    status: 202
-    resHeaders?: { token: string }
+    req: {
+      query: { aa: number }
+    }
+    res: {
+      status: 202
+      headers?: { token: string }
+    }
   }
-}
-
-export default mockMethods<Methods>({
-  get: ({ query }) => (query?.aa ? { status: 200, resBody: new FormData() } : { status: 403 }),
-  post: ({ reqBody }) => (reqBody ? { status: 200, resBody: new ArrayBuffer(1) } : { status: 500 }),
-  put: () => ({ status: 200, resHeaders: { token: 'aaa' } }),
-  delete: () => ({ status: 202, resBody: undefined })
-})
+}>

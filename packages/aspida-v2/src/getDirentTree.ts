@@ -34,7 +34,8 @@ export const getDirentTree = (input: string) => {
       } else if (dirent.name.endsWith('.ts')) {
         const value = parse(fs.readFileSync(`${input}/${dirent.name}`, 'utf8'), 'Methods')
 
-        if (!value?.methods.some(({ props }) => Object.keys(props).length)) return
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        if (!value?.methods.some(({ name, ...val }) => Object.keys(val).length)) return
 
         tree.children.push({
           name: dirent.name,
