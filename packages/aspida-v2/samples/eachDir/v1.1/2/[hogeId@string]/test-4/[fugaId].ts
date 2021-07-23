@@ -1,3 +1,4 @@
+// prettier-ignore
 /**
  * _fugaId comment
  */

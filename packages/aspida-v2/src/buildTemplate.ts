@@ -188,6 +188,7 @@ export const api = createApi()
     .replace('<% imports %>', imports.join('\n'))
     .replace('<% api %>', api)
     .replace('<% baseURL %>', baseURL)
+    .replace(/\n([a-z])/g, '\n// prettier-ignore\n$1')
 
   return { text, filePath: path.posix.join(tree.path, '$api.ts') }
 }
