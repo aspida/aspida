@@ -1,31 +1,15 @@
 import createDocComment from './createDocComment'
 import type { Method } from './parseInterface'
 
-const genReqBody = ({ name, req }: Method, importName: string) =>
-  req?.body
-    ? ` body${req.body.hasQuestion ? '?' : ''}: ${importName}['${name}']['req']['body'],`
-    : ''
-
-const genQuery = ({ name, req }: Method, importName: string) =>
-  req?.query
-    ? ` query${req.query.hasQuestion ? '?' : ''}: ${importName}['${name}']['req']['query'],`
-    : ''
-
-const genReqHeaders = ({ name, req }: Method, importName: string) =>
-  req?.headers
-    ? ` headers${req.headers.hasQuestion ? '?' : ''}: ${importName}['${name}']['req']['headers'],`
-    : ''
-
 const genOption = (method: Method, importName: string) => {
   const isOptionRequired =
     method.req?.query?.hasQuestion === false ||
     method.req?.body?.hasQuestion === false ||
     method.req?.headers?.hasQuestion === false
 
-  return `(option${isOptionRequired ? '' : '?'}: {${genReqBody(method, importName)}${genQuery(
-    method,
-    importName
-  )}${genReqHeaders(method, importName)} init?: RequestInit })`
+  return `(option${isOptionRequired ? '' : '?'}: ${
+    method.req ? `${importName}['${method.name}']['req'] & ` : ''
+  }{ init?: RequestInit })`
 }
 
 const genRes = ({ name, res }: Method, importName: string) =>

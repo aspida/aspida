@@ -159,5 +159,3 @@ export const createApi = (config?: { baseURL?: string; trailingSlash?: boolean; 
 export * from './../../../../@constants'
 // prettier-ignore
 export * from './../../../../@types'
-// prettier-ignore
-export const api = createApi()

@@ -9,7 +9,7 @@ export type AspidaConfig = {
 }
 
 const defaultConfig: AspidaConfig = {
-  input: ['api', 'apis'].find(input => fs.existsSync(input)) ?? 'api',
+  input: 'api',
   baseURL: '',
   trailingSlash: false,
   outputEachDir: false

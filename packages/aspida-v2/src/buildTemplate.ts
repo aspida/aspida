@@ -183,7 +183,6 @@ ${['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'PATCH', 'OPTIONS']
 ${constantsPath ? `\nexport * from '${constantsPath}@constants'` : ''}${
     typesPath ? `\nexport * from '${typesPath}@types'` : ''
   }
-export const api = createApi()
 `
     .replace('<% imports %>', imports.join('\n'))
     .replace('<% api %>', api)
