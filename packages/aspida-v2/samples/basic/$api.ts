@@ -25,9 +25,13 @@ import type { Methods as Methods10 } from './v1.1/2/[hogeId@string]/test-4/fuga 
 // prettier-ignore
 import type { Methods as Methods11 } from './v1.1/2/[hogeId]'
 // prettier-ignore
-import type { Methods as Methods12 } from './v1.1/[articleId].json'
+import type { Methods as Methods12 } from './v1.1/3.1'
 // prettier-ignore
-import type { Methods as Methods13 } from './v1.1/users/[userId@string]'
+import type { Methods as Methods13 } from './v1.1/[articleId].json'
+// prettier-ignore
+import type { Methods as Methods14 } from './v1.1/users/[userId@string]'
+// prettier-ignore
+import type { Methods as Methods15 } from './v2.0'
 
 // prettier-ignore
 type BasicHeaders = Record<string, string>
@@ -186,7 +190,9 @@ export const createApi = (config?: { baseURL?: string; trailingSlash?: boolean; 
   const PATH3 = '/entries.json'
   const PATH4 = '/test-4'
   const PATH5 = '/test-4/fuga aa'
-  const PATH6 = '/v1.1/users'
+  const PATH6 = '/v1.1/3.1'
+  const PATH7 = '/v1.1/users'
+  const PATH8 = '/v2.0'
   const GET = 'GET'
   const POST = 'POST'
   const PUT = 'PUT'
@@ -304,25 +310,40 @@ export const createApi = (config?: { baseURL?: string; trailingSlash?: boolean; 
           }
         }
       },
+      /**
+       * 3.1 comment
+       */
+      $3_1: {
+        /**
+         * 3.1 get method comment
+         * @param option.headers - 3.1 reqHeaders
+         */
+        $get: (option?: Methods12['get']['req'] & { init?: RequestInit }) =>
+          send<Methods12['get']['res']>(f, GET, prefix, PATH6, 'json', option),
+        $post: (option: Omit<Methods12['post']['req'], 'format'> & { init?: RequestInit }) =>
+          send<Methods12['post']['res']>(f, POST, prefix, PATH6, 'json', option, 'URLSearchParams'),
+        $path: (option?: { method?: 'get'; query: Methods12['get']['req']['query'] } | { method: 'post'; query: Methods12['post']['req']['query'] }) =>
+          `${prefix}${PATH6}${option && option.query ? `?${dataToURLString(option.query)}` : ''}`
+      },
       articleId_json: (val1: number | string) => {
         const prefix1 = `${PATH1}/${val1}.json`
 
         return {
           $get: (option?: { init?: RequestInit }) =>
-            send<Methods12['get']['res']>(f, GET, prefix, prefix1, 'json', option),
+            send<Methods13['get']['res']>(f, GET, prefix, prefix1, 'json', option),
           $path: () => `${prefix}${prefix1}`
         }
       },
       users: {
         userId: (val2: string) => {
-          const prefix2 = `${PATH6}/${val2}`
+          const prefix2 = `${PATH7}/${val2}`
 
           return {
-            $get: (option: Methods13['get']['req'] & { init?: RequestInit }) =>
-              send<Methods13['get']['res']>(f, GET, prefix, prefix2, 'json', option),
-            $post: (option: Methods13['post']['req'] & { init?: RequestInit }) =>
-              send<Methods13['post']['res']>(f, POST, prefix, prefix2, 'json', option),
-            $path: (option?: { method?: 'get'; query: Methods13['get']['req']['query'] } | { method: 'post'; query: Methods13['post']['req']['query'] }) =>
+            $get: (option: Methods14['get']['req'] & { init?: RequestInit }) =>
+              send<Methods14['get']['res']>(f, GET, prefix, prefix2, 'json', option),
+            $post: (option: Methods14['post']['req'] & { init?: RequestInit }) =>
+              send<Methods14['post']['res']>(f, POST, prefix, prefix2, 'json', option),
+            $path: (option?: { method?: 'get'; query: Methods14['get']['req']['query'] } | { method: 'post'; query: Methods14['post']['req']['query'] }) =>
               `${prefix}${prefix2}${option && option.query ? `?${dataToURLString(option.query)}` : ''}`
           }
         }
@@ -331,6 +352,12 @@ export const createApi = (config?: { baseURL?: string; trailingSlash?: boolean; 
         send<Methods5['get']['res']>(f, GET, prefix, PATH1, 'json', option),
       $path: (option?: { method?: 'get'; query: Methods5['get']['req']['query'] }) =>
         `${prefix}${PATH1}${option && option.query ? `?${dataToURLString(option.query)}` : ''}`
+    },
+    v2_0: {
+      $get: (option: Methods15['get']['req'] & { init?: RequestInit }) =>
+        send<Methods15['get']['res']>(f, GET, prefix, PATH8, 'text', option),
+      $path: (option?: { method?: 'get'; query: Methods15['get']['req']['query'] }) =>
+        `${prefix}${PATH8}${option && option.query ? `?${dataToURLString(option.query)}` : ''}`
     },
     /**
      * get method comment

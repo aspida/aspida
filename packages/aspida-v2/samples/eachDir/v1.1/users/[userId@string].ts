@@ -1,12 +1,21 @@
-export type Methods = {
-  get: {
-    query: { aa?: number }
-    reqHeaders: {}
-    resBody: { id: number }
-  }
+import { AspidaMethods } from 'aspida-v2'
 
-  post: {
-    query: { aa: number }
-    resBody: { id: number }
+export type Methods = AspidaMethods<{
+  get: {
+    req: {
+      query: { aa?: number }
+      headers: {}
+    }
+    res: {
+      body: { id: number }
+    }
   }
-}
+  post: {
+    req: {
+      query: { aa: number }
+    }
+    res: {
+      body: { id: number }
+    }
+  }
+}>

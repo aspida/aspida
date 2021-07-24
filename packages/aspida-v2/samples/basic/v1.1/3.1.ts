@@ -1,23 +1,32 @@
+import { AspidaMethods } from 'aspida-v2'
+
 /**
  * 3.1 comment
  */
-export type Methods = {
+export type Methods = AspidaMethods<{
   /**
    * 3.1 get method comment
    */
   get: {
-    query?: { aa?: number }
-    /**
-     * 3.1 reqHeaders
-     */
-    reqHeaders?: {}
-    resBody: { id: number }
+    req: {
+      query?: { aa?: number }
+      /**
+       * 3.1 reqHeaders
+       */
+      headers?: {}
+    }
+    res: {
+      body: { id: number }
+    }
   }
-
   post: {
-    query: { aa: number }
-    reqFormat: URLSearchParams
-    reqBody?: { name: string }
-    resBody: { id: number }
+    req: {
+      query: { aa: number }
+      format: URLSearchParams
+      body?: { name: string }
+    }
+    res: {
+      body: { id: number }
+    }
   }
-}
+}>

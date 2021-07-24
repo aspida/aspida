@@ -2,6 +2,7 @@ import { getConfigs, AspidaConfig } from './getConfigs'
 import buildTemplate from './buildTemplate'
 import writeRouteFile from './writeRouteFile'
 import watchInputDir from './watchInputDir'
+import migration from './migration'
 
 export type LowerHttpMethod = 'get' | 'post' | 'put' | 'delete' | 'patch'
 export type HttpStatusOk = 200 | 201 | 202 | 203 | 204 | 205 | 206
@@ -45,7 +46,9 @@ export type AspidaMethods<
     [L in Exclude<LowerHttpMethod, 'get'>]?: MethodParams
   } & {
     get?: Omit<MethodParams, 'req'> &
-      Omit<MethodParams, 'req'> & { req?: Omit<MethodParams['req'], 'body'> & { body?: never } }
+      Omit<MethodParams, 'req'> & {
+        req?: Omit<MethodParams['req'], 'format' | 'body'> & { format?: never; body?: never }
+      }
   }
 > = T
 
@@ -62,3 +65,10 @@ export const watch = (config?: Parameters<typeof getConfigs>[0]) =>
 
     return watchInputDir(c.input, () => buildTemplate(c).forEach(writeRouteFile))
   })
+
+export const migrate = (config?: Parameters<typeof getConfigs>[0]) => {
+  getConfigs(config).forEach(migration)
+  getConfigs(config).forEach(c => {
+    buildTemplate(c).forEach(writeRouteFile)
+  })
+}

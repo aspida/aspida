@@ -1,3 +1,5 @@
+import { AspidaMethods } from 'aspida-v2'
+
 /* eslint-disable */
 // prettier-ignore
 /**
@@ -6,7 +8,7 @@
  * @remarks
  * root remarks comment
  */
-export type Methods = {
+export type Methods = AspidaMethods<{
   /**
    * get method comment
    * 
@@ -14,48 +16,59 @@ export type Methods = {
    * get method remarks comment
    */
   get: {
-    reqHeaders?:
-      | {
+    req: {
+      query?: { aa: number };
+      headers?: |{
           'access-token': string
         }
-      | {
+|{
           'x-auth-token': string
         }
-    query?: { aa: number };
-    resBody: FormData
-  };
-
-  post: {
-    'reqHeaders'?:
-      & {
-          'access-token': string
-        }
-      & {
-          'x-auth-token': string
-        }
-    query: { aa: number }
-    /** body comment */
-    reqBody: { val: number }
-    resBody: ArrayBuffer;
+    }
+    res: {
+      body: FormData
+    }
   }
-
+  post: {
+    req: {
+      query: { aa: number }
+      headers?: &{
+          'access-token': string
+        }
+&{
+          'x-auth-token': string
+        }
+      /** body comment */
+      body: { val: number }
+    }
+    res: {
+      body: ArrayBuffer
+    }
+  }
   /**
    * put method comment
    */
   put: {
-    /**
+    req: {
+      /**
      * query comment
      */
-    query: { aa: number }
-    status: 200
-    /** returns comment */
-    resBody?: { aa: number }
-    resHeaders: { token: string }
+      query: { aa: number }
+    }
+    res: {
+      status: 200
+      headers: { token: string }
+      /** returns comment */
+      body?: { aa: number }
+    }
   }
-
   delete: {
-    query: { aa: number }
-    status: 202
-    resHeaders?: { token: string }
+    req: {
+      query: { aa: number }
+    }
+    res: {
+      status: 202
+      headers?: { token: string }
+    }
   }
-}
+}>

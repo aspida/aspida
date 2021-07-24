@@ -180,10 +180,9 @@ ${['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'PATCH', 'OPTIONS']
 
   return <% api %>
 }
-${constantsPath ? `\nexport * from '${constantsPath}@constants'` : ''}${
-    typesPath ? `\nexport * from '${typesPath}@types'` : ''
-  }
-`
+${constantsPath ? `\nexport * from '${constantsPath}@constants'\n` : ''}${
+    typesPath ? `\nexport * from '${typesPath}@types'\n` : ''
+  }`
     .replace('<% imports %>', imports.join('\n'))
     .replace('<% api %>', api)
     .replace('<% baseURL %>', baseURL)

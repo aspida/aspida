@@ -8,7 +8,11 @@ const genOption = (method: Method, importName: string) => {
     method.req?.headers?.hasQuestion === false
 
   return `(option${isOptionRequired ? '' : '?'}: ${
-    method.req ? `${importName}['${method.name}']['req'] & ` : ''
+    method.req
+      ? `${method.req.format ? 'Omit<' : ''}${importName}['${method.name}']['req']${
+          method.req.format ? ", 'format'>" : ''
+        } & `
+      : ''
   }{ init?: RequestInit })`
 }
 

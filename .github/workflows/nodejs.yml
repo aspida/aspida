@@ -28,6 +28,7 @@ jobs:
         if: steps.yarn-cache.outputs.cache-hit != 'true'
       - run: yarn lint
         if: matrix.os != 'windows-latest'
+      - run: yarn build:v2
       - run: yarn typecheck
       - run: yarn test --coverage
         if: matrix.node-version != 10

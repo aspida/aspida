@@ -1,10 +1,15 @@
-export interface Methods {
+import { AspidaMethods } from 'aspida-v2'
+
+export type Methods = AspidaMethods<{
   get: {
-    query: { val: string }
-    reqHeaders: { 'content-type': string }
-    reqFormat: FormData
-    resHeaders: { token: string }
-    resBody: string
-    status: 200 | 204
+    req: {
+      query: { val: string }
+      headers: { 'content-type': string }
+    }
+    res: {
+      status: 200 | 204
+      headers: { token: string }
+      body: string
+    }
   }
-}
+}>
