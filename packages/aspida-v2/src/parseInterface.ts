@@ -1,4 +1,4 @@
-import type { LowerHttpMethod, MethodParams } from './'
+import type { HttpMethod, HttpStatusOk, HttpStatusErr } from './'
 
 export type Doc = string[]
 
@@ -10,8 +10,27 @@ type Prop = {
 }
 type MethodProps<T extends Record<string, any>> = Partial<Record<keyof T, Prop>>
 
+export type MethodParams = {
+  req?: {
+    headers?: Record<string, string | number>
+    query?: Record<string, number | string | (number | string)[]>
+    format?: FormData | URLSearchParams
+    body?: any
+  }
+  res?: {
+    status?: HttpStatusOk
+    headers?: Record<string, string>
+    body?: any
+  }
+  err?: {
+    status?: HttpStatusErr
+    headers?: Record<string, string>
+    body?: any
+  }
+}
+
 export type Method = {
-  name: LowerHttpMethod
+  name: HttpMethod
   req?: MethodProps<Required<MethodParams>['req']>
   res?: MethodProps<Required<MethodParams>['res']>
   err?: MethodProps<Required<MethodParams>['err']>
@@ -261,7 +280,7 @@ const parseMethod = (text: string): { value: Method; length: number } => {
   cursor += countIgnored(text.slice(cursor)) + 1 // '}'
 
   return {
-    value: { name: methodName.value as LowerHttpMethod, ...params.value, doc: doc?.values },
+    value: { name: methodName.value as HttpMethod, ...params.value, doc: doc?.values },
     length: cursor
   }
 }

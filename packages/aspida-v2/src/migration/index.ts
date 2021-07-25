@@ -36,7 +36,7 @@ const walk = (tree: DirentTree) => {
       const filePath = path.join(tree.path, c.name)
       fs.writeFileSync(
         filePath,
-        "import { AspidaMethods } from 'aspida-v2'\n\n" +
+        "import type { AspidaMethods } from 'aspida-v2'\n\n" +
           fs.readFileSync(filePath, 'utf8').replace(
             c.$textForApiTypes,
             `${c.doc ? `${c.doc}\n` : ''}export type Methods = AspidaMethods<{

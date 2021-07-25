@@ -19,19 +19,6 @@ const headersToObject = (headers: Headers): any =>
   [...headers.entries()].reduce((prev, [key, val]) => ({ ...prev, [key]: val }), {})
 
 // prettier-ignore
-const appendDataToFormData = (data: Record<string, any>, formData: FormData) => {
-  Object.entries(data).forEach(([key, val]) => {
-    if (Array.isArray(val)) {
-      val.forEach(v => formData.append(key, v))
-    } else if (val != null) {
-      formData.append(key, val)
-    }
-  })
-
-  return formData
-}
-
-// prettier-ignore
 const dataToURLString = (data: Record<string, any>) => {
   const searchParams = new URLSearchParams()
 
@@ -47,62 +34,35 @@ const dataToURLString = (data: Record<string, any>) => {
 }
 
 // prettier-ignore
-const optionToRequest = (
-  method: string,
-  params?: Params,
-  format?: BodyInit
-): RequestInit => {
-  if (!params) return { method }
+const optionToRequest = (method: string, params?: Params): RequestInit => {
+  if (!params?.body) return { method, ...params?.init }
 
-  let body
-  let headers: BasicHeaders = {}
-
-  switch (format) {
-    case undefined:
-      break;
-    case 'FormData':
-      if (typeof FormData !== 'undefined') {
-        body = appendDataToFormData(params.body, new FormData())
-      } else {
-        const formData = new (require('form-data'))()
-        body = appendDataToFormData(params.body, formData)
-        headers = formData.getHeaders()
-      }
-      break
-    case 'URLSearchParams':
-      body = dataToURLString(params.body)
-      headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8'
-      break
-    case 'ArrayBuffer':
-    case 'string':
-    case 'Blob':
-      body = params.body
-      break
-    default:
-      body = JSON.stringify(params.body)
-      headers['Content-Type'] = 'application/json;charset=utf-8'
-      break
+  return {
+    method,
+    body: JSON.stringify(params.body),
+    ...params.init,
+    headers: { 'Content-Type': 'application/json;charset=utf-8', ...params.init?.headers, ...params.headers }
   }
-
-  return { ...params.init, method, body, headers: { ...headers, ...params.init?.headers, ...params.headers } }
 }
 
 // prettier-ignore
 type ServerData = { status?: number; headers?: BasicHeaders; body?: any }
+// prettier-ignore
+type ResType = 'json' | 'text' | 'arrayBuffer' | 'blob' | 'formData' | 'void'
 
+// prettier-ignore
+const client: typeof fetch = typeof fetch !== 'undefined' ? fetch : require('node-fetch')
 // prettier-ignore
 const send = async <
   Success extends ServerData = { status: number; headers: BasicHeaders },
   Failure extends ServerData = { status: number; headers: BasicHeaders }
 >(
-  client: typeof fetch,
   method: string,
   baseURL: string,
   url: string,
-  resType: 'json' | 'text' | 'arrayBuffer' | 'blob' | 'formData' | 'void',
-  errType: 'json' | 'text' | 'arrayBuffer' | 'blob' | 'formData' | 'void',
-  params?: Params,
-  format?: BodyInit
+  resType: ResType,
+  errType: ResType,
+  params?: Params
 ): Promise<
   | { res: Success; err?: undefined }
   | { res?: undefined; err: { type: 'httpError'; data: Failure } }
@@ -111,7 +71,7 @@ const send = async <
   try {
     const res = await client(
       `${baseURL}${url}${params?.query ? `?${dataToURLString(params.query)}` : ''}`,
-      optionToRequest(method, params, format)
+      optionToRequest(method, params)
     )
 
     if (res.ok) {
@@ -140,13 +100,19 @@ const send = async <
 }
 
 // prettier-ignore
-export const createApi = (config?: { baseURL?: string; trailingSlash?: boolean; init?: RequestInit}) => {
-  const f = typeof fetch !== 'undefined' ? fetch : require('node-fetch')
-  const prefix = (config?.baseURL ?? '').replace(/\/$/, '')
-  const PATH0 = '/v1.1/users/'
-  const PATH1 = '/'
-  const GET = 'GET'
-  const POST = 'POST'
+const BASE_URL = ''
+// prettier-ignore
+const PATH0 = '/v1.1/users/'
+// prettier-ignore
+const PATH1 = '/'
+// prettier-ignore
+const GET = 'GET'
+// prettier-ignore
+const POST = 'POST'
+
+// prettier-ignore
+export const createApi = (config?: { baseURL?: string; trailingSlash?: boolean; init?: RequestInit }) => {
+  const prefix = (config?.baseURL ?? BASE_URL).replace(/\/$/, '')
 
   return {
     _userId: (val0: string) => {
@@ -154,12 +120,12 @@ export const createApi = (config?: { baseURL?: string; trailingSlash?: boolean; 
 
       return {
         $get: (option: Methods0['get']['req'] & { init?: RequestInit }) =>
-          send<Methods0['get']['res']>(f, GET, prefix, `${prefix0}${PATH1}`, 'json', 'void', option),
+          send<Methods0['get']['res']>(GET, prefix, `${prefix0}${PATH1}`, 'json', 'void', option),
         $post: (option: Methods0['post']['req'] & { init?: RequestInit }) =>
-          send<Methods0['post']['res']>(f, POST, prefix, `${prefix0}${PATH1}`, 'json', 'void', option),
+          send<Methods0['post']['res']>(POST, prefix, `${prefix0}${PATH1}`, 'json', 'void', option),
         $path: (option?: { method?: 'get'; query: Methods0['get']['req']['query'] } | { method: 'post'; query: Methods0['post']['req']['query'] }) =>
           `${prefix}${prefix0}${PATH1}${option?.query ? `?${dataToURLString(option.query)}` : ''}`
       }
     }
-  }
+  } as const
 }

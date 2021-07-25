@@ -49,19 +49,6 @@ const headersToObject = (headers: Headers): any =>
   [...headers.entries()].reduce((prev, [key, val]) => ({ ...prev, [key]: val }), {})
 
 // prettier-ignore
-const appendDataToFormData = (data: Record<string, any>, formData: FormData) => {
-  Object.entries(data).forEach(([key, val]) => {
-    if (Array.isArray(val)) {
-      val.forEach(v => formData.append(key, v))
-    } else if (val != null) {
-      formData.append(key, val)
-    }
-  })
-
-  return formData
-}
-
-// prettier-ignore
 const dataToURLString = (data: Record<string, any>) => {
   const searchParams = new URLSearchParams()
 
@@ -77,36 +64,21 @@ const dataToURLString = (data: Record<string, any>) => {
 }
 
 // prettier-ignore
-const optionToRequest = (
-  method: string,
-  params?: Params,
-  format?: BodyInit
-): RequestInit => {
-  if (!params) return { method }
+type Format = 'URLSearchParams'
+
+// prettier-ignore
+const URLSEARCHPARAMS = 'URLSearchParams'
+// prettier-ignore
+const optionToRequest = (method: string, params?: Params, format?: Format): RequestInit => {
+  if (!params?.body) return { method, ...params?.init }
 
   let body
   let headers: BasicHeaders = {}
 
   switch (format) {
-    case undefined:
-      break;
-    case 'FormData':
-      if (typeof FormData !== 'undefined') {
-        body = appendDataToFormData(params.body, new FormData())
-      } else {
-        const formData = new (require('form-data'))()
-        body = appendDataToFormData(params.body, formData)
-        headers = formData.getHeaders()
-      }
-      break
-    case 'URLSearchParams':
+    case URLSEARCHPARAMS:
       body = dataToURLString(params.body)
       headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8'
-      break
-    case 'ArrayBuffer':
-    case 'string':
-    case 'Blob':
-      body = params.body
       break
     default:
       body = JSON.stringify(params.body)
@@ -114,25 +86,33 @@ const optionToRequest = (
       break
   }
 
-  return { ...params.init, method, body, headers: { ...headers, ...params.init?.headers, ...params.headers } }
+  return {
+    method,
+    body,
+    ...params.init,
+    headers: { ...headers, ...params.init?.headers, ...params.headers }
+  }
 }
 
 // prettier-ignore
 type ServerData = { status?: number; headers?: BasicHeaders; body?: any }
+// prettier-ignore
+type ResType = 'json' | 'text' | 'arrayBuffer' | 'blob' | 'formData' | 'void'
 
+// prettier-ignore
+const client: typeof fetch = typeof fetch !== 'undefined' ? fetch : require('node-fetch')
 // prettier-ignore
 const send = async <
   Success extends ServerData = { status: number; headers: BasicHeaders },
   Failure extends ServerData = { status: number; headers: BasicHeaders }
 >(
-  client: typeof fetch,
   method: string,
   baseURL: string,
   url: string,
-  resType: 'json' | 'text' | 'arrayBuffer' | 'blob' | 'formData' | 'void',
-  errType: 'json' | 'text' | 'arrayBuffer' | 'blob' | 'formData' | 'void',
+  resType: ResType,
+  errType: ResType,
   params?: Params,
-  format?: BodyInit
+  format?: Format
 ): Promise<
   | { res: Success; err?: undefined }
   | { res?: undefined; err: { type: 'httpError'; data: Failure } }
@@ -169,6 +149,35 @@ const send = async <
   }
 }
 
+// prettier-ignore
+const BASE_URL = 'https://example.com/api/'
+// prettier-ignore
+const PATH0 = '/foo:bar'
+// prettier-ignore
+const PATH1 = '/v1.1'
+// prettier-ignore
+const PATH2 = '/v1.1/2'
+// prettier-ignore
+const PATH3 = '/entries.json'
+// prettier-ignore
+const PATH4 = '/test-4'
+// prettier-ignore
+const PATH5 = '/test-4/fuga aa'
+// prettier-ignore
+const PATH6 = '/v1.1/3.1'
+// prettier-ignore
+const PATH7 = '/v1.1/users'
+// prettier-ignore
+const PATH8 = '/v2.0'
+// prettier-ignore
+const GET = 'GET'
+// prettier-ignore
+const POST = 'POST'
+// prettier-ignore
+const PUT = 'PUT'
+// prettier-ignore
+const DELETE = 'DELETE'
+
 /**
  * root comment
  *
@@ -176,22 +185,8 @@ const send = async <
  * root remarks comment
  */
 // prettier-ignore
-export const createApi = (config?: { baseURL?: string; trailingSlash?: boolean; init?: RequestInit}) => {
-  const f = typeof fetch !== 'undefined' ? fetch : require('node-fetch')
-  const prefix = (config?.baseURL ?? 'https://example.com/api/').replace(/\/$/, '')
-  const PATH0 = '/foo:bar'
-  const PATH1 = '/v1.1'
-  const PATH2 = '/v1.1/2'
-  const PATH3 = '/entries.json'
-  const PATH4 = '/test-4'
-  const PATH5 = '/test-4/fuga aa'
-  const PATH6 = '/v1.1/3.1'
-  const PATH7 = '/v1.1/users'
-  const PATH8 = '/v2.0'
-  const GET = 'GET'
-  const POST = 'POST'
-  const PUT = 'PUT'
-  const DELETE = 'DELETE'
+export const createApi = (config?: { baseURL?: string; trailingSlash?: boolean; init?: RequestInit }) => {
+  const prefix = (config?.baseURL ?? BASE_URL).replace(/\/$/, '')
 
   return {
     _sampleId_json: (val0: number) => {
@@ -199,7 +194,7 @@ export const createApi = (config?: { baseURL?: string; trailingSlash?: boolean; 
 
       return {
         $get: (option?: { init?: RequestInit }) =>
-          send<Methods1['get']['res']>(f, GET, prefix, prefix0, 'json', 'void', option),
+          send<Methods1['get']['res']>(GET, prefix, prefix0, 'json', 'void', option),
         $path: () => `${prefix}${prefix0}`
       }
     },
@@ -209,7 +204,7 @@ export const createApi = (config?: { baseURL?: string; trailingSlash?: boolean; 
 
         return {
           $get: (option?: { init?: RequestInit }) =>
-            send<Methods3['get']['res']>(f, GET, prefix, prefix1, 'text', 'void', option),
+            send<Methods3['get']['res']>(GET, prefix, prefix1, 'text', 'void', option),
           $path: () => `${prefix}${prefix1}`
         }
       },
@@ -218,12 +213,12 @@ export const createApi = (config?: { baseURL?: string; trailingSlash?: boolean; 
 
         return {
           $get: (option?: { init?: RequestInit }) =>
-            send<Methods4['get']['res']>(f, GET, prefix, prefix1, 'text', 'void', option),
+            send<Methods4['get']['res']>(GET, prefix, prefix1, 'text', 'void', option),
           $path: () => `${prefix}${prefix1}`
         }
       },
       $get: (option?: { init?: RequestInit }) =>
-        send<Methods2['get']['res']>(f, GET, prefix, PATH0, 'text', 'void', option),
+        send<Methods2['get']['res']>(GET, prefix, PATH0, 'text', 'void', option),
       $path: () => `${prefix}${PATH0}`
     },
     v1_1: {
@@ -233,7 +228,7 @@ export const createApi = (config?: { baseURL?: string; trailingSlash?: boolean; 
 
           return {
             $get: (option: Methods6['get']['req'] & { init?: RequestInit }) =>
-              send<Methods6['get']['res']>(f, GET, prefix, prefix2, 'json', 'void', option),
+              send<Methods6['get']['res']>(GET, prefix, prefix2, 'json', 'void', option),
             $path: (option?: { method?: 'get'; query: Methods6['get']['req']['query'] }) =>
               `${prefix}${prefix2}${option?.query ? `?${dataToURLString(option.query)}` : ''}`
           }
@@ -244,7 +239,7 @@ export const createApi = (config?: { baseURL?: string; trailingSlash?: boolean; 
           return {
             entries_json: {
               $get: (option?: { init?: RequestInit }) =>
-                send<Methods7['get']['res']>(f, GET, prefix, `${prefix2}${PATH3}`, 'json', 'void', option),
+                send<Methods7['get']['res']>(GET, prefix, `${prefix2}${PATH3}`, 'json', 'void', option),
               $path: () => `${prefix}${prefix2}${PATH3}`
             },
             test_4: {
@@ -256,40 +251,40 @@ export const createApi = (config?: { baseURL?: string; trailingSlash?: boolean; 
 
                 return {
                   $get: (option?: Methods9['get']['req'] & { init?: RequestInit }) =>
-                    send<Methods9['get']['res']>(f, GET, prefix, prefix4, 'json', 'void', option),
+                    send<Methods9['get']['res']>(GET, prefix, prefix4, 'json', 'void', option),
                   $post: (option: Methods9['post']['req'] & { init?: RequestInit }) =>
-                    send<Methods9['post']['res']>(f, POST, prefix, prefix4, 'json', 'void', option),
+                    send<Methods9['post']['res']>(POST, prefix, prefix4, 'json', 'void', option),
                   $put: (option: Methods9['put']['req'] & { init?: RequestInit }) =>
-                    send<Methods9['put']['res']>(f, PUT, prefix, prefix4, 'json', 'void', option),
+                    send<Methods9['put']['res']>(PUT, prefix, prefix4, 'json', 'void', option),
                   /**
                    * _fugaId delete method
                    */
                   $delete: (option: Methods9['delete']['req'] & { init?: RequestInit }) =>
-                    send<{}>(f, DELETE, prefix, prefix4, 'void', 'void', option),
+                    send<{}>(DELETE, prefix, prefix4, 'void', 'void', option),
                   $path: (option?: { method?: 'get'; query: Methods9['get']['req']['query'] } | { method: 'post'; query: Methods9['post']['req']['query'] } | { method: 'put'; query: Methods9['put']['req']['query'] } | { method: 'delete'; query: Methods9['delete']['req']['query'] }) =>
                     `${prefix}${prefix4}${option?.query ? `?${dataToURLString(option.query)}` : ''}`
                 }
               },
               fuga_aa: {
                 $get: (option: Methods10['get']['req'] & { init?: RequestInit }) =>
-                  send<Methods10['get']['res']>(f, GET, prefix, `${prefix2}${PATH5}`, 'json', 'void', option),
+                  send<Methods10['get']['res']>(GET, prefix, `${prefix2}${PATH5}`, 'json', 'void', option),
                 $post: (option: Methods10['post']['req'] & { init?: RequestInit }) =>
-                  send<Methods10['post']['res']>(f, POST, prefix, `${prefix2}${PATH5}`, 'json', 'void', option),
+                  send<Methods10['post']['res']>(POST, prefix, `${prefix2}${PATH5}`, 'json', 'void', option),
                 $put: (option: Methods10['put']['req'] & { init?: RequestInit }) =>
-                  send<Methods10['put']['res']>(f, PUT, prefix, `${prefix2}${PATH5}`, 'json', 'void', option),
+                  send<Methods10['put']['res']>(PUT, prefix, `${prefix2}${PATH5}`, 'json', 'void', option),
                 $delete: (option: Methods10['delete']['req'] & { init?: RequestInit }) =>
-                  send<Methods10['delete']['res']>(f, DELETE, prefix, `${prefix2}${PATH5}`, 'json', 'void', option),
+                  send<Methods10['delete']['res']>(DELETE, prefix, `${prefix2}${PATH5}`, 'json', 'void', option),
                 $path: (option?: { method?: 'get'; query: Methods10['get']['req']['query'] } | { method: 'post'; query: Methods10['post']['req']['query'] } | { method: 'put'; query: Methods10['put']['req']['query'] } | { method: 'delete'; query: Methods10['delete']['req']['query'] }) =>
                   `${prefix}${prefix2}${PATH5}${option?.query ? `?${dataToURLString(option.query)}` : ''}`
               },
               $get: (option: Methods8['get']['req'] & { init?: RequestInit }) =>
-                send<{}>(f, GET, prefix, `${prefix2}${PATH4}`, 'void', 'void', option),
+                send<{}>(GET, prefix, `${prefix2}${PATH4}`, 'void', 'void', option),
               $post: (option?: Methods8['post']['req'] & { init?: RequestInit }) =>
-                send<{}>(f, POST, prefix, `${prefix2}${PATH4}`, 'void', 'void', option),
+                send<{}>(POST, prefix, `${prefix2}${PATH4}`, 'void', 'void', option),
               $put: (option?: Methods8['put']['req'] & { init?: RequestInit }) =>
-                send<Methods8['put']['res']>(f, PUT, prefix, `${prefix2}${PATH4}`, 'json', 'void', option),
+                send<Methods8['put']['res']>(PUT, prefix, `${prefix2}${PATH4}`, 'json', 'void', option),
               $delete: (option: Methods8['delete']['req'] & { init?: RequestInit }) =>
-                send<Methods8['delete']['res']>(f, DELETE, prefix, `${prefix2}${PATH4}`, 'json', 'void', option),
+                send<Methods8['delete']['res']>(DELETE, prefix, `${prefix2}${PATH4}`, 'json', 'void', option),
               $path: (option?: { method?: 'get'; query: Methods8['get']['req']['query'] } | { method: 'post'; query: Methods8['post']['req']['query'] } | { method: 'put'; query: Methods8['put']['req']['query'] } | { method: 'delete'; query: Methods8['delete']['req']['query'] }) =>
                 `${prefix}${prefix2}${PATH4}${option?.query ? `?${dataToURLString(option.query)}` : ''}`
             }
@@ -300,7 +295,7 @@ export const createApi = (config?: { baseURL?: string; trailingSlash?: boolean; 
 
           return {
             $get: (option?: { init?: RequestInit }) =>
-              send<Methods11['get']['res']>(f, GET, prefix, prefix2, 'json', 'void', option),
+              send<Methods11['get']['res']>(GET, prefix, prefix2, 'json', 'void', option),
             $path: () => `${prefix}${prefix2}`
           }
         }
@@ -314,9 +309,9 @@ export const createApi = (config?: { baseURL?: string; trailingSlash?: boolean; 
          * @param option.headers - 3.1 reqHeaders
          */
         $get: (option?: Methods12['get']['req'] & { init?: RequestInit }) =>
-          send<Methods12['get']['res']>(f, GET, prefix, PATH6, 'json', 'void', option),
+          send<Methods12['get']['res']>(GET, prefix, PATH6, 'json', 'void', option),
         $post: (option: Omit<Methods12['post']['req'], 'format'> & { init?: RequestInit }) =>
-          send<Methods12['post']['res']>(f, POST, prefix, PATH6, 'json', 'void', option, 'URLSearchParams'),
+          send<Methods12['post']['res']>(POST, prefix, PATH6, 'json', 'void', option, URLSEARCHPARAMS),
         $path: (option?: { method?: 'get'; query: Methods12['get']['req']['query'] } | { method: 'post'; query: Methods12['post']['req']['query'] }) =>
           `${prefix}${PATH6}${option?.query ? `?${dataToURLString(option.query)}` : ''}`
       },
@@ -325,7 +320,7 @@ export const createApi = (config?: { baseURL?: string; trailingSlash?: boolean; 
 
         return {
           $get: (option?: { init?: RequestInit }) =>
-            send<Methods13['get']['res']>(f, GET, prefix, prefix1, 'json', 'void', option),
+            send<Methods13['get']['res']>(GET, prefix, prefix1, 'json', 'void', option),
           $path: () => `${prefix}${prefix1}`
         }
       },
@@ -335,22 +330,22 @@ export const createApi = (config?: { baseURL?: string; trailingSlash?: boolean; 
 
           return {
             $get: (option: Methods14['get']['req'] & { init?: RequestInit }) =>
-              send<Methods14['get']['res']>(f, GET, prefix, prefix2, 'json', 'void', option),
+              send<Methods14['get']['res']>(GET, prefix, prefix2, 'json', 'void', option),
             $post: (option: Methods14['post']['req'] & { init?: RequestInit }) =>
-              send<Methods14['post']['res']>(f, POST, prefix, prefix2, 'json', 'void', option),
+              send<Methods14['post']['res']>(POST, prefix, prefix2, 'json', 'void', option),
             $path: (option?: { method?: 'get'; query: Methods14['get']['req']['query'] } | { method: 'post'; query: Methods14['post']['req']['query'] }) =>
               `${prefix}${prefix2}${option?.query ? `?${dataToURLString(option.query)}` : ''}`
           }
         }
       },
       $get: (option?: Methods5['get']['req'] & { init?: RequestInit }) =>
-        send<Methods5['get']['res']>(f, GET, prefix, PATH1, 'json', 'void', option),
+        send<Methods5['get']['res']>(GET, prefix, PATH1, 'json', 'void', option),
       $path: (option?: { method?: 'get'; query: Methods5['get']['req']['query'] }) =>
         `${prefix}${PATH1}${option?.query ? `?${dataToURLString(option.query)}` : ''}`
     },
     v2_0: {
       $get: (option: Methods15['get']['req'] & { init?: RequestInit }) =>
-        send<Methods15['get']['res']>(f, GET, prefix, PATH8, 'text', 'void', option),
+        send<Methods15['get']['res']>(GET, prefix, PATH8, 'text', 'void', option),
       $path: (option?: { method?: 'get'; query: Methods15['get']['req']['query'] }) =>
         `${prefix}${PATH8}${option?.query ? `?${dataToURLString(option.query)}` : ''}`
     },
@@ -361,24 +356,24 @@ export const createApi = (config?: { baseURL?: string; trailingSlash?: boolean; 
      * get method remarks comment
      */
     $get: (option?: Methods0['get']['req'] & { init?: RequestInit }) =>
-      send<Methods0['get']['res'], Methods0['get']['err']>(f, GET, prefix, '', 'formData', 'json', option),
+      send<Methods0['get']['res'], Methods0['get']['err']>(GET, prefix, '', 'formData', 'json', option),
     /**
      * @param option.body - body comment
      */
     $post: (option: Methods0['post']['req'] & { init?: RequestInit }) =>
-      send<Methods0['post']['res']>(f, POST, prefix, '', 'arrayBuffer', 'void', option),
+      send<Methods0['post']['res']>(POST, prefix, '', 'arrayBuffer', 'void', option),
     /**
      * put method comment
      * @param option.query - query comment
      * @returns returns comment
      */
     $put: (option: Methods0['put']['req'] & { init?: RequestInit }) =>
-      send<Methods0['put']['res']>(f, PUT, prefix, '', 'json', 'void', option),
+      send<Methods0['put']['res']>(PUT, prefix, '', 'json', 'void', option),
     $delete: (option: Methods0['delete']['req'] & { init?: RequestInit }) =>
-      send<Methods0['delete']['res']>(f, DELETE, prefix, '', 'void', 'void', option),
+      send<Methods0['delete']['res']>(DELETE, prefix, '', 'void', 'void', option),
     $path: (option?: { method?: 'get'; query: Methods0['get']['req']['query'] } | { method: 'post'; query: Methods0['post']['req']['query'] } | { method: 'put'; query: Methods0['put']['req']['query'] } | { method: 'delete'; query: Methods0['delete']['req']['query'] }) =>
       `${prefix}${option?.query ? `?${dataToURLString(option.query)}` : ''}`
-  }
+  } as const
 }
 
 // prettier-ignore

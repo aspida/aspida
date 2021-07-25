@@ -23,15 +23,13 @@ const genErr = ({ name, err }: Method, importName: string) =>
   err ? `, ${importName}['${name}']['err']` : ''
 
 const genRequest = ({ req }: Method) =>
-  `, option${
-    !req?.body
-      ? ''
-      : req?.format
-      ? `, '${req?.format.value}'`
-      : req.body && /^(ArrayBuffer|Blob|string)$/.test(req.body.value)
-      ? `, '${req.body.value}'`
-      : ''
-  }`
+  !req?.body
+    ? ''
+    : req.format
+    ? `, ${req.format.value.toUpperCase()}`
+    : req.body && /^(ArrayBuffer|Blob|string)$/.test(req.body.value)
+    ? `, ${req.body.value.toUpperCase()}`
+    : ''
 
 const genBodyType = (data: Method['res'] | Method['err']) =>
   !data?.body
@@ -46,9 +44,9 @@ const genReturnVal = (method: Method, importName: string, path: string) =>
   `send<${genRes(method, importName)}${genErr(
     method,
     importName
-  )}>(f, ${method.name.toUpperCase()}, prefix, ${path}, '${genBodyType(
-    method.res
-  )}', '${genBodyType(method.err)}'${genRequest(method)})`
+  )}>(${method.name.toUpperCase()}, prefix, ${path}, '${genBodyType(method.res)}', '${genBodyType(
+    method.err
+  )}', option${genRequest(method)})`
 
 export default (methods: Method[], indent: string, importName: string, path: string) =>
   [

@@ -19,19 +19,6 @@ const headersToObject = (headers: Headers): any =>
   [...headers.entries()].reduce((prev, [key, val]) => ({ ...prev, [key]: val }), {})
 
 // prettier-ignore
-const appendDataToFormData = (data: Record<string, any>, formData: FormData) => {
-  Object.entries(data).forEach(([key, val]) => {
-    if (Array.isArray(val)) {
-      val.forEach(v => formData.append(key, v))
-    } else if (val != null) {
-      formData.append(key, val)
-    }
-  })
-
-  return formData
-}
-
-// prettier-ignore
 const dataToURLString = (data: Record<string, any>) => {
   const searchParams = new URLSearchParams()
 
@@ -47,36 +34,21 @@ const dataToURLString = (data: Record<string, any>) => {
 }
 
 // prettier-ignore
-const optionToRequest = (
-  method: string,
-  params?: Params,
-  format?: BodyInit
-): RequestInit => {
-  if (!params) return { method }
+type Format = 'URLSearchParams'
+
+// prettier-ignore
+const URLSEARCHPARAMS = 'URLSearchParams'
+// prettier-ignore
+const optionToRequest = (method: string, params?: Params, format?: Format): RequestInit => {
+  if (!params?.body) return { method, ...params?.init }
 
   let body
   let headers: BasicHeaders = {}
 
   switch (format) {
-    case undefined:
-      break;
-    case 'FormData':
-      if (typeof FormData !== 'undefined') {
-        body = appendDataToFormData(params.body, new FormData())
-      } else {
-        const formData = new (require('form-data'))()
-        body = appendDataToFormData(params.body, formData)
-        headers = formData.getHeaders()
-      }
-      break
-    case 'URLSearchParams':
+    case URLSEARCHPARAMS:
       body = dataToURLString(params.body)
       headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8'
-      break
-    case 'ArrayBuffer':
-    case 'string':
-    case 'Blob':
-      body = params.body
       break
     default:
       body = JSON.stringify(params.body)
@@ -84,25 +56,33 @@ const optionToRequest = (
       break
   }
 
-  return { ...params.init, method, body, headers: { ...headers, ...params.init?.headers, ...params.headers } }
+  return {
+    method,
+    body,
+    ...params.init,
+    headers: { ...headers, ...params.init?.headers, ...params.headers }
+  }
 }
 
 // prettier-ignore
 type ServerData = { status?: number; headers?: BasicHeaders; body?: any }
+// prettier-ignore
+type ResType = 'json' | 'text' | 'arrayBuffer' | 'blob' | 'formData' | 'void'
 
+// prettier-ignore
+const client: typeof fetch = typeof fetch !== 'undefined' ? fetch : require('node-fetch')
 // prettier-ignore
 const send = async <
   Success extends ServerData = { status: number; headers: BasicHeaders },
   Failure extends ServerData = { status: number; headers: BasicHeaders }
 >(
-  client: typeof fetch,
   method: string,
   baseURL: string,
   url: string,
-  resType: 'json' | 'text' | 'arrayBuffer' | 'blob' | 'formData' | 'void',
-  errType: 'json' | 'text' | 'arrayBuffer' | 'blob' | 'formData' | 'void',
+  resType: ResType,
+  errType: ResType,
   params?: Params,
-  format?: BodyInit
+  format?: Format
 ): Promise<
   | { res: Success; err?: undefined }
   | { res?: undefined; err: { type: 'httpError'; data: Failure } }
@@ -139,16 +119,21 @@ const send = async <
   }
 }
 
+// prettier-ignore
+const BASE_URL = ''
+// prettier-ignore
+const PATH0 = '/v1.1/3.1/'
+// prettier-ignore
+const GET = 'GET'
+// prettier-ignore
+const POST = 'POST'
+
 /**
  * 3.1 comment
  */
 // prettier-ignore
-export const createApi = (config?: { baseURL?: string; trailingSlash?: boolean; init?: RequestInit}) => {
-  const f = typeof fetch !== 'undefined' ? fetch : require('node-fetch')
-  const prefix = (config?.baseURL ?? '').replace(/\/$/, '')
-  const PATH0 = '/v1.1/3.1/'
-  const GET = 'GET'
-  const POST = 'POST'
+export const createApi = (config?: { baseURL?: string; trailingSlash?: boolean; init?: RequestInit }) => {
+  const prefix = (config?.baseURL ?? BASE_URL).replace(/\/$/, '')
 
   return {
     /**
@@ -156,10 +141,10 @@ export const createApi = (config?: { baseURL?: string; trailingSlash?: boolean; 
      * @param option.headers - 3.1 reqHeaders
      */
     $get: (option?: Methods0['get']['req'] & { init?: RequestInit }) =>
-      send<Methods0['get']['res']>(f, GET, prefix, PATH0, 'json', 'void', option),
+      send<Methods0['get']['res']>(GET, prefix, PATH0, 'json', 'void', option),
     $post: (option: Omit<Methods0['post']['req'], 'format'> & { init?: RequestInit }) =>
-      send<Methods0['post']['res']>(f, POST, prefix, PATH0, 'json', 'void', option, 'URLSearchParams'),
+      send<Methods0['post']['res']>(POST, prefix, PATH0, 'json', 'void', option, URLSEARCHPARAMS),
     $path: (option?: { method?: 'get'; query: Methods0['get']['req']['query'] } | { method: 'post'; query: Methods0['post']['req']['query'] }) =>
       `${prefix}${PATH0}${option?.query ? `?${dataToURLString(option.query)}` : ''}`
-  }
+  } as const
 }
