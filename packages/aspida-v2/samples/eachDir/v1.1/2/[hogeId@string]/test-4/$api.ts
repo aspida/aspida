@@ -95,56 +95,51 @@ const optionToRequest = (
 type ServerData = { status?: number; headers?: BasicHeaders; body?: any }
 
 // prettier-ignore
-type NormalizedResponse<Success extends ServerData, Failure extends ServerData> =
-  | { isSuccess: true; stream: Response['body']; data: Success }
-  | { isSuccess: false; isFailure: true; stream: Response['body']; data: Failure }
-  | { isSuccess: false; isFailure: false; err: Error };
-
-// prettier-ignore
-const send = async <Success extends ServerData = { status: number; headers: BasicHeaders }, Failure extends ServerData = { status: number; headers: BasicHeaders }>(
+const send = async <
+  Success extends ServerData = { status: number; headers: BasicHeaders },
+  Failure extends ServerData = { status: number; headers: BasicHeaders }
+>(
   client: typeof fetch,
   method: string,
   baseURL: string,
   url: string,
   resType: 'json' | 'text' | 'arrayBuffer' | 'blob' | 'formData' | 'void',
+  errType: 'json' | 'text' | 'arrayBuffer' | 'blob' | 'formData' | 'void',
   params?: Params,
   format?: BodyInit
-): Promise<NormalizedResponse<Success, Failure>> => {
+): Promise<
+  | { res: Success; err?: undefined }
+  | { res?: undefined; err: { type: 'httpError'; data: Failure } }
+  | { res?: undefined; err: { type: 'networkError'; data: TypeError } }
+> => {
   try {
     const res = await client(
-      `${baseURL}${url}${
-        params?.query ? `?${dataToURLString(params.query)}` : ''
-      }`,
+      `${baseURL}${url}${params?.query ? `?${dataToURLString(params.query)}` : ''}`,
       optionToRequest(method, params, format)
     )
 
     if (res.ok) {
       return {
-        isSuccess: true,
-        stream: res.body,
-        data: {
+        res: {
           status: res.status,
           headers: headersToObject(res.headers),
-          body: resType === 'void' ? undefined : await res[resType](),
+          body: resType === 'void' ? undefined : await res[resType]()
         } as Success
-      };
+      }
     } else {
       return {
-        isSuccess: false,
-        isFailure: true,
-        stream: res.body,
-        data: {
-          status: res.status,
-          headers: headersToObject(res.headers),
-        } as Failure
-      };
+        err: {
+          type: 'httpError',
+          data: {
+            status: res.status,
+            headers: headersToObject(res.headers),
+            body: errType === 'void' ? undefined : await res[errType]()
+          } as Failure
+        }
+      }
     }
-  } catch (err) {
-    return {
-      isSuccess: false,
-      isFailure: false,
-      err,
-    };
+  } catch (e) {
+    return { err: { type: 'networkError', data: e } }
   }
 }
 
@@ -164,47 +159,47 @@ export const createApi = (config?: { baseURL?: string; trailingSlash?: boolean; 
     /**
      * _fugaId comment
      */
-    fugaId: (val0: number | string) => {
+    _fugaId: (val0: number | string) => {
       const prefix0 = `${PATH0}${val0}`
 
       return {
         $get: (option?: Methods1['get']['req'] & { init?: RequestInit }) =>
-          send<Methods1['get']['res']>(f, GET, prefix, `${prefix0}${PATH1}`, 'json', option),
+          send<Methods1['get']['res']>(f, GET, prefix, `${prefix0}${PATH1}`, 'json', 'void', option),
         $post: (option: Methods1['post']['req'] & { init?: RequestInit }) =>
-          send<Methods1['post']['res']>(f, POST, prefix, `${prefix0}${PATH1}`, 'json', option),
+          send<Methods1['post']['res']>(f, POST, prefix, `${prefix0}${PATH1}`, 'json', 'void', option),
         $put: (option: Methods1['put']['req'] & { init?: RequestInit }) =>
-          send<Methods1['put']['res']>(f, PUT, prefix, `${prefix0}${PATH1}`, 'json', option),
+          send<Methods1['put']['res']>(f, PUT, prefix, `${prefix0}${PATH1}`, 'json', 'void', option),
         /**
          * _fugaId delete method
          * @returns _fugaId resBody
          */
         $delete: (option: Methods1['delete']['req'] & { init?: RequestInit }) =>
-          send<Methods1['delete']['res']>(f, DELETE, prefix, `${prefix0}${PATH1}`, 'json', option),
+          send<Methods1['delete']['res']>(f, DELETE, prefix, `${prefix0}${PATH1}`, 'json', 'void', option),
         $path: (option?: { method?: 'get'; query: Methods1['get']['req']['query'] } | { method: 'post'; query: Methods1['post']['req']['query'] } | { method: 'put'; query: Methods1['put']['req']['query'] } | { method: 'delete'; query: Methods1['delete']['req']['query'] }) =>
-          `${prefix}${prefix0}${PATH1}${option && option.query ? `?${dataToURLString(option.query)}` : ''}`
+          `${prefix}${prefix0}${PATH1}${option?.query ? `?${dataToURLString(option.query)}` : ''}`
       }
     },
     fuga_aa: {
       $get: (option: Methods2['get']['req'] & { init?: RequestInit }) =>
-        send<Methods2['get']['res']>(f, GET, prefix, PATH2, 'json', option),
+        send<Methods2['get']['res']>(f, GET, prefix, PATH2, 'json', 'void', option),
       $post: (option: Methods2['post']['req'] & { init?: RequestInit }) =>
-        send<Methods2['post']['res']>(f, POST, prefix, PATH2, 'json', option),
+        send<Methods2['post']['res']>(f, POST, prefix, PATH2, 'json', 'void', option),
       $put: (option: Methods2['put']['req'] & { init?: RequestInit }) =>
-        send<Methods2['put']['res']>(f, PUT, prefix, PATH2, 'json', option),
+        send<Methods2['put']['res']>(f, PUT, prefix, PATH2, 'json', 'void', option),
       $delete: (option: Methods2['delete']['req'] & { init?: RequestInit }) =>
-        send<Methods2['delete']['res']>(f, DELETE, prefix, PATH2, 'json', option),
+        send<Methods2['delete']['res']>(f, DELETE, prefix, PATH2, 'json', 'void', option),
       $path: (option?: { method?: 'get'; query: Methods2['get']['req']['query'] } | { method: 'post'; query: Methods2['post']['req']['query'] } | { method: 'put'; query: Methods2['put']['req']['query'] } | { method: 'delete'; query: Methods2['delete']['req']['query'] }) =>
-        `${prefix}${PATH2}${option && option.query ? `?${dataToURLString(option.query)}` : ''}`
+        `${prefix}${PATH2}${option?.query ? `?${dataToURLString(option.query)}` : ''}`
     },
     $get: (option: Methods0['get']['req'] & { init?: RequestInit }) =>
-      send<{}>(f, GET, prefix, PATH0, 'void', option),
+      send<{}>(f, GET, prefix, PATH0, 'void', 'void', option),
     $post: (option?: Methods0['post']['req'] & { init?: RequestInit }) =>
-      send<{}>(f, POST, prefix, PATH0, 'void', option),
+      send<{}>(f, POST, prefix, PATH0, 'void', 'void', option),
     $put: (option?: Methods0['put']['req'] & { init?: RequestInit }) =>
-      send<Methods0['put']['res']>(f, PUT, prefix, PATH0, 'json', option),
+      send<Methods0['put']['res']>(f, PUT, prefix, PATH0, 'json', 'void', option),
     $delete: (option: Methods0['delete']['req'] & { init?: RequestInit }) =>
-      send<Methods0['delete']['res']>(f, DELETE, prefix, PATH0, 'json', option),
+      send<Methods0['delete']['res']>(f, DELETE, prefix, PATH0, 'json', 'void', option),
     $path: (option?: { method?: 'get'; query: Methods0['get']['req']['query'] } | { method: 'post'; query: Methods0['post']['req']['query'] } | { method: 'put'; query: Methods0['put']['req']['query'] } | { method: 'delete'; query: Methods0['delete']['req']['query'] }) =>
-      `${prefix}${PATH0}${option && option.query ? `?${dataToURLString(option.query)}` : ''}`
+      `${prefix}${PATH0}${option?.query ? `?${dataToURLString(option.query)}` : ''}`
   }
 }

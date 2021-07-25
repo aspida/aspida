@@ -95,56 +95,51 @@ const optionToRequest = (
 type ServerData = { status?: number; headers?: BasicHeaders; body?: any }
 
 // prettier-ignore
-type NormalizedResponse<Success extends ServerData, Failure extends ServerData> =
-  | { isSuccess: true; stream: Response['body']; data: Success }
-  | { isSuccess: false; isFailure: true; stream: Response['body']; data: Failure }
-  | { isSuccess: false; isFailure: false; err: Error };
-
-// prettier-ignore
-const send = async <Success extends ServerData = { status: number; headers: BasicHeaders }, Failure extends ServerData = { status: number; headers: BasicHeaders }>(
+const send = async <
+  Success extends ServerData = { status: number; headers: BasicHeaders },
+  Failure extends ServerData = { status: number; headers: BasicHeaders }
+>(
   client: typeof fetch,
   method: string,
   baseURL: string,
   url: string,
   resType: 'json' | 'text' | 'arrayBuffer' | 'blob' | 'formData' | 'void',
+  errType: 'json' | 'text' | 'arrayBuffer' | 'blob' | 'formData' | 'void',
   params?: Params,
   format?: BodyInit
-): Promise<NormalizedResponse<Success, Failure>> => {
+): Promise<
+  | { res: Success; err?: undefined }
+  | { res?: undefined; err: { type: 'httpError'; data: Failure } }
+  | { res?: undefined; err: { type: 'networkError'; data: TypeError } }
+> => {
   try {
     const res = await client(
-      `${baseURL}${url}${
-        params?.query ? `?${dataToURLString(params.query)}` : ''
-      }`,
+      `${baseURL}${url}${params?.query ? `?${dataToURLString(params.query)}` : ''}`,
       optionToRequest(method, params, format)
     )
 
     if (res.ok) {
       return {
-        isSuccess: true,
-        stream: res.body,
-        data: {
+        res: {
           status: res.status,
           headers: headersToObject(res.headers),
-          body: resType === 'void' ? undefined : await res[resType](),
+          body: resType === 'void' ? undefined : await res[resType]()
         } as Success
-      };
+      }
     } else {
       return {
-        isSuccess: false,
-        isFailure: true,
-        stream: res.body,
-        data: {
-          status: res.status,
-          headers: headersToObject(res.headers),
-        } as Failure
-      };
+        err: {
+          type: 'httpError',
+          data: {
+            status: res.status,
+            headers: headersToObject(res.headers),
+            body: errType === 'void' ? undefined : await res[errType]()
+          } as Failure
+        }
+      }
     }
-  } catch (err) {
-    return {
-      isSuccess: false,
-      isFailure: false,
-      err,
-    };
+  } catch (e) {
+    return { err: { type: 'networkError', data: e } }
   }
 }
 
@@ -157,26 +152,26 @@ export const createApi = (config?: { baseURL?: string; trailingSlash?: boolean; 
   const GET = 'GET'
 
   return {
-    bar_id_json: (val0: string) => {
+    _bar_id_json: (val0: string) => {
       const prefix0 = `${PATH0}${val0}.json`
 
       return {
         $get: (option?: { init?: RequestInit }) =>
-          send<Methods1['get']['res']>(f, GET, prefix, `${prefix0}${PATH1}`, 'text', option),
+          send<Methods1['get']['res']>(f, GET, prefix, `${prefix0}${PATH1}`, 'text', 'void', option),
         $path: () => `${prefix}${prefix0}${PATH1}`
       }
     },
-    fooId_create: (val0: number) => {
+    _fooId_create: (val0: number) => {
       const prefix0 = `${PATH0}${val0}@create`
 
       return {
         $get: (option?: { init?: RequestInit }) =>
-          send<Methods2['get']['res']>(f, GET, prefix, `${prefix0}${PATH1}`, 'text', option),
+          send<Methods2['get']['res']>(f, GET, prefix, `${prefix0}${PATH1}`, 'text', 'void', option),
         $path: () => `${prefix}${prefix0}${PATH1}`
       }
     },
     $get: (option?: { init?: RequestInit }) =>
-      send<Methods0['get']['res']>(f, GET, prefix, PATH0, 'text', option),
+      send<Methods0['get']['res']>(f, GET, prefix, PATH0, 'text', 'void', option),
     $path: () => `${prefix}${PATH0}`
   }
 }

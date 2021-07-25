@@ -67,7 +67,7 @@ export default (direntTree: DirentTree, basePath: string, trailingSlash: boolean
 
           newPrefix = `prefix${dirDeps}`
           newUrl = ''
-          valFn = `${indent}${toJSValidString(valName)}${
+          valFn = `${indent}_${toJSValidString(valName)}${
             duplicatedNames.length > 1 && valType ? `_${valType}` : ''
           }${toJSValidString(postfix)}: (val${dirDeps}: ${
             valType ?? 'number | string'

@@ -33,22 +33,22 @@ const genRequest = ({ req }: Method) =>
       : ''
   }`
 
-const genResMethodName = ({ res }: Method) =>
-  !res?.body
+const genBodyType = (data: Method['res'] | Method['err']) =>
+  !data?.body
     ? 'void'
     : (
         { ArrayBuffer: 'arrayBuffer', Blob: 'blob', string: 'text', FormData: 'formData' } as {
           [key: string]: string
         }
-      )[res.body.value] || 'json'
+      )[data.body.value] || 'json'
 
 const genReturnVal = (method: Method, importName: string, path: string) =>
   `send<${genRes(method, importName)}${genErr(
     method,
     importName
-  )}>(f, ${method.name.toUpperCase()}, prefix, ${path}, '${genResMethodName(method)}'${genRequest(
-    method
-  )})`
+  )}>(f, ${method.name.toUpperCase()}, prefix, ${path}, '${genBodyType(
+    method.res
+  )}', '${genBodyType(method.err)}'${genRequest(method)})`
 
 export default (methods: Method[], indent: string, importName: string, path: string) =>
   [
@@ -80,7 +80,7 @@ export default (methods: Method[], indent: string, importName: string, path: str
           .join(' | ')}) =>
 ${indent}    \`\${prefix}\${${
           path.startsWith('`') ? path.slice(3, -2) : path
-        }}\${option && option.query ? \`?\${dataToURLString(option.query)}\` : ''}\``
+        }}\${option?.query ? \`?\${dataToURLString(option.query)}\` : ''}\``
       : `${indent}  $path: () => \`\${prefix}\${${
           path.startsWith('`') ? path.slice(3, -2) : path
         }}\``
