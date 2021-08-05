@@ -1,4 +1,5 @@
 # @aspida/swrv
+
 <br />
 <img src="https://aspida.github.io/aspida/logos/png/logo.png" alt="aspida" title="aspida" />
 <div align="center">
@@ -57,7 +58,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from "@vue/composition-api"
 import useAspidaSWRV from "@aspida/swrv"
 import aspida from "@aspida/axios" // "@aspida/fetch", "@aspida/node-fetch"
 import api from "../api/$api"
@@ -65,13 +66,10 @@ import api from "../api/$api"
 const client = api(aspida())
 
 export default defineComponent({
-  name: 'Profile',
+  name: "Profile",
 
   setup() {
-    const { data, error } = useAspidaSWRV(
-      client.user._userId(123),
-      { query: { name: 'mario' } }
-    )
+    const { data, error } = useAspidaSWRV(client.user._userId(123), { query: { name: "mario" } })
 
     return { data, error }
   }
@@ -97,7 +95,7 @@ export default defineComponent({
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from "@vue/composition-api"
 import useAspidaSWRV from "@aspida/swrv"
 import aspida from "@aspida/axios" // "@aspida/fetch", "@aspida/node-fetch"
 import api from "../api/$api"
@@ -105,14 +103,12 @@ import api from "../api/$api"
 const client = api(aspida())
 
 export default defineComponent({
-  name: 'Profile',
+  name: "Profile",
 
   setup() {
-    const { data, error } = useAspidaSWRV(
-      client.user._userId(123),
-    'get',
-      { query: { name: 'mario' } }
-    )
+    const { data, error } = useAspidaSWRV(client.user._userId(123), "get", {
+      query: { name: "mario" }
+    })
 
     return { data, error }
   }
@@ -136,7 +132,7 @@ export default defineComponent({
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from "@vue/composition-api"
 import useAspidaSWRV from "@aspida/swrv"
 import aspida from "@aspida/axios" // "@aspida/fetch", "@aspida/node-fetch"
 import api from "../api/$api"
@@ -144,16 +140,13 @@ import api from "../api/$api"
 const client = api(aspida())
 
 export default defineComponent({
-  name: 'Profile',
+  name: "Profile",
 
   setup() {
-    const { data, error } = useAspidaSWRV(
-      client.user._userId(123),
-      {
-        query: { name: 'mario' },
-        revalidateDebounce: 0
-      }
-    )
+    const { data, error } = useAspidaSWRV(client.user._userId(123), {
+      query: { name: "mario" },
+      revalidateDebounce: 0
+    })
 
     return { data, error }
   }
@@ -161,18 +154,13 @@ export default defineComponent({
 </script>
 ```
 
-### Conditional Fetching
-
-If you use the `enabled = false` option, AspidaSWRV will not start the request.
+### Dependent Fetching
 
 ```ts
 const { data: user } = useAspidaSWRV(client.user)
-const { data } = useAspidaSWRV(client.articles, { query: { userId: user?.id ?? 0 }, enabled: !!user })
-// is an alias of 
-const { data } = useSWRV(
-  user ? [client.articles.$path({ query: { userId: user.id }}), '$get'] : null,
-  () => client.articles.$get({ query: { userId: user.id }})
-)
+const { data } = useAspidaSWRV(() => user.value && client.articles, {
+  query: { userId: user?.id ?? 0 }
+})
 ```
 
 ## License
