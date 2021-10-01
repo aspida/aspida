@@ -11,33 +11,54 @@ type ResponseData<T extends (option: any) => Promise<any>> = ReturnType<T> exten
   ? S
   : never
 
-type AspidaOptions<
-  T extends (option: any) => Promise<any>,
-  U extends SWRConfiguration | SWRInfiniteConfiguration
-> = Parameters<
+type Options<T extends (option: any) => Promise<any>> = Parameters<
   Parameters<T> extends [Parameters<T>[0]]
     ? (
         option: Parameters<T>[0] &
-          U & {
+          SWRConfiguration<ResponseData<T>> & {
             enabled?: boolean
           }
       ) => void
     : (
         option?: Parameters<T>[0] &
-          U & {
+          SWRConfiguration<ResponseData<T>> & {
             enabled?: boolean
           }
       ) => void
 >
 
-type Options<T extends (option: any) => Promise<any>> = AspidaOptions<
-  T,
-  SWRConfiguration<ResponseData<T>>
->
-
-type InfiniteOptions<T extends (option: any) => Promise<any>> = AspidaOptions<
-  T,
-  SWRInfiniteConfiguration<ResponseData<T>>
+type InfiniteOptions<T extends (option: any) => Promise<any>> = Parameters<
+  Parameters<T> extends [Parameters<T>[0]]
+    ? (
+        option: Parameters<T>[0] extends Record<string, any> & { query: any }
+          ? Omit<Parameters<T>[0], 'query'> & {
+              query: (
+                index: number,
+                previousPageData: ResponseData<T> | null
+              ) => Parameters<T>[0]['query']
+            } & SWRInfiniteConfiguration<ResponseData<T>> & {
+                enabled?: boolean
+              }
+          : Parameters<T>[0] &
+              SWRInfiniteConfiguration<ResponseData<T>> & {
+                enabled?: boolean
+              }
+      ) => void
+    : (
+        option?: Parameters<T>[0] extends Record<string, any> & { query: any }
+          ? Omit<Parameters<T>[0], 'query'> & {
+              query: (
+                index: number,
+                previousPageData: ResponseData<T> | null
+              ) => Parameters<T>[0]['query']
+            } & SWRInfiniteConfiguration<ResponseData<T>> & {
+                enabled?: boolean
+              }
+          : Parameters<T>[0] &
+              SWRInfiniteConfiguration<ResponseData<T>> & {
+                enabled?: boolean
+              }
+      ) => void
 >
 
 function useAspidaSWR<
@@ -89,7 +110,7 @@ export function useAspidaSWRInfinite<
   api: T,
   key: U,
   ...option: InfiniteOptions<T[U]>
-): SWRInfiniteResponse<ResponseData<T[U]>, any>
+): SWRInfiniteResponse<ResponseData<T[U]>>
 export function useAspidaSWRInfinite<
   T extends Record<string, any> & { $path: (option?: any) => string },
   U extends { [K in keyof T]: T[K] extends (option: any) => Promise<any> ? K : never }[keyof T]
@@ -99,7 +120,16 @@ export function useAspidaSWRInfinite<
 
   return useSWRInfinite(
     (...args: Parameters<SWRKeyLoader>) =>
-      opt?.enabled === false ? null : getKey(api.$path(opt), method, ...args),
+      opt?.enabled === false
+        ? null
+        : getKey(
+            api.$path({
+              ...opt,
+              ...(opt?.query ? { query: opt.query(...args) } : {})
+            }),
+            method,
+            ...args
+          ),
     () => api[method](opt),
     opt
   )
