@@ -304,7 +304,9 @@ export const parse = (
   text: string,
   name: string
 ): { methods: Method[]; doc?: Doc; $textForApiTypes: string } | null => {
-  const interfaceRegExp = new RegExp(`(^|\r?\n)(export[\\s]*)(interface[\\s]*${name}|type[\\s]*${name}[\\s]*=[\\s]*([a-zA-Z0-9]+<)?)( ?{)`)
+  const interfaceRegExp = new RegExp(
+    `(^|\r?\n)(export[\\s]*)(interface[\\s]*${name}|type[\\s]*${name}[\\s]*=[\\s]*([a-zA-Z0-9]+<)?)( ?{)`
+  )
 
   if (!interfaceRegExp.test(text)) return null
 

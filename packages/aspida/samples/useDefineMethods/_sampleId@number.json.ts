@@ -1,7 +1,7 @@
 import { DefineMethods } from '../../src'
 
 export type Methods = DefineMethods<{
- get: {
+  get: {
     resBody: { id: number }
   }
 }>
