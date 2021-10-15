@@ -136,6 +136,7 @@ export type AspidaMethodParams = {
   reqBody?: any
   resHeaders?: any
   resBody?: any
+  polymorph?: AspidaMethodParams[]
 }
 
 export type AspidaMethods = {
