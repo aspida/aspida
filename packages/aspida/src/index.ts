@@ -141,3 +141,5 @@ export type AspidaMethodParams = {
 export type AspidaMethods = {
   [method in LowerHttpMethod]?: AspidaMethodParams
 }
+
+export type DefineMethods<T extends AspidaMethods> = T
