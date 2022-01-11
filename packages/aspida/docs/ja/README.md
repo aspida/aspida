@@ -29,8 +29,8 @@
 
 ## 特徴
 
-- パス・URL クエリ・ヘッダー・ボディ・レスポンス全てに型を指定できる
-- FormData / URLSearchParams の内容にも型を指定できる
+- パス・URL クエリ・ヘッダー・ボディ・レスポンス全てに型を指定可能
+- FormData / URLSearchParams の内容にも型を指定可能
 - HTTP クライアントは axios / fetch / node-fetch に対応
 
 <br />
@@ -265,12 +265,13 @@ watch([
 
 ## Ecosystem
 
-- [openapi2aspida](https://github.com/aspida/openapi2aspida) - Convert OpenAPI 3.0 and Swagger 2.0 definitions
-- [aspida-mock](https://github.com/aspida/aspida-mock) - TypeScript friendly RESTful API mock
-- [frourio](https://frourio.io/) - Fast and type-safe full stack framework, for TypeScript TypeScript
-- [@aspida/swr](https://github.com/aspida/aspida/tree/master/packages/aspida-swr) - SWR (React Hooks) wrapper
-- [@aspida/swrv](https://github.com/aspida/aspida/tree/master/packages/aspida-swrv) - SWRV (Vue Composition API) wrapper
-- [eslint-plugin-aspida](https://github.com/ibuki2003/eslint-plugin-aspida) - Support writing aspida api definition
+- [openapi2aspida](https://github.com/aspida/openapi2aspida) - OpenAPI 3.0 と Swagger 2.0 の定義を aspida 形式に変換
+- [aspida-mock](https://github.com/aspida/aspida-mock) - TypeScript フレンドリーな RESTful API mock
+- [frourio](https://frourio.io/) - 高速かつ型安全なフルスタックフレームワーク
+- [@aspida/swr](https://github.com/aspida/aspida/tree/master/packages/aspida-swr) - SWR (React Hooks)ラッパー
+- [@aspida/swrv](https://github.com/aspida/aspida/tree/master/packages/aspida-swrv) - SWRV (Vue Composition API)ラッパー
+- [eslint-plugin-aspida](https://github.com/ibuki2003/eslint-plugin-aspida) - aspida api 専用リンター
+
 
 ## Tips
 
