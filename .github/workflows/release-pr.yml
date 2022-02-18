@@ -1,0 +1,54 @@
+name: Release PR
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  cache-pnpm:
+    name: Cache Pnpm
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache pnpm modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 6
+          run_install: |
+            - recursive: true
+              args: [--frozen-lockfile, --prefer-offline]
+  release:
+    needs: cache-pnpm
+    name: Release PR
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Cache pnpm modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 6
+          run_install: |
+            - recursive: true
+              args: [--frozen-lockfile, --prefer-offline]
+      - name: Create Release Pull Request
+        uses: changesets/action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          commit: 'chore: version package'
+          title: 'chore: version package'
