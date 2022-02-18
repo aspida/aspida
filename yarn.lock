@@ -1432,6 +1432,16 @@ aspida-mock@^0.8.2:
   resolved "https://registry.yarnpkg.com/aspida-mock/-/aspida-mock-0.8.2.tgz#ac6553a72ac213c399c7fe587238055482666f62"
   integrity sha512-QBqUjW4VSaq4DKxWFj7ADE0Yk3OjW/u2MG13vAI5vo40oEWqr1N4IuPMsC8j1fgFgmhao2G+9NhGISsTBufq9Q==
 
+aspida@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/aspida/-/aspida-1.7.1.tgz#b021e1766991b3b9a7b85f297f5ac05af4b42b60"
+  integrity sha512-YIfSeLHPAtIkWnu8QFfKvlPB0/S6sRjD2WgmHuiTbhvTdINqK0KMPNK8WepUORXmUcraSaeHN1xO5MMKTREiTA==
+  dependencies:
+    "@types/minimist" "^1.2.1"
+    chokidar "^3.5.1"
+    form-data "^4.0.0"
+    minimist "^1.2.5"
+
 astral-regex@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/astral-regex/-/astral-regex-2.0.0.tgz#483143c567aeed4785759c0865786dc77d7d2e31"
