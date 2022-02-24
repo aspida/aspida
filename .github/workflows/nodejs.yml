@@ -56,7 +56,7 @@ jobs:
       - run: yarn build:aspida
       - run: |
           VERSION="$(node -e 'console.log(process.argv[1].match(/^refs\/tags\/v(\d+\.\d+\.\d+)$/)[1])' "${{ github.ref }}")"
-          for pacakge in $(ls .); do
+          for package in $(ls .); do
             cd "$package"
             node -e 'console.log(JSON.stringify({...require("./package.json"),version:process.argv[1]}, null, 2))' "$VERSION" | tee ./tmp-package.json
             mv ./tmp-package.json ./package.json

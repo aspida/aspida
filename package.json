@@ -14,10 +14,6 @@
     "build:swrv": "npm run rimraf -- aspida-swrv && tsc -p packages/aspida-swrv",
     "lint": "eslint --ext .js,.ts --ignore-path .gitignore . && prettier --check \"./**/*.ts\"",
     "lint:fix": "eslint --ext .js,.ts --ignore-path .gitignore . --fix && prettier --write \"./**/*.ts\"",
-    "release": "standard-version --skip.tag",
-    "release:major": "npm run release -- --release-as major",
-    "release:minor": "npm run release -- --release-as minor",
-    "release:patch": "npm run release -- --release-as patch",
     "rimraf": "node -e \"require('fs').rmdirSync('packages/' + process.argv[1] + '/dist', { recursive: true })\"",
     "test": "jest",
     "typecheck": "tsc --noEmit"
@@ -97,7 +93,6 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-query": "^3.16.0",
-    "standard-version": "^9.3.0",
     "swr": "^0.5.6",
     "swrv": "^0.9.3",
     "ts-jest": "^27.0.2",
