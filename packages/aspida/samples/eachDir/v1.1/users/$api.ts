@@ -1,8 +1,10 @@
 /* eslint-disable */
 // prettier-ignore
-import { AspidaClient, dataToURLString } from 'aspida'
+import type { AspidaClient } from 'aspida'
 // prettier-ignore
-import { Methods as Methods0 } from './_userId@string'
+import { dataToURLString } from 'aspida'
+// prettier-ignore
+import type { Methods as Methods0 } from './_userId@string'
 
 // prettier-ignore
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {

@@ -1,18 +1,20 @@
 /* eslint-disable */
 // prettier-ignore
-import { AspidaClient, dataToURLString } from 'aspida'
+import type { AspidaClient } from 'aspida'
 // prettier-ignore
-import { Methods as Methods0 } from './_hogeId'
+import { dataToURLString } from 'aspida'
 // prettier-ignore
-import { Methods as Methods1 } from './_hogeId@number'
+import type { Methods as Methods0 } from './_hogeId'
 // prettier-ignore
-import { Methods as Methods2 } from './_hogeId@string/entries.json'
+import type { Methods as Methods1 } from './_hogeId@number'
 // prettier-ignore
-import { Methods as Methods3 } from './_hogeId@string/test-4'
+import type { Methods as Methods2 } from './_hogeId@string/entries.json'
 // prettier-ignore
-import { Methods as Methods4 } from './_hogeId@string/test-4/_fugaId'
+import type { Methods as Methods3 } from './_hogeId@string/test-4'
 // prettier-ignore
-import { Methods as Methods5 } from './_hogeId@string/test-4/fuga aa'
+import type { Methods as Methods4 } from './_hogeId@string/test-4/_fugaId'
+// prettier-ignore
+import type { Methods as Methods5 } from './_hogeId@string/test-4/fuga aa'
 
 // prettier-ignore
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
