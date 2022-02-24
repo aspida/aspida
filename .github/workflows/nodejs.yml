@@ -30,7 +30,6 @@ jobs:
         if: matrix.os != 'windows-latest'
       - run: yarn typecheck
       - run: yarn test --coverage
-        if: matrix.node-version != 10
       - run: npx codecov
         if: github.ref == 'refs/heads/main' && matrix.os == 'ubuntu-latest' && matrix.node-version == 14
         env:
@@ -45,7 +44,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 14
           registry-url: "https://registry.npmjs.org"
       - uses: actions/cache@v2
         id: yarn-cache
