@@ -1,42 +1,44 @@
 /* eslint-disable */
 // prettier-ignore
-import { AspidaClient, AspidaResponse, BasicHeaders, dataToURLString } from 'aspida'
+import type { AspidaClient, AspidaResponse, BasicHeaders } from 'aspida'
 // prettier-ignore
-import { Methods as Methods0 } from '.'
+import { dataToURLString } from 'aspida'
 // prettier-ignore
-import { Methods as Methods1 } from './_sampleId@number.json'
+import type { Methods as Methods0 } from '.'
 // prettier-ignore
-import { Methods as Methods2 } from './foo%3Abar'
+import type { Methods as Methods1 } from './_sampleId@number.json'
 // prettier-ignore
-import { Methods as Methods3 } from './foo%3Abar/_bar_id@string.json'
+import type { Methods as Methods2 } from './foo%3Abar'
 // prettier-ignore
-import { Methods as Methods4 } from './foo%3Abar/_fooId@number%40create'
+import type { Methods as Methods3 } from './foo%3Abar/_bar_id@string.json'
 // prettier-ignore
-import { Methods as Methods5 } from './polymorphism/users'
+import type { Methods as Methods4 } from './foo%3Abar/_fooId@number%40create'
 // prettier-ignore
-import { Methods as Methods6 } from './polymorphism/users/_userId'
+import type { Methods as Methods5 } from './polymorphism/users'
 // prettier-ignore
-import { Methods as Methods7 } from './v1.1'
+import type { Methods as Methods6 } from './polymorphism/users/_userId'
 // prettier-ignore
-import { Methods as Methods8 } from './v1.1/2/_hogeId'
+import type { Methods as Methods7 } from './v1.1'
 // prettier-ignore
-import { Methods as Methods9 } from './v1.1/2/_hogeId@number'
+import type { Methods as Methods8 } from './v1.1/2/_hogeId'
 // prettier-ignore
-import { Methods as Methods10 } from './v1.1/2/_hogeId@string/entries.json'
+import type { Methods as Methods9 } from './v1.1/2/_hogeId@number'
 // prettier-ignore
-import { Methods as Methods11 } from './v1.1/2/_hogeId@string/test-4'
+import type { Methods as Methods10 } from './v1.1/2/_hogeId@string/entries.json'
 // prettier-ignore
-import { Methods as Methods12 } from './v1.1/2/_hogeId@string/test-4/_fugaId'
+import type { Methods as Methods11 } from './v1.1/2/_hogeId@string/test-4'
 // prettier-ignore
-import { Methods as Methods13 } from './v1.1/2/_hogeId@string/test-4/fuga aa'
+import type { Methods as Methods12 } from './v1.1/2/_hogeId@string/test-4/_fugaId'
 // prettier-ignore
-import { Methods as Methods14 } from './v1.1/3.1'
+import type { Methods as Methods13 } from './v1.1/2/_hogeId@string/test-4/fuga aa'
 // prettier-ignore
-import { Methods as Methods15 } from './v1.1/_articleId.json'
+import type { Methods as Methods14 } from './v1.1/3.1'
 // prettier-ignore
-import { Methods as Methods16 } from './v1.1/users/_userId@string'
+import type { Methods as Methods15 } from './v1.1/_articleId.json'
 // prettier-ignore
-import { Methods as Methods17 } from './v2.0'
+import type { Methods as Methods16 } from './v1.1/users/_userId@string'
+// prettier-ignore
+import type { Methods as Methods17 } from './v2.0'
 
 // prettier-ignore
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {

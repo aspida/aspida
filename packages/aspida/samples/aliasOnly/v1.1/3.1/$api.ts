@@ -1,8 +1,10 @@
 /* eslint-disable */
 // prettier-ignore
-import { AspidaClient, dataToURLString } from 'aspida'
+import type { AspidaClient } from 'aspida'
 // prettier-ignore
-import { Methods as Methods0 } from '.'
+import { dataToURLString } from 'aspida'
+// prettier-ignore
+import type { Methods as Methods0 } from '.'
 
 /**
  * 3.1 comment

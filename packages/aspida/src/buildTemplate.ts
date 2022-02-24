@@ -27,10 +27,16 @@ const createTemplate = (
   outputMode: AspidaConfig['outputMode']
 ) => {
   const { api, imports, pathes } = createTemplateValues(tree, basePath, trailingSlash, outputMode)
+  const headImports = [
+    `import type { AspidaClient${api.includes('AspidaResponse') ? ', AspidaResponse' : ''}${
+      api.includes('BasicHeaders') ? ', BasicHeaders' : ''
+    } } from 'aspida'`
+  ]
+  if (api.includes('dataToURLString')) {
+    headImports.push("import { dataToURLString } from 'aspida'")
+  }
   const text = `/* eslint-disable */
-import { AspidaClient${api.includes('AspidaResponse') ? ', AspidaResponse' : ''}${
-    api.includes('BasicHeaders') ? ', BasicHeaders' : ''
-  }${api.includes('dataToURLString') ? ', dataToURLString' : ''} } from 'aspida'
+<% headImports %>
 <% imports %>
 
 ${createDocComment(
@@ -50,6 +56,7 @@ ${['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'PATCH', 'OPTIONS']
 export type ApiInstance = ReturnType<typeof api>
 export default api
 `
+    .replace('<% headImports %>', headImports.join('\n'))
     .replace('<% imports %>', imports.join('\n'))
     .replace('<% api %>', api)
     .replace('<% baseURL %>', baseURL)
