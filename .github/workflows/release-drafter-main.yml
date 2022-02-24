@@ -1,10 +1,9 @@
 name: Release Drafter
 
 on:
-  pull_request_target:
+  push:
     branches:
       - main
-    types: [opened, reopened, synchronize]
 
 jobs:
   update_release_draft:
@@ -12,4 +11,4 @@ jobs:
     steps:
       - uses: release-drafter/release-drafter@v5
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT }}
