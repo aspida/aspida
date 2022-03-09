@@ -27,21 +27,28 @@ function useAspidaSWRV<
     $get: (option: any) => Promise<any>
     $path: (option?: any) => string
   }
->(api: T, ...option: Options<T['$get']>): Res<T['$get']>
+>(api: T | (() => T | null), ...option: Options<T['$get']>): Res<T['$get']>
 function useAspidaSWRV<
   T extends Record<string, any> & { $path: (option?: any) => string },
   U extends { [K in keyof T]: T[K] extends (option: any) => Promise<any> ? K : never }[keyof T]
->(api: T, key: U, ...option: Options<T[U]>): Res<T[U]>
+>(api: T | (() => T | null), key: U, ...option: Options<T[U]>): Res<T[U]>
 function useAspidaSWRV<
   T extends Record<string, any> & { $path: (option?: any) => string },
   U extends { [K in keyof T]: T[K] extends (option: any) => Promise<any> ? K : never }[keyof T]
->(api: T, key: U, ...option: Parameters<T[U]>) {
+>(api: T | (() => T | null), key: U, ...option: Parameters<T[U]>) {
   const method = typeof key === 'string' ? key : '$get'
   const opt = typeof key === 'string' ? (option as any)[0] : key
 
   return useSWRV(
-    opt?.enabled === false ? null : [api.$path(opt), method],
-    () => api[method](opt),
+    opt?.enabled === false
+      ? null
+      : typeof api === 'function'
+      ? () => {
+          const client = api()
+          return client && [client.$path(opt), method]
+        }
+      : [api.$path(opt), method],
+    () => (typeof api === 'function' ? api()?.[method](opt) : api[method](opt)),
     opt
   )
 }
