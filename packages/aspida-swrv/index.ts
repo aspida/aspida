@@ -3,8 +3,18 @@ import { IResponse } from 'swrv/dist/types'
 
 type Options<T extends (option: any) => Promise<any>> = Parameters<
   Parameters<T> extends [Parameters<T>[0]]
-    ? (option: Parameters<T>[0] & IConfig) => void
-    : (option?: Parameters<T>[0] & IConfig) => void
+    ? (
+        option: Parameters<T>[0] &
+          IConfig & {
+            enabled?: boolean
+          }
+      ) => void
+    : (
+        option?: Parameters<T>[0] &
+          IConfig & {
+            enabled?: boolean
+          }
+      ) => void
 >
 
 type Res<T extends (option: any) => Promise<any>> = IResponse<
@@ -27,10 +37,12 @@ function useAspidaSWRV<
   U extends { [K in keyof T]: T[K] extends (option: any) => Promise<any> ? K : never }[keyof T]
 >(api: T | (() => T | null), key: U, ...option: Parameters<T[U]>) {
   const method = typeof key === 'string' ? key : '$get'
-  const opt = (typeof key === 'string' ? (option as any)[0] : key) as IConfig | undefined
+  const opt = typeof key === 'string' ? (option as any)[0] : key
 
   return useSWRV(
-    typeof api === 'function'
+    opt?.enabled === false
+      ? null
+      : typeof api === 'function'
       ? () => {
           const client = api()
           return client && [client.$path(opt), method]
