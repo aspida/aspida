@@ -13,7 +13,7 @@ type AspidaSWRVOption<T> = T & {
    *    fetcher: enabled ? undefined : null
    */
   enabled?: boolean
-  key?: keyType | ((opt: AspidaSWRVOption<T>, getOriginalKey: () => string | null) => keyType)
+  key?: keyType | ((opt: AspidaSWRVOption<T>, getOriginalKey: () => string[] | null) => keyType)
   fetcher?:
     | ((f: (opt: AspidaSWRVOption<T>) => any) => (opt: AspidaSWRVOption<T>) => any)
     | null
@@ -42,16 +42,16 @@ function useAspidaSWRV<
   U extends {
     [K in keyof T]: T[K] extends (option: any) => Promise<any> ? K : never
   }[keyof T]
->(api: T | null | (() => T | null), key: U, ...option: Options<T[U]>): Res<T[U]>
+>(api: T | null | (() => T | null), method: U, ...option: Options<T[U]>): Res<T[U]>
 function useAspidaSWRV<
   T extends Record<string, any> & { $path: (option?: any) => string },
   U extends {
     [K in keyof T]: T[K] extends (option: any) => Promise<any> ? K : never
   }[keyof T]
->(api: T | null | (() => T | null), maybeKey: U, ...option: Parameters<T[U]>) {
+>(api: T | null | (() => T | null), maybeMethod: U, ...option: Parameters<T[U]>) {
   if (typeof api === 'function') api = api()
-  const method = typeof maybeKey === 'string' ? maybeKey : '$get'
-  const opt = typeof maybeKey === 'string' ? (option as any)[0] : maybeKey
+  const method = typeof maybeMethod === 'string' ? maybeMethod : '$get'
+  const opt = typeof maybeMethod === 'string' ? (option as any)[0] : maybeMethod
 
   const enabled = opt?.enabled ?? true
 
