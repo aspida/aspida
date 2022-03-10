@@ -13,7 +13,7 @@ type AspidaSWRVOption<T> = T & {
    *    fetcher: enabled ? undefined : null
    */
   enabled?: boolean
-  key?: (opt: AspidaSWRVOption<T>, getOriginalKey: () => string | null) => keyType
+  key?: keyType | ((opt: AspidaSWRVOption<T>, getOriginalKey: () => string | null) => keyType)
   fetcher?:
     | ((f: (opt: AspidaSWRVOption<T>) => any) => (opt: AspidaSWRVOption<T>) => any)
     | null
@@ -76,7 +76,7 @@ function useAspidaSWRV<
           return fetcherInterv(api[method])(opt)
         })(api)
 
-  // TODO: Why as any? Wait for https://github.com/Kong/swrv/pull/274.
+  // TODO: Why as any? https://github.com/Kong/swrv/pull/274.
   return useSWRV(key, fetcher as any, opt)
 }
 
