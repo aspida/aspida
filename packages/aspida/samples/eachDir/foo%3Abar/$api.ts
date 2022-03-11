@@ -20,9 +20,9 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
       const prefix0 = `${PATH0}${val0}.json`
 
       return {
-        get: (option?: { config?: T }) =>
+        get: (option?: { config?: T | undefined } | undefined) =>
           fetch<Methods1['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).text(),
-        $get: (option?: { config?: T }) =>
+        $get: (option?: { config?: T | undefined } | undefined) =>
           fetch<Methods1['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).text().then(r => r.body),
         $path: () => `${prefix}${prefix0}${PATH1}`
       }
@@ -31,9 +31,9 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
       const prefix0 = `${PATH0}${val0}@create`
 
       return {
-        get: (option?: { config?: T }) =>
+        get: (option?: { config?: T | undefined } | undefined) =>
           fetch<Methods2['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).text(),
-        $get: (option?: { config?: T }) =>
+        $get: (option?: { config?: T | undefined } | undefined) =>
           fetch<Methods2['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).text().then(r => r.body),
         $path: () => `${prefix}${prefix0}${PATH1}`
       }
@@ -46,16 +46,16 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
       const prefix0 = `${PATH0}${val0}@create`
 
       return {
-        get: (option?: { config?: T }) =>
+        get: (option?: { config?: T | undefined } | undefined) =>
           fetch<Methods2['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).text(),
-        $get: (option?: { config?: T }) =>
+        $get: (option?: { config?: T | undefined } | undefined) =>
           fetch<Methods2['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).text().then(r => r.body),
         $path: () => `${prefix}${prefix0}${PATH1}`
       }
     },
-    get: (option?: { config?: T }) =>
+    get: (option?: { config?: T | undefined } | undefined) =>
       fetch<Methods0['get']['resBody']>(prefix, PATH0, GET, option).text(),
-    $get: (option?: { config?: T }) =>
+    $get: (option?: { config?: T | undefined } | undefined) =>
       fetch<Methods0['get']['resBody']>(prefix, PATH0, GET, option).text().then(r => r.body),
     $path: () => `${prefix}${PATH0}`
   }

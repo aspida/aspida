@@ -4,29 +4,41 @@ import { AspidaConfig } from './commands'
 
 const genReqBody = ({ name, props }: Method, importName: string, index: number) =>
   props.polymorph?.[index].reqBody
-    ? ` body${
-        props.polymorph?.[index].reqBody?.hasQuestion ? '?' : ''
-      }: ${importName}['${name}']['polymorph'][${index}]['reqBody'],`
+    ? (opt =>
+        ` body${opt ? '?' : ''}: ${importName}['${name}']['polymorph'][${index}]['reqBody']${
+          opt ? ' | undefined' : ''
+        },`)(props.polymorph?.[index].reqBody?.hasQuestion)
     : props.reqBody
-    ? ` body${props.reqBody.hasQuestion ? '?' : ''}: ${importName}['${name}']['reqBody'],`
+    ? (opt =>
+        ` body${opt ? '?' : ''}: ${importName}['${name}']['reqBody']${opt ? ' | undefined' : ''},`)(
+        props.reqBody.hasQuestion
+      )
     : ''
 
 const genQuery = ({ name, props }: Method, importName: string, index: number) =>
   props.polymorph?.[index].query
-    ? ` query${
-        props.polymorph?.[index].query?.hasQuestion ? '?' : ''
-      }: ${importName}['${name}']['polymorph'][${index}]['query'],`
+    ? (opt =>
+        ` query${opt ? '?' : ''}: ${importName}['${name}']['polymorph'][${index}]['query']${
+          opt ? ' | undefined' : ''
+        },`)(props.polymorph?.[index].query?.hasQuestion)
     : props.query
-    ? ` query${props.query.hasQuestion ? '?' : ''}: ${importName}['${name}']['query'],`
+    ? (opt =>
+        ` query${opt ? '?' : ''}: ${importName}['${name}']['query']${opt ? ' | undefined' : ''},`)(
+        props.query.hasQuestion
+      )
     : ''
 
 const genReqHeaders = ({ name, props }: Method, importName: string, index: number) =>
   props.polymorph?.[index].reqHeaders
-    ? ` headers${
-        props.polymorph?.[index].reqHeaders?.hasQuestion ? '?' : ''
-      }: ${importName}['${name}']['polymorph'][${index}]['reqHeaders'],`
+    ? (opt =>
+        ` headers${opt ? '?' : ''}: ${importName}['${name}']['polymorph'][${index}]['reqHeaders']${
+          opt ? ' | undefined' : ''
+        },`)(props.polymorph?.[index].reqHeaders?.hasQuestion)
     : props.reqHeaders
-    ? ` headers${props.reqHeaders.hasQuestion ? '?' : ''}: ${importName}['${name}']['reqHeaders'],`
+    ? (opt =>
+        ` headers${opt ? '?' : ''}: ${importName}['${name}']['reqHeaders']${
+          opt ? ' | undefined' : ''
+        },`)(props.reqHeaders.hasQuestion)
     : ''
 
 const genOption = (method: Method, importName: string, index = 0) => {
@@ -40,11 +52,14 @@ const genOption = (method: Method, importName: string, index = 0) => {
         poly.reqBody?.hasQuestion === false ||
         poly.reqHeaders?.hasQuestion === false))
 
-  return `(option${isOptionRequired ? '' : '?'}: {${genReqBody(
-    method,
-    importName,
-    index
-  )}${genQuery(method, importName, index)}${genReqHeaders(method, importName, index)} config?: T })`
+  return (opt =>
+    `(option${opt ? '?' : ''}: {${genReqBody(method, importName, index)}${genQuery(
+      method,
+      importName,
+      index
+    )}${genReqHeaders(method, importName, index)} config?: T | undefined }${
+      opt ? ' | undefined' : ''
+    })`)(!isOptionRequired)
 }
 
 const genResBody = ({ name, props }: Method, importName: string) =>
@@ -180,13 +195,13 @@ export default (
     (methods.filter(({ props }) => props.query).length
       ? `${indent}  $path: (option?: ${methods
           .filter(({ props }) => props.query)
-          .map(
-            ({ name }) =>
-              `{ method${
-                name === 'get' ? '?' : ''
-              }: '${name}'; query: ${importName}['${name}']['query'] }`
+          .map(({ name }) =>
+            (opt =>
+              `{ method${opt ? '?' : ''}: '${name}'${
+                opt ? ' | undefined' : ''
+              }; query: ${importName}['${name}']['query'] }`)(name === 'get')
           )
-          .join(' | ')}) =>
+          .join(' | ')} | undefined) =>
 ${indent}    \`\${prefix}\${${
           path.startsWith('`') ? path.slice(3, -2) : path
         }}\${option && option.query ? \`?\${dataToURLString(option.query)}\` : ''}\``
