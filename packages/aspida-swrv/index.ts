@@ -8,12 +8,11 @@ type AspidaSWRVOption<T> = T & {
    * @deprecated
    * Will be dropped next major release.
    * Use key and fetcher options instead.
-   *    key: (_opt, getOriginalKey) =>
-   *      enabled ? getOriginalKey() : null,
+   *    key: enabled ? undefined : null,
    *    fetcher: enabled ? undefined : null
    */
   enabled?: boolean
-  key?: keyType | ((opt: AspidaSWRVOption<T>, getOriginalKey: () => string[] | null) => keyType)
+  key?: keyType | (() => keyType)
   fetcher?:
     | ((f: (opt: AspidaSWRVOption<T>) => any) => (opt: AspidaSWRVOption<T>) => any)
     | null
@@ -30,6 +29,31 @@ type Res<T extends (option: any) => Promise<any>> = IResponse<
   ReturnType<T> extends Promise<infer S> ? S : never,
   any
 >
+
+function getAspidaSWRVDefaultKey<
+  T extends Record<string, any> & {
+    $get: (option: any) => Promise<any>
+    $path: (option?: any) => string
+  }
+>(api: T, ...option: Options<T['$get']>): string[]
+function getAspidaSWRVDefaultKey<
+  T extends Record<string, any> & { $path: (option?: any) => string },
+  U extends {
+    [K in keyof T]: T[K] extends (option: any) => Promise<any> ? K : never
+  }[keyof T]
+>(api: T, method: U, ...option: Options<T[U]>): string[]
+function getAspidaSWRVDefaultKey<
+  T extends Record<string, any> & { $path: (option?: any) => string },
+  U extends {
+    [K in keyof T]: T[K] extends (option: any) => Promise<any> ? K : never
+  }[keyof T]
+>(api: T, maybeMethod: U, ...option: Parameters<T[U]>) {
+  const method = typeof maybeMethod === 'string' ? maybeMethod : '$get'
+  const opt = typeof maybeMethod === 'string' ? (option as any)[0] : maybeMethod
+
+  return [api.$path(opt), method]
+}
+export { getAspidaSWRVDefaultKey }
 
 function useAspidaSWRV<
   T extends Record<string, any> & {
@@ -55,17 +79,13 @@ function useAspidaSWRV<
 
   const enabled = opt?.enabled ?? true
 
-  const getOriginalKey = (api => () => {
-    return api && [api.$path(opt), method]
-  })(api)
-
   const key =
     opt?.key !== undefined
       ? typeof opt.key === 'function'
-        ? opt.key(opt, getOriginalKey)
+        ? opt.key()
         : opt.key
       : enabled
-      ? getOriginalKey()
+      ? getAspidaSWRVDefaultKey(api as any, method, opt)
       : null
 
   const fetcherInterv = opt?.fetcher === undefined ? (enabled ? (f: any) => f : null) : opt?.fetcher
