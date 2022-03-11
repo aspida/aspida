@@ -13,9 +13,9 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const GET = 'GET'
 
   return {
-    $get: (option: { query: Methods0['get']['query'], headers: Methods0['get']['reqHeaders'], config?: T }) =>
+    $get: (option: { query: Methods0['get']['query'], headers: Methods0['get']['reqHeaders'], config?: T | undefined }) =>
       fetch<Methods0['get']['resBody'], Methods0['get']['resHeaders'], Methods0['get']['status']>(prefix, PATH0, GET, option).text().then(r => r.body),
-    $path: (option?: { method?: 'get'; query: Methods0['get']['query'] }) =>
+    $path: (option?: { method?: 'get' | undefined; query: Methods0['get']['query'] } | undefined) =>
       `${prefix}${PATH0}${option && option.query ? `?${dataToURLString(option.query)}` : ''}`
   }
 }

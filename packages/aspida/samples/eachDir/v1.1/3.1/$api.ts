@@ -21,19 +21,19 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
      * 3.1 get method comment
      * @param option.headers - 3.1 reqHeaders
      */
-    get: (option?: { query?: Methods0['get']['query'], headers?: Methods0['get']['reqHeaders'], config?: T }) =>
+    get: (option?: { query?: Methods0['get']['query'] | undefined, headers?: Methods0['get']['reqHeaders'] | undefined, config?: T | undefined } | undefined) =>
       fetch<Methods0['get']['resBody']>(prefix, PATH0, GET, option).json(),
     /**
      * 3.1 get method comment
      * @param option.headers - 3.1 reqHeaders
      */
-    $get: (option?: { query?: Methods0['get']['query'], headers?: Methods0['get']['reqHeaders'], config?: T }) =>
+    $get: (option?: { query?: Methods0['get']['query'] | undefined, headers?: Methods0['get']['reqHeaders'] | undefined, config?: T | undefined } | undefined) =>
       fetch<Methods0['get']['resBody']>(prefix, PATH0, GET, option).json().then(r => r.body),
-    post: (option: { body?: Methods0['post']['reqBody'], query: Methods0['post']['query'], config?: T }) =>
+    post: (option: { body?: Methods0['post']['reqBody'] | undefined, query: Methods0['post']['query'], config?: T | undefined }) =>
       fetch<Methods0['post']['resBody']>(prefix, PATH0, POST, option, 'URLSearchParams').json(),
-    $post: (option: { body?: Methods0['post']['reqBody'], query: Methods0['post']['query'], config?: T }) =>
+    $post: (option: { body?: Methods0['post']['reqBody'] | undefined, query: Methods0['post']['query'], config?: T | undefined }) =>
       fetch<Methods0['post']['resBody']>(prefix, PATH0, POST, option, 'URLSearchParams').json().then(r => r.body),
-    $path: (option?: { method?: 'get'; query: Methods0['get']['query'] } | { method: 'post'; query: Methods0['post']['query'] }) =>
+    $path: (option?: { method?: 'get' | undefined; query: Methods0['get']['query'] } | { method: 'post'; query: Methods0['post']['query'] } | undefined) =>
       `${prefix}${PATH0}${option && option.query ? `?${dataToURLString(option.query)}` : ''}`
   }
 }
