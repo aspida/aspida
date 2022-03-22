@@ -1,14 +1,8 @@
-/* eslint-disable */
-// prettier-ignore
 import type { AspidaClient } from 'aspida'
-// prettier-ignore
 import type { Methods as Methods0 } from '.'
-// prettier-ignore
 import type { Methods as Methods1 } from './_bar_id@string.json'
-// prettier-ignore
 import type { Methods as Methods2 } from './_fooId@number%40create'
 
-// prettier-ignore
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const prefix = (baseURL === undefined ? '' : baseURL).replace(/\/$/, '')
   const PATH0 = '/foo:bar/'
@@ -61,7 +55,5 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   }
 }
 
-// prettier-ignore
 export type ApiInstance = ReturnType<typeof api>
-// prettier-ignore
 export default api
