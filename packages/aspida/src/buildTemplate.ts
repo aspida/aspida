@@ -35,8 +35,7 @@ const createTemplate = (
   if (api.includes('dataToURLString')) {
     headImports.push("import { dataToURLString } from 'aspida'")
   }
-  const text = `/* eslint-disable */
-<% headImports %>
+  const text = `<% headImports %>
 <% imports %>
 
 ${createDocComment(
@@ -60,7 +59,6 @@ export default api
     .replace('<% imports %>', imports.join('\n'))
     .replace('<% api %>', api)
     .replace('<% baseURL %>', baseURL)
-    .replace(/\n([a-z])/g, '\n// prettier-ignore\n$1')
 
   return { text, filePath: path.posix.join(tree.path, '$api.ts') }
 }
