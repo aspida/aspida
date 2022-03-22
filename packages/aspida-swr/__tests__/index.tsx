@@ -2,14 +2,22 @@ import React from 'react'
 import { render, act } from '@testing-library/react'
 import { mockClient, mockMethods } from 'aspida-mock'
 import fetchClient from '../../aspida-node-fetch'
-import useAspidaSWR from '../index'
+import { SWRConfig, useSWRConfig } from 'swr'
+import useAspidaSWR, { aspidaMutate, getSWRDefaultKey } from '../index'
+
 import api from '../../aspida/samples/basic/$api'
 import { Methods as Methods0 } from '../../aspida/samples/basic/v1.1'
 import { Methods as Methods1 } from '../../aspida/samples/basic/v2.0'
+import { Methods as MethodsCounter } from '../../aspida/samples/basic/v1.1/counter'
 
 const adapter = mockClient(fetchClient())
 const client = api(adapter)
 const nextTick = () => new Promise(resolve => setTimeout(resolve, 50))
+let serverCount = 0
+
+beforeEach(() => {
+  serverCount = 0
+})
 
 adapter.attachRoutes([
   {
@@ -26,6 +34,16 @@ adapter.attachRoutes([
         resBody: query?.val ?? 'none',
         resHeaders: { token: query?.val }
       })
+    })
+  },
+  {
+    path: '/v1.1/counter',
+    methods: mockMethods<MethodsCounter>({
+      get: () => ({ status: 200, resBody: { c: serverCount } }),
+      post: ({ reqBody: { a } }) => {
+        serverCount += a
+        return { status: 200, resBody: { c: serverCount } }
+      }
     })
   }
 ])
@@ -54,12 +72,76 @@ describe('optional query', () => {
     })
   })
 
+  test('get default key', async () => {
+    expect(getSWRDefaultKey(client.v1_1)).toMatchInlineSnapshot(`
+Array [
+  "https://example.com/api/v1.1",
+  "$get",
+]
+`)
+  })
+
+  test('aspida mutate', async () => {
+    function Page() {
+      const a = useAspidaSWR(client.v1_1.counter)
+
+      return <div>{a.data?.c}</div>
+    }
+    const swrConfig = { provider: () => new Map() }
+    const f = useSWRConfig()
+    const { container } = render(
+      <SWRConfig value={f}>
+        <Page />
+      </SWRConfig>
+    )
+    expect(container.textContent).toBe('')
+
+    await act(async () => {
+      await nextTick()
+      expect(container.textContent).toBe('0')
+    })
+
+    serverCount += 1
+
+    await act(async () => {
+      await nextTick()
+      expect(container.textContent).toBe('0')
+    })
+
+    await act(async () => {
+      await aspidaMutate(client.v1_1.counter)
+      await nextTick()
+      expect(container.textContent).toBe('1')
+    })
+  })
+
+  test('aspida mutate to change', async () => {
+    function Page() {
+      const a = useAspidaSWR(client.v1_1.counter)
+
+      return <div>{a.data?.c}</div>
+    }
+    const { container } = render(<Page />)
+    expect(container.textContent).toBe('')
+
+    await act(async () => {
+      await nextTick()
+      expect(container.textContent).toBe('0')
+    })
+
+    await act(async () => {
+      await aspidaMutate(client.v1_1.counter, {}, { c: 3 })
+      await nextTick()
+      expect(container.textContent).toBe('3')
+    })
+  })
+
   test('basic usage with initialData', async () => {
     function Page() {
       const a = useAspidaSWR(client.v1_1, {
         query: { aa: 0 },
         revalidateOnMount: true,
-        initialData: { aa: 1 }
+        fallbackData: { aa: 1 }
       })
 
       if (a.data) {
@@ -77,7 +159,7 @@ describe('optional query', () => {
 
     await act(async () => {
       await nextTick()
-      expect(container.textContent).toMatchInlineSnapshot(`"0"`)
+      expect(container.textContent).toBe('0')
     })
   })
 
@@ -192,7 +274,7 @@ describe('required query', () => {
         query: { val: 'bb' },
         headers: { 'content-type': 'text/plain' },
         revalidateOnMount: true,
-        initialData: '1'
+        fallbackData: '1'
       })
 
       return <div>{a.data}</div>
@@ -211,7 +293,7 @@ describe('required query', () => {
       // @ts-expect-error
       const a = useAspidaSWR(client.v2_0, 'get', {
         revalidateOnMount: true,
-        initialData: {
+        fallbackData: {
           status: 200,
           body: 'a',
           headers: { token: 'b' },
