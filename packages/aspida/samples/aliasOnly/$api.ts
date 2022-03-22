@@ -1,39 +1,20 @@
-/* eslint-disable */
-// prettier-ignore
 import type { AspidaClient, BasicHeaders } from 'aspida'
-// prettier-ignore
 import { dataToURLString } from 'aspida'
-// prettier-ignore
 import type { Methods as Methods0 } from '.'
-// prettier-ignore
 import type { Methods as Methods1 } from './_sampleId@number.json'
-// prettier-ignore
 import type { Methods as Methods2 } from './foo%3Abar'
-// prettier-ignore
 import type { Methods as Methods3 } from './foo%3Abar/_bar_id@string.json'
-// prettier-ignore
 import type { Methods as Methods4 } from './foo%3Abar/_fooId@number%40create'
-// prettier-ignore
 import type { Methods as Methods5 } from './v1.1'
-// prettier-ignore
 import type { Methods as Methods6 } from './v1.1/2/_hogeId'
-// prettier-ignore
 import type { Methods as Methods7 } from './v1.1/2/_hogeId@number'
-// prettier-ignore
 import type { Methods as Methods8 } from './v1.1/2/_hogeId@string/entries.json'
-// prettier-ignore
 import type { Methods as Methods9 } from './v1.1/2/_hogeId@string/test-4'
-// prettier-ignore
 import type { Methods as Methods10 } from './v1.1/2/_hogeId@string/test-4/_fugaId'
-// prettier-ignore
 import type { Methods as Methods11 } from './v1.1/2/_hogeId@string/test-4/fuga aa'
-// prettier-ignore
 import type { Methods as Methods12 } from './v1.1/3.1'
-// prettier-ignore
 import type { Methods as Methods13 } from './v1.1/_articleId.json'
-// prettier-ignore
 import type { Methods as Methods14 } from './v1.1/users/_userId@string'
-// prettier-ignore
 import type { Methods as Methods15 } from './v2.0'
 
 /**
@@ -42,7 +23,6 @@ import type { Methods as Methods15 } from './v2.0'
  * @remarks
  * root remarks comment
  */
-// prettier-ignore
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const prefix = (baseURL === undefined ? '' : baseURL).replace(/\/$/, '')
   const PATH0 = '/foo:bar'
@@ -301,7 +281,5 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   }
 }
 
-// prettier-ignore
 export type ApiInstance = ReturnType<typeof api>
-// prettier-ignore
 export default api
