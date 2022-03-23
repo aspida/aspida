@@ -304,7 +304,10 @@ export const parse = (
   text: string,
   name: string
 ): { methods: Method[]; doc?: Doc; $textForApiTypes: string } | null => {
-  const interfaceRegExp = new RegExp(`(^|\r?\n)(export )(interface ${name}|type ${name} ?=)( ?{)`)
+  const interfaceRegExp = new RegExp(
+    `(^|\r?\n)(export[\\s]*)(interface[\\s]*${name}|type[\\s]*${name}[\\s]*=[\\s]*(\\w+<)?)(\\s?{)`
+  )
+
   if (!interfaceRegExp.test(text)) return null
 
   const [d, ...m] = text.split(interfaceRegExp)

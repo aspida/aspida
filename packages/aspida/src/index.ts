@@ -138,6 +138,12 @@ export type AspidaMethodParams = {
   resBody?: any
 }
 
-export type AspidaMethods = {
-  [method in LowerHttpMethod]?: AspidaMethodParams
+export type AspidaMethod = AspidaMethodParams & {
+  polymorph?: AspidaMethodParams[]
 }
+
+export type AspidaMethods = {
+  [method in LowerHttpMethod]?: AspidaMethod
+}
+
+export type DefineMethods<T extends AspidaMethods> = T
