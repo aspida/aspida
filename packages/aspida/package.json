@@ -28,6 +28,6 @@
     "@types/minimist": "^1.2.2",
     "chokidar": "^3.5.1",
     "form-data": "^4.0.0",
-    "minimist": "^1.2.5"
+    "minimist": "^1.2.6"
   }
 }
