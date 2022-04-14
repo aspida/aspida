@@ -50,13 +50,36 @@ export const headersToObject = (headers: Headers): any =>
   [...headers.entries()].reduce((prev, [key, val]) => ({ ...prev, [key]: val }), {})
 
 const appendDataToFormData = (data: Record<string, any>, formData: FormData | NodeFormData) => {
-  for (const key in data) {
-    if (Array.isArray(data[key])) {
-      data[key].forEach((d: any) => formData.append(key, d))
-    } else if (data[key] != null) {
-      formData.append(key, data[key])
+  const toFormData = (key: string, value: any) => {
+    if (value === undefined || value === null) return;
+    const isObject = (value: unknown) => {
+      return typeof value === "object" && !Array.isArray(value) && !(value instanceof File);
+    };
+
+    if (isObject(value)) {
+      Object.entries(value).forEach(([subKey, value]) => {
+        toFormData(`${key}[${subKey}]`, value);
+      });
+    } else {
+      if (Array.isArray(value)) {
+        value.forEach((el) => {
+          if (isObject(el)) {
+            Object.entries(el).forEach(([subKey, value]) => {
+              toFormData(`${key}[][${subKey}]`, value);
+            });
+          } else {
+            formData.append(`${key}[]`, el);
+          }
+        });
+      } else {
+        formData.append(key, value);
+      }
     }
-  }
+  };
+
+  Object.entries(data).forEach(([key, value]) => {
+    toFormData(key, value);
+  });
 
   return formData
 }
