@@ -7,6 +7,9 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": "bin/index.js",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/simula-labs"
+  },
   "homepage": "https://github.com/aspida/aspida#readme",
   "repository": {
     "type": "git",
