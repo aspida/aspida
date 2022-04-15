@@ -1,0 +1,38 @@
+title: AcademicHistory
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+  name:
+    type: string
+    example: 明治大学
+  faculty:
+    type: string
+    example: 情報コミュニケーション学部
+  since_date:
+    type: string
+    format: date
+    example: '2008-04-01'
+  until_date:
+    type: string
+    format: date
+    example: '2012-03-01'
+  type:
+    type: string
+    example: university
+    enum:
+      - graduate_school
+      - university
+      - vocational_school
+      - junior_college
+      - high_school
+    description: 「大学院」「大学」「専門学校」「短期大学」「高校」
+required:
+  - id
+  - name
+  - since_date
+  - until_date
+  - type
+description: dateの日付は月初で統一
+x-internal: false

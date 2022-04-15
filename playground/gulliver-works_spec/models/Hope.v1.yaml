@@ -1,0 +1,25 @@
+title: Hope
+type: object
+properties:
+  id:
+    type: string
+  time_to_change_jobs:
+    type: number
+    description: 転職希望時期(Nヶ月以内)
+  annual_income:
+    type: number
+  workplace:
+    $ref: ./Prefecture.v1.yaml
+  occupations:
+    type: array
+    items:
+      $ref: ./Occupation.v1.yaml
+  employment_statuses:
+    type: array
+    items:
+      $ref: ./EmploymentStatus.v1.yaml
+  account:
+    $ref: ./Account.v1.yaml
+required:
+  - id
+  - account

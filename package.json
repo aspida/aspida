@@ -12,6 +12,7 @@
     "build:react-query": "npm run rimraf -- aspida-react-query && tsc -p packages/aspida-react-query",
     "build:swr": "npm run rimraf -- aspida-swr && tsc -p packages/aspida-swr",
     "build:swrv": "npm run rimraf -- aspida-swrv && tsc -p packages/aspida-swrv",
+    "build:all": "npm run build:aspida && npm run build:axios && npm run build:swr",
     "lint": "eslint --ext .js,.ts . && prettier --check \"./**/*.ts\"",
     "lint:fix": "eslint --ext .js,.ts . --fix && prettier --write \"./**/*.ts\"",
     "rimraf": "node -e \"require('fs').rmdirSync('packages/' + process.argv[1] + '/dist', { recursive: true })\"",

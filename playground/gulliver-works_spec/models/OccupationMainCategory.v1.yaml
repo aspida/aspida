@@ -1,0 +1,17 @@
+title: OccupationMainCategory
+type: object
+description: 職種「大項目」
+properties:
+  id:
+    type: string
+    format: uuid
+  name:
+    type: string
+    example: コンサル
+  occupation_sub_categories:
+    type: array
+    items:
+      $ref: ./OccupationSubCategory.v1.yaml
+required:
+  - id
+  - name

@@ -1,0 +1,13 @@
+title: Industry
+type: object
+description: 業種
+properties:
+  id:
+    type: string
+    format: uuid
+  name:
+    type: string
+    example: 銀行・信託銀行
+required:
+  - id
+  - name

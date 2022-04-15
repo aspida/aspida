@@ -1,0 +1,2002 @@
+openapi: 3.0.0
+info:
+  title: Application
+  version: '1'
+servers:
+  - url: 'http://localhost:3000/v1'
+    description: local
+  - url: 'https://api.gulliver-works.com/v1'
+    description: Prd
+  - url: 'https://api-stg.gulliver-works.com/v1'
+    description: Stg
+  - url: 'https://api-dev.gulliver-woks.com/v1'
+    description: Dev
+paths:
+  '/accounts/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: ''
+    get:
+      summary: アカウントを取得する
+      tags:
+        - Account
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: Account
+                type: object
+                x-tags:
+                  - Account
+                description: ''
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  email:
+                    type: string
+                    format: email
+                    example: test@example.com
+                  email_verification_status:
+                    type: string
+                    example: verified
+                    enum:
+                      - unspecified
+                      - request
+                      - verified
+                    default: unspecified
+                  profile:
+                    $ref: '#/paths/~1accounts~1%7Baccount_id%7D~1profile/get/responses/200/content/application~1json/schema'
+                  work_histories:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1work_histories~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+                  academic_histories:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1academic_histories~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+                  email_verification_token:
+                    type: string
+                    format: uuid
+                  last_notification_read_at:
+                    type: string
+                    format: date
+                required:
+                  - id
+                  - email
+                  - email_verification_status
+                  - profile
+                  - academic_histories
+              examples:
+                example-1: {}
+      operationId: get-accounts-id
+    patch:
+      summary: アカウントを更新する
+      tags:
+        - Account
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1accounts~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+      operationId: patch-accounts-id
+    delete:
+      summary: アカウントを削除する
+      tags:
+        - Account
+      responses:
+        '204':
+          description: No Content
+      operationId: delete-accounts-id
+  '/recruitments/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: 募集を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: Recruitment
+                type: object
+                description: ''
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  title:
+                    type: string
+                    example: 三度の飯よりReact！そんなGeekなあなたへ
+                  occupation:
+                    title: Occupation
+                    type: object
+                    description: 職種
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                      name:
+                        type: string
+                        example: 戦略・経営コンサルタント
+                    required:
+                      - id
+                      - name
+                  industry:
+                    title: Industry
+                    type: object
+                    description: 業種
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                      name:
+                        type: string
+                        example: 銀行・信託銀行
+                    required:
+                      - id
+                      - name
+                  workplace:
+                    $ref: '#/paths/~1prefectures/get/responses/200/content/application~1json/schema/properties/prefectures/items'
+                  job_description:
+                    type: string
+                    example: 新規事業のフロントサイドエンジニア
+                  work_conditions:
+                    type: string
+                    example: 保険・交通費とか諸々
+                  qualification_requirement:
+                    type: string
+                    example: ・大卒以上　・40歳未満
+                  is_public:
+                    type: boolean
+                    default: 'true'
+                    example: 'true'
+                  company:
+                    $ref: '#/paths/~1companies~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+                  employment_statuses:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1employment_statuses/get/responses/200/content/application~1json/schema/properties/employment_statuses/items'
+                  status:
+                    type: string
+                    enum:
+                      - active
+                      - inactive
+                      - draft
+                required:
+                  - id
+                  - title
+                  - is_public
+                  - company
+                  - status
+      operationId: get-recruitments-id
+    patch:
+      summary: 募集を更新する
+      operationId: patch-recruitments-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1recruitments~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                recruitment:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      example: 三度の飯よりReact！そんなGeekなあなたへ
+                    department_id:
+                      type: string
+                      format: uuid
+                    occupation_id:
+                      type: string
+                      format: uuid
+                    industry_id:
+                      type: string
+                      format: uuid
+                    workplace_id:
+                      type: string
+                      format: uuid
+                    job_description:
+                      type: string
+                      example: 新規事業のフロントサイドエンジニア
+                    work_conditions:
+                      type: string
+                      example: 保険・交通費とか諸々
+                    qualification_requirement:
+                      type: string
+                      example: ・大卒以上　・40歳未満
+                    is_public:
+                      type: boolean
+                      default: 'true'
+                      example: 'true'
+    delete:
+      summary: 募集を削除する
+      operationId: delete-recruitments-id
+      responses:
+        '204':
+          description: No Content
+  '/accounts/{account_id}/interested_lists':
+    parameters:
+      - schema:
+          type: string
+        name: account_id
+        in: path
+        required: true
+    get:
+      summary: アカウントの気になるリスト一覧を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  interested_lists:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1interested_lists~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+      operationId: get-accounts-account_id-intested_list
+      parameters: []
+    post:
+      summary: アカウントの気になるリストを作成する
+      operationId: post-accounts-account_id-intested_list
+      responses:
+        '201':
+          description: Created
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                interested_list:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    recruitment_ids:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                  required:
+                    - name
+        description: ''
+  '/interested_lists/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    delete:
+      summary: 「気になるリスト」を削除する
+      operationId: delete-accounts-account_id-interested_list-id
+      responses:
+        '204':
+          description: No Content
+    patch:
+      summary: 「気になるリスト」を更新する
+      operationId: patch-accounts-account_id-interested_list-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1interested_lists~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                interested_list:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    recruitments:
+                      type: array
+                      items:
+                        $ref: '#/paths/~1recruitments~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+    get:
+      summary: 「気になるリスト」を取得する
+      operationId: get-accounts-account_id-interested_lists-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: InterestedList
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  name:
+                    type: string
+                    example: バックエンドエンジニア募集リスト
+                  account:
+                    $ref: '#/paths/~1accounts~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+                  recruitments:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1recruitments~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+                required:
+                  - id
+                  - name
+                  - account
+  '/accounts/{account_id}/followings':
+    parameters:
+      - schema:
+          type: string
+        name: account_id
+        in: path
+        required: true
+    get:
+      summary: アカウントのフォロー一覧を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  followings:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1companies~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+      operationId: get-accounts-account_id-following
+    post:
+      summary: アカウントのフォローを作成する
+      operationId: post-accounts-account_id-following
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1companies~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                following:
+                  type: object
+                  properties:
+                    company_id:
+                      type: string
+                      format: uuid
+                  required:
+                    - company_id
+  '/followings/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    delete:
+      summary: フォローを削除する
+      operationId: delete-accounts-account_id-following-id
+      responses:
+        '204':
+          description: No Content
+  /recruitments:
+    get:
+      summary: 募集一覧（募集検索）を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  recruitments:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1recruitments~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+      operationId: get-recruitments
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: 'occupation_ids[]'
+          description: 職種
+        - schema:
+            type: string
+          in: query
+          name: 'industry_ids[]'
+          description: 業種
+        - schema:
+            type: string
+          in: query
+          name: 'workplace_ids[]'
+          description: 勤務地
+        - schema:
+            type: string
+          in: query
+          name: 'employment_status_ids[]'
+          description: 雇用形態
+        - schema:
+            type: string
+          in: query
+          name: type
+          description: タイプ
+        - schema:
+            type: integer
+          in: query
+          name: max_income
+          description: 最高金額
+        - schema:
+            type: integer
+          in: query
+          name: min_income
+          description: 最低金額
+        - schema:
+            type: string
+          in: query
+          name: keyword
+          description: キーワード
+  '/accounts/{account_id}/notifications':
+    parameters:
+      - schema:
+          type: string
+        name: account_id
+        in: path
+        required: true
+    get:
+      summary: アカウントの通知一覧を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  account_notifications:
+                    type: array
+                    items:
+                      title: AccountNotification
+                      type: object
+                      description: STIを使って実装する
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                        content:
+                          type: string
+                          example: XXさんからスカウトが届きました。
+                        created_at:
+                          type: string
+                          format: date-time
+                          example: '2020-05-10T13:50:40+09:00'
+                        is_read:
+                          type: boolean
+                          default: 'false'
+                          example: 'false'
+                          description: 「未読」「既読」
+                      required:
+                        - id
+                        - content
+                        - created_at
+                        - is_read
+      operationId: get-accounts-account_id-notifications
+  '/accounts/{account_id}/rooms':
+    parameters:
+      - schema:
+          type: string
+        name: account_id
+        in: path
+        required: true
+    get:
+      summary: アカウントのトークルーム一覧を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  rooms:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1rooms~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+      operationId: get-accounts-account_id-messages
+    post:
+      summary: トークルームを作成する
+      operationId: post-accounts-account_id-rooms
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1rooms~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                room:
+                  type: object
+                  properties:
+                    company_id:
+                      type: string
+                      format: uuid
+                  required:
+                    - company_id
+  '/rooms/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: トークルームを取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: Room
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  account:
+                    $ref: '#/paths/~1accounts~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+                  company:
+                    $ref: '#/paths/~1companies~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+                required:
+                  - id
+                  - account
+                  - company
+      operationId: get-accounts-account_id-rooms-id
+  '/rooms/{room_id}/messages':
+    parameters:
+      - schema:
+          type: string
+        name: room_id
+        in: path
+        required: true
+    get:
+      summary: ルームのメッセージ一覧を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  messages:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1messages~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+      operationId: get-accounts-account_id-rooms-room_id-messages
+    post:
+      summary: ルームのメッセージを作成する
+      operationId: post-accounts-account_id-rooms-room_id-messages
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1messages~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: object
+                  properties:
+                    account_id:
+                      type: string
+                      format: uuid
+                    content:
+                      type: string
+                      example: 初めまして。XXXと申します。
+                    attachment:
+                      type: object
+                      description: 添付ファイルのこと、つかいたかはSpecのREADME見て
+                  required:
+                    - account_id
+                    - content
+  '/messages/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: メッセージを取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: Message
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  content:
+                    type: string
+                    example: お世話になっております。株式会社XXXのXXXです。
+                  account:
+                    $ref: '#/paths/~1accounts~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+                  room:
+                    $ref: '#/paths/~1rooms~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+                required:
+                  - id
+                  - content
+                  - account
+                  - room
+      operationId: get-accounts-account_id-rooms-room_id-messages-id
+  '/accounts/{account_id}/applicants':
+    parameters:
+      - schema:
+          type: string
+        name: account_id
+        in: path
+        required: true
+    get:
+      summary: アカウントの応募一覧を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  applicants:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1accounts~1%7Baccount_id%7D~1applicants/post/responses/201/content/application~1json/schema'
+      operationId: get-accounts-account_id-applicants
+    post:
+      summary: アカウントの応募を作成する
+      operationId: post-accounts-account_id-applicants
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                title: Applicant
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  recruitment:
+                    $ref: '#/paths/~1recruitments~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+                  account:
+                    $ref: '#/paths/~1accounts~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+                  applicant_status:
+                    type: string
+                    enum:
+                      - applied
+                      - contacting
+                      - certificated
+                    description: 求職者側のみ存在、「応募中」「連絡中」「確定済み」
+                  management_status:
+                    type: string
+                    enum:
+                      - backlog
+                      - in_progress
+                      - closed
+                      - signed
+                    description: '採用側の場合のみ存在、未対応, 対応中, 対応済み, 採用・契約締結済み'
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                required:
+                  - id
+                  - recruitment
+                  - account
+                  - applicant_status
+                  - management_status
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                applicant:
+                  type: object
+                  properties:
+                    recruitment_id:
+                      type: string
+                      format: uuid
+                    motivation:
+                      type: string
+                      enum:
+                        - immediately
+                        - hear_the_story
+                        - just_curious
+                      example: immediately
+                  required:
+                    - recruitment_id
+                    - motivation
+        description: ''
+  '/work_histories/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: 職歴を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: WorkHistory
+                type: object
+                x-examples: {}
+                description: ''
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  is_employed:
+                    type: boolean
+                    description: 「在職中」「離職中」
+                    example: 'true'
+                    default: 'true'
+                  occupation:
+                    $ref: '#/paths/~1recruitments~1%7Bid%7D/get/responses/200/content/application~1json/schema/properties/occupation'
+                  industry:
+                    $ref: '#/paths/~1recruitments~1%7Bid%7D/get/responses/200/content/application~1json/schema/properties/industry'
+                  position:
+                    type: string
+                    example: 主任
+                  annual_income:
+                    type: number
+                    example: 4000000
+                  management_experience:
+                    type: integer
+                    example: 3
+                  job_summary:
+                    type: string
+                    example: Ruby on Railsを使ったバックエンド開発
+                  since_date:
+                    type: string
+                    format: date
+                    example: '2019-08-01'
+                  until_date:
+                    format: date
+                    example: '2020-05-01'
+                    type: string
+                  name:
+                    type: string
+                    example: 株式会社SIMULA Labs
+                required:
+                  - id
+                  - is_employed
+                  - occupation
+                  - industry
+                  - position
+                  - annual_income
+                  - management_experience
+                  - since_date
+                  - name
+      operationId: get-work_histories-id
+    patch:
+      summary: 職歴を更新する
+      operationId: patch-work_histories-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1work_histories~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                work_history:
+                  type: object
+                  properties:
+                    is_employed:
+                      type: boolean
+                      description: 「在職中」「離職中」
+                      example: 'true'
+                      default: 'true'
+                    occupation_id:
+                      type: string
+                      format: uuid
+                    industry_id:
+                      type: string
+                      format: uuid
+                    position:
+                      type: string
+                      example: 主任
+                    annual_income:
+                      type: number
+                      example: 4000000
+                    management_experience:
+                      type: integer
+                      example: 3
+                    job_summary:
+                      type: string
+                      example: Ruby on Railsを使ったバックエンド開発
+                    since_date:
+                      type: string
+                      format: date
+                      example: '2019-08-01'
+                    until_date:
+                      format: date
+                      example: '2020-05-01'
+                      type: string
+                    name:
+                      type: string
+                      example: 株式会社SIMULA Labs
+    delete:
+      summary: 職歴を削除する
+      operationId: delete-work_histories-id
+      responses:
+        '204':
+          description: No Content
+  '/academic_histories/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: 学歴を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: AcademicHistory
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  name:
+                    type: string
+                    example: 明治大学
+                  faculty:
+                    type: string
+                    example: 情報コミュニケーション学部
+                  since_date:
+                    type: string
+                    format: date
+                    example: 2008-04
+                  until_date:
+                    type: string
+                    format: date
+                    example: 2012-03
+                  type:
+                    type: string
+                    example: university
+                    enum:
+                      - graduate_school
+                      - university
+                      - vocational_school
+                      - junior_college
+                      - high_school
+                    description: 「大学院」「大学」「専門学校」「短期大学」「高校」
+                required:
+                  - id
+                  - name
+                  - since_date
+                  - until_date
+                  - type
+      operationId: get-academic_histories-id
+    patch:
+      summary: 学歴を更新する
+      operationId: patch-academic_histories-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1academic_histories~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                academic_history:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: 明治大学
+                    faculty:
+                      type: string
+                      example: 情報コミュニケーション学部
+                    since_date:
+                      type: string
+                      format: date
+                      example: 2008-04
+                    until_date:
+                      type: string
+                      format: date
+                      example: 2012-03
+                    type:
+                      type: string
+                      example: university
+                      enum:
+                        - graduate_school
+                        - university
+                        - vocational_school
+                        - junior_college
+                        - high_school
+                      description: 「大学院」「大学」「専門学校」「短期大学」「高校」
+    delete:
+      summary: 学歴を削除する
+      operationId: delete-academic_histories-id
+      responses:
+        '204':
+          description: No Content
+  '/accounts/{account_id}/work_histories':
+    parameters:
+      - schema:
+          type: string
+        name: account_id
+        in: path
+        required: true
+    get:
+      summary: アカウントの職歴一覧を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  work_histories:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1work_histories~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+      operationId: get-accounts-account_id-work_histories
+    post:
+      summary: アカウントの職歴を作成する
+      operationId: post-accounts-account_id-work_histories
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1work_histories~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                work_history:
+                  type: object
+                  properties:
+                    is_employed:
+                      type: boolean
+                      description: 「在職中」「離職中」
+                      example: 'true'
+                      default: 'true'
+                    occupation_id:
+                      type: string
+                      format: uuid
+                    industry_id:
+                      type: string
+                      format: uuid
+                    position:
+                      type: string
+                      example: 主任
+                    annual_income:
+                      type: number
+                      example: 4000000
+                    management_experience:
+                      type: integer
+                      example: 3
+                    job_summary:
+                      type: string
+                      example: Ruby on Railsを使ったバックエンド開発
+                    since_date:
+                      type: string
+                      format: date
+                      example: '2019-08-01'
+                    until_date:
+                      format: date
+                      example: '2020-05-01'
+                      type: string
+                    name:
+                      type: string
+                      example: 株式会社SIMULA Labs
+                  required:
+                    - is_employed
+                    - occupation_id
+                    - industry_id
+                    - position
+                    - annual_income
+                    - management_experience
+                    - since_date
+                    - name
+        description: ''
+  '/accounts/{account_id}/academic_histories':
+    parameters:
+      - schema:
+          type: string
+        name: account_id
+        in: path
+        required: true
+    get:
+      summary: アカウントの学歴一覧を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  academic_histories:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1academic_histories~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+      operationId: get-accounts-account_id-academic_histories
+    post:
+      summary: アカウントの学歴を作成する
+      operationId: post-accounts-account_id-academic_histories
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1academic_histories~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                academic_history:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: 明治大学
+                    faculty:
+                      type: string
+                      example: 情報コミュニケーション学部
+                    since_date:
+                      type: string
+                      format: date
+                      example: 2008-04
+                    until_date:
+                      type: string
+                      format: date
+                      example: 2012-03
+                    type:
+                      type: string
+                      example: university
+                      enum:
+                        - graduate_school
+                        - university
+                        - vocational_school
+                        - junior_college
+                        - high_school
+                      description: 「大学院」「大学」「専門学校」「短期大学」「高校」
+                  required:
+                    - name
+                    - since_date
+                    - until_date
+                    - type
+        description: ''
+  '/accounts/{account_id}/profile':
+    parameters:
+      - schema:
+          type: string
+        name: account_id
+        in: path
+        required: true
+    get:
+      summary: アカウントのプロフィールを取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: AccountProfile
+                type: object
+                x-tags:
+                  - Account
+                description: STIを使って実装する
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  first_name:
+                    type: string
+                    example: 太郎
+                  last_name:
+                    type: string
+                    example: 山田
+                  first_name_kana:
+                    type: string
+                    example: タロウ
+                  last_name_kana:
+                    type: string
+                    example: ヤマダ
+                  gender:
+                    type: string
+                    enum:
+                      - MALE
+                      - FEMALE
+                      - OTHER
+                    example: MALE
+                  phone:
+                    type: string
+                    example: 090-XXXX-XXXX
+                  postal_code:
+                    type: string
+                    example: 107-0051
+                  address:
+                    type: string
+                    example: 東京都港区元赤坂1-7-18
+                  date_of_birth:
+                    type: string
+                    format: date
+                    description: ''
+                  biography:
+                    type: string
+                    example: 自己PR/紹介
+                required:
+                  - id
+                  - first_name
+                  - last_name
+                  - first_name_kana
+                  - last_name_kana
+                  - gender
+                  - phone
+                  - postal_code
+                  - address
+                  - date_of_birth
+                  - biography
+      operationId: get-accounts-account_id-profile
+    post:
+      summary: アカウントのプロフィールを作成する
+      operationId: post-accounts-account_id-profile
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1accounts~1%7Baccount_id%7D~1profile/get/responses/200/content/application~1json/schema'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                profile:
+                  type: object
+                  properties:
+                    first_name:
+                      type: string
+                      example: 太郎
+                    last_name:
+                      type: string
+                      example: 山田
+                    first_name_kana:
+                      type: string
+                      example: タロウ
+                    last_name_kana:
+                      type: string
+                      example: ヤマダ
+                    gender:
+                      type: string
+                      enum:
+                        - MALE
+                        - FEMALE
+                        - OTHER
+                      example: MALE
+                    phone:
+                      type: string
+                      example: 090-XXXX-XXXX
+                    postal_code:
+                      type: string
+                      example: 107-0051
+                    address:
+                      type: string
+                      example: 東京都港区元赤坂1-7-18
+                    birth_of_date:
+                      type: string
+                      format: date
+                    biography:
+                      type: string
+                      example: 自己PR/紹介
+                  required:
+                    - first_name
+                    - last_name
+                    - first_name_kana
+                    - last_name_kana
+                    - gender
+                    - phone
+                    - postal_code
+                    - address
+                    - birth_of_date
+                    - biography
+        description: ''
+    patch:
+      summary: アカウントのプロフィールを更新する
+      operationId: patch-accounts-account_id-profile
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1accounts~1%7Baccount_id%7D~1profile/get/responses/200/content/application~1json/schema'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                profile:
+                  type: object
+                  properties:
+                    first_name:
+                      type: string
+                      example: 太郎
+                    last_name:
+                      type: string
+                      example: 山田
+                    first_name_kana:
+                      type: string
+                      example: タロウ
+                    last_name_kana:
+                      type: string
+                      example: ヤマダ
+                    gender:
+                      type: string
+                      enum:
+                        - MALE
+                        - FEMALE
+                        - OTHER
+                      example: MALE
+                    phone:
+                      type: string
+                      example: 090-XXXX-XXXX
+                    nationality:
+                      type: string
+                      example: JP
+                    place_of_residence:
+                      type: string
+                      example: 東京都
+                    postal_code:
+                      type: string
+                      example: 107-0051
+                    address:
+                      type: string
+                      example: 東京都港区元赤坂1-7-18
+                    english_skill:
+                      type: string
+                      description: 「日常会話レベル」「ビジネス会話レベル」「ネイティブレベル」
+                      enum:
+                        - daily_conversation
+                        - business_conversation
+                        - native
+                      example: daily_conversation
+                    birth_of_date:
+                      type: string
+                      format: date
+                    biography:
+                      type: string
+                      example: 自己PR/紹介
+        description: ''
+  /occupation_main_categories:
+    get:
+      summary: 職種一覧を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  occupation_main_categories:
+                    type: array
+                    items:
+                      title: OccupationMainCategory
+                      type: object
+                      description: 職種「大項目」
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                        name:
+                          type: string
+                          example: コンサル
+                        occupation_sub_categories:
+                          type: array
+                          items:
+                            title: OccupationSubCategory
+                            type: object
+                            description: 職種「中項目」
+                            properties:
+                              id:
+                                type: string
+                                format: uuid
+                              name:
+                                type: string
+                                example: ビジネスコンサルタント
+                              occupations:
+                                format: uuid
+                                type: array
+                                items:
+                                  $ref: '#/paths/~1recruitments~1%7Bid%7D/get/responses/200/content/application~1json/schema/properties/occupation'
+                            required:
+                              - id
+                              - name
+                      required:
+                        - id
+                        - name
+      operationId: get-occupation_main_categories
+      description: 「大項目」「中項目」「小項目」まとめて全部取得する
+  /industry_categories:
+    get:
+      summary: 業種一覧を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  industry_categories:
+                    type: array
+                    items:
+                      title: IndustryCategory
+                      type: object
+                      description: 業種カテゴリー
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                        name:
+                          type: string
+                          example: 金融・保険
+                        industries:
+                          type: array
+                          items:
+                            $ref: '#/paths/~1recruitments~1%7Bid%7D/get/responses/200/content/application~1json/schema/properties/industry'
+                      required:
+                        - id
+                        - name
+      operationId: get-industry_categories
+      description: 業種まとめて全部取得する
+  /employment_statuses:
+    get:
+      summary: 雇用形態一覧を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  employment_statuses:
+                    type: array
+                    items:
+                      title: EmploymentStatus
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                          example: 正社員
+                      required:
+                        - id
+                        - name
+      operationId: get-employment_statuses
+      parameters:
+        - schema:
+            type: string
+            enum:
+              - project
+              - career
+          in: query
+          name: type
+    parameters: []
+  '/interested_lists/{interested_list_id}/recruitments':
+    parameters:
+      - schema:
+          type: string
+        name: interested_list_id
+        in: path
+        required: true
+    post:
+      summary: 気になるリストに募集を追加する
+      operationId: post-interested_lists-interested_list_id-recruitments
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1interested_lists~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                interested_list:
+                  type: object
+                  properties:
+                    recruitment_id:
+                      type: string
+                      format: uuid
+                  required:
+                    - recruitment_id
+  '/interested_lists/{interested_list_id}/recruitments/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: interested_list_id
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    delete:
+      summary: 気になるリストから募集を削除する
+      operationId: delete-interested_lists-interested_list_id-recruitments-id
+      responses:
+        '204':
+          description: No Content
+  '/companies/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: 企業取得
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: Company
+                type: object
+                description: ''
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  name:
+                    type: string
+                    example: 株式会社SIMULA Labs
+                  name_kana:
+                    type: string
+                    example: 'シミュララボ '
+                  head_office_location:
+                    type: string
+                    example: 東京都港区元赤坂1-7-18
+                  year_of_establishment:
+                    type: string
+                    format: date
+                    example: '2015'
+                  hp_url:
+                    type: string
+                    format: uri
+                    example: 'https://simula-labs.com/'
+                  phone:
+                    type: string
+                    example: 03-1234-5678
+                  capital:
+                    type: integer
+                    example: 1520
+                  is_listed:
+                    type: boolean
+                    default: 'false'
+                    example: 'false'
+                  representative:
+                    type: string
+                    example: 牧野暉弘
+                  representative_kana:
+                    type: string
+                    example: まきのあきひろ
+                  net_sales:
+                    type: string
+                    example: '5000'
+                  numbers_of_employees:
+                    type: string
+                    example: '20'
+                  average_age:
+                    type: integer
+                    example: 28
+                  business_summary:
+                    type: string
+                    example: 事業概要
+                  corporate_pr:
+                    type: string
+                    maxLength: 500
+                    example: ヒトが生涯の中で最も長く過ごす「働く」という時間。 日本の場合、この働く時間をどう過ごすかはほとんど就活の間に決まってしまっていると言ってもいいでしょう。
+                  industries:
+                    type: array
+                    description: ''
+                    items:
+                      $ref: '#/paths/~1recruitments~1%7Bid%7D/get/responses/200/content/application~1json/schema/properties/industry'
+                  cover_image_url:
+                    type: string
+                required:
+                  - id
+                  - name
+                  - name_kana
+                  - head_office_location
+                  - year_of_establishment
+                  - capital
+                  - is_listed
+                  - representative
+                  - representative_kana
+                  - business_summary
+      operationId: get-companies-id
+      description: ''
+  /companies:
+    get:
+      summary: 企業一覧取得
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  companies:
+                    $ref: '#/paths/~1companies~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+      operationId: get-companies
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: keyword
+          description: 検索キーワード
+    post:
+      summary: 企業を作成する
+      operationId: post-companies
+      responses:
+        '201':
+          description: Created
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                company:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: 株式会社SIMULA Labs
+                    name_kana:
+                      type: string
+                      example: 'シミュララボ '
+                    head_office_location:
+                      type: string
+                      example: 東京都港区元赤坂1-7-18
+                    year_of_establishment:
+                      type: string
+                      format: date
+                      example: '2015'
+                    hp_url:
+                      type: string
+                      format: uri
+                      example: 'https://simula-labs.com/'
+                    phone:
+                      type: string
+                      example: 03-1234-5678
+                    capital:
+                      type: number
+                      example: 1520
+                    is_listed:
+                      type: boolean
+                      default: 'false'
+                      example: 'false'
+                    representative:
+                      type: string
+                      example: 牧野暉弘
+                    representative_kana:
+                      type: string
+                      example: まきのあきひろ
+                    net_sales:
+                      type: string
+                      example: '5000'
+                    numbers_of_employees:
+                      type: string
+                      example: '20'
+                    average_age:
+                      type: integer
+                      example: 28
+                    feature_ids:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                    business_summary:
+                      type: string
+                      example: 事業概要
+                    corporate_pr:
+                      type: string
+                      maxLength: 500
+                      example: ヒトが生涯の中で最も長く過ごす「働く」という時間。 日本の場合、この働く時間をどう過ごすかはほとんど就活の間に決まってしまっていると言ってもいいでしょう。
+                    cover_image:
+                      type: string
+                      description: 画像も投稿したい時はform-dataで投げて
+                    logo:
+                      type: string
+                      description: 画像も投稿したい時はform-dataで投げて
+                  required:
+                    - name
+                    - name_kana
+                    - head_office_location
+                    - year_of_establishment
+                    - capital
+                    - is_listed
+                    - representative
+                    - representative_kana
+                    - business_summary
+                employment:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      format: email
+                      example: sample@example.com
+                  required:
+                    - email
+  '/accounts/{account_id}/mark_as_read':
+    parameters:
+      - schema:
+          type: string
+        name: account_id
+        in: path
+        required: true
+    post:
+      summary: 通知に既読をつける
+      operationId: post-accounts-account_id-mark_as_read
+      responses:
+        '204':
+          description: No Content
+  '/accounts/{account_id}/hopes':
+    parameters:
+      - schema:
+          type: string
+        name: account_id
+        in: path
+        required: true
+    post:
+      summary: アカウントの希望条件を作成する
+      tags: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1hopes~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+      operationId: post-accounts-account_id-hopes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hope:
+                  type: object
+                  required:
+                    - time_to_change_job
+                    - annual_income
+                    - type
+                    - workplace_id
+                    - employment_status_ids
+                    - occupation_ids
+                  properties:
+                    time_to_change_job:
+                      type: number
+                      description: 何ヶ月以内に転職したいか
+                    annual_income:
+                      type: number
+                    type:
+                      type: string
+                      enum:
+                        - career
+                        - project
+                    workplace_id:
+                      type: string
+                      format: uuid
+                      description: StateのID
+                    employment_status_ids:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                    occupation_ids:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+              required:
+                - hope
+    get:
+      summary: アカウントの希望一覧を取得する
+      operationId: get-accounts-account_id-hope
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  hopes:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1hopes~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+  /companies/recommended:
+    get:
+      summary: おすすめの企業一覧を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/paths/~1companies~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+      operationId: get-companies-recommended
+      description: 希望の職種・雇用形態からおすすめの企業をいくつか取得する
+  /recruitments/recommended:
+    get:
+      summary: おすすめの募集一覧を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/paths/~1recruitments~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+      operationId: get-recruitments-recommended
+      description: 希望の職種・募集形態からおすすめの募集をいくつか取得する
+  '/companies/{company_id}/recruitments':
+    parameters:
+      - schema:
+          type: string
+        name: company_id
+        in: path
+        required: true
+    get:
+      summary: 企業の募集一覧を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  recruitments:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1recruitments~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+      operationId: get-companies-company_id-recruitments
+  '/hopes/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: 希望条件を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: Hope
+                type: object
+                properties:
+                  id:
+                    type: string
+                  time_to_change_jobs:
+                    type: number
+                    description: 転職希望時期(Nヶ月以内)
+                  annual_income:
+                    type: number
+                  workplace:
+                    $ref: '#/paths/~1prefectures/get/responses/200/content/application~1json/schema/properties/prefectures/items'
+                  occupations:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1recruitments~1%7Bid%7D/get/responses/200/content/application~1json/schema/properties/occupation'
+                  employment_statuses:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1employment_statuses/get/responses/200/content/application~1json/schema/properties/employment_statuses/items'
+                  account:
+                    $ref: '#/paths/~1accounts~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+                required:
+                  - id
+                  - account
+      operationId: get-hopes-id
+    patch:
+      summary: 希望条件を更新する
+      operationId: patch-hopes-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1hopes~1%7Bid%7D/get/responses/200/content/application~1json/schema'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hope:
+                  type: object
+                  properties:
+                    time_to_change_job:
+                      type: number
+                      description: 何ヶ月以内に転職したいか
+                    annual_income:
+                      type: number
+                    type:
+                      type: string
+                      enum:
+                        - career
+                        - project
+                    workplace_id:
+                      type: string
+                      format: uuid
+                      description: StateのID
+                    employment_status_ids:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                    occupation_ids:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+  /prefectures:
+    get:
+      summary: 都道府県一覧を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  prefectures:
+                    type: array
+                    items:
+                      title: Prefecture
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                          example: 東京
+                      required:
+                        - id
+                        - name
+      operationId: get-prefectures
+components:
+  schemas: {}
+  securitySchemes: {}

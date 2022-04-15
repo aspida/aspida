@@ -1,0 +1,105 @@
+openapi: 3.0.0
+info:
+  title: EnterpriseAuth
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000/enterprise_auth/v1'
+    description: local
+  - url: 'https://api.gulliver-works.com/enterprise_auth/v1'
+    description: Prd
+  - url: 'https://api-stg.gulliver-works.com/enterprise_auth/v1'
+    description: Stg
+  - url: 'https://api-dev.gulliver-works.com/enterprise_auth/v1'
+    description: Dev
+paths:
+  /sign_up:
+    post:
+      summary: Sign Up
+      operationId: post-sign_up
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeWithToken.yaml'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                employee:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    password:
+                      type: string
+                  required:
+                    - email
+                    - password
+  /sign_in:
+    post:
+      summary: Sign In
+      operationId: post-sign_in
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeWithToken.yaml'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                employee:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    password:
+                      type: string
+                  required:
+                    - email
+                    - password
+components:
+  schemas:
+    EmployeeWithToken.yaml:
+      title: EmployeeWithToken.yaml
+      type: object
+      properties:
+        employee:
+          title: Employee
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            email:
+              type: string
+              format: email
+              example: test@example.com
+            email_verification_status:
+              type: string
+              example: verified
+              enum:
+                - unspecified
+                - request
+                - verified
+              default: unspecified
+            email_verification_token:
+              type: string
+              format: uuid
+            last_notification_read_at:
+              type: string
+              format: date
+          required:
+            - id
+            - email
+            - email_verification_status
+        token:
+          type: string

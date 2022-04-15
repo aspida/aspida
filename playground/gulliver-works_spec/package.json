@@ -1,0 +1,40 @@
+{
+  "name": "gulliver-works_spec",
+  "version": "1.0.0",
+  "description": "NameSpaceごとにモックサーバーを立ててあります。 下記のオリジンをbaseURLにして、各エンドポイントにリクエストを送れば、レスポンスが返ってきます。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "integrate:application": "openapi-generator-cli generate -g openapi -i reference/Application.v1.yaml -o codegen/generated/application",
+    "integrate:auth": "openapi-generator-cli generate -g openapi -i reference/Auth.v1.yaml -o codegen/generated/auth",
+    "integrate:enterprise": "openapi-generator-cli generate -g openapi -i reference/Enterprise.v1.yaml -o codegen/generated/enterprise",
+    "integrate:all": "npm run integrate:application && npm run integrate:auth && npm run integrate:enterprise",
+    "generate:application": "openapi2aspida -i ./codegen/generated/application/openapi.json -o codegen/aspida/application",
+    "generate:auth": "openapi2aspida -i ./codegen/generated/auth/openapi.json -o codegen/aspida/auth",
+    "generate:enterprise": "openapi2aspida -i ./codegen/generated/enterprise/openapi.json -o codegen/aspida/enterprise",
+    "generate:all": "rm -rf codegen/aspida && npm run generate:application && npm run generate:auth && npm run generate:enterprise",
+    "generate": "npm run integrate:all && npm run generate:all"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coadmap/gulliver-works_spec.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/coadmap/gulliver-works_spec/issues"
+  },
+  "homepage": "https://github.com/coadmap/gulliver-works_spec#readme",
+  "dependencies": {
+    "@aspida/axios": "file:../../packages/aspida-axios",
+    "axios": "^0.26.1",
+    "humps": "^2.0.1"
+  },
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.4.26",
+    "@types/humps": "^2.0.1",
+    "openapi-generator": "^0.1.39",
+    "openapi2aspida": "file:../../packages/openapi2aspida"
+  }
+}

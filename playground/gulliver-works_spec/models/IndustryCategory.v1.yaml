@@ -1,0 +1,17 @@
+title: IndustryCategory
+type: object
+description: 業種カテゴリー
+properties:
+  id:
+    type: string
+    format: uuid
+  name:
+    type: string
+    example: 金融・保険
+  industries:
+    type: array
+    items:
+      $ref: ./Industry.v1.yaml
+required:
+  - id
+  - name

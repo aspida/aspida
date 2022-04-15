@@ -1,0 +1,117 @@
+{
+  "name": "openapi2aspida",
+  "version": "0.17.0",
+  "description": "Convert OpenAPI 3.0 or Swagger 2.0 definitions into aspida",
+  "author": "Solufa <solufa2020@gmail.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "bin": "bin/index.js",
+  "scripts": {
+    "dev": "rm -rf generated && npm run build && node bin/index.js -i samples/gulliver-works/openapi.json -o generated --build",
+    "build": "npm run rimraf && tsc",
+    "rimraf": "node -e \"require('fs').rmdirSync('dist', { recursive: true })\"",
+    "release": "standard-version --skip.tag",
+    "release:major": "npm run release -- --release-as major",
+    "release:minor": "npm run release -- --release-as minor",
+    "release:patch": "npm run release -- --release-as patch",
+    "lint": "eslint --ext .ts . && prettier --check \"./**/*.ts\"",
+    "lint:fix": "eslint --ext .ts . --fix && prettier --write \"./**/*.ts\"",
+    "test": "jest",
+    "typecheck": "tsc --noEmit"
+  },
+  "homepage": "https://github.com/aspida/openapi2aspida#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aspida/openapi2aspida.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aspida/openapi2aspida/issues"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "typescript",
+    "aspida",
+    "openapi",
+    "swagger"
+  ],
+  "eslintConfig": {
+    "env": {
+      "es6": true,
+      "node": true,
+      "browser": true
+    },
+    "extends": [
+      "standard",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:jest/recommended",
+      "prettier"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2018,
+      "sourceType": "module"
+    },
+    "root": true,
+    "rules": {
+      "@typescript-eslint/no-non-null-assertion": "off",
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "@typescript-eslint/ban-ts-comment": "off",
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+      "@typescript-eslint/no-var-requires": "off",
+      "@typescript-eslint/ban-types": "off",
+      "@typescript-eslint/camelcase": "off",
+      "@typescript-eslint/no-explicit-any": "off"
+    }
+  },
+  "prettier": {
+    "printWidth": 100,
+    "semi": false,
+    "arrowParens": "avoid",
+    "singleQuote": true,
+    "trailingComma": "none",
+    "overrides": [
+      {
+        "files": [
+          "*.md",
+          "*.yml"
+        ],
+        "options": {
+          "singleQuote": false
+        }
+      }
+    ]
+  },
+  "dependencies": {
+    "aspida": "^1.9.0",
+    "fs-extra": "^10.0.0",
+    "humps": "^2.0.1",
+    "js-yaml": "^4.1.0",
+    "openapi-types": "^9.1.0",
+    "swagger-parser": "^10.0.3",
+    "swagger2openapi": "^7.0.8"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.12",
+    "@types/humps": "^2.0.1",
+    "@types/jest": "^27.4.1",
+    "@types/js-yaml": "^4.0.2",
+    "@types/minimist": "^1.2.2",
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "@typescript-eslint/parser": "^4.28.4",
+    "eslint": "^7.31.0",
+    "eslint-config-prettier": "^8.4.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jest": "^24.4.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-standard": "^5.0.0",
+    "jest": "^27.0.6",
+    "prettier": "^2.3.2",
+    "standard-version": "^9.3.1",
+    "ts-jest": "^27.0.4",
+    "ts-node": "^10.1.0",
+    "typescript": "^4.3.5"
+  }
+}

@@ -1,0 +1,11 @@
+title: Prefecture
+type: object
+properties:
+  id:
+    type: string
+  name:
+    type: string
+    example: 東京
+required:
+  - id
+  - name

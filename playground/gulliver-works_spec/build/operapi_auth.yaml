@@ -1,0 +1,292 @@
+openapi: 3.0.0
+info:
+  title: Auth
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000/auth/v1'
+    description: Local
+  - url: 'https://api-dev.gulliver-works.com/auth/v1'
+    description: Dev
+  - url: 'https://api-stg.gulliver-works.com/auth/v1'
+    description: Stg
+  - url: 'https://api.gulliver-works.com/auth/v1'
+    description: Prd
+paths:
+  /sign_in:
+    post:
+      summary: Sign In
+      operationId: post-sign_in
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountWithToken.yaml'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                account:
+                  type: object
+                  required:
+                    - email
+                    - password
+                  properties:
+                    email:
+                      type: string
+                      example: test@example.com
+                      format: email
+                    password:
+                      type: string
+                      format: password
+  /sign_up:
+    parameters: []
+    post:
+      summary: Sign Up
+      operationId: post-sign_up
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountWithToken.yaml'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                account:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      example: test@example.com
+                      format: email
+                    password:
+                      type: string
+                      format: password
+                  required:
+                    - email
+                    - password
+        description: ''
+components:
+  schemas:
+    AccountWithToken.yaml:
+      title: AccountWithToken.yaml
+      type: object
+      properties:
+        account:
+          title: Account
+          type: object
+          x-tags:
+            - Account
+          description: ''
+          properties:
+            id:
+              type: string
+              format: uuid
+            email:
+              type: string
+              format: email
+              example: test@example.com
+            email_verification_status:
+              type: string
+              example: verified
+              enum:
+                - unspecified
+                - request
+                - verified
+              default: unspecified
+            profile:
+              title: AccountProfile
+              type: object
+              x-tags:
+                - Account
+              description: STIを使って実装する
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                first_name:
+                  type: string
+                  example: 太郎
+                last_name:
+                  type: string
+                  example: 山田
+                first_name_kana:
+                  type: string
+                  example: タロウ
+                last_name_kana:
+                  type: string
+                  example: ヤマダ
+                gender:
+                  type: string
+                  enum:
+                    - MALE
+                    - FEMALE
+                    - OTHER
+                  example: MALE
+                phone:
+                  type: string
+                  example: 090-XXXX-XXXX
+                postal_code:
+                  type: string
+                  example: 107-0051
+                address:
+                  type: string
+                  example: 東京都港区元赤坂1-7-18
+                date_of_birth:
+                  type: string
+                  format: date
+                  description: ''
+                biography:
+                  type: string
+                  example: 自己PR/紹介
+              required:
+                - id
+                - first_name
+                - last_name
+                - first_name_kana
+                - last_name_kana
+                - gender
+                - phone
+                - postal_code
+                - address
+                - date_of_birth
+                - biography
+            work_histories:
+              type: array
+              items:
+                title: WorkHistory
+                type: object
+                x-examples: {}
+                description: ''
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  is_employed:
+                    type: boolean
+                    description: 「在職中」「離職中」
+                    example: 'true'
+                    default: 'true'
+                  occupation:
+                    title: Occupation
+                    type: object
+                    description: 職種
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                      name:
+                        type: string
+                        example: 戦略・経営コンサルタント
+                    required:
+                      - id
+                      - name
+                  industry:
+                    title: Industry
+                    type: object
+                    description: 業種
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                      name:
+                        type: string
+                        example: 銀行・信託銀行
+                    required:
+                      - id
+                      - name
+                  position:
+                    type: string
+                    example: 主任
+                  annual_income:
+                    type: number
+                    example: 4000000
+                  management_experience:
+                    type: integer
+                    example: 3
+                  job_summary:
+                    type: string
+                    example: Ruby on Railsを使ったバックエンド開発
+                  since_date:
+                    type: string
+                    format: date
+                    example: '2019-08-01'
+                  until_date:
+                    format: date
+                    example: '2020-05-01'
+                    type: string
+                  name:
+                    type: string
+                    example: 株式会社SIMULA Labs
+                required:
+                  - id
+                  - is_employed
+                  - occupation
+                  - industry
+                  - position
+                  - annual_income
+                  - management_experience
+                  - since_date
+                  - name
+            academic_histories:
+              type: array
+              items:
+                title: AcademicHistory
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  name:
+                    type: string
+                    example: 明治大学
+                  faculty:
+                    type: string
+                    example: 情報コミュニケーション学部
+                  since_date:
+                    type: string
+                    format: date
+                    example: 2008-04
+                  until_date:
+                    type: string
+                    format: date
+                    example: 2012-03
+                  type:
+                    type: string
+                    example: university
+                    enum:
+                      - graduate_school
+                      - university
+                      - vocational_school
+                      - junior_college
+                      - high_school
+                    description: 「大学院」「大学」「専門学校」「短期大学」「高校」
+                required:
+                  - id
+                  - name
+                  - since_date
+                  - until_date
+                  - type
+            email_verification_token:
+              type: string
+              format: uuid
+            last_notification_read_at:
+              type: string
+              format: date
+          required:
+            - id
+            - email
+            - email_verification_status
+            - profile
+            - academic_histories
+        token:
+          type: string

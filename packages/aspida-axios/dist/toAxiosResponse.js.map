@@ -1,0 +1,1 @@
+{"version":3,"file":"toAxiosResponse.js","sourceRoot":"","sources":["../src/toAxiosResponse.ts"],"names":[],"mappings":";;AAGA,mBAAe,UAAC,OAAqB,EAAE,MAA0B,IAAoB,OAAA,CAAC;IACpF,MAAM,EAAE,OAAO,CAAC,MAAM;IACtB,UAAU,EAAE,UAAG,OAAO,CAAC,MAAM,CAAE;IAC/B,IAAI,EAAE,OAAO,CAAC,OAAO;IACrB,OAAO,EAAE,OAAO,CAAC,UAAU;IAC3B,MAAM,QAAA;CACP,CAAC,EANmF,CAMnF,EAAA"}

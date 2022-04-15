@@ -1,0 +1,31 @@
+title: Applicant
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+  recruitment:
+    $ref: ./Recruitment.v1.yaml
+  account:
+    $ref: ./Account.v1.yaml
+  management_status:
+    type: string
+    enum:
+      - backlog
+      - in_progress
+      - closed
+      - signed
+    description: '採用側の場合のみ存在、未対応, 対応中, 対応済み, 採用・契約締結済み'
+    default: backlog
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+required:
+  - id
+  - recruitment
+  - account
+  - management_status
+description: ''

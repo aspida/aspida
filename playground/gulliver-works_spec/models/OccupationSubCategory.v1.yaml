@@ -1,0 +1,18 @@
+title: OccupationSubCategory
+type: object
+description: 職種「中項目」
+properties:
+  id:
+    type: string
+    format: uuid
+  name:
+    type: string
+    example: ビジネスコンサルタント
+  occupations:
+    format: uuid
+    type: array
+    items:
+      $ref: ./Occupation.v1.yaml
+required:
+  - id
+  - name

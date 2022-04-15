@@ -1,0 +1,50 @@
+title: WorkHistory
+type: object
+x-examples: {}
+description: dateの日付は月初で統一
+properties:
+  id:
+    type: string
+    format: uuid
+  is_employed:
+    type: boolean
+    description: 「在職中」「離職中」
+    example: 'true'
+    default: 'true'
+  occupation:
+    $ref: ./Occupation.v1.yaml
+  industry:
+    $ref: ./Industry.v1.yaml
+  position:
+    type: string
+    example: 主任
+  annual_income:
+    type: number
+    example: 4000000
+  management_experience:
+    type: integer
+    example: 3
+  job_summary:
+    type: string
+    example: Ruby on Railsを使ったバックエンド開発
+  since_date:
+    type: string
+    format: date
+    example: '2019-08-01'
+  until_date:
+    format: date
+    example: '2020-05-01'
+    type: string
+  name:
+    type: string
+    example: 株式会社SIMULA Labs
+required:
+  - id
+  - is_employed
+  - occupation
+  - industry
+  - position
+  - annual_income
+  - management_experience
+  - since_date
+  - name

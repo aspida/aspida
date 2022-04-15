@@ -1,0 +1,926 @@
+openapi: 3.0.0
+info:
+  title: Enterprise
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000/enterprise/v1'
+    description: local
+  - url: 'https://api.gulliver-works.com/enterprise/v1'
+    description: Prd
+  - url: 'https://api-stg.gulliver-works.com/enterprise/v1'
+    description: Stg
+  - url: 'https://api-dev.gulliver-works.com/enterprise/v1'
+    description: Dev
+paths:
+  /companies:
+    get:
+      summary: 企業一覧を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  companies:
+                    type: array
+                    items:
+                      $ref: ../models/Company.v1.yaml
+      operationId: get-companies
+    post:
+      summary: 企業を作成する
+      operationId: post-companies
+      responses:
+        '201':
+          description: Created
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                company:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: 株式会社SIMULA Labs
+                    name_kana:
+                      type: string
+                      example: 'シミュララボ '
+                    head_office_location:
+                      type: string
+                      example: 東京都港区元赤坂1-7-18
+                    year_of_establishment:
+                      type: string
+                      format: date
+                      example: '2015'
+                    hp_url:
+                      type: string
+                      format: uri
+                      example: 'https://simula-labs.com/'
+                    phone:
+                      type: string
+                      example: 03-1234-5678
+                    capital:
+                      type: number
+                      example: 1520
+                    is_listed:
+                      type: boolean
+                      default: false
+                      example: 'false'
+                    representative:
+                      type: string
+                      example: 牧野暉弘
+                    representative_kana:
+                      type: string
+                      example: まきのあきひろ
+                    net_sales:
+                      type: string
+                      example: '5000'
+                    numbers_of_employees:
+                      type: string
+                      example: '20'
+                    average_age:
+                      type: integer
+                      example: 28
+                    feature_ids:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                    business_summary:
+                      type: string
+                      example: 事業概要
+                    corporate_pr:
+                      type: string
+                      maxLength: 500
+                      example: ヒトが生涯の中で最も長く過ごす「働く」という時間。 日本の場合、この働く時間をどう過ごすかはほとんど就活の間に決まってしまっていると言ってもいいでしょう。
+                    cover_image:
+                      type: string
+                      description: 画像も投稿したい時はform-dataで投げて
+                    logo:
+                      type: string
+                      description: 画像も投稿したい時はform-dataで投げて
+                  required:
+                    - name
+                    - name_kana
+                    - head_office_location
+                    - year_of_establishment
+                    - capital
+                    - is_listed
+                    - representative
+                    - representative_kana
+                    - business_summary
+  '/companies/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: 企業を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Company.v1.yaml
+      operationId: get-companies-id
+    patch:
+      summary: 企業を更新する
+      operationId: patch-companies-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Company.v1.yaml
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                company:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: 株式会社SIMULA Labs
+                    name_kana:
+                      type: string
+                      example: 'シミュララボ '
+                    head_office_location:
+                      type: string
+                      example: 東京都港区元赤坂1-7-18
+                    year_of_establishment:
+                      type: string
+                      format: date
+                      example: '2015'
+                    hp_url:
+                      type: string
+                      format: uri
+                      example: 'https://simula-labs.com/'
+                    phone:
+                      type: string
+                      example: 03-1234-5678
+                    capital:
+                      type: number
+                      example: 1520
+                    is_listed:
+                      type: boolean
+                      default: 'false'
+                      example: 'false'
+                    representative:
+                      type: string
+                      example: 牧野暉弘
+                    representative_kana:
+                      type: string
+                      example: まきのあきひろ
+                    net_sales:
+                      type: string
+                      example: '5000'
+                    numbers_of_employees:
+                      type: string
+                      example: '20'
+                    average_age:
+                      type: integer
+                      example: 28
+                    feature_ids:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                    business_summary:
+                      type: string
+                      example: 事業概要
+                    corporate_pr:
+                      type: string
+                      maxLength: 500
+                      example: ヒトが生涯の中で最も長く過ごす「働く」という時間。 日本の場合、この働く時間をどう過ごすかはほとんど就活の間に決まってしまっていると言ってもいいでしょう。
+                    logo:
+                      type: string
+                      description: 画像も投稿したい時はform-dataで投げて
+                    cover_image:
+                      type: string
+                      description: 画像も投稿したい時はform-dataで投げて
+    delete:
+      summary: 企業を削除する
+      operationId: delete-companies-id
+      responses:
+        '204':
+          description: No Content
+  '/companies/{company_id}/recruitments':
+    parameters:
+      - schema:
+          type: string
+        name: company_id
+        in: path
+        required: true
+    get:
+      summary: 募集一覧を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  recruitments:
+                    type: array
+                    items:
+                      $ref: ../models/Recruitment.v1.yaml
+      operationId: get-companies-company_id-recruitments
+      description: ''
+    post:
+      summary: 募集を作成する
+      operationId: post-companies-company_id-recruitments
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Recruitment.v1.yaml
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                recruitment:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      example: 三度の飯よりReact！そんなGeekなあなたへ
+                    occupation_id:
+                      type: string
+                      format: uuid
+                    industry_id:
+                      type: string
+                      format: uuid
+                    workplace_id:
+                      type: string
+                      format: uuid
+                    job_description:
+                      type: string
+                      example: 新規事業のフロントサイドエンジニア
+                    work_conditions:
+                      type: string
+                      example: 保険・交通費とか諸々
+                    qualification_requirement:
+                      type: string
+                      example: ・大卒以上　・40歳未満
+                    status:
+                      type: string
+                      enum:
+                        - active
+                        - inactive
+                        - draft
+                      example: active
+                      default: active
+                  required:
+                    - title
+                    - status
+  '/recruitments/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: 募集を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Recruitment.v1.yaml
+      operationId: get-companies-company_id-recruitments-id
+    patch:
+      summary: 募集を更新する
+      operationId: patch-companies-company_id-recruitments-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Recruitment.v1.yaml
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                recruitment:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      example: 三度の飯よりReact！そんなGeekなあなたへ
+                    department_id:
+                      type: string
+                      format: uuid
+                    occupation_id:
+                      type: string
+                      format: uuid
+                    industry_id:
+                      type: string
+                      format: uuid
+                    workplace_id:
+                      type: string
+                      format: uuid
+                    job_description:
+                      type: string
+                      example: 新規事業のフロントサイドエンジニア
+                    work_conditions:
+                      type: string
+                      example: 保険・交通費とか諸々
+                    qualification_requirement:
+                      type: string
+                      example: ・大卒以上　・40歳未満
+                    is_public:
+                      type: boolean
+                      default: 'true'
+                      example: 'true'
+                    status:
+                      type: string
+                      enum:
+                        - active
+                        - inactive
+                        - draft
+                      example: active
+                    employment_status_ids:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+    delete:
+      summary: 募集を削除する
+      operationId: delete-companies-company_id-recruitments-id
+      responses:
+        '204':
+          description: No Content
+  '/recruitments/{recruitment_id}/applicants':
+    parameters:
+      - schema:
+          type: string
+        name: recruitment_id
+        in: path
+        required: true
+    get:
+      summary: 募集の応募一覧を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  applicants:
+                    type: array
+                    items:
+                      $ref: ../models/Applicant.v1.yaml
+      operationId: get-companies-company_id-recruitments-recruitment_id-applicants
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: management_status
+          description: 対応中とか
+        - schema:
+            type: string
+          in: query
+          name: occupation_id
+          description: 職種絞り込み
+        - schema:
+            type: string
+          in: query
+          name: recruitment_id
+          description: 募集絞り込み
+  '/applicants/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: 応募を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Applicant.v1.yaml
+      operationId: get-companies-company_id-applicants-id
+    patch:
+      summary: 応募を更新する
+      operationId: patch-companies-company_id-applicants-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Applicant.v1.yaml
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                applicant:
+                  type: object
+                  properties:
+                    management_status:
+                      type: string
+                      enum:
+                        - backlog
+                        - in_progress
+                        - closed
+                        - signed
+                      description: '未対応, 対応中, 対応済み, 採用・契約締結済み'
+  '/companies/{company_id}/rooms':
+    parameters:
+      - schema:
+          type: string
+        name: company_id
+        in: path
+        required: true
+    get:
+      summary: トークルーム一覧を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  rooms:
+                    type: array
+                    items:
+                      $ref: ../models/Room.v1.yaml
+      operationId: get-companies-company_id-rooms
+    post:
+      summary: トークルームを作成する
+      operationId: post-companies-company_id-rooms
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Room.v1.yaml
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                room:
+                  type: object
+                  properties:
+                    account_id:
+                      type: string
+                      format: uuid
+                  required:
+                    - account_id
+  '/rooms/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: トークルームを取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Room.v1.yaml
+      operationId: get-companies-company_id-rooms-id
+  '/rooms/{room_id}/messages':
+    parameters:
+      - schema:
+          type: string
+        name: room_id
+        in: path
+        required: true
+    get:
+      summary: トークルームのメッセージ一覧を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  messages:
+                    type: array
+                    items:
+                      $ref: ../models/Message.v1.yaml
+      operationId: get-companies-company_id-rooms-room_id-messages
+    post:
+      summary: トークルームのメッセージを作成する
+      operationId: post-companies-company_id-rooms-room_id-messages
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Message.v1.yaml
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: object
+                  properties:
+                    employee_id:
+                      type: string
+                      format: uuid
+                    content:
+                      type: string
+                      example: 初めまして。XXXと申します。
+                  required:
+                    - employee_id
+                    - content
+  '/messages/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: メッセージを取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Message.v1.yaml
+      operationId: get-messages-id
+  '/companies/{company_id}/notifications':
+    parameters:
+      - schema:
+          type: string
+        name: company_id
+        in: path
+        required: true
+    get:
+      summary: 通知一覧を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  notifications:
+                    type: array
+                    items:
+                      $ref: ../models/CompanyNotification.v1.yaml
+      operationId: get-companies-company_id-notifications
+  '/companies/{company_id}/mark_as_read':
+    parameters:
+      - schema:
+          type: string
+        name: company_id
+        in: path
+        required: true
+    post:
+      summary: 通知に既読をつける
+      operationId: post-companies-company_id-mark_as_read
+      responses:
+        '204':
+          description: No Content
+  '/companies/{company_id}/applicants':
+    parameters:
+      - schema:
+          type: string
+        name: company_id
+        in: path
+        required: true
+    get:
+      summary: 企業の応募者一覧を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  applicants:
+                    type: array
+                    items:
+                      $ref: ../models/Applicant.v1.yaml
+      operationId: get-companies-company_id-applicants
+      description: ''
+      parameters: []
+  '/employees/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: 従業員を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Employee.v1.yaml
+      operationId: get-employees-id
+    patch:
+      summary: 従業員を更新する
+      operationId: patch-employees-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Employee.v1.yaml
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                employee:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      format: email
+    delete:
+      summary: 従業員を削除する
+      operationId: delete-employees-id
+      responses:
+        '204':
+          description: No Content
+  '/companies/{company_id}/employees':
+    parameters:
+      - schema:
+          type: string
+        name: company_id
+        in: path
+        required: true
+    get:
+      summary: 企業の従業員一覧を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  employees:
+                    type: array
+                    items:
+                      $ref: ../models/Employee.v1.yaml
+      operationId: get-companies-company_id-employees
+    post:
+      summary: 企業の従業員を作成する
+      operationId: post-companies-company_id-employees
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Employee.v1.yaml
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                employee:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    password:
+                      type: string
+  '/employees/{employee_id}/profile':
+    parameters:
+      - schema:
+          type: string
+        name: employee_id
+        in: path
+        required: true
+    get:
+      summary: 従業員のプロフィールを取得する
+      tags: []
+      responses: {}
+      operationId: get-employees-employee_id-profile
+    patch:
+      summary: 従業員のプロフィールを更新する
+      operationId: patch-employees-employee_id-profile
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ../models/EmployeeProfile.v1.yaml
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                profile:
+                  type: object
+                  properties:
+                    first_name:
+                      type: string
+                      example: 太郎
+                    last_name:
+                      type: string
+                      example: 山田
+                    first_name_kana:
+                      type: string
+                      example: タロウ
+                    last_name_kana:
+                      type: string
+                      example: ヤマダ
+                    gender:
+                      type: string
+                      enum:
+                        - MALE
+                        - FEMALE
+                        - OTHER
+                      example: MALE
+                    phone:
+                      type: string
+                      example: 090-XXXX-XXXX
+                    postal_code:
+                      type: string
+                      example: 107-0051
+                    address:
+                      type: string
+                      example: 東京都港区元赤坂1-7-18
+                    date_of_birth:
+                      type: string
+                      format: date
+                    biography:
+                      type: string
+                      example: 自己PR/紹介
+      description: ''
+    post:
+      summary: 従業員のプロフィールを作成する
+      operationId: post-employees-employee_id-profile
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                profile:
+                  type: object
+                  properties:
+                    first_name:
+                      type: string
+                      example: 太郎
+                    last_name:
+                      type: string
+                      example: 山田
+                    first_name_kana:
+                      type: string
+                      example: タロウ
+                    last_name_kana:
+                      type: string
+                      example: ヤマダ
+                    gender:
+                      type: string
+                      enum:
+                        - MALE
+                        - FEMALE
+                        - OTHER
+                      example: MALE
+                    phone:
+                      type: string
+                      example: 090-XXXX-XXXX
+                    postal_code:
+                      type: string
+                      example: 107-0051
+                    address:
+                      type: string
+                      example: 東京都港区元赤坂1-7-18
+                    date_of_birth:
+                      type: string
+                      format: date
+                    biography:
+                      type: string
+                      example: 自己PR/紹介
+                  required:
+                    - first_name
+                    - last_name
+                    - first_name_kana
+                    - last_name_kana
+                    - gender
+                    - phone
+                    - date_of_birth
+  /occupation_main_categories:
+    get:
+      summary: 職種一覧を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  occupation_main_categories:
+                    type: array
+                    items:
+                      $ref: ../models/OccupationMainCategory.v1.yaml
+      operationId: get-occupation_main_categories
+      description: 「大項目」「中項目」「小項目」まとめて全部取得する
+  /prefectures:
+    get:
+      summary: 都道府県一覧を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  prefectures:
+                    type: array
+                    items:
+                      $ref: ../models/Prefecture.v1.yaml
+      operationId: get-prefectures
+  /industry_categories:
+    get:
+      summary: 業種一覧を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  industry_categories:
+                    type: array
+                    items:
+                      $ref: ../models/IndustryCategory.v1.yaml
+      operationId: get-industry_categories
+      description: 業種まとめて全部取得する
+components:
+  schemas: {}

@@ -1,0 +1,18 @@
+title: Message
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+  content:
+    type: string
+    example: お世話になっております。株式会社XXXのXXXです。
+  account:
+    $ref: ./Account.v1.yaml
+  room:
+    $ref: ./Room.v1.yaml
+required:
+  - id
+  - content
+  - account
+  - room

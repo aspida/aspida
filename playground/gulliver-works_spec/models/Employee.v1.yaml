@@ -1,0 +1,28 @@
+title: Employee
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+  email:
+    type: string
+    format: email
+    example: test@example.com
+  email_verification_status:
+    type: string
+    example: verified
+    enum:
+      - unspecified
+      - request
+      - verified
+    default: unspecified
+  email_verification_token:
+    type: string
+    format: uuid
+  last_notification_read_at:
+    type: string
+    format: date
+required:
+  - id
+  - email
+  - email_verification_status

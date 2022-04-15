@@ -1,0 +1,102 @@
+openapi: 3.0.0
+info:
+  title: Auth
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000/auth/v1'
+    description: Local
+  - url: 'https://api-dev.gulliver-works.com/auth/v1'
+    description: Dev
+  - url: 'https://api-stg.gulliver-works.com/auth/v1'
+    description: Stg
+  - url: 'https://api.gulliver-works.com/auth/v1'
+    description: Prd
+paths:
+  /sign_in:
+    post:
+      summary: Sign In
+      operationId: post-sign_in
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountWithToken.yaml'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                account:
+                  type: object
+                  required:
+                    - email
+                    - password
+                  properties:
+                    email:
+                      type: string
+                      example: test@example.com
+                      format: email
+                    password:
+                      type: string
+                      format: password
+  /sign_up:
+    parameters: []
+    post:
+      summary: Sign Up
+      operationId: post-sign_up
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountWithToken.yaml'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                account:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      example: test@example.com
+                      format: email
+                    password:
+                      type: string
+                      format: password
+                  required:
+                    - email
+                    - password
+        description: ''
+  /verify_email:
+    get:
+      summary: アドレスを確認し、本登録する
+      tags: []
+      responses:
+        '302':
+          description: Found
+      operationId: get-verify_email
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: token
+          description: 新規登録時に発行されたアドレス確認用トークン
+      description: ''
+components:
+  schemas:
+    AccountWithToken.yaml:
+      title: AccountWithToken.yaml
+      type: object
+      properties:
+        account:
+          $ref: ../models/Account.v1.yaml
+        token:
+          type: string

@@ -1,0 +1,19 @@
+title: InterestedList
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+  name:
+    type: string
+    example: バックエンドエンジニア募集リスト
+  account:
+    $ref: ./Account.v1.yaml
+  recruitments:
+    type: array
+    items:
+      $ref: ./Recruitment.v1.yaml
+required:
+  - id
+  - name
+  - account

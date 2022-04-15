@@ -1,0 +1,13 @@
+title: Occupation
+type: object
+description: 職種
+properties:
+  id:
+    type: string
+    format: uuid
+  name:
+    type: string
+    example: 戦略・経営コンサルタント
+required:
+  - id
+  - name

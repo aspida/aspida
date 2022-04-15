@@ -1,0 +1,24 @@
+title: CompanyNotification
+type: object
+description: STIを使って実装する
+properties:
+  id:
+    type: string
+    format: uuid
+  content:
+    type: string
+    example: XXさんからメッセージが届きました。
+  created_at:
+    type: string
+    format: date-time
+    example: '2020-05-10T13:50:40+09:00'
+  is_read:
+    type: boolean
+    default: 'false'
+    example: 'false'
+    description: 「未読」「既読」
+required:
+  - id
+  - content
+  - created_at
+  - is_read

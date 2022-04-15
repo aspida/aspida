@@ -1,0 +1,3124 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "Application",
+    "version" : "1"
+  },
+  "servers" : [ {
+    "description" : "local",
+    "url" : "http://localhost:3000/v1"
+  }, {
+    "description" : "Prd",
+    "url" : "https://api.gulliver-works.com/v1"
+  }, {
+    "description" : "Stg",
+    "url" : "https://api-stg.gulliver-works.com/v1"
+  }, {
+    "description" : "Dev",
+    "url" : "https://api-dev.gulliver-woks.com/v1"
+  } ],
+  "paths" : {
+    "/accounts/{id}" : {
+      "delete" : {
+        "operationId" : "delete-accounts-id",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          }
+        },
+        "summary" : "アカウントを削除する",
+        "tags" : [ "Account" ]
+      },
+      "get" : {
+        "operationId" : "get-accounts-id",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "examples" : {
+                  "example-1" : { }
+                },
+                "schema" : {
+                  "$ref" : "#/components/schemas/Account"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "アカウントを取得する",
+        "tags" : [ "Account" ]
+      },
+      "patch" : {
+        "operationId" : "patch-accounts-id",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/inline_object",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "account" : {
+                    "$ref" : "#/components/schemas/_accounts__id__account"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Account"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "アカウントを更新する",
+        "tags" : [ "Account" ]
+      }
+    },
+    "/recruitments/{id}" : {
+      "get" : {
+        "operationId" : "get-recruitments-id",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Recruitment"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "募集を取得する",
+        "tags" : [ ]
+      }
+    },
+    "/accounts/{account_id}/interested_lists" : {
+      "get" : {
+        "operationId" : "get-accounts-account_id-intested_list",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "account_id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "アカウントの気になるリスト一覧を取得する",
+        "tags" : [ ]
+      },
+      "post" : {
+        "operationId" : "post-accounts-account_id-intested_list",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "account_id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/inline_object_1",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "interested_list" : {
+                    "$ref" : "#/components/schemas/_accounts__account_id__interested_lists_interested_list"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created"
+          }
+        },
+        "summary" : "アカウントの気になるリストを作成する"
+      }
+    },
+    "/interested_lists/{id}" : {
+      "delete" : {
+        "operationId" : "delete-accounts-account_id-interested_list-id",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          }
+        },
+        "summary" : "「気になるリスト」を削除する"
+      },
+      "get" : {
+        "operationId" : "get-accounts-account_id-interested_lists-id",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InterestedList"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "「気になるリスト」を取得する"
+      },
+      "patch" : {
+        "operationId" : "patch-accounts-account_id-interested_list-id",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/inline_object_2",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "interested_list" : {
+                    "$ref" : "#/components/schemas/_interested_lists__id__interested_list"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InterestedList"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "「気になるリスト」を更新する"
+      }
+    },
+    "/accounts/{account_id}/followings" : {
+      "get" : {
+        "operationId" : "get-accounts-account_id-following",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "account_id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_1"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "アカウントのフォロー一覧を取得する",
+        "tags" : [ ]
+      },
+      "post" : {
+        "operationId" : "post-accounts-account_id-following",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "account_id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/inline_object_3",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "following" : {
+                    "$ref" : "#/components/schemas/_accounts__account_id__followings_following"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Company"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "アカウントのフォローを作成する"
+      }
+    },
+    "/followings/{id}" : {
+      "delete" : {
+        "operationId" : "delete-accounts-account_id-following-id",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          }
+        },
+        "summary" : "フォローを削除する"
+      }
+    },
+    "/recruitments" : {
+      "get" : {
+        "operationId" : "get-recruitments",
+        "parameters" : [ {
+          "description" : "職種",
+          "explode" : true,
+          "in" : "query",
+          "name" : "occupation_ids[]",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "form"
+        }, {
+          "description" : "業種",
+          "explode" : true,
+          "in" : "query",
+          "name" : "industry_ids[]",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "form"
+        }, {
+          "description" : "勤務地",
+          "explode" : true,
+          "in" : "query",
+          "name" : "workplace_ids[]",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "form"
+        }, {
+          "description" : "雇用形態",
+          "explode" : true,
+          "in" : "query",
+          "name" : "employment_status_ids[]",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "form"
+        }, {
+          "description" : "タイプ",
+          "explode" : true,
+          "in" : "query",
+          "name" : "type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "form"
+        }, {
+          "description" : "最高金額",
+          "explode" : true,
+          "in" : "query",
+          "name" : "max_income",
+          "required" : false,
+          "schema" : {
+            "type" : "integer"
+          },
+          "style" : "form"
+        }, {
+          "description" : "最低金額",
+          "explode" : true,
+          "in" : "query",
+          "name" : "min_income",
+          "required" : false,
+          "schema" : {
+            "type" : "integer"
+          },
+          "style" : "form"
+        }, {
+          "description" : "キーワード",
+          "explode" : true,
+          "in" : "query",
+          "name" : "keyword",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "form"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_2"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "募集一覧（募集検索）を取得する",
+        "tags" : [ ]
+      }
+    },
+    "/accounts/{account_id}/notifications" : {
+      "get" : {
+        "operationId" : "get-accounts-account_id-notifications",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "account_id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_3"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "アカウントの通知一覧を取得する",
+        "tags" : [ ]
+      }
+    },
+    "/accounts/{account_id}/rooms" : {
+      "get" : {
+        "operationId" : "get-accounts-account_id-messages",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "account_id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_4"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "アカウントのトークルーム一覧を取得する",
+        "tags" : [ ]
+      },
+      "post" : {
+        "operationId" : "post-accounts-account_id-rooms",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "account_id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/inline_object_4",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "room" : {
+                    "$ref" : "#/components/schemas/_accounts__account_id__followings_following"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Room"
+                }
+              }
+            },
+            "description" : "Created"
+          }
+        },
+        "summary" : "トークルームを作成する"
+      }
+    },
+    "/rooms/{id}" : {
+      "get" : {
+        "operationId" : "get-accounts-account_id-rooms-id",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Room"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "トークルームを取得する",
+        "tags" : [ ]
+      }
+    },
+    "/rooms/{room_id}/messages" : {
+      "get" : {
+        "operationId" : "get-accounts-account_id-rooms-room_id-messages",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "room_id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_5"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "ルームのメッセージ一覧を取得する",
+        "tags" : [ ]
+      },
+      "post" : {
+        "operationId" : "post-accounts-account_id-rooms-room_id-messages",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "room_id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/inline_object_5",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "message" : {
+                    "$ref" : "#/components/schemas/_rooms__room_id__messages_message"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Message"
+                }
+              }
+            },
+            "description" : "Created"
+          }
+        },
+        "summary" : "ルームのメッセージを作成する"
+      }
+    },
+    "/messages/{id}" : {
+      "get" : {
+        "operationId" : "get-messages-id",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Message"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "メッセージを取得する",
+        "tags" : [ ]
+      }
+    },
+    "/accounts/{account_id}/applicants" : {
+      "get" : {
+        "operationId" : "get-accounts-account_id-applicants",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "account_id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_6"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "アカウントの応募一覧を取得する",
+        "tags" : [ ]
+      },
+      "post" : {
+        "operationId" : "post-accounts-account_id-applicants",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "account_id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/inline_object_6",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "applicant" : {
+                    "$ref" : "#/components/schemas/_accounts__account_id__applicants_applicant"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Applicant"
+                }
+              }
+            },
+            "description" : "Created"
+          }
+        },
+        "summary" : "アカウントの応募を作成する"
+      }
+    },
+    "/work_histories/{id}" : {
+      "delete" : {
+        "operationId" : "delete-work_histories-id",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          }
+        },
+        "summary" : "職歴を削除する"
+      },
+      "get" : {
+        "operationId" : "get-work_histories-id",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/WorkHistory"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "職歴を取得する",
+        "tags" : [ ]
+      },
+      "patch" : {
+        "operationId" : "patch-work_histories-id",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/inline_object_7",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "work_history" : {
+                    "$ref" : "#/components/schemas/_work_histories__id__work_history"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/WorkHistory"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "職歴を更新する"
+      }
+    },
+    "/academic_histories/{id}" : {
+      "delete" : {
+        "operationId" : "delete-academic_histories-id",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          }
+        },
+        "summary" : "学歴を削除する"
+      },
+      "get" : {
+        "operationId" : "get-academic_histories-id",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AcademicHistory"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "学歴を取得する",
+        "tags" : [ ]
+      },
+      "patch" : {
+        "operationId" : "patch-academic_histories-id",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/inline_object_8",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "academic_history" : {
+                    "$ref" : "#/components/schemas/_academic_histories__id__academic_history"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AcademicHistory"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "学歴を更新する"
+      }
+    },
+    "/accounts/{account_id}/work_histories" : {
+      "get" : {
+        "operationId" : "get-accounts-account_id-work_histories",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "account_id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_7"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "アカウントの職歴一覧を取得する",
+        "tags" : [ ]
+      },
+      "post" : {
+        "operationId" : "post-accounts-account_id-work_histories",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "account_id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/inline_object_9",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "work_history" : {
+                    "$ref" : "#/components/schemas/_accounts__account_id__work_histories_work_history"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/WorkHistory"
+                }
+              }
+            },
+            "description" : "Created"
+          }
+        },
+        "summary" : "アカウントの職歴を作成する"
+      }
+    },
+    "/accounts/{account_id}/academic_histories" : {
+      "get" : {
+        "operationId" : "get-accounts-account_id-academic_histories",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "account_id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_8"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "アカウントの学歴一覧を取得する",
+        "tags" : [ ]
+      },
+      "post" : {
+        "operationId" : "post-accounts-account_id-academic_histories",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "account_id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        }, {
+          "explode" : false,
+          "in" : "header",
+          "name" : "Authorization",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/inline_object_10",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "academic_history" : {
+                    "$ref" : "#/components/schemas/_accounts__account_id__academic_histories_academic_history"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AcademicHistory"
+                }
+              }
+            },
+            "description" : "Created"
+          }
+        },
+        "summary" : "アカウントの学歴を作成する"
+      }
+    },
+    "/accounts/{account_id}/profile" : {
+      "get" : {
+        "operationId" : "get-accounts-account_id-profile",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "account_id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AccountProfile"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "アカウントのプロフィールを取得する",
+        "tags" : [ ]
+      },
+      "patch" : {
+        "operationId" : "patch-accounts-account_id-profile",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "account_id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/inline_object_12",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "profile" : {
+                    "$ref" : "#/components/schemas/_accounts__account_id__profile_profile_1"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AccountProfile"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "アカウントのプロフィールを更新する"
+      },
+      "post" : {
+        "operationId" : "post-accounts-account_id-profile",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "account_id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/inline_object_11",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "profile" : {
+                    "$ref" : "#/components/schemas/_accounts__account_id__profile_profile"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AccountProfile"
+                }
+              }
+            },
+            "description" : "Created"
+          }
+        },
+        "summary" : "アカウントのプロフィールを作成する"
+      }
+    },
+    "/occupation_main_categories" : {
+      "get" : {
+        "description" : "「大項目」「中項目」「小項目」まとめて全部取得する",
+        "operationId" : "get-occupation_main_categories",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_9"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "職種一覧を取得する",
+        "tags" : [ ]
+      }
+    },
+    "/industry_categories" : {
+      "get" : {
+        "description" : "業種まとめて全部取得する",
+        "operationId" : "get-industry_categories",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_10"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "業種一覧を取得する",
+        "tags" : [ ]
+      }
+    },
+    "/employment_statuses" : {
+      "get" : {
+        "operationId" : "get-employment_statuses",
+        "parameters" : [ {
+          "explode" : true,
+          "in" : "query",
+          "name" : "type",
+          "required" : false,
+          "schema" : {
+            "enum" : [ "project", "career" ],
+            "type" : "string"
+          },
+          "style" : "form"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_11"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "雇用形態一覧を取得する",
+        "tags" : [ ]
+      }
+    },
+    "/interested_lists/{interested_list_id}/recruitments" : {
+      "post" : {
+        "operationId" : "post-interested_lists-interested_list_id-recruitments",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "interested_list_id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/inline_object_13",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "interested_list" : {
+                    "$ref" : "#/components/schemas/_accounts__account_id__applicants_applicant"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InterestedList"
+                }
+              }
+            },
+            "description" : "Created"
+          }
+        },
+        "summary" : "気になるリストに募集を追加する"
+      }
+    },
+    "/interested_lists/{interested_list_id}/recruitments/{id}" : {
+      "delete" : {
+        "operationId" : "delete-interested_lists-interested_list_id-recruitments-id",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "interested_list_id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        }, {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          }
+        },
+        "summary" : "気になるリストから募集を削除する"
+      }
+    },
+    "/companies/{id}" : {
+      "get" : {
+        "operationId" : "get-companies-id",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Company"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "企業取得",
+        "tags" : [ ]
+      }
+    },
+    "/companies" : {
+      "get" : {
+        "operationId" : "get-companies",
+        "parameters" : [ {
+          "description" : "検索キーワード",
+          "explode" : true,
+          "in" : "query",
+          "name" : "keyword",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "form"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_12"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "企業一覧取得",
+        "tags" : [ ]
+      }
+    },
+    "/accounts/{account_id}/mark_as_read" : {
+      "post" : {
+        "operationId" : "post-accounts-account_id-mark_as_read",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "account_id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          }
+        },
+        "summary" : "通知に既読をつける"
+      }
+    },
+    "/accounts/{account_id}/hopes" : {
+      "get" : {
+        "operationId" : "get-accounts-account_id-hope",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "account_id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_13"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "アカウントの希望一覧を取得する"
+      },
+      "post" : {
+        "operationId" : "post-accounts-account_id-hopes",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "account_id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/inline_object_14",
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "properties" : {
+                  "hope" : {
+                    "$ref" : "#/components/schemas/_accounts__account_id__hopes_hope"
+                  }
+                },
+                "required" : [ "hope" ],
+                "type" : "object"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Hope"
+                }
+              }
+            },
+            "description" : "Created"
+          }
+        },
+        "summary" : "アカウントの希望条件を作成する",
+        "tags" : [ ]
+      }
+    },
+    "/companies/recommended" : {
+      "get" : {
+        "description" : "希望の職種・雇用形態からおすすめの企業をいくつか取得する",
+        "operationId" : "get-companies-recommended",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/Company"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "おすすめの企業一覧を取得する",
+        "tags" : [ ]
+      }
+    },
+    "/recruitments/recommended" : {
+      "get" : {
+        "description" : "希望の職種・募集形態からおすすめの募集をいくつか取得する",
+        "operationId" : "get-recruitments-recommended",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/Recruitment"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "おすすめの募集一覧を取得する",
+        "tags" : [ ]
+      }
+    },
+    "/companies/{company_id}/recruitments" : {
+      "get" : {
+        "operationId" : "get-companies-company_id-recruitments",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "company_id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_2"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "企業の募集一覧を取得する",
+        "tags" : [ ]
+      }
+    },
+    "/hopes/{id}" : {
+      "get" : {
+        "operationId" : "get-hopes-id",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Hope"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "希望条件を取得する",
+        "tags" : [ ]
+      },
+      "patch" : {
+        "operationId" : "patch-hopes-id",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/inline_object_15",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "hope" : {
+                    "$ref" : "#/components/schemas/_hopes__id__hope"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Hope"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "希望条件を更新する"
+      }
+    },
+    "/prefectures" : {
+      "get" : {
+        "operationId" : "get-prefectures",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_14"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "都道府県一覧を取得する",
+        "tags" : [ ]
+      }
+    }
+  },
+  "components" : {
+    "requestBodies" : {
+      "inline_object_1" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_object_1"
+            }
+          }
+        }
+      },
+      "inline_object_9" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_object_9"
+            }
+          }
+        }
+      },
+      "inline_object_10" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_object_10"
+            }
+          }
+        }
+      },
+      "inline_object_8" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_object_8"
+            }
+          }
+        }
+      },
+      "inline_object_7" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_object_7"
+            }
+          }
+        }
+      },
+      "inline_object_12" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_object_12"
+            }
+          }
+        }
+      },
+      "inline_object_6" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_object_6"
+            }
+          }
+        }
+      },
+      "inline_object_11" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_object_11"
+            }
+          }
+        }
+      },
+      "inline_object_5" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_object_5"
+            }
+          }
+        }
+      },
+      "inline_object_14" : {
+        "content" : {
+          "multipart/form-data" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_object_14"
+            }
+          }
+        }
+      },
+      "inline_object_4" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_object_4"
+            }
+          }
+        }
+      },
+      "inline_object_13" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_object_13"
+            }
+          }
+        }
+      },
+      "inline_object_3" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_object_3"
+            }
+          }
+        }
+      },
+      "inline_object_2" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_object_2"
+            }
+          }
+        }
+      },
+      "inline_object_15" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_object_15"
+            }
+          }
+        }
+      },
+      "inline_object" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_object"
+            }
+          }
+        }
+      }
+    },
+    "schemas" : {
+      "Account" : {
+        "description" : "",
+        "properties" : {
+          "id" : {
+            "format" : "uuid",
+            "type" : "string"
+          },
+          "email" : {
+            "example" : "test@example.com",
+            "format" : "email",
+            "type" : "string"
+          },
+          "email_verification_status" : {
+            "default" : "unspecified",
+            "enum" : [ "unspecified", "request", "verified" ],
+            "example" : "verified",
+            "type" : "string"
+          },
+          "profile" : {
+            "$ref" : "#/components/schemas/AccountProfile"
+          },
+          "work_histories" : {
+            "items" : {
+              "$ref" : "#/components/schemas/WorkHistory"
+            },
+            "type" : "array"
+          },
+          "academic_histories" : {
+            "items" : {
+              "$ref" : "#/components/schemas/AcademicHistory"
+            },
+            "type" : "array"
+          },
+          "email_verification_token" : {
+            "format" : "uuid",
+            "type" : "string"
+          },
+          "last_notification_read_at" : {
+            "format" : "date",
+            "type" : "string"
+          }
+        },
+        "required" : [ "academic_histories", "email", "email_verification_status", "id", "profile" ],
+        "title" : "Account",
+        "type" : "object",
+        "x-tags" : [ "Account" ]
+      },
+      "Recruitment" : {
+        "description" : "",
+        "properties" : {
+          "id" : {
+            "format" : "uuid",
+            "type" : "string"
+          },
+          "title" : {
+            "example" : "三度の飯よりReact！そんなGeekなあなたへ",
+            "type" : "string"
+          },
+          "occupation" : {
+            "$ref" : "#/components/schemas/Occupation"
+          },
+          "industry" : {
+            "$ref" : "#/components/schemas/Industry"
+          },
+          "workplace" : {
+            "$ref" : "#/components/schemas/Prefecture"
+          },
+          "job_description" : {
+            "example" : "新規事業のフロントサイドエンジニア",
+            "type" : "string"
+          },
+          "work_conditions" : {
+            "example" : "保険・交通費とか諸々",
+            "type" : "string"
+          },
+          "qualification_requirement" : {
+            "example" : "・大卒以上　・40歳未満",
+            "type" : "string"
+          },
+          "company" : {
+            "$ref" : "#/components/schemas/Company"
+          },
+          "status" : {
+            "default" : "active",
+            "enum" : [ "active", "inactive", "draft" ],
+            "type" : "string"
+          }
+        },
+        "required" : [ "company", "id", "status", "title" ],
+        "title" : "Recruitment",
+        "type" : "object"
+      },
+      "InterestedList" : {
+        "properties" : {
+          "id" : {
+            "format" : "uuid",
+            "type" : "string"
+          },
+          "name" : {
+            "example" : "バックエンドエンジニア募集リスト",
+            "type" : "string"
+          },
+          "account" : {
+            "$ref" : "#/components/schemas/Account"
+          },
+          "recruitments" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Recruitment"
+            },
+            "type" : "array"
+          }
+        },
+        "required" : [ "account", "id", "name" ],
+        "title" : "InterestedList",
+        "type" : "object"
+      },
+      "Company" : {
+        "description" : "",
+        "properties" : {
+          "id" : {
+            "format" : "uuid",
+            "type" : "string"
+          },
+          "name" : {
+            "example" : "株式会社SIMULA Labs",
+            "type" : "string"
+          },
+          "name_kana" : {
+            "example" : "シミュララボ ",
+            "type" : "string"
+          },
+          "head_office_location" : {
+            "example" : "東京都港区元赤坂1-7-18",
+            "type" : "string"
+          },
+          "year_of_establishment" : {
+            "format" : "date",
+            "type" : "string"
+          },
+          "hp_url" : {
+            "example" : "https://simula-labs.com/",
+            "format" : "uri",
+            "type" : "string"
+          },
+          "phone" : {
+            "example" : "03-1234-5678",
+            "type" : "string"
+          },
+          "capital" : {
+            "example" : 1520,
+            "type" : "integer"
+          },
+          "is_listed" : {
+            "default" : false,
+            "example" : false,
+            "type" : "boolean"
+          },
+          "representative" : {
+            "example" : "牧野暉弘",
+            "type" : "string"
+          },
+          "representative_kana" : {
+            "example" : "まきのあきひろ",
+            "type" : "string"
+          },
+          "net_sales" : {
+            "example" : "5000",
+            "type" : "string"
+          },
+          "numbers_of_employees" : {
+            "example" : "20",
+            "type" : "string"
+          },
+          "average_age" : {
+            "example" : 28,
+            "type" : "integer"
+          },
+          "business_summary" : {
+            "example" : "事業概要",
+            "type" : "string"
+          },
+          "corporate_pr" : {
+            "example" : "ヒトが生涯の中で最も長く過ごす「働く」という時間。 日本の場合、この働く時間をどう過ごすかはほとんど就活の間に決まってしまっていると言ってもいいでしょう。",
+            "maxLength" : 500,
+            "type" : "string"
+          },
+          "industries" : {
+            "description" : "",
+            "items" : {
+              "$ref" : "#/components/schemas/Industry"
+            },
+            "type" : "array"
+          },
+          "cover_image_url" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "business_summary", "capital", "head_office_location", "id", "is_listed", "name", "name_kana", "representative", "representative_kana", "year_of_establishment" ],
+        "title" : "Company",
+        "type" : "object"
+      },
+      "AccountNotification" : {
+        "description" : "STIを使って実装する",
+        "properties" : {
+          "id" : {
+            "format" : "uuid",
+            "type" : "string"
+          },
+          "content" : {
+            "example" : "XXさんからスカウトが届きました。",
+            "type" : "string"
+          },
+          "created_at" : {
+            "example" : "2020-05-10T13:50:40+09:00",
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "is_read" : {
+            "default" : false,
+            "description" : "「未読」「既読」",
+            "example" : false,
+            "type" : "boolean"
+          }
+        },
+        "required" : [ "content", "created_at", "id", "is_read" ],
+        "title" : "AccountNotification",
+        "type" : "object"
+      },
+      "Room" : {
+        "properties" : {
+          "id" : {
+            "format" : "uuid",
+            "type" : "string"
+          },
+          "account" : {
+            "$ref" : "#/components/schemas/Account"
+          },
+          "company" : {
+            "$ref" : "#/components/schemas/Company"
+          }
+        },
+        "required" : [ "account", "company", "id" ],
+        "title" : "Room",
+        "type" : "object"
+      },
+      "Message" : {
+        "properties" : {
+          "id" : {
+            "format" : "uuid",
+            "type" : "string"
+          },
+          "content" : {
+            "example" : "お世話になっております。株式会社XXXのXXXです。",
+            "type" : "string"
+          },
+          "account" : {
+            "$ref" : "#/components/schemas/Account"
+          },
+          "room" : {
+            "$ref" : "#/components/schemas/Room"
+          }
+        },
+        "required" : [ "account", "content", "id", "room" ],
+        "title" : "Message",
+        "type" : "object"
+      },
+      "Applicant" : {
+        "description" : "",
+        "properties" : {
+          "id" : {
+            "format" : "uuid",
+            "type" : "string"
+          },
+          "recruitment" : {
+            "$ref" : "#/components/schemas/Recruitment"
+          },
+          "account" : {
+            "$ref" : "#/components/schemas/Account"
+          },
+          "management_status" : {
+            "default" : "backlog",
+            "description" : "採用側の場合のみ存在、未対応, 対応中, 対応済み, 採用・契約締結済み",
+            "enum" : [ "backlog", "in_progress", "closed", "signed" ],
+            "type" : "string"
+          },
+          "created_at" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "updated_at" : {
+            "format" : "date-time",
+            "type" : "string"
+          }
+        },
+        "required" : [ "account", "id", "management_status", "recruitment" ],
+        "title" : "Applicant",
+        "type" : "object"
+      },
+      "WorkHistory" : {
+        "description" : "dateの日付は月初で統一",
+        "properties" : {
+          "id" : {
+            "format" : "uuid",
+            "type" : "string"
+          },
+          "is_employed" : {
+            "default" : true,
+            "description" : "「在職中」「離職中」",
+            "example" : true,
+            "type" : "boolean"
+          },
+          "occupation" : {
+            "$ref" : "#/components/schemas/Occupation"
+          },
+          "industry" : {
+            "$ref" : "#/components/schemas/Industry"
+          },
+          "position" : {
+            "example" : "主任",
+            "type" : "string"
+          },
+          "annual_income" : {
+            "example" : 4000000,
+            "type" : "number"
+          },
+          "management_experience" : {
+            "example" : 3,
+            "type" : "integer"
+          },
+          "job_summary" : {
+            "example" : "Ruby on Railsを使ったバックエンド開発",
+            "type" : "string"
+          },
+          "since_date" : {
+            "example" : "2019-08-01",
+            "format" : "date",
+            "type" : "string"
+          },
+          "until_date" : {
+            "example" : "2020-05-01",
+            "format" : "date",
+            "type" : "string"
+          },
+          "name" : {
+            "example" : "株式会社SIMULA Labs",
+            "type" : "string"
+          }
+        },
+        "required" : [ "annual_income", "id", "industry", "is_employed", "management_experience", "name", "occupation", "position", "since_date" ],
+        "title" : "WorkHistory",
+        "type" : "object",
+        "x-examples" : { }
+      },
+      "AcademicHistory" : {
+        "description" : "dateの日付は月初で統一",
+        "properties" : {
+          "id" : {
+            "format" : "uuid",
+            "type" : "string"
+          },
+          "name" : {
+            "example" : "明治大学",
+            "type" : "string"
+          },
+          "faculty" : {
+            "example" : "情報コミュニケーション学部",
+            "type" : "string"
+          },
+          "since_date" : {
+            "example" : "2008-04-01",
+            "format" : "date",
+            "type" : "string"
+          },
+          "until_date" : {
+            "example" : "2012-03-01",
+            "format" : "date",
+            "type" : "string"
+          },
+          "type" : {
+            "description" : "「大学院」「大学」「専門学校」「短期大学」「高校」",
+            "enum" : [ "graduate_school", "university", "vocational_school", "junior_college", "high_school" ],
+            "example" : "university",
+            "type" : "string"
+          }
+        },
+        "required" : [ "id", "name", "since_date", "type", "until_date" ],
+        "title" : "AcademicHistory",
+        "type" : "object",
+        "x-internal" : false
+      },
+      "AccountProfile" : {
+        "description" : "STIを使って実装する",
+        "properties" : {
+          "id" : {
+            "format" : "uuid",
+            "type" : "string"
+          },
+          "first_name" : {
+            "example" : "太郎",
+            "type" : "string"
+          },
+          "last_name" : {
+            "example" : "山田",
+            "type" : "string"
+          },
+          "first_name_kana" : {
+            "example" : "タロウ",
+            "type" : "string"
+          },
+          "last_name_kana" : {
+            "example" : "ヤマダ",
+            "type" : "string"
+          },
+          "gender" : {
+            "enum" : [ "MALE", "FEMALE", "OTHER" ],
+            "example" : "MALE",
+            "type" : "string"
+          },
+          "phone" : {
+            "example" : "090-XXXX-XXXX",
+            "type" : "string"
+          },
+          "postal_code" : {
+            "example" : "107-0051",
+            "type" : "string"
+          },
+          "address" : {
+            "example" : "東京都港区元赤坂1-7-18",
+            "type" : "string"
+          },
+          "date_of_birth" : {
+            "description" : "",
+            "format" : "date",
+            "type" : "string"
+          },
+          "biography" : {
+            "example" : "自己PR/紹介",
+            "type" : "string"
+          }
+        },
+        "required" : [ "date_of_birth", "first_name", "first_name_kana", "gender", "id", "last_name", "last_name_kana", "phone" ],
+        "title" : "AccountProfile",
+        "type" : "object",
+        "x-tags" : [ "Account" ]
+      },
+      "OccupationMainCategory" : {
+        "description" : "職種「大項目」",
+        "properties" : {
+          "id" : {
+            "format" : "uuid",
+            "type" : "string"
+          },
+          "name" : {
+            "example" : "コンサル",
+            "type" : "string"
+          },
+          "occupation_sub_categories" : {
+            "items" : {
+              "$ref" : "#/components/schemas/OccupationSubCategory"
+            },
+            "type" : "array"
+          }
+        },
+        "required" : [ "id", "name" ],
+        "title" : "OccupationMainCategory",
+        "type" : "object"
+      },
+      "IndustryCategory" : {
+        "description" : "業種カテゴリー",
+        "properties" : {
+          "id" : {
+            "format" : "uuid",
+            "type" : "string"
+          },
+          "name" : {
+            "example" : "金融・保険",
+            "type" : "string"
+          },
+          "industries" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Industry"
+            },
+            "type" : "array"
+          }
+        },
+        "required" : [ "id", "name" ],
+        "title" : "IndustryCategory",
+        "type" : "object"
+      },
+      "EmploymentStatus" : {
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "example" : "正社員",
+            "type" : "string"
+          }
+        },
+        "required" : [ "id", "name" ],
+        "title" : "EmploymentStatus",
+        "type" : "object"
+      },
+      "Hope" : {
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "time_to_change_jobs" : {
+            "description" : "転職希望時期(Nヶ月以内)",
+            "type" : "number"
+          },
+          "annual_income" : {
+            "type" : "number"
+          },
+          "workplace" : {
+            "$ref" : "#/components/schemas/Prefecture"
+          },
+          "occupations" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Occupation"
+            },
+            "type" : "array"
+          },
+          "employment_statuses" : {
+            "items" : {
+              "$ref" : "#/components/schemas/EmploymentStatus"
+            },
+            "type" : "array"
+          },
+          "account" : {
+            "$ref" : "#/components/schemas/Account"
+          }
+        },
+        "required" : [ "account", "id" ],
+        "title" : "Hope",
+        "type" : "object"
+      },
+      "Prefecture" : {
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "example" : "東京",
+            "type" : "string"
+          }
+        },
+        "required" : [ "id", "name" ],
+        "title" : "Prefecture",
+        "type" : "object"
+      },
+      "Occupation" : {
+        "description" : "職種",
+        "properties" : {
+          "id" : {
+            "format" : "uuid",
+            "type" : "string"
+          },
+          "name" : {
+            "example" : "戦略・経営コンサルタント",
+            "type" : "string"
+          }
+        },
+        "required" : [ "id", "name" ],
+        "title" : "Occupation",
+        "type" : "object"
+      },
+      "Industry" : {
+        "description" : "業種",
+        "properties" : {
+          "id" : {
+            "format" : "uuid",
+            "type" : "string"
+          },
+          "name" : {
+            "example" : "銀行・信託銀行",
+            "type" : "string"
+          }
+        },
+        "required" : [ "id", "name" ],
+        "title" : "Industry",
+        "type" : "object"
+      },
+      "OccupationSubCategory" : {
+        "description" : "職種「中項目」",
+        "properties" : {
+          "id" : {
+            "format" : "uuid",
+            "type" : "string"
+          },
+          "name" : {
+            "example" : "ビジネスコンサルタント",
+            "type" : "string"
+          },
+          "occupations" : {
+            "format" : "uuid",
+            "items" : {
+              "$ref" : "#/components/schemas/Occupation"
+            },
+            "type" : "array"
+          }
+        },
+        "required" : [ "id", "name" ],
+        "title" : "OccupationSubCategory",
+        "type" : "object"
+      },
+      "_accounts__id__account" : {
+        "properties" : {
+          "email" : {
+            "format" : "email",
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "inline_object" : {
+        "properties" : {
+          "account" : {
+            "$ref" : "#/components/schemas/_accounts__id__account"
+          }
+        },
+        "type" : "object"
+      },
+      "inline_response_200" : {
+        "properties" : {
+          "interested_lists" : {
+            "items" : {
+              "$ref" : "#/components/schemas/InterestedList"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "_accounts__account_id__interested_lists_interested_list" : {
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "recruitment_ids" : {
+            "items" : {
+              "format" : "uuid",
+              "type" : "string"
+            },
+            "type" : "array"
+          }
+        },
+        "required" : [ "name" ],
+        "type" : "object"
+      },
+      "inline_object_1" : {
+        "properties" : {
+          "interested_list" : {
+            "$ref" : "#/components/schemas/_accounts__account_id__interested_lists_interested_list"
+          }
+        },
+        "type" : "object"
+      },
+      "_interested_lists__id__interested_list" : {
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "recruitments" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Recruitment"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "inline_object_2" : {
+        "properties" : {
+          "interested_list" : {
+            "$ref" : "#/components/schemas/_interested_lists__id__interested_list"
+          }
+        },
+        "type" : "object"
+      },
+      "inline_response_200_1" : {
+        "properties" : {
+          "followings" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Company"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "_accounts__account_id__followings_following" : {
+        "properties" : {
+          "company_id" : {
+            "format" : "uuid",
+            "type" : "string"
+          }
+        },
+        "required" : [ "company_id" ],
+        "type" : "object"
+      },
+      "inline_object_3" : {
+        "properties" : {
+          "following" : {
+            "$ref" : "#/components/schemas/_accounts__account_id__followings_following"
+          }
+        },
+        "type" : "object"
+      },
+      "inline_response_200_2" : {
+        "properties" : {
+          "recruitments" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Recruitment"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "inline_response_200_3" : {
+        "properties" : {
+          "account_notifications" : {
+            "items" : {
+              "$ref" : "#/components/schemas/AccountNotification"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "inline_response_200_4" : {
+        "properties" : {
+          "rooms" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Room"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "inline_object_4" : {
+        "properties" : {
+          "room" : {
+            "$ref" : "#/components/schemas/_accounts__account_id__followings_following"
+          }
+        },
+        "type" : "object"
+      },
+      "inline_response_200_5" : {
+        "properties" : {
+          "messages" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Message"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "_rooms__room_id__messages_message" : {
+        "properties" : {
+          "account_id" : {
+            "format" : "uuid",
+            "type" : "string"
+          },
+          "content" : {
+            "example" : "初めまして。XXXと申します。",
+            "type" : "string"
+          },
+          "attachment" : {
+            "description" : "添付ファイルのこと、つかいたかはSpecのREADME見て",
+            "type" : "object"
+          }
+        },
+        "required" : [ "account_id", "content" ],
+        "type" : "object"
+      },
+      "inline_object_5" : {
+        "properties" : {
+          "message" : {
+            "$ref" : "#/components/schemas/_rooms__room_id__messages_message"
+          }
+        },
+        "type" : "object"
+      },
+      "inline_response_200_6" : {
+        "properties" : {
+          "applicants" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Applicant"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "_accounts__account_id__applicants_applicant" : {
+        "properties" : {
+          "recruitment_id" : {
+            "format" : "uuid",
+            "type" : "string"
+          }
+        },
+        "required" : [ "recruitment_id" ],
+        "type" : "object"
+      },
+      "inline_object_6" : {
+        "properties" : {
+          "applicant" : {
+            "$ref" : "#/components/schemas/_accounts__account_id__applicants_applicant"
+          }
+        },
+        "type" : "object"
+      },
+      "_work_histories__id__work_history" : {
+        "properties" : {
+          "is_employed" : {
+            "default" : true,
+            "description" : "「在職中」「離職中」",
+            "example" : true,
+            "type" : "boolean"
+          },
+          "occupation_id" : {
+            "format" : "uuid",
+            "type" : "string"
+          },
+          "industry_id" : {
+            "format" : "uuid",
+            "type" : "string"
+          },
+          "position" : {
+            "example" : "主任",
+            "type" : "string"
+          },
+          "annual_income" : {
+            "example" : 4000000,
+            "type" : "number"
+          },
+          "management_experience" : {
+            "example" : 3,
+            "type" : "integer"
+          },
+          "job_summary" : {
+            "example" : "Ruby on Railsを使ったバックエンド開発",
+            "type" : "string"
+          },
+          "since_date" : {
+            "example" : "2019-08-01",
+            "format" : "date",
+            "type" : "string"
+          },
+          "until_date" : {
+            "example" : "2020-05-01",
+            "format" : "date",
+            "type" : "string"
+          },
+          "name" : {
+            "example" : "株式会社SIMULA Labs",
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "inline_object_7" : {
+        "properties" : {
+          "work_history" : {
+            "$ref" : "#/components/schemas/_work_histories__id__work_history"
+          }
+        },
+        "type" : "object"
+      },
+      "_academic_histories__id__academic_history" : {
+        "properties" : {
+          "name" : {
+            "example" : "明治大学",
+            "type" : "string"
+          },
+          "faculty" : {
+            "example" : "情報コミュニケーション学部",
+            "type" : "string"
+          },
+          "since_date" : {
+            "format" : "date",
+            "type" : "string"
+          },
+          "until_date" : {
+            "format" : "date",
+            "type" : "string"
+          },
+          "type" : {
+            "description" : "「大学院」「大学」「専門学校」「短期大学」「高校」",
+            "enum" : [ "graduate_school", "university", "vocational_school", "junior_college", "high_school" ],
+            "example" : "university",
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "inline_object_8" : {
+        "properties" : {
+          "academic_history" : {
+            "$ref" : "#/components/schemas/_academic_histories__id__academic_history"
+          }
+        },
+        "type" : "object"
+      },
+      "inline_response_200_7" : {
+        "properties" : {
+          "work_histories" : {
+            "items" : {
+              "$ref" : "#/components/schemas/WorkHistory"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "_accounts__account_id__work_histories_work_history" : {
+        "properties" : {
+          "is_employed" : {
+            "default" : true,
+            "description" : "「在職中」「離職中」",
+            "example" : true,
+            "type" : "boolean"
+          },
+          "occupation_id" : {
+            "format" : "uuid",
+            "type" : "string"
+          },
+          "industry_id" : {
+            "format" : "uuid",
+            "type" : "string"
+          },
+          "position" : {
+            "example" : "主任",
+            "type" : "string"
+          },
+          "annual_income" : {
+            "example" : 4000000,
+            "type" : "number"
+          },
+          "management_experience" : {
+            "example" : 3,
+            "type" : "integer"
+          },
+          "job_summary" : {
+            "example" : "Ruby on Railsを使ったバックエンド開発",
+            "type" : "string"
+          },
+          "since_date" : {
+            "example" : "2019-08-01",
+            "format" : "date",
+            "type" : "string"
+          },
+          "until_date" : {
+            "example" : "2020-05-01",
+            "format" : "date",
+            "type" : "string"
+          },
+          "name" : {
+            "example" : "株式会社SIMULA Labs",
+            "type" : "string"
+          }
+        },
+        "required" : [ "annual_income", "industry_id", "is_employed", "management_experience", "name", "occupation_id", "position", "since_date" ],
+        "type" : "object"
+      },
+      "inline_object_9" : {
+        "properties" : {
+          "work_history" : {
+            "$ref" : "#/components/schemas/_accounts__account_id__work_histories_work_history"
+          }
+        },
+        "type" : "object"
+      },
+      "inline_response_200_8" : {
+        "properties" : {
+          "academic_histories" : {
+            "items" : {
+              "$ref" : "#/components/schemas/AcademicHistory"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "_accounts__account_id__academic_histories_academic_history" : {
+        "properties" : {
+          "name" : {
+            "example" : "明治大学",
+            "type" : "string"
+          },
+          "faculty" : {
+            "example" : "情報コミュニケーション学部",
+            "type" : "string"
+          },
+          "since_date" : {
+            "format" : "date",
+            "type" : "string"
+          },
+          "until_date" : {
+            "format" : "date",
+            "type" : "string"
+          },
+          "type" : {
+            "description" : "「大学院」「大学」「専門学校」「短期大学」「高校」",
+            "enum" : [ "graduate_school", "university", "vocational_school", "junior_college", "high_school" ],
+            "example" : "university",
+            "type" : "string"
+          }
+        },
+        "required" : [ "name", "since_date", "type", "until_date" ],
+        "type" : "object"
+      },
+      "inline_object_10" : {
+        "properties" : {
+          "academic_history" : {
+            "$ref" : "#/components/schemas/_accounts__account_id__academic_histories_academic_history"
+          }
+        },
+        "type" : "object"
+      },
+      "_accounts__account_id__profile_profile" : {
+        "properties" : {
+          "first_name" : {
+            "example" : "太郎",
+            "type" : "string"
+          },
+          "last_name" : {
+            "example" : "山田",
+            "type" : "string"
+          },
+          "first_name_kana" : {
+            "example" : "タロウ",
+            "type" : "string"
+          },
+          "last_name_kana" : {
+            "example" : "ヤマダ",
+            "type" : "string"
+          },
+          "gender" : {
+            "enum" : [ "MALE", "FEMALE", "OTHER" ],
+            "example" : "MALE",
+            "type" : "string"
+          },
+          "phone" : {
+            "example" : "090-XXXX-XXXX",
+            "type" : "string"
+          },
+          "postal_code" : {
+            "example" : "107-0051",
+            "type" : "string"
+          },
+          "address" : {
+            "example" : "東京都港区元赤坂1-7-18",
+            "type" : "string"
+          },
+          "date_of_birth" : {
+            "format" : "date",
+            "type" : "string"
+          },
+          "biography" : {
+            "example" : "自己PR/紹介",
+            "type" : "string"
+          }
+        },
+        "required" : [ "date_of_birth", "first_name", "first_name_kana", "gender", "last_name", "last_name_kana", "phone" ],
+        "type" : "object"
+      },
+      "inline_object_11" : {
+        "properties" : {
+          "profile" : {
+            "$ref" : "#/components/schemas/_accounts__account_id__profile_profile"
+          }
+        },
+        "type" : "object"
+      },
+      "_accounts__account_id__profile_profile_1" : {
+        "properties" : {
+          "first_name" : {
+            "example" : "太郎",
+            "type" : "string"
+          },
+          "last_name" : {
+            "example" : "山田",
+            "type" : "string"
+          },
+          "first_name_kana" : {
+            "example" : "タロウ",
+            "type" : "string"
+          },
+          "last_name_kana" : {
+            "example" : "ヤマダ",
+            "type" : "string"
+          },
+          "gender" : {
+            "enum" : [ "MALE", "FEMALE", "OTHER" ],
+            "example" : "MALE",
+            "type" : "string"
+          },
+          "phone" : {
+            "example" : "090-XXXX-XXXX",
+            "type" : "string"
+          },
+          "postal_code" : {
+            "example" : "107-0051",
+            "type" : "string"
+          },
+          "address" : {
+            "example" : "東京都港区元赤坂1-7-18",
+            "type" : "string"
+          },
+          "date_of_birth" : {
+            "format" : "date",
+            "type" : "string"
+          },
+          "biography" : {
+            "example" : "自己PR/紹介",
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "inline_object_12" : {
+        "properties" : {
+          "profile" : {
+            "$ref" : "#/components/schemas/_accounts__account_id__profile_profile_1"
+          }
+        },
+        "type" : "object"
+      },
+      "inline_response_200_9" : {
+        "properties" : {
+          "occupation_main_categories" : {
+            "items" : {
+              "$ref" : "#/components/schemas/OccupationMainCategory"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "inline_response_200_10" : {
+        "properties" : {
+          "industry_categories" : {
+            "items" : {
+              "$ref" : "#/components/schemas/IndustryCategory"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "inline_response_200_11" : {
+        "properties" : {
+          "employment_statuses" : {
+            "items" : {
+              "$ref" : "#/components/schemas/EmploymentStatus"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "inline_object_13" : {
+        "properties" : {
+          "interested_list" : {
+            "$ref" : "#/components/schemas/_accounts__account_id__applicants_applicant"
+          }
+        },
+        "type" : "object"
+      },
+      "inline_response_200_12" : {
+        "properties" : {
+          "companies" : {
+            "$ref" : "#/components/schemas/Company"
+          }
+        },
+        "type" : "object"
+      },
+      "inline_response_200_13" : {
+        "properties" : {
+          "hopes" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Hope"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "_accounts__account_id__hopes_hope" : {
+        "properties" : {
+          "time_to_change_job" : {
+            "description" : "何ヶ月以内に転職したいか",
+            "type" : "number"
+          },
+          "annual_income" : {
+            "type" : "number"
+          },
+          "type" : {
+            "enum" : [ "career", "project" ],
+            "type" : "string"
+          },
+          "workplace_id" : {
+            "description" : "StateのID",
+            "format" : "uuid",
+            "type" : "string"
+          },
+          "employment_status_ids" : {
+            "items" : {
+              "format" : "uuid",
+              "type" : "string"
+            },
+            "type" : "array"
+          },
+          "occupation_ids" : {
+            "items" : {
+              "format" : "uuid",
+              "type" : "string"
+            },
+            "type" : "array"
+          }
+        },
+        "required" : [ "annual_income", "employment_status_ids", "occupation_ids", "time_to_change_job", "type", "workplace_id" ],
+        "type" : "object"
+      },
+      "inline_object_14" : {
+        "properties" : {
+          "hope" : {
+            "$ref" : "#/components/schemas/_accounts__account_id__hopes_hope"
+          }
+        },
+        "required" : [ "hope" ],
+        "type" : "object"
+      },
+      "_hopes__id__hope" : {
+        "properties" : {
+          "time_to_change_job" : {
+            "description" : "何ヶ月以内に転職したいか",
+            "type" : "number"
+          },
+          "annual_income" : {
+            "type" : "number"
+          },
+          "type" : {
+            "enum" : [ "career", "project" ],
+            "type" : "string"
+          },
+          "workplace_id" : {
+            "description" : "StateのID",
+            "format" : "uuid",
+            "type" : "string"
+          },
+          "employment_status_ids" : {
+            "items" : {
+              "format" : "uuid",
+              "type" : "string"
+            },
+            "type" : "array"
+          },
+          "occupation_ids" : {
+            "items" : {
+              "format" : "uuid",
+              "type" : "string"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "inline_object_15" : {
+        "properties" : {
+          "hope" : {
+            "$ref" : "#/components/schemas/_hopes__id__hope"
+          }
+        },
+        "type" : "object"
+      },
+      "inline_response_200_14" : {
+        "properties" : {
+          "prefectures" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Prefecture"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      }
+    },
+    "securitySchemes" : { }
+  }
+}

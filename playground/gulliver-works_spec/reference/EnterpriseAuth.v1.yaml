@@ -1,0 +1,93 @@
+openapi: 3.0.0
+info:
+  title: EnterpriseAuth
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000/enterprise_auth/v1'
+    description: local
+  - url: 'https://api.gulliver-works.com/enterprise_auth/v1'
+    description: Prd
+  - url: 'https://api-stg.gulliver-works.com/enterprise_auth/v1'
+    description: Stg
+  - url: 'https://api-dev.gulliver-works.com/enterprise_auth/v1'
+    description: Dev
+paths:
+  /sign_up:
+    post:
+      summary: Sign Up
+      operationId: post-sign_up
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeWithToken.yaml'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                employee:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    password:
+                      type: string
+                  required:
+                    - email
+                    - password
+  /sign_in:
+    post:
+      summary: Sign In
+      operationId: post-sign_in
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeWithToken.yaml'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                employee:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    password:
+                      type: string
+                  required:
+                    - email
+                    - password
+  /verify_email:
+    get:
+      summary: アドレスを確認し、本登録する
+      tags: []
+      responses:
+        '302':
+          description: Found
+      operationId: get-verify_email
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: token
+          description: 新規登録時に発行されたアドレス確認用トークン
+      description: ''
+components:
+  schemas:
+    EmployeeWithToken.yaml:
+      title: EmployeeWithToken.yaml
+      type: object
+      properties:
+        employee:
+          $ref: ../models/Employee.v1.yaml
+        token:
+          type: string

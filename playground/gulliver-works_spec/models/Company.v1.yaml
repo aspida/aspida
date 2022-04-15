@@ -1,0 +1,74 @@
+title: Company
+type: object
+description: ''
+properties:
+  id:
+    type: string
+    format: uuid
+  name:
+    type: string
+    example: 株式会社SIMULA Labs
+  name_kana:
+    type: string
+    example: 'シミュララボ '
+  head_office_location:
+    type: string
+    example: 東京都港区元赤坂1-7-18
+  year_of_establishment:
+    type: string
+    format: date
+    example: '2015'
+  hp_url:
+    type: string
+    format: uri
+    example: 'https://simula-labs.com/'
+  phone:
+    type: string
+    example: 03-1234-5678
+  capital:
+    type: integer
+    example: 1520
+  is_listed:
+    type: boolean
+    default: 'false'
+    example: 'false'
+  representative:
+    type: string
+    example: 牧野暉弘
+  representative_kana:
+    type: string
+    example: まきのあきひろ
+  net_sales:
+    type: string
+    example: '5000'
+  numbers_of_employees:
+    type: string
+    example: '20'
+  average_age:
+    type: integer
+    example: 28
+  business_summary:
+    type: string
+    example: 事業概要
+  corporate_pr:
+    type: string
+    maxLength: 500
+    example: ヒトが生涯の中で最も長く過ごす「働く」という時間。 日本の場合、この働く時間をどう過ごすかはほとんど就活の間に決まってしまっていると言ってもいいでしょう。
+  industries:
+    type: array
+    description: ''
+    items:
+      $ref: ./Industry.v1.yaml
+  cover_image_url:
+    type: string
+required:
+  - id
+  - name
+  - name_kana
+  - head_office_location
+  - year_of_establishment
+  - capital
+  - is_listed
+  - representative
+  - representative_kana
+  - business_summary

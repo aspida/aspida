@@ -1,0 +1,1 @@
+{"version":3,"file":"toAxiosResponse.d.ts","sourceRoot":"","sources":["../src/toAxiosResponse.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,kBAAkB,EAAE,aAAa,EAAE,MAAM,OAAO,CAAA;AACzD,OAAO,EAAE,YAAY,EAAE,MAAM,aAAa,CAAA;kCAEjB,YAAY,UAAU,kBAAkB,KAAG,aAAa;AAAjF,wBAME"}

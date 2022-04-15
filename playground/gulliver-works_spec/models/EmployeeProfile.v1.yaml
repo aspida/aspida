@@ -1,0 +1,51 @@
+title: EmployeeProfile
+type: object
+description: STIを使って実装する
+properties:
+  id:
+    type: string
+    format: uuid
+  first_name:
+    type: string
+    example: 太郎
+  last_name:
+    type: string
+    example: 山田
+  first_name_kana:
+    type: string
+    example: タロウ
+  last_name_kana:
+    type: string
+    example: ヤマダ
+  gender:
+    type: string
+    enum:
+      - MALE
+      - FEMALE
+      - OTHER
+    example: MALE
+  phone:
+    type: string
+    example: 090-XXXX-XXXX
+  postal_code:
+    type: string
+    example: 107-0051
+  address:
+    type: string
+    example: 東京都港区元赤坂1-7-18
+  date_of_birth:
+    type: string
+    format: date
+    description: ''
+  biography:
+    type: string
+    example: 自己PR/紹介
+required:
+  - id
+  - first_name
+  - last_name
+  - first_name_kana
+  - last_name_kana
+  - gender
+  - phone
+  - date_of_birth

@@ -1,0 +1,39 @@
+title: Recruitment
+type: object
+description: ''
+properties:
+  id:
+    type: string
+    format: uuid
+  title:
+    type: string
+    example: 三度の飯よりReact！そんなGeekなあなたへ
+  occupation:
+    $ref: ./Occupation.v1.yaml
+  industry:
+    $ref: ./Industry.v1.yaml
+  workplace:
+    $ref: ./Prefecture.v1.yaml
+  job_description:
+    type: string
+    example: 新規事業のフロントサイドエンジニア
+  work_conditions:
+    type: string
+    example: 保険・交通費とか諸々
+  qualification_requirement:
+    type: string
+    example: ・大卒以上　・40歳未満
+  company:
+    $ref: ./Company.v1.yaml
+  status:
+    type: string
+    enum:
+      - active
+      - inactive
+      - draft
+    default: active
+required:
+  - id
+  - title
+  - company
+  - status
