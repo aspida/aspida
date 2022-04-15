@@ -1,4 +1,5 @@
 import NodeFormData from 'form-data'
+import {decamelizeKeys} from "humps"
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD' | 'PATCH' | 'OPTIONS'
 export type LowerHttpMethod = 'get' | 'post' | 'put' | 'delete' | 'head' | 'patch' | 'options'
@@ -121,29 +122,30 @@ export const optionToRequest = (
 
   let httpBody
   let headers: BasicHeaders = {}
+  const decamelizeBody =  decamelizeKeys(option.body)
 
   switch (type) {
     case 'FormData':
       if (hasFormData) {
-        httpBody = appendDataToFormData(option.body, new FormData())
+        httpBody = appendDataToFormData(decamelizeBody, new FormData())
       } else {
         const formData = new NodeFormData()
-        httpBody = appendDataToFormData(option.body, formData)
+        httpBody = appendDataToFormData(decamelizeBody, formData)
         headers = formData.getHeaders()
       }
       break
     case 'URLSearchParams':
-      httpBody = dataToURLString(option.body)
+      httpBody = dataToURLString(decamelizeBody)
       headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8'
       break
     case 'ArrayBuffer':
     case 'string':
     case 'Blob':
     case 'any':
-      httpBody = option.body
+      httpBody = decamelizeBody
       break
     default:
-      httpBody = JSON.stringify(option.body)
+      httpBody = JSON.stringify(decamelizeBody)
       headers['Content-Type'] = 'application/json;charset=utf-8'
       break
   }
