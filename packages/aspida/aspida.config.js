@@ -1,17 +1,20 @@
 module.exports = [
   {
-    input: 'samples/basic',
+    input: 'samples/aspida/application',
     baseURL: 'https://example.com/api/',
     trailingSlash: false,
-    outputMode: 'all'
+    outputMode: 'normalOnly'
   },
-  { input: 'samples/eachDir', trailingSlash: true, outputEachDir: true },
-  { input: 'samples/normalOnly', outputMode: 'normalOnly' },
-  { input: 'samples/aliasOnly', outputEachDir: true, outputMode: 'aliasOnly' },
   {
-    input: 'samples/useDefineMethods',
+    input: 'samples/aspida/auth',
     baseURL: 'https://example.com/api/',
     trailingSlash: false,
-    outputMode: 'all'
+    outputMode: 'normalOnly'
+  },
+  {
+    input: 'samples/aspida/enterprise',
+    baseURL: 'https://example.com/api/',
+    trailingSlash: false,
+    outputMode: 'normalOnly'
   }
 ]

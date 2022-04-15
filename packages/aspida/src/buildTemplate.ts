@@ -3,6 +3,7 @@ import { AspidaConfig } from './getConfigs'
 import createTemplateValues from './createTemplateValues'
 import createDocComment from './createDocComment'
 import { getDirentTree, DirentTree, FileData } from './getDirentTree'
+import { decamelize } from "humps";
 
 const listNotIndexFiles = (tree: DirentTree): string[] => [
   ...tree.children
@@ -43,7 +44,7 @@ ${createDocComment(
   tree.children.find((c): c is FileData => !c.isDir && c.name === 'index.ts')?.doc
 )}const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const prefix = (baseURL === undefined ? '<% baseURL %>' : baseURL).replace(/\\/$/, '')
-${pathes.map((p, i) => `  const PATH${i} = ${p}`).join('\n')}
+${pathes.map((p, i) => `  const PATH${i} = ${decamelize(p)}`).join('\n')}
 ${['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'PATCH', 'OPTIONS']
   .filter(m => api.includes(`, ${m}, option`))
   .map(m => `  const ${m} = '${m}'`)
