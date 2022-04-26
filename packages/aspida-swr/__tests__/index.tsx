@@ -46,11 +46,11 @@ describe('optional query', () => {
       }
     }
     const { container } = render(<Page />)
-    expect(container.textContent).toMatchInlineSnapshot(`""`)
+    expect(container.textContent).toMatchInlineSnapshot(`"undefined"`)
 
     await act(async () => {
       await nextTick()
-      expect(container.textContent).toMatchInlineSnapshot(`"1"`)
+      expect(container.textContent).toMatchInlineSnapshot(`"3"`)
     })
   })
 
@@ -73,7 +73,7 @@ describe('optional query', () => {
       }
     }
     const { container } = render(<Page />)
-    expect(container.textContent).toMatchInlineSnapshot(`"2"`)
+    expect(container.textContent).toMatchInlineSnapshot(`"1"`)
 
     await act(async () => {
       await nextTick()
@@ -96,11 +96,11 @@ describe('optional query', () => {
       }
     }
     const { container } = render(<Page />)
-    expect(container.textContent).toMatchInlineSnapshot(`""`)
+    expect(container.textContent).toMatchInlineSnapshot(`"undefined"`)
 
     await act(async () => {
       await nextTick()
-      expect(container.textContent).toMatchInlineSnapshot(`"2"`)
+      expect(container.textContent).toMatchInlineSnapshot(`"1"`)
     })
   })
 
@@ -119,11 +119,11 @@ describe('optional query', () => {
       }
     }
     const { container } = render(<Page />)
-    expect(container.textContent).toMatchInlineSnapshot(`""`)
+    expect(container.textContent).toMatchInlineSnapshot(`"undefined"`)
 
     await act(async () => {
       await nextTick()
-      expect(container.textContent).toMatchInlineSnapshot(`"1"`)
+      expect(container.textContent).toMatchInlineSnapshot(`"3"`)
     })
   })
 
@@ -142,11 +142,11 @@ describe('optional query', () => {
       }
     }
     const { container } = render(<Page />)
-    expect(container.textContent).toMatchInlineSnapshot(`""`)
+    expect(container.textContent).toMatchInlineSnapshot(`"undefined"`)
 
     await act(async () => {
       await nextTick()
-      expect(container.textContent).toMatchInlineSnapshot(`"2"`)
+      expect(container.textContent).toMatchInlineSnapshot(`"1"`)
     })
   })
 })

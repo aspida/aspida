@@ -66,6 +66,13 @@
 $ mkdir api
 ```
 
+### Type helper `DefineMethods`
+
+`DefineMethods<>` is helper type for defining `Methods`. In earlier aspida, user shuold define without checking for API definition.
+If you already have aspida in your projects, you can easily use `DefineMethods<>` with surrounding your definition.
+It is just an option whether to use `DefineMethods<>`.
+Be aware of the limitation that `DefineMethods<>` can't detect extra meaningless properties.
+
 ### Create an endpoint type definition file
 
 - GET: /v1/users/?limit={number}
