@@ -86,7 +86,7 @@ const genPolyStatus = ({ name, props }: Method, importName: string, index: numbe
     ? `, ${importName}['${name}']['polymorph'][${index}]['status']`
     : genStatus({ name, props }, importName)
 
-const genRequest = (props: Method['props']) =>
+const genRequest = (props: Omit<Method['props'], 'polymorph'>) =>
   `, option${
     !props.reqBody
       ? ''
@@ -97,7 +97,7 @@ const genRequest = (props: Method['props']) =>
       : ''
   }`
 
-const genResMethodName = (props: Method['props']) =>
+const genResMethodName = (props: Omit<Method['props'], 'polymorph'>) =>
   !props.resBody
     ? 'send'
     : (

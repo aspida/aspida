@@ -20,7 +20,7 @@ adapter.attachRoutes([
   {
     path: '/v1.1',
     methods: mockMethods<Methods0>({
-      get: ({ query }) => ({ status: 200, resBody: query || [{ aa: 3 }] })
+      get: ({ query }) => ({ status: 200, resBody: query || { aa: 3 } })
     })
   },
   {
@@ -40,7 +40,15 @@ describe('optional query', () => {
     function Page() {
       const a = useAspidaQuery(client.v1_1)
 
-      return <div>{a.data?.length}</div>
+      if (a.data) {
+        if ('aa' in a.data) {
+          return <div>{a.data.aa}</div>
+        } else {
+          return <div>{a.data.bb}</div>
+        }
+      } else {
+        return <div>undefined</div>
+      }
     }
     const { container } = render(
       <App>
@@ -51,19 +59,26 @@ describe('optional query', () => {
 
     await act(async () => {
       await nextTick()
-      expect(container.textContent).toMatchInlineSnapshot(`"1"`)
+      expect(container.textContent).toMatchInlineSnapshot(`"3"`)
     })
   })
 
   test('basic usage with initialData', async () => {
     function Page() {
       const a = useAspidaQuery(client.v1_1, {
-        query: [],
         refetchOnMount: true,
-        initialData: [{ aa: 1 }, { aa: 2 }]
+        initialData: { aa: 1 }
       })
 
-      return <div>{a.data?.length}</div>
+      if (a.data) {
+        if ('aa' in a.data) {
+          return <div>{a.data.aa}</div>
+        } else {
+          return <div>{a.data.bb}</div>
+        }
+      } else {
+        return <div>undefined</div>
+      }
     }
     const { container } = render(
       <App>
@@ -80,9 +95,17 @@ describe('optional query', () => {
 
   test('basic usage with query', async () => {
     function Page() {
-      const a = useAspidaQuery(client.v1_1, { query: [{ aa: 1 }, { aa: 2 }] })
+      const a = useAspidaQuery(client.v1_1, { query: { aa: 1 } })
 
-      return <div>{a.data?.length}</div>
+      if (a.data) {
+        if ('aa' in a.data) {
+          return <div>{a.data.aa}</div>
+        } else {
+          return <div>{a.data.bb}</div>
+        }
+      } else {
+        return <div>undefined</div>
+      }
     }
     const { container } = render(
       <App>
@@ -101,7 +124,15 @@ describe('optional query', () => {
     function Page() {
       const a = useAspidaQuery(client.v1_1, 'get')
 
-      return <div>{a.data?.body.length}</div>
+      if (a.data) {
+        if ('aa' in a.data.body) {
+          return <div>{a.data.body.aa}</div>
+        } else {
+          return <div>{a.data.body.bb}</div>
+        }
+      } else {
+        return <div>undefined</div>
+      }
     }
     const { container } = render(
       <App>
@@ -118,9 +149,17 @@ describe('optional query', () => {
 
   test('specify get method with query', async () => {
     function Page() {
-      const a = useAspidaQuery(client.v1_1, 'get', { query: [{ aa: 1 }, { aa: 2 }] })
+      const a = useAspidaQuery(client.v1_1, 'get', { query: { aa: 1 } })
 
-      return <div>{a.data?.body.length}</div>
+      if (a.data) {
+        if ('aa' in a.data.body) {
+          return <div>{a.data.body.aa}</div>
+        } else {
+          return <div>{a.data.body.bb}</div>
+        }
+      } else {
+        return <div>undefined</div>
+      }
     }
     const { container } = render(
       <App>

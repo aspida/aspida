@@ -13,7 +13,7 @@ export type Methods = DefineMethods<{
     reqFormat: FormData
     polymorph: [
       { reqBody: { id: number }; resBody: { id: number } },
-      { reqBody: { id: number }[]; resBody: { id: number }[] },
+      { reqBody: { name: string }; resBody: { id: number }[] },
       {}
     ]
   }

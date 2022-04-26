@@ -144,14 +144,16 @@ type AspidaMethodParamsReqFormData = {
 
 type AspidaMethodParamsReq = AspidaMethodParamsReqOthers | AspidaMethodParamsReqFormData
 
+type JSONValue = string | number | boolean | null | { [key: string]: JSONValue } | Array<JSONValue>
+
 type AspidaMethodParamsOthers = {
   status?: number
   query?: Record<string, string | number | (string | number)[]>
-  resHeaders?: any
-  resBody?: any
+  resHeaders?: { [key: string]: string | undefined }
+  resBody?: JSONValue | FormData | ArrayBuffer
 }
-export type AspidaMethod = AspidaMethodParamsReq & AspidaMethodParamsOthers
+export type AspidaMethodParams = AspidaMethodParamsReq & AspidaMethodParamsOthers
 
-export type AspidaMethods = Partial<Record<LowerHttpMethod, AspidaMethod>>
+export type AspidaMethods = Partial<Record<LowerHttpMethod, AspidaMethodParams>>
 
 export type DefineMethods<T extends AspidaMethods> = T

@@ -3,7 +3,7 @@ import { DefineMethods } from '../../../../../src'
 type User = {
   id: number
   name: string
-  icon: File
+  // icon: File
 }
 
 export type Methods = DefineMethods<{
@@ -19,16 +19,35 @@ export type Methods = DefineMethods<{
   }
 
   post: {
-    reqFormat: FormData
+    /**
+     * query(?): ...
+     * reqHeaders(?): ...
+     * reqBody(?): ...
+     * status: ...
+     * resHeaders(?): ...
+     * resBody(?): ...
+     */
     polymorph: [
+      // polymorphic types
       {
         reqBody: Omit<User, 'id'>
         resBody: User
+        /**
+         * query(?): ...
+         * reqHeaders(?): ...
+         * status: ...
+         * resHeaders(?): ...
+         */
       },
       {
         reqBody: Omit<User, 'id'>[]
         resBody: User[]
       }
     ]
+  }
+
+  patch: {
+    reqFormat: FormData
+    reqBody: { a: File }
   }
 }>

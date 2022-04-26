@@ -4,16 +4,15 @@ import { DefineMethods } from '../../src'
 export type Methods = DefineMethods<{
   get: {
     // test
-    query?: (
+    query?:
       | {
           aa: number /*
     test { aa }
     */
         }
       | { bb: string[] }
-    )[]
     status: 200
-    resBody: Array<{ aa: number } | { bb: Array<string> }>
+    resBody: { aa: number } | { bb: Array<string> }
   }
 }>
 
