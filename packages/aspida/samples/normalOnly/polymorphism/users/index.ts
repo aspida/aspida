@@ -1,4 +1,6 @@
-export interface Methods {
+import { DefineMethods } from '../../../../src'
+
+export type Methods = DefineMethods<{
   get: {
     polymorph: [
       { reqBody: { id: number }; resBody: { id: number } },
@@ -11,7 +13,7 @@ export interface Methods {
     reqFormat: FormData
     polymorph: [
       { reqBody: { id: number }; resBody: { id: number } },
-      { reqBody: { id: number }[]; resBody: { id: number }[] },
+      { reqBody: { name: string }; resBody: { id: number }[] },
       {}
     ]
   }
@@ -32,4 +34,4 @@ export interface Methods {
     reqBody?: { id: number }
     polymorph: [{ reqHeaders: { token: string }; resHeaders: { token: string } }, { status: 204 }]
   }
-}
+}>

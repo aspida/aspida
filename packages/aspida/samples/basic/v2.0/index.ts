@@ -1,6 +1,7 @@
+import { DefineMethods } from '../../../src'
 import { mockMethods } from 'aspida-mock'
 
-export interface Methods {
+export type Methods = DefineMethods<{
   get: {
     query: { val: string }
     reqHeaders: { 'content-type': string }
@@ -9,7 +10,7 @@ export interface Methods {
     resBody: string
     status: 200 | 204
   }
-}
+}>
 
 export default mockMethods<Methods>({
   get: ({ query }) =>

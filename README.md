@@ -66,6 +66,13 @@
 $ mkdir api
 ```
 
+### Type helper `DefineMethods`
+
+`DefineMethods<>` is helper type for defining `Methods`. In earlier aspida, user shuold define without checking for API definition.
+If you already have aspida in your projects, you can easily use `DefineMethods<>` with surrounding your definition.
+It is just an option whether to use `DefineMethods<>`.
+Be aware of the limitation that `DefineMethods<>` can't detect extra meaningless properties.
+
 ### Create an endpoint type definition file
 
 - GET: /v1/users/?limit={number}
@@ -74,12 +81,14 @@ $ mkdir api
   `api/v1/users/index.ts`
 
   ```typescript
+  import { DefineMethods } from 'aspida'
+
   type User = {
     id: number
     name: string
   }
 
-  export type Methods = {
+  export type Methods = DefineMethods<{
     get: {
       query?: {
         limit: number
@@ -102,7 +111,7 @@ $ mkdir api
        * polymorph: [...]
        */
     }
-  }
+  }>
   ```
 
 - GET: /v1/users/\${userId}
@@ -114,12 +123,14 @@ $ mkdir api
   If not specified with @, the default path variable type is "number | string"
 
   ```typescript
+  import { DefineMethods } from 'aspida'
+
   type User = {
     id: number
     name: string
   }
 
-  export type Methods = {
+  export type Methods = DefineMethods<{
     get: {
       resBody: User
     }
@@ -131,7 +142,7 @@ $ mkdir api
 
       resBody: User
     }
-  }
+  }>
   ```
 
 ### Build type definition file
@@ -289,6 +300,7 @@ watch([
 1. [Import only some endpoints](#tips8)
 1. [Retrieve endpoint URL string](#tips9)
 1. [Reflect TSDoc comments](#tips10)
+1. [Type-safe type definition](#tips11)
 
 <a id="tips1"></a>
 
@@ -353,9 +365,10 @@ import api from "../api/$api"
 `api/v1/users/index.ts`
 
 ```typescript
+import { DefineMethods } from 'aspida'
 import type { ReadStream } from 'fs'
 
-export type Methods = {
+export type Methods = DefineMethods<{
   post: {
     reqFormat: FormData
 
@@ -369,7 +382,7 @@ export type Methods = {
       name: string
     }
   }
-}
+}>
 ```
 
 `src/index.ts`
@@ -422,7 +435,9 @@ import api from "../api/$api"
 `api/v1/users/index.ts`
 
 ```typescript
-export type Methods = {
+import { DefineMethods } from 'aspida'
+
+export type Methods = DefineMethods<{
   post: {
     reqFormat: URLSearchParams
 
@@ -435,7 +450,7 @@ export type Methods = {
       name: string
     }
   }
-}
+}>
 ```
 
 `src/index.ts`
@@ -460,7 +475,9 @@ import api from "../api/$api"
 `api/v1/users/index.ts`
 
 ```typescript
-export type Methods = {
+import { DefineMethods } from 'aspida'
+
+export type Methods = DefineMethods<{
   get: {
     query: {
       name: string
@@ -468,7 +485,7 @@ export type Methods = {
 
     resBody: ArrayBuffer
   }
-}
+}>
 ```
 
 `src/index.ts`
@@ -493,12 +510,14 @@ import api from "../api/$api"
 `api/users/index.ts`
 
 ```ts
+import { DefineMethods } from 'aspida'
+
 type User = {
   id: number
   name: string
 }
 
-export interface Methods {
+export Methods = DefineMethods<{
   post: {
     // common properties
     reqFormat: FormData
@@ -528,7 +547,7 @@ export interface Methods {
       }
     ]
   }
-}
+}>
 ```
 
 `src/index.ts`
@@ -559,21 +578,25 @@ Example `":"` -> `"%3A"`
 `api/foo%3Abar/index.ts`
 
 ```ts
-export type Methods = {
+import { DefineMethods } from 'aspida'
+
+export type Methods = DefineMethods<{
   get: {
     resBody: string
   }
-}
+}>
 ```
 
 `api/users/_userId@number%3Aread/index.ts`
 
 ```ts
-export type Methods = {
+import { DefineMethods } from 'aspida'
+
+export type Methods = DefineMethods<{
   get: {
     resBody: User
   }
-}
+}>
 ```
 
 With clients, `"%3A"` -> `":"`
@@ -663,13 +686,15 @@ import api from "../api/$api"
 `api/index.ts`
 
 ```ts
+import { DefineMethods } from 'aspida'
+
 /**
  * root comment
  * 
  * @remarks
  * root remarks comment
  */
-export type Methods = {
+export type Methods = DefineMethods<{
   /**
    * post method comment
    * 
@@ -693,7 +718,7 @@ export type Methods = {
      */
     resBody: User
   }
-}
+}>
 ```
 
 ```sh
@@ -727,6 +752,18 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
       fetch<Methods0['post']['resBody']>(prefix, PATH0, POST, option).json().then(r => r.body)
   }
 }
+```
+
+<a id="tips11"></a>
+
+### Type-safe type definition
+
+```ts
+export type Methods = DefineMethods<{
+  get: {
+    resBody: { id: number }
+  }
+}>
 ```
 
 ## Support

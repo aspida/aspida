@@ -1,4 +1,5 @@
 import NodeFormData from 'form-data'
+import type { ReadStream } from 'fs'
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD' | 'PATCH' | 'OPTIONS'
 export type LowerHttpMethod = 'get' | 'post' | 'put' | 'delete' | 'head' | 'patch' | 'options'
@@ -128,22 +129,31 @@ export const optionToRequest = (
   return { httpBody, ...option, headers: { ...headers, ...option.headers } }
 }
 
-export type AspidaMethodParams = {
-  status?: number
-  query?: any
+type AspidaMethodParamsReqOthers = {
   reqHeaders?: any
-  reqFormat?: FormData | URLSearchParams | ArrayBuffer | Blob | string | any
+  reqFormat?: URLSearchParams | ArrayBuffer | Blob | string
   reqBody?: any
-  resHeaders?: any
-  resBody?: any
+  polymorph?: Array<AspidaMethodParamsOthers & Omit<AspidaMethodParamsReqOthers, 'polymorph'>>
+}
+type AspidaMethodParamsReqFormData = {
+  reqHeaders?: any
+  reqFormat?: FormData
+  reqBody?: Record<string, string | number | File | ReadStream>
+  polymorph?: Array<AspidaMethodParamsOthers & Omit<AspidaMethodParamsReqFormData, 'polymorph'>>
 }
 
-export type AspidaMethod = AspidaMethodParams & {
-  polymorph?: AspidaMethodParams[]
-}
+type AspidaMethodParamsReq = AspidaMethodParamsReqOthers | AspidaMethodParamsReqFormData
 
-export type AspidaMethods = {
-  [method in LowerHttpMethod]?: AspidaMethod
+type JSONValue = string | number | boolean | null | { [key: string]: JSONValue } | Array<JSONValue>
+
+type AspidaMethodParamsOthers = {
+  status?: number
+  query?: Record<string, string | number | (string | number)[]>
+  resHeaders?: { [key: string]: string | undefined }
+  resBody?: JSONValue | FormData | ArrayBuffer
 }
+export type AspidaMethodParams = AspidaMethodParamsReq & AspidaMethodParamsOthers
+
+export type AspidaMethods = Partial<Record<LowerHttpMethod, AspidaMethodParams>>
 
 export type DefineMethods<T extends AspidaMethods> = T
