@@ -152,8 +152,21 @@ type AspidaMethodParamsOthers = {
   resHeaders?: { [key: string]: string | undefined }
   resBody?: JSONValue | FormData | ArrayBuffer
 }
-export type AspidaMethodParams = AspidaMethodParamsReq & AspidaMethodParamsOthers
+
+export type AspidaMethodParams = {
+  status?: number
+  query?: any
+  reqHeaders?: any
+  reqFormat?: FormData | URLSearchParams | ArrayBuffer | Blob | string | any
+  reqBody?: any
+  resHeaders?: any
+  resBody?: any
+}
 
 export type AspidaMethods = Partial<Record<LowerHttpMethod, AspidaMethodParams>>
 
-export type DefineMethods<T extends AspidaMethods> = T
+type AspidaMethodParamsStrict = AspidaMethodParamsReq & AspidaMethodParamsOthers
+
+type AspidaMethodsStrict = Partial<Record<LowerHttpMethod, AspidaMethodParamsStrict>>
+
+export type DefineMethods<T extends AspidaMethodsStrict> = T
