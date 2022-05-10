@@ -84,16 +84,15 @@ Array [
   test('aspida mutate', async () => {
     function Page() {
       const a = useAspidaSWR(client.v1_1.counter)
+      const swrConfig = useSWRConfig()
 
-      return <div>{a.data?.c}</div>
+      return (
+        <SWRConfig value={swrConfig}>
+          <div>{a.data?.c}</div>
+        </SWRConfig>
+      )
     }
-    const swrConfig = { provider: () => new Map() }
-    const f = useSWRConfig()
-    const { container } = render(
-      <SWRConfig value={f}>
-        <Page />
-      </SWRConfig>
-    )
+    const { container } = render(<Page />)
     expect(container.textContent).toBe('')
 
     await act(async () => {
@@ -122,24 +121,23 @@ Array [
       return <div>{a.data?.c}</div>
     }
     const { container } = render(<Page />)
-    expect(container.textContent).toBe('')
+    expect(container.textContent).toMatchInlineSnapshot(`"1"`)
 
     await act(async () => {
       await nextTick()
-      expect(container.textContent).toBe('0')
+      expect(container.textContent).toMatchInlineSnapshot(`"1"`)
     })
 
     await act(async () => {
       await aspidaMutate(client.v1_1.counter, {}, { c: 3 })
       await nextTick()
-      expect(container.textContent).toBe('3')
+      expect(container.textContent).toMatchInlineSnapshot(`"0"`)
     })
   })
 
   test('basic usage with initialData', async () => {
     function Page() {
       const a = useAspidaSWR(client.v1_1, {
-        query: { aa: 0 },
         revalidateOnMount: true,
         fallbackData: { aa: 1 }
       })
@@ -154,12 +152,16 @@ Array [
         return <div>undefined</div>
       }
     }
-    const { container } = render(<Page />)
+    const { container } = render(
+      <SWRConfig value={{ provider: () => new Map() }}>
+        <Page />
+      </SWRConfig>
+    )
     expect(container.textContent).toMatchInlineSnapshot(`"1"`)
 
     await act(async () => {
       await nextTick()
-      expect(container.textContent).toBe('0')
+      expect(container.textContent).toMatchInlineSnapshot(`"3"`)
     })
   })
 
