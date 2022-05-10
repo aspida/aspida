@@ -1,4 +1,4 @@
-import useSWRV, { IConfig } from 'swrv'
+import useSWRV, { IConfig, mutate } from 'swrv'
 import { IResponse } from 'swrv/dist/types'
 
 type keyType = string | any[] | null
