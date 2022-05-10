@@ -165,6 +165,7 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
             })(),
             post: (() => {
               function postRequest(option: { body: Methods6['post']['polymorph'][0]['reqBody'], config?: T | undefined }): Promise<AspidaResponse<Methods6['post']['polymorph'][0]['resBody']>>
+              function postRequest(option: { body: Methods6['post']['polymorph'][1]['reqBody'], config?: T | undefined }): Promise<AspidaResponse<Methods6['post']['polymorph'][1]['resBody']>>
               function postRequest(option: any) {
                 return fetch(prefix, prefix2, POST, option).json()
               }
@@ -172,6 +173,7 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
             })(),
             $post: (() => {
               function $postRequest(option: { body: Methods6['post']['polymorph'][0]['reqBody'], config?: T | undefined }): Promise<Methods6['post']['polymorph'][0]['resBody']>
+              function $postRequest(option: { body: Methods6['post']['polymorph'][1]['reqBody'], config?: T | undefined }): Promise<Methods6['post']['polymorph'][1]['resBody']>
               function $postRequest(option: any) {
                 return fetch(prefix, prefix2, POST, option).json().then(r => r.body)
               }
