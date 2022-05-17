@@ -1,4 +1,4 @@
-import useSWRV, { IConfig } from 'swrv'
+import useSWRV, { IConfig, mutate, SWRVCache } from 'swrv'
 import { IResponse } from 'swrv/dist/types'
 
 type keyType = string | any[] | null
@@ -54,6 +54,82 @@ function getAspidaSWRVDefaultKey<
   return [api.$path(opt), method]
 }
 export { getAspidaSWRVDefaultKey }
+
+type AwaitedPolyfill<T> = T extends null | undefined
+  ? T
+  : T extends object
+  ? T extends { then(onfulfilled: infer F): any }
+    ? F extends (value: infer V) => any
+      ? Awaited<V>
+      : never
+    : T
+  : T
+
+type MutatorOptions<T extends (option: any) => Promise<any>> = Parameters<
+  Parameters<T> extends [Parameters<T>[0]]
+    ? (
+        option: AspidaSWRVOption<Parameters<T>[0]>,
+        res?: AwaitedPolyfill<ReturnType<T>>,
+        cache?: SWRVCache<Pick<IResponse<any, any>, 'error' | 'data' | 'isValidating'>>,
+        ttl?: number
+      ) => void
+    : (
+        option?: AspidaSWRVOption<Parameters<T>[0]>,
+        res?: AwaitedPolyfill<ReturnType<T>>,
+        cache?: SWRVCache<Pick<IResponse<any, any>, 'error' | 'data' | 'isValidating'>>,
+        ttl?: number
+      ) => void
+>
+
+function aspidaMutate<
+  T extends Record<string, any> & {
+    $get: (option: any) => Promise<any>
+    $path: (option?: any) => string
+  }
+>(
+  api: T,
+  ...option: MutatorOptions<T['$get']>
+): Promise<{
+  data?: AwaitedPolyfill<ReturnType<T['$get']>>
+  error?: unknown
+  isValidating: boolean
+}>
+function aspidaMutate<
+  T extends Record<string, any> & { $path: (option?: any) => string },
+  U extends { [K in keyof T]: T[K] extends (option: any) => Promise<any> ? K : never }[keyof T]
+>(
+  api: T,
+  method: U,
+  ...option: MutatorOptions<T[U]>
+): Promise<{
+  data?: AwaitedPolyfill<ReturnType<T[U]>>
+  error?: unknown
+  isValidating: boolean
+}>
+function aspidaMutate<
+  T extends Record<string, any> & { $path: (option?: any) => string },
+  U extends { [K in keyof T]: T[K] extends (option: any) => Promise<any> ? K : never }[keyof T]
+>(
+  api: T,
+  maybeMethod: U,
+  maybeOption: Parameters<T[U]>[0],
+  maybeRes?: Parameters<T[U]>[1],
+  maybeCache?: Parameters<T[U]>[2],
+  maybeTtl?: Parameters<T[U]>[3]
+): Promise<{
+  data?: T[U]
+  error?: unknown
+  isValidating: boolean
+}> {
+  const method = typeof maybeMethod === 'string' ? maybeMethod : '$get'
+  const option = typeof maybeMethod === 'string' ? maybeOption : maybeMethod
+  const res = typeof maybeMethod === 'string' ? maybeRes : maybeOption
+  const cache = typeof maybeMethod === 'string' ? maybeCache : maybeRes
+  const ttl = typeof maybeMethod === 'string' ? maybeTtl : maybeCache
+  const key = getAspidaSWRVDefaultKey(api as any, method as any, option as any)
+  return mutate(key as any, res as any, cache as any, ttl as any)
+}
+export { aspidaMutate }
 
 function useAspidaSWRV<
   T extends Record<string, any> & {

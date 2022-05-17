@@ -1,11 +1,14 @@
 import { VueConstructor } from 'vue'
+import { SWRVCache } from 'swrv'
 import VueCompositionApi from '@vue/composition-api'
 import { mockClient, mockMethods } from 'aspida-mock'
 import fetchClient from '../../aspida-node-fetch'
-import useAspidaSWRV from '../index'
+import useAspidaSWRV, { aspidaMutate, getAspidaSWRVDefaultKey } from '../index'
 import api from '../../aspida/samples/basic/$api'
 import { Methods as Methods0 } from '../../aspida/samples/basic/v1.1/3.1'
 import { Methods as Methods1 } from '../../aspida/samples/basic/v2.0'
+import { Methods as MethodsCounter } from '../../aspida/samples/basic/v1.1/counter'
+import { IResponse } from 'swrv/dist/types'
 
 const Vue: VueConstructor = require('vue/dist/vue.common.js')
 
@@ -14,6 +17,13 @@ Vue.use(VueCompositionApi)
 const adapter = mockClient(fetchClient())
 const client = api(adapter)
 const timeout = (msec: number) => new Promise(resolve => setTimeout(resolve, msec))
+
+let serverCount = 0
+
+beforeEach(() => {
+  serverCount = 0
+})
+
 const tick = async (vm: Vue, times: number) => {
   for (const _ in [...Array(times).keys()]) {
     await vm.$nextTick()
@@ -36,6 +46,16 @@ adapter.attachRoutes([
         resHeaders: { token: query?.val }
       })
     })
+  },
+  {
+    path: '/v1.1/counter',
+    methods: mockMethods<MethodsCounter>({
+      get: () => ({ status: 200, resBody: { c: serverCount } }),
+      post: ({ reqBody: { a } }) => {
+        serverCount += a
+        return { status: 200, resBody: { c: serverCount } }
+      }
+    })
   }
 ])
 
@@ -56,6 +76,67 @@ describe('optional query', () => {
     await timeout(20)
 
     expect(vm.$el.textContent).toEqual('hello, 0')
+  })
+
+  test('get default key', async () => {
+    expect(getAspidaSWRVDefaultKey(client.v1_1)).toMatchInlineSnapshot(`
+Array [
+  "https://example.com/api/v1.1",
+  "$get",
+]
+`)
+  })
+
+  test('aspida mutate', async () => {
+    const cache = new SWRVCache<Omit<IResponse, 'mutate'>>()
+    const vm = new Vue({
+      template: '<div>hello, {{ data && data.c }}</div>',
+      setup() {
+        const { data, error } = useAspidaSWRV(client.v1_1.counter, { cache })
+
+        return { data, error }
+      }
+    }).$mount()
+
+    expect(vm.$el.textContent).toContain('hello,')
+
+    await tick(vm, 2)
+    await timeout(20)
+
+    expect(vm.$el.textContent).toContain('hello, 0')
+
+    serverCount += 1
+
+    await aspidaMutate(client.v1_1.counter, undefined, undefined, cache)
+    await tick(vm, 2)
+    await timeout(20)
+
+    expect(vm.$el.textContent).toContain('hello, 1')
+  })
+
+  test('aspida mutate to change', async () => {
+    const cache = new SWRVCache<Omit<IResponse, 'mutate'>>()
+    const vm = new Vue({
+      template: '<div>hello, {{ data && data.c }}</div>',
+      setup() {
+        const { data, error } = useAspidaSWRV(client.v1_1.counter, { cache })
+
+        return { data, error }
+      }
+    }).$mount()
+
+    expect(vm.$el.textContent).toBe('hello, ')
+
+    await tick(vm, 2)
+    await timeout(20)
+
+    expect(vm.$el.textContent).toEqual('hello, 0')
+
+    await aspidaMutate(client.v1_1.counter, {}, { c: 4 }, cache)
+    await tick(vm, 2)
+    await timeout(20)
+
+    expect(vm.$el.textContent).toEqual('hello, 4')
   })
 
   test('basic usage with SWRV options', async () => {
