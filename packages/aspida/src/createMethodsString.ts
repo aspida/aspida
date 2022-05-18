@@ -126,7 +126,7 @@ const genPolymorphReturnVal = (method: Method, indent: string, path: string) =>
     method.name
   }Request(option: any) {\n${indent}      return fetch(prefix, ${path}, ${method.name.toUpperCase()}${genRequest(
     { ...method.props, ...method.props.polymorph?.find(p => p.reqBody) }
-  )}).${genResMethodName({ ...method.props, ...method.props.polymorph?.find(p => p.reqBody) })}()`
+  )}).${genResMethodName({ ...method.props, ...method.props.polymorph?.find(p => p.resBody) })}()`
 
 export default (
   methods: Method[],
