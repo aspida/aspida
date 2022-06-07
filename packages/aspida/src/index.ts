@@ -138,7 +138,7 @@ type AspidaMethodParamsReqOthers = {
 type AspidaMethodParamsReqFormData = {
   reqHeaders?: any
   reqFormat?: FormData
-  reqBody?: Record<string, string | number | File | ReadStream>
+  reqBody?: Record<string, string | number | File | File[] | ReadStream>
   polymorph?: Array<AspidaMethodParamsOthers & Omit<AspidaMethodParamsReqFormData, 'polymorph'>>
 }
 
