@@ -13,5 +13,11 @@ module.exports = [
     baseURL: 'https://example.com/api/',
     trailingSlash: false,
     outputMode: 'all'
+  },
+  {
+    input: 'samples/array',
+    baseURL: 'https://example.com/api/',
+    trailingSlash: false,
+    outputMode: 'all'
   }
 ]

@@ -11,6 +11,7 @@ import {
 export type FetchConfig = RequestInit & {
   baseURL?: string
   throwHttpErrors?: boolean
+  paramsSerializer?: typeof dataToURLString
 }
 
 export class HTTPError extends Error {
@@ -33,9 +34,10 @@ export default (client = fetch, config?: FetchConfig): AspidaClient<FetchConfig>
       <V>(fn: (res: Response) => Promise<V>) =>
       async () => {
         const request = optionToRequest(params, type)
+        const serializer = config?.paramsSerializer || dataToURLString
         const res = await client(
           `${request?.config?.baseURL ?? baseURL}${url}${
-            request?.query ? `?${dataToURLString(request.query)}` : ''
+            request?.query ? `?${serializer(request.query)}` : ''
           }`,
           {
             method,
