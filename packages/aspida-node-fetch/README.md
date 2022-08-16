@@ -1,4 +1,5 @@
 # @aspida/node-fetch
+
 <br />
 <img src="https://aspida.github.io/aspida/logos/png/logo.png" alt="aspida" title="aspida" />
 <div align="center">
@@ -82,6 +83,33 @@ const client = api(aspida(fetch, fetchConfig))
 })()
 ```
 
+### Serialize GET parameters manually
+
+`src/index.ts`
+
+```typescript
+import fetch from "node-fetch"
+import aspida, { HTTPError } from "@aspida/fetch"
+import qs from "qs"
+import api from "../api/$api"
+
+const fetchConfig = {
+  paramsSerializer: params => qs.stringify(params)
+}
+
+const client = api(aspida(fetch, fetchConfig))
+;(async () => {
+  const users = await client.v1.users.$get({
+    // config: { paramsSerializer: (params) => qs.stringify(params) },
+    query: { ids: [1, 2, 3] }
+  })
+  console.log(users)
+  // req -> GET: /v1/users/?ids%5B0%5D=1&ids%5B1%5D=2&ids%5B2%5D=3
+  // decoded ->             ids[0]=1    &ids[1]=2    &ids[2]=3
+  // res -> [{ id: 1, name: "taro1" }, { id: 2, name: "taro2" }, { id: 3, name: "taro3" }]
+})()
+
 ## License
 
 @aspida/node-fetch is licensed under a [MIT License](https://github.com/aspida/aspida/blob/master/packages/aspida-node-fetch/LICENSE).
+```

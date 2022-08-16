@@ -27,5 +27,8 @@
   ],
   "dependencies": {
     "aspida": "^1.7.1"
+  },
+  "devDependencies": {
+    "qs": "^6.11.0"
   }
 }
