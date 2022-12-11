@@ -86,7 +86,7 @@
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-standard": "^5.0.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "jest": "^27.0.4",
     "node-fetch": "^2.6.1",
     "prettier": "^2.3.0",
