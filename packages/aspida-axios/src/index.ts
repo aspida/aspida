@@ -24,7 +24,7 @@ export default (
       const request = optionToRequest(params, type)
       const res = await client.request({
         paramsSerializer: {
-          encode: params => dataToURLString(params)
+          serialize: params => dataToURLString(params)
         },
         ...config,
         url,
