@@ -8,7 +8,7 @@ import {
   hasMockHandler
 } from 'aspida-mock'
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosAdapter } from 'axios'
-import settle from 'axios/lib/core/settle'
+import settle from './settle'
 import aspidaClientFactory from './'
 import toMockConfig from './toMockConfig'
 import toAxiosResponse from './toAxiosResponse'
@@ -18,7 +18,7 @@ export default (
   config?: AxiosRequestConfig
 ): MockClient<AxiosRequestConfig> => {
   const aspidaClient = aspidaClientFactory(client, config)
-  let originalAdapter: AxiosAdapter | undefined
+  let originalAdapter: AxiosInstance['defaults']['adapter']
   let originalTransformRequest: AxiosRequestConfig['transformRequest'] | undefined
   let mockRoutes: MockRoute[] | undefined
 
@@ -45,28 +45,26 @@ export default (
       originalTransformRequest = client.defaults.transformRequest
       mockRoutes = routes
 
-      client.defaults.adapter = config =>
-        // eslint-disable-next-line no-async-promise-executor
-        new Promise(async (resolve, reject) => {
-          const customConfig = toMockConfig(config)
+      client.defaults.adapter =
+        routes.length === 0
+          ? originalAdapter
+          : config =>
+              // eslint-disable-next-line no-async-promise-executor
+              new Promise(async (resolve, reject) => {
+                const customConfig = toMockConfig(config)
 
-          try {
-            const result = await callMockHandler(customConfig, routes, mockConfig?.middleware)
+                try {
+                  const result = await callMockHandler(customConfig, routes, mockConfig?.middleware)
 
-            if (!result && originalAdapter) {
-              originalAdapter(config).then(resolve, reject)
-              return
-            }
+                  const res = result ? toAxiosResponse(result, config) : { status: 404, config }
 
-            const res = result ? toAxiosResponse(result, config) : { status: 404, config }
+                  if (mockConfig?.log) printLog(customConfig, res.status)
 
-            if (mockConfig?.log) printLog(customConfig, res.status)
-
-            setTimeout(() => settle(resolve, reject, res), mockConfig?.delayMSec)
-          } catch (e) {
-            reject(e)
-          }
-        })
+                  setTimeout(() => settle(resolve, reject, res), mockConfig?.delayMSec)
+                } catch (e) {
+                  reject(e)
+                }
+              })
 
       client.defaults.transformRequest = data => data
     },
