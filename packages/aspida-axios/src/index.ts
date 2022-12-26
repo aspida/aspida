@@ -23,7 +23,9 @@ export default (
     const send = (responseType?: 'arraybuffer' | 'blob' | 'json' | 'text') => async () => {
       const request = optionToRequest(params, type)
       const res = await client.request({
-        paramsSerializer: params => dataToURLString(params),
+        paramsSerializer: {
+          encode: params => dataToURLString(params)
+        },
         ...config,
         url,
         baseURL,
