@@ -1,6 +1,12 @@
 import type { Config } from '@jest/types'
-import { pathsToModuleNameMapper } from 'ts-jest/utils'
+import { pathsToModuleNameMapper } from 'ts-jest'
 import { compilerOptions } from './tsconfig.json'
+
+const moduleNameMapper = {
+  ...pathsToModuleNameMapper(compilerOptions.paths, {
+    prefix: '<rootDir>/'
+  })
+}
 
 const config: { projects: Config.InitialOptions[] } = {
   projects: [
@@ -8,18 +14,14 @@ const config: { projects: Config.InitialOptions[] } = {
       preset: 'ts-jest',
       testPathIgnorePatterns: ['tsx$'],
       coveragePathIgnorePatterns: ['sample1', 'dist'],
-      moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
-        prefix: '<rootDir>/'
-      })
+      moduleNameMapper
     },
     {
       preset: 'ts-jest',
-      testEnvironment: 'jsdom',
+      testEnvironment: 'jest-environment-jsdom',
       testMatch: ['**/__tests__/**/*.tsx'],
       coveragePathIgnorePatterns: ['sample1', 'dist'],
-      moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
-        prefix: '<rootDir>/'
-      })
+      moduleNameMapper
     }
   ]
 }
