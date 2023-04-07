@@ -26,7 +26,7 @@ export type AspidaParams<Config = any> = {
   query?: any
   headers?: any
   body?: any
-  config?: Config
+  config?: Config | undefined
 }
 
 export type AspidaClient<Config> = {

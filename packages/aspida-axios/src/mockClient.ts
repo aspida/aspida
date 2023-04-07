@@ -72,7 +72,9 @@ export default (
     },
 
     detachRoutes() {
+      // @ts-expect-error
       client.defaults.adapter = originalAdapter
+      // @ts-expect-error
       client.defaults.transformRequest = originalTransformRequest
       originalAdapter = undefined
       mockRoutes = undefined

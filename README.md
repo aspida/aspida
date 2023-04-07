@@ -1,4 +1,5 @@
 # aspida
+
 <br />
 <img src="https://aspida.github.io/aspida/logos/png/logo.png" alt="aspida" title="aspida" />
 <div align="center">
@@ -81,7 +82,7 @@ Be aware of the limitation that `DefineMethods<>` can't detect extra meaningless
   `api/v1/users/index.ts`
 
   ```typescript
-  import { DefineMethods } from 'aspida'
+  import { DefineMethods } from "aspida"
 
   type User = {
     id: number
@@ -123,7 +124,7 @@ Be aware of the limitation that `DefineMethods<>` can't detect extra meaningless
   If not specified with @, the default path variable type is "number | string"
 
   ```typescript
-  import { DefineMethods } from 'aspida'
+  import { DefineMethods } from "aspida"
 
   type User = {
     id: number
@@ -234,13 +235,13 @@ import api from "../api/$api"
 
 ## Options of aspida.config.js
 
-| Option               | Type                                 | Default       | Description                                           |
-| -------------------- | ------------------------------------ | ------------- | ----------------------------------------------------- |
-| input                | string                               | "api"         | Specifies the endpoint type definition root directory |
-| baseURL              | string                               | ""            | Specify baseURL of the request                        |
-| trailingSlash        | boolean                              | false         | Append `/` to the request URL                         |
-| outputEachDir        | boolean                              | false         | Generate `$api.ts` in each endpoint directory         |
-| outputMode (>=1.6.0) | "all" \| "normalOnly" \| "aliasOnly" | "all"         | Output either `get` or `$get` for compression         |
+| Option               | Type                                 | Default | Description                                           |
+| -------------------- | ------------------------------------ | ------- | ----------------------------------------------------- |
+| input                | string                               | "api"   | Specifies the endpoint type definition root directory |
+| baseURL              | string                               | ""      | Specify baseURL of the request                        |
+| trailingSlash        | boolean                              | false   | Append `/` to the request URL                         |
+| outputEachDir        | boolean                              | false   | Generate `$api.ts` in each endpoint directory         |
+| outputMode (>=1.6.0) | "all" \| "normalOnly" \| "aliasOnly" | "all"   | Output either `get` or `$get` for compression         |
 
 ## Node.js API
 
@@ -259,7 +260,7 @@ build([
     baseURL: "https://example.com/v2",
     trailingSlash: true,
     outputEachDir: true,
-    outputMode: 'all'
+    outputMode: "all"
   }
 ])
 
@@ -273,7 +274,7 @@ watch([
     baseURL: "https://example.com/v2",
     trailingSlash: true,
     outputEachDir: true,
-    outputMode: 'all'
+    outputMode: "all"
   }
 ])
 ```
@@ -323,10 +324,7 @@ module.exports = { baseURL: "https://example.com/api" }
 If you want to define multiple API endpoints, specify them in an array
 
 ```javascript
-module.exports = [
-  { input: "api1" },
-  { input: "api2", baseURL: "https://example.com/api" }
-]
+module.exports = [{ input: "api1" }, { input: "api2", baseURL: "https://example.com/api" }]
 ```
 
 <a id="tips2"></a>
@@ -365,8 +363,8 @@ import api from "../api/$api"
 `api/v1/users/index.ts`
 
 ```typescript
-import { DefineMethods } from 'aspida'
-import type { ReadStream } from 'fs'
+import { DefineMethods } from "aspida"
+import type { ReadStream } from "fs"
 
 export type Methods = DefineMethods<{
   post: {
@@ -410,12 +408,12 @@ Post in Node.js (>=1.6.0)
 `src/index.ts`
 
 ```typescript
-import fs from 'fs'
+import fs from "fs"
 import aspida from "@aspida/axios"
 import api from "../api/$api"
 ;(async () => {
   const client = api(aspida())
-  const fileName = 'images/sample.jpg'
+  const fileName = "images/sample.jpg"
   const user = await client.v1.users.$post({
     body: {
       name: "taro",
@@ -435,7 +433,7 @@ import api from "../api/$api"
 `api/v1/users/index.ts`
 
 ```typescript
-import { DefineMethods } from 'aspida'
+import { DefineMethods } from "aspida"
 
 export type Methods = DefineMethods<{
   post: {
@@ -475,7 +473,7 @@ import api from "../api/$api"
 `api/v1/users/index.ts`
 
 ```typescript
-import { DefineMethods } from 'aspida'
+import { DefineMethods } from "aspida"
 
 export type Methods = DefineMethods<{
   get: {
@@ -578,7 +576,7 @@ Example `":"` -> `"%3A"`
 `api/foo%3Abar/index.ts`
 
 ```ts
-import { DefineMethods } from 'aspida'
+import { DefineMethods } from "aspida"
 
 export type Methods = DefineMethods<{
   get: {
@@ -590,7 +588,7 @@ export type Methods = DefineMethods<{
 `api/users/_userId@number%3Aread/index.ts`
 
 ```ts
-import { DefineMethods } from 'aspida'
+import { DefineMethods } from "aspida"
 
 export type Methods = DefineMethods<{
   get: {
@@ -671,10 +669,12 @@ import api from "../api/$api"
   console.log(client.vi.users.$path({ query: { limit: 10 } }))
   // /v1/users?limit=10
 
-  console.log(client.vi.users.$path({
-    method: 'post',
-    query: { id: 1 }
-  }))
+  console.log(
+    client.vi.users.$path({
+      method: "post",
+      query: { id: 1 }
+    })
+  )
   // /v1/users?id=1
 })()
 ```
@@ -686,18 +686,18 @@ import api from "../api/$api"
 `api/index.ts`
 
 ```ts
-import { DefineMethods } from 'aspida'
+import { DefineMethods } from "aspida"
 
 /**
  * root comment
- * 
+ *
  * @remarks
  * root remarks comment
  */
 export type Methods = DefineMethods<{
   /**
    * post method comment
-   * 
+   *
    * @remarks
    * post method remarks comment
    */
@@ -730,7 +730,7 @@ $ npm run api:build
 ```ts
 /**
  * root comment
- * 
+ *
  * @remarks
  * root remarks comment
  */
@@ -738,18 +738,25 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   return {
     /**
      * post method comment
-     * 
+     *
      * @remarks
      * post method remarks comment
-     * 
+     *
      * @param option.query - post query comment
      * @param option.headers - post reqHeaders comment
      * @param option.body - post reqBody comment
      * @returns post resBody comment1
      * post resBody comment2
      */
-    $post: (option: { body: Methods0['post']['reqBody'], query: Methods0['post']['query'], headers: Methods0['post']['reqHeaders'], config?: T }) =>
-      fetch<Methods0['post']['resBody']>(prefix, PATH0, POST, option).json().then(r => r.body)
+    $post: (option: {
+      body: Methods0["post"]["reqBody"]
+      query: Methods0["post"]["query"]
+      headers: Methods0["post"]["reqHeaders"]
+      config?: T
+    }) =>
+      fetch<Methods0["post"]["resBody"]>(prefix, PATH0, POST, option)
+        .json()
+        .then(r => r.body)
   }
 }
 ```
