@@ -6,14 +6,14 @@ type MethodsProperties = keyof AspidaMethodParams
 type Prop = {
   value: string
   hasQuestion: boolean
-  doc?: Doc
+  doc: Doc | undefined
 }
 type MethodProps = Partial<Record<MethodsProperties, Prop>>
 
 export type Method = {
   name: LowerHttpMethod
   props: MethodProps & { polymorph?: MethodProps[] }
-  doc?: Doc
+  doc?: Doc | undefined
 }
 
 const quoteRegExp = /['"]/
@@ -303,7 +303,7 @@ const parseMethods = (text: string): { methods: Method[]; cursor: number } => {
 export const parse = (
   text: string,
   name: string
-): { methods: Method[]; doc?: Doc; $textForApiTypes: string } | null => {
+): { methods: Method[]; doc: Doc | undefined; $textForApiTypes: string } | null => {
   const interfaceRegExp = new RegExp(
     `(^|\r?\n)(export[\\s]*)(interface[\\s]*${name}|type[\\s]*${name}[\\s]*=[\\s]*(\\w+<)?)(\\s?{)`
   )

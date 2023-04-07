@@ -4,6 +4,7 @@ import { compilerOptions } from './tsconfig.json'
 
 const config: { projects: Config.InitialOptions[] } = {
   projects: [
+    // @ts-expect-error
     {
       preset: 'ts-jest',
       testPathIgnorePatterns: ['tsx$'],
@@ -12,6 +13,7 @@ const config: { projects: Config.InitialOptions[] } = {
         prefix: '<rootDir>/'
       })
     },
+    // @ts-expect-error
     {
       preset: 'ts-jest',
       testEnvironment: 'jsdom',

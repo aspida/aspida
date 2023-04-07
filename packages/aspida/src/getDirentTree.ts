@@ -5,7 +5,7 @@ export type FileData = {
   name: string
   isDir: false
   methods: Method[]
-  doc?: Doc
+  doc: Doc | undefined
   $textForApiTypes: string
 }
 
