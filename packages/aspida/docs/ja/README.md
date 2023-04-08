@@ -1,4 +1,5 @@
 # aspida
+
 <br />
 <img src="https://aspida.github.io/aspida/logos/png/logo.png" alt="aspida" title="aspida" />
 <div align="center">
@@ -10,9 +11,6 @@
   </a>
   <a href="https://github.com/aspida/aspida/actions?query=workflow%3A%22Node.js+CI%22">
     <img src="https://github.com/aspida/aspida/workflows/Node.js%20CI/badge.svg?branch=master" alt="Node.js CI" />
-  </a>
-  <a href="https://codecov.io/gh/aspida/aspida">
-    <img src="https://img.shields.io/codecov/c/github/aspida/aspida.svg" alt="Codecov" />
   </a>
   <a href="https://lgtm.com/projects/g/aspida/aspida/context:javascript">
     <img src="https://img.shields.io/lgtm/grade/javascript/g/aspida/aspida.svg" alt="Language grade: JavaScript" />
@@ -222,12 +220,12 @@ import api from "../api/$api"
 
 ## aspida.config.js のオプション
 
-| Option        | Type    | Default       | Description                                        |
-| ------------- | ------- | ------------- | -------------------------------------------------- |
-| input         | string  | "api"         | エンドポイントの型定義ルートディレクトリを指定     |
-| baseURL       | string  | ""            | リクエスト時の baseURL を指定                      |
-| trailingSlash | boolean | false         | リクエスト URL の末尾に `/` を付与                 |
-| outputEachDir | boolean | false         | `$api.ts` を各エンドポイントのディレクトリにも生成 |
+| Option        | Type    | Default | Description                                        |
+| ------------- | ------- | ------- | -------------------------------------------------- |
+| input         | string  | "api"   | エンドポイントの型定義ルートディレクトリを指定     |
+| baseURL       | string  | ""      | リクエスト時の baseURL を指定                      |
+| trailingSlash | boolean | false   | リクエスト URL の末尾に `/` を付与                 |
+| outputEachDir | boolean | false   | `$api.ts` を各エンドポイントのディレクトリにも生成 |
 
 ## Node.js API
 
@@ -272,7 +270,6 @@ watch([
 - [@aspida/swrv](https://github.com/aspida/aspida/tree/master/packages/aspida-swrv) - SWRV (Vue Composition API)ラッパー
 - [eslint-plugin-aspida](https://github.com/ibuki2003/eslint-plugin-aspida) - aspida api 専用リンター
 
-
 ## Tips
 
 1. [型定義ファイルを置くディレクトリを api 以外に変更する](#tips1)
@@ -307,10 +304,7 @@ module.exports = { baseURL: "https://example.com/api" }
 複数の API エンドポイントを型定義したい場合は配列で指定する
 
 ```javascript
-module.exports = [
-  { input: "api1" },
-  { input: "api2", baseURL: "https://example.com/api" }
-]
+module.exports = [{ input: "api1" }, { input: "api2", baseURL: "https://example.com/api" }]
 ```
 
 <a id="tips2"></a>
@@ -484,7 +478,7 @@ export interface Methods {
     polymorph: [
       // polymorphic types
       {
-        reqBody: Omit<User, 'id'>
+        reqBody: Omit<User, "id">
         resBody: User
         /**
          * query(?): ...
@@ -494,7 +488,7 @@ export interface Methods {
          */
       },
       {
-        reqBody: Omit<User, 'id'>[]
+        reqBody: Omit<User, "id">[]
         resBody: User[]
       }
     ]
@@ -605,10 +599,12 @@ import api from "../api/$api"
   console.log(client.vi.users.$path({ query: { limit: 10 } }))
   // /v1/users?limit=10
 
-  console.log(client.vi.users.$path({
-    method: 'post',
-    query: { id: 1 }
-  }))
+  console.log(
+    client.vi.users.$path({
+      method: "post",
+      query: { id: 1 }
+    })
+  )
   // /v1/users?id=1
 })()
 ```
@@ -622,14 +618,14 @@ import api from "../api/$api"
 ```ts
 /**
  * root comment
- * 
+ *
  * @remarks
  * root remarks comment
  */
 export type Methods = {
   /**
    * post method comment
-   * 
+   *
    * @remarks
    * post method remarks comment
    */
@@ -662,7 +658,7 @@ $ npm run api:build
 ```ts
 /**
  * root comment
- * 
+ *
  * @remarks
  * root remarks comment
  */
@@ -670,18 +666,25 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   return {
     /**
      * post method comment
-     * 
+     *
      * @remarks
      * post method remarks comment
-     * 
+     *
      * @param option.query - post query comment
      * @param option.headers - post reqHeaders comment
      * @param option.body - post reqBody comment
      * @returns post resBody comment1
      * post resBody comment2
      */
-    $post: (option: { body: Methods0['post']['reqBody'], query: Methods0['post']['query'], headers: Methods0['post']['reqHeaders'], config?: T }) =>
-      fetch<Methods0['post']['resBody']>(prefix, PATH0, POST, option).json().then(r => r.body)
+    $post: (option: {
+      body: Methods0["post"]["reqBody"]
+      query: Methods0["post"]["query"]
+      headers: Methods0["post"]["reqHeaders"]
+      config?: T
+    }) =>
+      fetch<Methods0["post"]["resBody"]>(prefix, PATH0, POST, option)
+        .json()
+        .then(r => r.body)
   }
 }
 ```

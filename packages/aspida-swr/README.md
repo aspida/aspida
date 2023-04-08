@@ -1,4 +1,5 @@
 # @aspida/swr
+
 <br />
 <img src="https://aspida.github.io/aspida/logos/png/logo.png" alt="aspida" title="aspida" />
 <div align="center">
@@ -10,9 +11,6 @@
   </a>
   <a href="https://github.com/aspida/aspida/actions?query=workflow%3A%22Node.js+CI%22">
     <img src="https://github.com/aspida/aspida/workflows/Node.js%20CI/badge.svg?branch=master" alt="Node.js CI" />
-  </a>
-  <a href="https://codecov.io/gh/aspida/aspida">
-    <img src="https://img.shields.io/codecov/c/github/aspida/aspida.svg" alt="Codecov" />
   </a>
   <a href="https://lgtm.com/projects/g/aspida/aspida/context:javascript">
     <img src="https://img.shields.io/lgtm/grade/javascript/g/aspida/aspida.svg" alt="Language grade: JavaScript" />
@@ -55,10 +53,7 @@ import api from "../api/$api"
 const client = api(aspida())
 
 function Profile() {
-  const { data, error } = useAspidaSWR(
-    client.user._userId(123),
-    { query: { name: 'mario' } }
-  )
+  const { data, error } = useAspidaSWR(client.user._userId(123), { query: { name: "mario" } })
 
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
@@ -78,11 +73,9 @@ import api from "../api/$api"
 const client = api(aspida())
 
 function Profile() {
-  const { data, error } = useAspidaSWR(
-    client.user._userId(123),
-    'get',
-    { query: { name: 'mario' } }
-  )
+  const { data, error } = useAspidaSWR(client.user._userId(123), "get", {
+    query: { name: "mario" }
+  })
 
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
@@ -110,14 +103,11 @@ import api from "../api/$api"
 const client = api(aspida())
 
 function Profile() {
-  const { data, error } = useAspidaSWR(
-    client.user._userId(123),
-    {
-      query: { name: 'mario' },
-      revalidateOnMount: true,
-      initialData: { name: 'anonymous' }
-    }
-  )
+  const { data, error } = useAspidaSWR(client.user._userId(123), {
+    query: { name: "mario" },
+    revalidateOnMount: true,
+    initialData: { name: "anonymous" }
+  })
 
   if (error) return <div>failed to load</div>
   return <div>hello {data.name}!</div>
@@ -130,11 +120,14 @@ If you use the `enabled = false` option, AspidaSWR will not start the request.
 
 ```ts
 const { data: user } = useAspidaSWR(client.user)
-const { data } = useAspidaSWR(client.articles, { query: { userId: user?.id ?? 0 }, enabled: !!user })
-// is an alias of 
+const { data } = useAspidaSWR(client.articles, {
+  query: { userId: user?.id ?? 0 },
+  enabled: !!user
+})
+// is an alias of
 const { data } = useSWR(
-  user ? [client.articles.$path({ query: { userId: user.id }}), '$get'] : null,
-  () => client.articles.$get({ query: { userId: user.id }})
+  user ? [client.articles.$path({ query: { userId: user.id } }), "$get"] : null,
+  () => client.articles.$get({ query: { userId: user.id } })
 )
 ```
 
