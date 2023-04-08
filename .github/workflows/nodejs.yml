@@ -8,11 +8,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node-version: [12, 14, 16]
+        node-version: [16, 18]
         os: [ubuntu-latest]
         include:
           - os: windows-latest
-            node-version: 14
+            node-version: 18
     steps:
       - uses: actions/checkout@v2
       - name: setup Node.js ${{ matrix.node-version }}
@@ -29,6 +29,13 @@ jobs:
       - run: yarn lint
         if: matrix.os != 'windows-latest'
       - run: yarn typecheck
+      - run: yarn build:aspida
+      - run: yarn build:axios
+      - run: yarn build:fetch
+      - run: yarn build:node-fetch
+      - run: yarn build:react-query
+      - run: yarn build:swr
+      - run: yarn build:swrv
       - run: yarn test --coverage
       - run: npx codecov
         if: github.ref == 'refs/heads/main' && matrix.os == 'ubuntu-latest' && matrix.node-version == 14
@@ -44,13 +51,13 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 14
+          node-version: 18
           registry-url: "https://registry.npmjs.org"
       - uses: actions/cache@v2
         id: yarn-cache
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-node-v12-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
       - run: yarn --frozen-lockfile
         if: steps.yarn-cache.outputs.cache-hit != 'true'
       - run: yarn build:aspida
