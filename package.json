@@ -11,7 +11,6 @@
     "build:node-fetch": "rimraf packages/aspida-node-fetch/dist && tsc -p packages/aspida-node-fetch",
     "build:react-query": "rimraf packages/aspida-react-query/dist && tsc -p packages/aspida-react-query",
     "build:swr": "rimraf packages/aspida-swr/dist && tsc -p packages/aspida-swr",
-    "build:swrv": "rimraf packages/aspida-swrv/dist && tsc -p packages/aspida-swrv",
     "lint": "eslint --ext .js,.ts . && prettier --check \"./**/*.ts\"",
     "lint:fix": "eslint --ext .js,.ts . --fix && prettier --write \"./**/*.ts\"",
     "test": "jest",
@@ -73,7 +72,6 @@
     "@types/react-dom": "^17.0.11",
     "@typescript-eslint/eslint-plugin": "^5.57.1",
     "@typescript-eslint/parser": "^5.57.1",
-    "@vue/composition-api": "^1.0.0-rc.10",
     "aspida-mock": "^0.10.0",
     "axios": "^0.26.1",
     "eslint": "^8.38.0",
@@ -96,10 +94,8 @@
     "react-query": "^3.16.0",
     "rimraf": "^4.4.1",
     "swr": "^0.5.6",
-    "swrv": "^0.9.3",
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
-    "typescript": "^5.0.4",
-    "vue": "^2.6.12"
+    "typescript": "^5.0.4"
   }
 }

@@ -35,7 +35,6 @@ jobs:
       - run: npm run build:node-fetch
       - run: npm run build:react-query
       - run: npm run build:swr
-      - run: npm run build:swrv
       - run: npm test
 
   release:
@@ -87,9 +86,5 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: npm run build:swr
       - run: cd packages/aspida-swr && npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - run: npm run build:swrv
-      - run: cd packages/aspida-swrv && npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

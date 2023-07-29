@@ -12,7 +12,7 @@ app.use(express.json())
 
 beforeEach(
   () =>
-    new Promise(resolve => {
+    new Promise<void>(resolve => {
       server = app.listen(port, resolve)
     })
 )
