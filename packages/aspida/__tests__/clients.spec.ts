@@ -1,5 +1,5 @@
 import fastify, { FastifyInstance } from 'fastify'
-import axiosClient from '../../aspida-axios/src'
+import axiosClient from '../../aspida-axios'
 import api from '../samples/basic/$api'
 
 const port = 11111

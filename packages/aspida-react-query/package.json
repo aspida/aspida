@@ -4,8 +4,17 @@
   "description": "React Query wrapper for aspida",
   "author": "Solufa <solufa2020@gmail.com>",
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "bin": "./bin/index.js",
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/esm/index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
   "homepage": "https://github.com/aspida/aspida/tree/master/packages/aspida-react-query#readme",
   "repository": {
     "type": "git",

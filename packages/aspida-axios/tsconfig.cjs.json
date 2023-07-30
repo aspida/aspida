@@ -5,5 +5,5 @@
     "outDir": "dist/cjs",
     "paths": {}
   },
-  "include": ["src/**/*"]
+  "include": ["index.ts"]
 }
