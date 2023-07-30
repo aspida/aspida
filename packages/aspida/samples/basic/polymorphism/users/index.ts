@@ -10,15 +10,15 @@ export type Methods = DefineMethods<{
 
   post: {
     query?: { count: number }
-    reqFormat: FormData
     polymorph: [
       { reqBody: { id: number }; resBody: { id: number } },
-      { reqBody: { name: string }; resBody: { id: number }[] },
+      { reqBody: { name: string }[]; resBody: { name: string }[] },
       {}
     ]
   }
 
   patch: {
+    reqFormat: FormData
     reqBody: { id: number }
   }
 

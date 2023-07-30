@@ -224,7 +224,7 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
           function postRequest(option: { body: Methods6['post']['polymorph'][1]['reqBody'], query?: Methods6['post']['query'] | undefined, config?: T | undefined }): Promise<AspidaResponse<Methods6['post']['polymorph'][1]['resBody']>>
           function postRequest(option?: { query?: Methods6['post']['query'] | undefined, config?: T | undefined } | undefined): Promise<AspidaResponse>
           function postRequest(option: any) {
-            return fetch(prefix, PATH2, POST, option, 'FormData').json()
+            return fetch(prefix, PATH2, POST, option).json()
           }
           return postRequest
         })(),
@@ -233,14 +233,14 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
           function $postRequest(option: { body: Methods6['post']['polymorph'][1]['reqBody'], query?: Methods6['post']['query'] | undefined, config?: T | undefined }): Promise<Methods6['post']['polymorph'][1]['resBody']>
           function $postRequest(option?: { query?: Methods6['post']['query'] | undefined, config?: T | undefined } | undefined): Promise<void>
           function $postRequest(option: any) {
-            return fetch(prefix, PATH2, POST, option, 'FormData').json().then(r => r.body)
+            return fetch(prefix, PATH2, POST, option).json().then(r => r.body)
           }
           return $postRequest
         })(),
         patch: (option: { body: Methods6['patch']['reqBody'], config?: T | undefined }) =>
-          fetch(prefix, PATH2, PATCH, option).send(),
+          fetch(prefix, PATH2, PATCH, option, 'FormData').send(),
         $patch: (option: { body: Methods6['patch']['reqBody'], config?: T | undefined }) =>
-          fetch(prefix, PATH2, PATCH, option).send().then(r => r.body),
+          fetch(prefix, PATH2, PATCH, option, 'FormData').send().then(r => r.body),
         put: (() => {
           function putRequest(option: { body: Methods6['put']['polymorph'][0]['reqBody'], query: Methods6['put']['polymorph'][0]['query'], config?: T | undefined }): Promise<AspidaResponse<Methods6['put']['resBody']>>
           function putRequest(option: { body: Methods6['put']['polymorph'][1]['reqBody'], query: Methods6['put']['polymorph'][1]['query'], config?: T | undefined }): Promise<AspidaResponse<Methods6['put']['resBody']>>
