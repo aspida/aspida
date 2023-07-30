@@ -1,6 +1,7 @@
 import qs from 'qs'
 import api from '../../aspida/samples/array/$api'
 import aspida, { FetchConfig } from '../index'
+
 describe('paramsSerializer', () => {
   test('default', async () => {
     const fetch = jest.fn().mockResolvedValue({ headers: new Map(), status: 200, json: () => [] })
@@ -11,6 +12,7 @@ describe('paramsSerializer', () => {
       expect.anything()
     )
   })
+
   test('qs', async () => {
     const fetch = jest.fn().mockResolvedValue({ headers: new Map(), status: 200, json: () => [] })
     const config: FetchConfig = {

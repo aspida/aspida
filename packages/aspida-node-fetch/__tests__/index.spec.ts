@@ -1,6 +1,7 @@
 import qs from 'qs'
 import api from '../../aspida/samples/array/$api'
 import aspida, { FetchConfig } from '../index'
+
 describe('paramsSerializer', () => {
   test('default', async () => {
     const fetch: any = jest
@@ -13,6 +14,7 @@ describe('paramsSerializer', () => {
       expect.anything()
     )
   })
+
   test('qs', async () => {
     const fetch: any = jest
       .fn()
