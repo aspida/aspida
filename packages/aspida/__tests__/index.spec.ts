@@ -1,8 +1,8 @@
 import fs from 'fs'
 import packageJson from '../package.json'
 import build from '../src/buildTemplate'
-import { getConfigs } from '../src/getConfigs'
 import { version } from '../src/commands'
+import { getConfigs } from '../src/getConfigs'
 
 const basePath = 'packages/aspida'
 

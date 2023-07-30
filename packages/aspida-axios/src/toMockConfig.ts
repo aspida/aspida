@@ -1,6 +1,6 @@
 import { HttpMethod } from 'aspida'
-import { AxiosRequestConfig } from 'axios'
 import { MockRequestConfig } from 'aspida-mock'
+import { AxiosRequestConfig } from 'axios'
 
 export default (config: AxiosRequestConfig): MockRequestConfig => ({
   path: config.url || '',

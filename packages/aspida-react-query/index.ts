@@ -1,4 +1,4 @@
-import { useQuery, UseQueryResult, UseQueryOptions } from 'react-query'
+import { UseQueryOptions, UseQueryResult, useQuery } from 'react-query'
 
 type QueryOptions<T extends (option: any) => Promise<any>> = Parameters<
   Parameters<T> extends [Parameters<T>[0]]

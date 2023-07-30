@@ -1,6 +1,6 @@
-import { Method } from './parseInterface'
-import createDocComment from './createDocComment'
 import { AspidaConfig } from './commands'
+import createDocComment from './createDocComment'
+import { Method } from './parseInterface'
 
 const genReqBody = ({ name, props }: Method, importName: string, index: number) =>
   props.polymorph?.[index].reqBody

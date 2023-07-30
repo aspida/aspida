@@ -1,8 +1,8 @@
-import createMethods from './createMethodsString'
+import { AspidaConfig } from './commands'
 import createDocComment from './createDocComment'
+import createMethods from './createMethodsString'
 import { DirentTree, FileData } from './getDirentTree'
 import { Method } from './parseInterface'
-import { AspidaConfig } from './commands'
 
 const valNameRegExpStr = '^_[a-zA-Z][a-zA-Z0-9_]*'
 const valNameRegExp = new RegExp(valNameRegExpStr)

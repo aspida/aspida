@@ -1,11 +1,11 @@
 import {
   AspidaClient,
-  optionToRequest,
-  HttpMethod,
   AspidaParams,
+  HttpMethod,
   RequestType,
   dataToURLString,
-  headersToObject
+  headersToObject,
+  optionToRequest
 } from 'aspida'
 import fetch, { RequestInit, Response } from 'node-fetch'
 

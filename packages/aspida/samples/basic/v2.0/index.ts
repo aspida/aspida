@@ -1,5 +1,5 @@
-import { DefineMethods } from '../../../src'
 import { mockMethods } from 'aspida-mock'
+import { DefineMethods } from '../../../src'
 
 export type Methods = DefineMethods<{
   get: {

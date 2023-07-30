@@ -1,4 +1,4 @@
-import useSWR, { SWRResponse, SWRConfiguration } from 'swr'
+import useSWR, { SWRConfiguration, SWRResponse } from 'swr'
 
 type ValueKey = string | any[] | null
 

@@ -1,5 +1,5 @@
 import minimist from 'minimist'
-import { version, build, watch } from './commands'
+import { build, version, watch } from './commands'
 
 export const run = (args: string[]) => {
   const argv = minimist(args, {

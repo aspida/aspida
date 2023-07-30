@@ -1,6 +1,6 @@
+import qs from 'qs'
 import api from '../../aspida/samples/array/$api'
 import aspida, { FetchConfig } from '../index'
-import qs from 'qs'
 describe('paramsSerializer', () => {
   test('default', async () => {
     const fetch = jest.fn().mockResolvedValue({ headers: new Map(), status: 200, json: () => [] })

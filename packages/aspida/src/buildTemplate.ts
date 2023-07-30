@@ -1,8 +1,8 @@
 import path from 'path'
-import { AspidaConfig } from './getConfigs'
-import createTemplateValues from './createTemplateValues'
 import createDocComment from './createDocComment'
-import { getDirentTree, DirentTree, FileData } from './getDirentTree'
+import createTemplateValues from './createTemplateValues'
+import { AspidaConfig } from './getConfigs'
+import { DirentTree, FileData, getDirentTree } from './getDirentTree'
 
 const listNotIndexFiles = (tree: DirentTree): string[] => [
   ...tree.children

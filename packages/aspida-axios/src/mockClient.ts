@@ -1,17 +1,17 @@
-import { HttpMethod, AspidaParams, RequestType } from 'aspida'
+import { AspidaParams, HttpMethod, RequestType } from 'aspida'
 import {
   MockClient,
-  MockRoute,
   MockConfig,
+  MockRoute,
   callMockHandler,
-  printLog,
-  hasMockHandler
+  hasMockHandler,
+  printLog
 } from 'aspida-mock'
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosAdapter } from 'axios'
+import axios, { AxiosAdapter, AxiosInstance, AxiosRequestConfig } from 'axios'
 import settle from 'axios/lib/core/settle'
 import aspidaClientFactory from './'
-import toMockConfig from './toMockConfig'
 import toAxiosResponse from './toAxiosResponse'
+import toMockConfig from './toMockConfig'
 
 export default (
   client: AxiosInstance = axios,
