@@ -4,9 +4,17 @@
   "description": "TypeScript friendly HTTP client wrapper for the browser and node.js",
   "author": "Solufa <solufa2020@gmail.com>",
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "bin": "bin/index.js",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "bin": "./bin/index.js",
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/esm/index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
   "homepage": "https://github.com/aspida/aspida#readme",
   "repository": {
     "type": "git",
