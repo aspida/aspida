@@ -1,16 +1,15 @@
+import { renderHook, waitFor } from '@testing-library/react'
+import { mockClient, mockMethods } from 'aspida-mock'
 import React from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { render, act } from '@testing-library/react'
-import { mockClient, mockMethods } from 'aspida-mock'
 import fetchClient from '../../aspida-node-fetch'
-import { useAspidaQuery } from '../index'
 import api from '../../aspida/samples/basic/$api'
 import { Methods as Methods0 } from '../../aspida/samples/basic/v1.1'
 import { Methods as Methods1 } from '../../aspida/samples/basic/v2.0'
+import { useAspidaQuery } from '../index'
 
 const adapter = mockClient(fetchClient())
 const client = api(adapter)
-const nextTick = () => new Promise(resolve => setTimeout(resolve, 50))
 // eslint-disable-next-line react/prop-types
 const App: React.FC = ({ children }) => (
   <QueryClientProvider client={new QueryClient()}>{children}</QueryClientProvider>
@@ -37,274 +36,172 @@ adapter.attachRoutes([
 
 describe('optional query', () => {
   test('basic usage', async () => {
-    function Page() {
-      const a = useAspidaQuery(client.v1_1)
-
-      if (a.data) {
-        if ('aa' in a.data) {
-          return <div>{a.data.aa}</div>
-        } else {
-          return <div>{a.data.bb}</div>
-        }
-      } else {
-        return <div>undefined</div>
-      }
-    }
-    const { container } = render(
-      <App>
-        <Page />
-      </App>
-    )
-    expect(container.textContent).toMatchInlineSnapshot(`"undefined"`)
-
-    await act(async () => {
-      await nextTick()
-      expect(container.textContent).toMatchInlineSnapshot(`"3"`)
+    const { result } = renderHook(() => useAspidaQuery(client.v1_1), {
+      wrapper: ({ children }) => <App>{children}</App>
     })
+
+    expect(result.current.data).toBe(undefined)
+
+    await waitFor(() => expect(result.current.isFetched).toBe(true))
+
+    const { data } = result.current
+
+    expect(data && 'aa' in data && data.aa).toBe(3)
   })
 
-  test('basic usage with initialData', async () => {
-    function Page() {
-      const a = useAspidaQuery(client.v1_1, {
-        refetchOnMount: true,
-        initialData: { aa: 1 }
-      })
-
-      if (a.data) {
-        if ('aa' in a.data) {
-          return <div>{a.data.aa}</div>
-        } else {
-          return <div>{a.data.bb}</div>
-        }
-      } else {
-        return <div>undefined</div>
-      }
-    }
-    const { container } = render(
-      <App>
-        <Page />
-      </App>
+  test('basic usage with placeholderData', async () => {
+    const { result } = renderHook(
+      () => useAspidaQuery(client.v1_1, { refetchOnMount: true, placeholderData: { aa: 1 } }),
+      { wrapper: ({ children }) => <App>{children}</App> }
     )
-    expect(container.textContent).toMatchInlineSnapshot(`"1"`)
 
-    await act(async () => {
-      await nextTick()
-      expect(container.textContent).toMatchInlineSnapshot(`"3"`)
-    })
+    expect(result.current.data).toEqual({ aa: 1 })
+
+    await waitFor(() => expect(result.current.isFetched).toBe(true))
+
+    const { data } = result.current
+
+    expect(data && 'aa' in data && data.aa).toBe(3)
   })
 
   test('basic usage with query', async () => {
-    function Page() {
-      const a = useAspidaQuery(client.v1_1, { query: { aa: 1 } })
-
-      if (a.data) {
-        if ('aa' in a.data) {
-          return <div>{a.data.aa}</div>
-        } else {
-          return <div>{a.data.bb}</div>
-        }
-      } else {
-        return <div>undefined</div>
-      }
-    }
-    const { container } = render(
-      <App>
-        <Page />
-      </App>
-    )
-    expect(container.textContent).toMatchInlineSnapshot(`"undefined"`)
-
-    await act(async () => {
-      await nextTick()
-      expect(container.textContent).toMatchInlineSnapshot(`"1"`)
+    const { result } = renderHook(() => useAspidaQuery(client.v1_1, { query: { aa: 1 } }), {
+      wrapper: ({ children }) => <App>{children}</App>
     })
+
+    expect(result.current.data).toBe(undefined)
+
+    await waitFor(() => expect(result.current.isFetched).toBe(true))
+
+    const { data } = result.current
+
+    expect(data && 'aa' in data && data.aa).toBe(1)
   })
 
   test('specify get method', async () => {
-    function Page() {
-      const a = useAspidaQuery(client.v1_1, 'get')
-
-      if (a.data) {
-        if ('aa' in a.data.body) {
-          return <div>{a.data.body.aa}</div>
-        } else {
-          return <div>{a.data.body.bb}</div>
-        }
-      } else {
-        return <div>undefined</div>
-      }
-    }
-    const { container } = render(
-      <App>
-        <Page />
-      </App>
-    )
-    expect(container.textContent).toMatchInlineSnapshot(`"undefined"`)
-
-    await act(async () => {
-      await nextTick()
-      expect(container.textContent).toMatchInlineSnapshot(`"3"`)
+    const { result } = renderHook(() => useAspidaQuery(client.v1_1, 'get'), {
+      wrapper: ({ children }) => <App>{children}</App>
     })
+
+    expect(result.current.data).toBe(undefined)
+
+    await waitFor(() => expect(result.current.isFetched).toBe(true))
+
+    const { data } = result.current
+
+    expect(data && 'aa' in data.body && data.body.aa).toBe(3)
   })
 
   test('specify get method with query', async () => {
-    function Page() {
-      const a = useAspidaQuery(client.v1_1, 'get', { query: { aa: 1 } })
-
-      if (a.data) {
-        if ('aa' in a.data.body) {
-          return <div>{a.data.body.aa}</div>
-        } else {
-          return <div>{a.data.body.bb}</div>
-        }
-      } else {
-        return <div>undefined</div>
-      }
-    }
-    const { container } = render(
-      <App>
-        <Page />
-      </App>
-    )
-    expect(container.textContent).toMatchInlineSnapshot(`"undefined"`)
-
-    await act(async () => {
-      await nextTick()
-      expect(container.textContent).toMatchInlineSnapshot(`"1"`)
+    const { result } = renderHook(() => useAspidaQuery(client.v1_1, 'get', { query: { aa: 1 } }), {
+      wrapper: ({ children }) => <App>{children}</App>
     })
+
+    expect(result.current.data).toBe(undefined)
+
+    await waitFor(() => expect(result.current.isFetched).toBe(true))
+
+    const { data } = result.current
+
+    expect(data && 'aa' in data.body && data.body.aa).toBe(1)
   })
 })
 
 describe('required query', () => {
   test('expect ts error', async () => {
-    function Page() {
+    const { result } = renderHook(
       // @ts-expect-error
-      const a = useAspidaQuery(client.v2_0)
-
-      return <div>{a.data}</div>
-    }
-    const { container } = render(
-      <App>
-        <Page />
-      </App>
+      () => useAspidaQuery(client.v2_0),
+      { wrapper: ({ children }) => <App>{children}</App> }
     )
-    expect(container.textContent).toMatchInlineSnapshot(`""`)
 
-    await act(async () => {
-      await nextTick()
-      expect(container.textContent).toMatchInlineSnapshot(`"none"`)
-    })
+    expect(result.current.data).toBe(undefined)
+
+    await waitFor(() => expect(result.current.isFetched).toBe(true))
+
+    expect(result.current.data).toBe('none')
   })
 
   test('basic usage', async () => {
-    function Page() {
-      const a = useAspidaQuery(client.v2_0, {
-        query: { val: 'aa' },
-        headers: { 'content-type': 'text/plain' }
-      })
-
-      return <div>{a.data}</div>
-    }
-    const { container } = render(
-      <App>
-        <Page />
-      </App>
+    const { result } = renderHook(
+      () =>
+        useAspidaQuery(client.v2_0, {
+          query: { val: 'aa' },
+          headers: { 'content-type': 'text/plain' }
+        }),
+      { wrapper: ({ children }) => <App>{children}</App> }
     )
-    expect(container.textContent).toMatchInlineSnapshot(`""`)
 
-    await act(async () => {
-      await nextTick()
-      expect(container.textContent).toMatchInlineSnapshot(`"aa"`)
-    })
+    expect(result.current.data).toBe(undefined)
+
+    await waitFor(() => expect(result.current.isFetched).toBe(true))
+
+    expect(result.current.data).toBe('aa')
   })
 
   test('basic usage with initialData', async () => {
-    function Page() {
-      const a = useAspidaQuery(client.v2_0, {
-        query: { val: 'bb' },
-        headers: { 'content-type': 'text/plain' },
-        refetchOnMount: true,
-        initialData: '1'
-      })
-
-      return <div>{a.data}</div>
-    }
-    const { container } = render(
-      <App>
-        <Page />
-      </App>
+    const { result } = renderHook(
+      () =>
+        useAspidaQuery(client.v2_0, {
+          query: { val: 'bb' },
+          headers: { 'content-type': 'text/plain' },
+          refetchOnMount: true,
+          placeholderData: '1'
+        }),
+      { wrapper: ({ children }) => <App>{children}</App> }
     )
-    expect(container.textContent).toMatchInlineSnapshot(`"1"`)
 
-    await act(async () => {
-      await nextTick()
-      expect(container.textContent).toMatchInlineSnapshot(`"bb"`)
-    })
+    expect(result.current.data).toBe('1')
+
+    await waitFor(() => expect(result.current.isFetched).toBe(true))
+
+    expect(result.current.data).toBe('bb')
   })
 
   test('expect ts error when specify get method', async () => {
-    function Page() {
-      // @ts-expect-error
-      const a = useAspidaQuery(client.v2_0, 'get', {
-        refetchOnMount: true,
-        initialData: {
-          status: 200,
-          body: 'a',
-          headers: { token: 'b' },
-          originalResponse: null
-        }
-      })
-
-      return (
-        <div>
-          {
-            // @ts-expect-error
-            a.data?.body
+    const { result } = renderHook(
+      () =>
+        // @ts-expect-error
+        useAspidaQuery(client.v2_0, 'get', {
+          refetchOnMount: true,
+          placeholderData: {
+            status: 200,
+            body: 'a',
+            headers: { token: 'b' },
+            originalResponse: null
           }
-          /
-          {
-            // @ts-expect-error
-            a.data?.headers.token
-          }
-        </div>
-      )
-    }
-    const { container } = render(
-      <App>
-        <Page />
-      </App>
+        }),
+      { wrapper: ({ children }) => <App>{children}</App> }
     )
-    expect(container.textContent).toMatchInlineSnapshot(`"a/b"`)
 
-    await act(async () => {
-      await nextTick()
-      expect(container.textContent).toMatchInlineSnapshot(`"none/"`)
-    })
+    // @ts-expect-error
+    expect(result.current.data?.body).toBe('a')
+    // @ts-expect-error
+    expect(result.current.data?.headers.token).toBe('b')
+
+    await waitFor(() => expect(result.current.isFetched).toBe(true))
+
+    // @ts-expect-error
+    expect(result.current.data?.body).toBe('none')
+    // @ts-expect-error
+    expect(result.current.data?.headers.token).toBe(undefined)
   })
 
   test('specify get method', async () => {
-    function Page() {
-      const a = useAspidaQuery(client.v2_0, 'get', {
-        query: { val: 'aa' },
-        headers: { 'content-type': 'text/plain' }
-      })
-
-      return (
-        <div>
-          {a.data?.body}/{a.data?.headers.token}
-        </div>
-      )
-    }
-    const { container } = render(
-      <App>
-        <Page />
-      </App>
+    const { result } = renderHook(
+      () =>
+        useAspidaQuery(client.v2_0, 'get', {
+          query: { val: 'aa' },
+          headers: { 'content-type': 'text/plain' }
+        }),
+      { wrapper: ({ children }) => <App>{children}</App> }
     )
-    expect(container.textContent).toMatchInlineSnapshot(`"/"`)
 
-    await act(async () => {
-      await nextTick()
-      expect(container.textContent).toMatchInlineSnapshot(`"aa/aa"`)
-    })
+    expect(result.current.data).toBe(undefined)
+
+    await waitFor(() => expect(result.current.isFetched).toBe(true))
+
+    expect(result.current.data?.body).toBe('aa')
+    expect(result.current.data?.headers.token).toBe('aa')
   })
 })
