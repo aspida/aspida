@@ -93,7 +93,7 @@ const countIgnored = (text: string): number => {
     } else if (`${first}${second}` === '/*') {
       isMultiComment = true
       cursor += 1
-    } else if (/[^ \r\n;,]/.test(first)) {
+    } else if (/[^ \t\r\n;,]/.test(first)) {
       break
     }
 

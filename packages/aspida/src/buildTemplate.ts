@@ -43,11 +43,18 @@ ${createDocComment(
   tree.children.find((c): c is FileData => !c.isDir && c.name === 'index.ts')?.doc
 )}const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const prefix = (baseURL === undefined ? '<% baseURL %>' : baseURL).replace(/\\/$/, '')
-${pathes.map((p, i) => `  const PATH${i} = ${p}`).join('\n')}
-${['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'PATCH', 'OPTIONS']
-  .filter(m => api.includes(`, ${m}, option`))
-  .map(m => `  const ${m} = '${m}'`)
-  .join('\n')}
+${pathes.map((p, i) => `  const PATH${i} = ${p}`).join('\n')}${pathes.length > 0 ? '\n' : ''}${[
+    'GET',
+    'POST',
+    'PUT',
+    'DELETE',
+    'HEAD',
+    'PATCH',
+    'OPTIONS'
+  ]
+    .filter(m => api.includes(`, ${m}, option`))
+    .map(m => `  const ${m} = '${m}'`)
+    .join('\n')}
 
   return <% api %>
 }
