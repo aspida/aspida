@@ -283,6 +283,7 @@ watch([
 - [frourio](https://frourio.io/) - Fast and type-safe full stack framework, for TypeScript TypeScript
 - [@aspida/react-query](https://github.com/aspida/aspida/tree/master/packages/aspida-react-query) - React Query wrapper
 - [@aspida/swr](https://github.com/aspida/aspida/tree/master/packages/aspida-swr) - SWR (React Hooks) wrapper
+- [@aspida/swrv](https://github.com/aspida/aspida/tree/master/packages/aspida-swrv) - SWRV (Vue Composition API) wrapper
 - [eslint-plugin-aspida](https://github.com/aspida/eslint-plugin-aspida) - Support writing aspida api definition
 
 ## Tips
@@ -730,7 +731,7 @@ $ npm run api:build
  * @remarks
  * root remarks comment
  */
-const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
+const api = <T,>({ baseURL, fetch }: AspidaClient<T>) => {
   return {
     /**
      * post method comment

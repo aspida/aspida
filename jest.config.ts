@@ -17,6 +17,9 @@ const config: { projects: Config.InitialOptions[] } = {
     {
       preset: 'ts-jest',
       testEnvironment: 'jsdom',
+      testEnvironmentOptions: {
+        customExportConditions: ['node'] // for @vue/test-utils
+      },
       testMatch: ['**/__tests__/**/*.tsx'],
       coveragePathIgnorePatterns: ['sample1', 'dist'],
       moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {

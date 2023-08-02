@@ -18,5 +18,10 @@
     "exactOptionalPropertyTypes": true,
     "target": "es2018"
   },
-  "exclude": ["node_modules", "packages/**/node_modules", "packages/**/dist"]
+  "exclude": [
+    "node_modules",
+    "packages/**/node_modules",
+    "packages/**/dist",
+    "packages/aspida-swrv"
+  ]
 }

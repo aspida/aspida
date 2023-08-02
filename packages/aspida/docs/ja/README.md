@@ -267,6 +267,7 @@ watch([
 - [aspida-mock](https://github.com/aspida/aspida-mock) - TypeScript フレンドリーな RESTful API mock
 - [frourio](https://frourio.io/) - 高速かつ型安全なフルスタックフレームワーク
 - [@aspida/swr](https://github.com/aspida/aspida/tree/master/packages/aspida-swr) - SWR (React Hooks)ラッパー
+- [@aspida/swrv](https://github.com/aspida/aspida/tree/master/packages/aspida-swrv) - SWRV (Vue Composition API)ラッパー
 - [eslint-plugin-aspida](https://github.com/ibuki2003/eslint-plugin-aspida) - aspida api 専用リンター
 
 ## Tips
@@ -661,7 +662,7 @@ $ npm run api:build
  * @remarks
  * root remarks comment
  */
-const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
+const api = <T,>({ baseURL, fetch }: AspidaClient<T>) => {
   return {
     /**
      * post method comment

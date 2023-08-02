@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from '@testing-library/react'
 import { mockClient, mockMethods } from 'aspida-mock'
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import fetchClient from '../../aspida-node-fetch'
 import api from '../../aspida/samples/basic/$api'
@@ -10,8 +10,7 @@ import { useAspidaQuery } from '../index'
 
 const adapter = mockClient(fetchClient())
 const client = api(adapter)
-// eslint-disable-next-line react/prop-types
-const App: React.FC = ({ children }) => (
+const App = ({ children }: { children: ReactNode }) => (
   <QueryClientProvider client={new QueryClient()}>{children}</QueryClientProvider>
 )
 
