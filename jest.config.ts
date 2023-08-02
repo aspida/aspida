@@ -1,6 +1,6 @@
-import type { Config } from '@jest/types'
-import { pathsToModuleNameMapper } from 'ts-jest'
-import { compilerOptions } from './tsconfig.json'
+import type { Config } from '@jest/types';
+import { pathsToModuleNameMapper } from 'ts-jest';
+import { compilerOptions } from './tsconfig.json';
 
 const config: { projects: Config.InitialOptions[] } = {
   projects: [
@@ -10,23 +10,23 @@ const config: { projects: Config.InitialOptions[] } = {
       testPathIgnorePatterns: ['tsx$'],
       coveragePathIgnorePatterns: ['sample1', 'dist'],
       moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
-        prefix: '<rootDir>/'
-      })
+        prefix: '<rootDir>/',
+      }),
     },
     // @ts-expect-error
     {
       preset: 'ts-jest',
       testEnvironment: 'jsdom',
       testEnvironmentOptions: {
-        customExportConditions: ['node'] // for @vue/test-utils
+        customExportConditions: ['node'], // for @vue/test-utils
       },
       testMatch: ['**/__tests__/**/*.tsx'],
       coveragePathIgnorePatterns: ['sample1', 'dist'],
       moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
-        prefix: '<rootDir>/'
-      })
-    }
-  ]
-}
+        prefix: '<rootDir>/',
+      }),
+    },
+  ],
+};
 
-export default config
+export default config;

@@ -5,11 +5,11 @@ export type Methods = {
       | {
           aa: number /*
     test { aa }
-    */
+    */;
         }
       | { bb: string[] }
-    )[]
-    status: 200
-    resBody: Array<{ aa: number } | { bb: Array<string> }>
-  }
-}
+    )[];
+    status: 200;
+    resBody: Array<{ aa: number } | { bb: Array<string> }>;
+  };
+};

@@ -5,19 +5,19 @@ import {
   RequestType,
   dataToURLString,
   headersToObject,
-  optionToRequest
-} from 'aspida'
+  optionToRequest,
+} from 'aspida';
 
 export type FetchConfig = RequestInit & {
-  baseURL?: string
-  throwHttpErrors?: boolean
-  paramsSerializer?: typeof dataToURLString
-}
+  baseURL?: string;
+  throwHttpErrors?: boolean;
+  paramsSerializer?: typeof dataToURLString;
+};
 
 export class HTTPError extends Error {
   constructor(public response: Response) {
-    super(`HTTP Error: ${response.status} ${response.statusText}`)
-    Object.setPrototypeOf(this, new.target.prototype)
+    super(`HTTP Error: ${response.status} ${response.statusText}`);
+    Object.setPrototypeOf(this, new.target.prototype);
   }
 }
 
@@ -33,8 +33,8 @@ export default (client = fetch, config?: FetchConfig): AspidaClient<FetchConfig>
     const send =
       <V>(fn: (res: Response) => Promise<V>) =>
       async () => {
-        const request = optionToRequest(params, type)
-        const serializer = config?.paramsSerializer || dataToURLString
+        const request = optionToRequest(params, type);
+        const serializer = config?.paramsSerializer || dataToURLString;
         const res = await client(
           `${request?.config?.baseURL ?? baseURL}${url}${
             request?.query ? `?${serializer(request.query)}` : ''
@@ -44,19 +44,19 @@ export default (client = fetch, config?: FetchConfig): AspidaClient<FetchConfig>
             ...config,
             ...request?.config,
             body: request?.httpBody,
-            headers: { ...config?.headers, ...request?.config?.headers, ...request?.headers }
+            headers: { ...config?.headers, ...request?.config?.headers, ...request?.headers },
           }
         ).then(res =>
           !res.ok && config?.throwHttpErrors ? Promise.reject(new HTTPError(res)) : res
-        )
+        );
 
         return {
           status: res.status as any,
           headers: headersToObject(res.headers),
           originalResponse: res,
-          body: await fn(res)
-        }
-      }
+          body: await fn(res),
+        };
+      };
 
     return {
       send: send(() => Promise.resolve()),
@@ -64,7 +64,7 @@ export default (client = fetch, config?: FetchConfig): AspidaClient<FetchConfig>
       text: send(res => res.text()),
       arrayBuffer: send(res => res.arrayBuffer()),
       blob: send(res => res.blob()),
-      formData: send(res => res.formData())
-    }
-  }
-})
+      formData: send(res => res.formData()),
+    };
+  },
+});

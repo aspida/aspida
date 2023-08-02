@@ -1,11 +1,11 @@
-import { DefineMethods } from '../../../src'
+import { DefineMethods } from '../../../src';
 type User = {
-  id: number
-  name: string
-}
+  id: number;
+  name: string;
+};
 export type Methods = DefineMethods<{
   get: {
-    query?: { ids: number[] }
-    resBody: User[]
-  }
-}>
+    query?: { ids: number[] };
+    resBody: User[];
+  };
+}>;

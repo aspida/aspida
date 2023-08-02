@@ -1,8 +1,8 @@
-import path from 'path'
-import createDocComment from './createDocComment'
-import createTemplateValues from './createTemplateValues'
-import { AspidaConfig } from './getConfigs'
-import { DirentTree, FileData, getDirentTree } from './getDirentTree'
+import path from 'path';
+import createDocComment from './createDocComment';
+import createTemplateValues from './createTemplateValues';
+import { AspidaConfig } from './getConfigs';
+import { DirentTree, FileData, getDirentTree } from './getDirentTree';
 
 const listNotIndexFiles = (tree: DirentTree): string[] => [
   ...tree.children
@@ -16,8 +16,8 @@ const listNotIndexFiles = (tree: DirentTree): string[] => [
     ),
   ...tree.children
     .map(c => (!c.name.startsWith('_') && c.isDir ? listNotIndexFiles(c.tree) : []))
-    .reduce((p, c) => [...p, ...c], [])
-]
+    .reduce((p, c) => [...p, ...c], []),
+];
 
 const createTemplate = (
   tree: DirentTree,
@@ -26,14 +26,14 @@ const createTemplate = (
   basePath: string,
   outputMode: AspidaConfig['outputMode']
 ) => {
-  const { api, imports, pathes } = createTemplateValues(tree, basePath, trailingSlash, outputMode)
+  const { api, imports, pathes } = createTemplateValues(tree, basePath, trailingSlash, outputMode);
   const headImports = [
     `import type { AspidaClient${api.includes('AspidaResponse') ? ', AspidaResponse' : ''}${
       api.includes('BasicHeaders') ? ', BasicHeaders' : ''
-    } } from 'aspida'`
-  ]
+    } } from 'aspida'`,
+  ];
   if (api.includes('dataToURLString')) {
-    headImports.push("import { dataToURLString } from 'aspida'")
+    headImports.push("import { dataToURLString } from 'aspida'");
   }
   const text = `<% headImports %>
 <% imports %>
@@ -50,7 +50,7 @@ ${pathes.map((p, i) => `  const PATH${i} = ${p}`).join('\n')}${pathes.length > 0
     'DELETE',
     'HEAD',
     'PATCH',
-    'OPTIONS'
+    'OPTIONS',
   ]
     .filter(m => api.includes(`, ${m}, option`))
     .map(m => `  const ${m} = '${m}'`)
@@ -65,38 +65,38 @@ export default api
     .replace('<% headImports %>', headImports.join('\n'))
     .replace('<% imports %>', imports.join('\n'))
     .replace('<% api %>', api)
-    .replace('<% baseURL %>', baseURL)
+    .replace('<% baseURL %>', baseURL);
 
-  return { text, filePath: path.posix.join(tree.path, '$api.ts') }
-}
+  return { text, filePath: path.posix.join(tree.path, '$api.ts') };
+};
 
 export default ({ input, baseURL, trailingSlash, outputEachDir, outputMode }: AspidaConfig) => {
-  const direntTree = getDirentTree(input)
-  const templates = [createTemplate(direntTree, baseURL, trailingSlash, '', outputMode)]
+  const direntTree = getDirentTree(input);
+  const templates = [createTemplate(direntTree, baseURL, trailingSlash, '', outputMode)];
 
   if (outputEachDir) {
-    const notIndexFiles = listNotIndexFiles(direntTree)
+    const notIndexFiles = listNotIndexFiles(direntTree);
     if (notIndexFiles.length) {
       console.log(`aspida \u001b[43m\u001b[31mERROR\u001b[0m Since true is specified in outputEachDir at aspida.config.js, you need to rename the following files
-  ${notIndexFiles.join('\n  ')}`)
+  ${notIndexFiles.join('\n  ')}`);
 
-      return []
+      return [];
     }
 
     const appendTemplate = (tree: DirentTree) => {
       tree.children.forEach(c => {
-        if (!c.isDir || c.name.startsWith('_')) return
+        if (!c.isDir || c.name.startsWith('_')) return;
 
         templates.push(
           createTemplate(c.tree, baseURL, trailingSlash, c.tree.path.replace(input, ''), outputMode)
-        )
+        );
 
-        appendTemplate(c.tree)
-      })
-    }
+        appendTemplate(c.tree);
+      });
+    };
 
-    appendTemplate(direntTree)
+    appendTemplate(direntTree);
   }
 
-  return templates
-}
+  return templates;
+};
