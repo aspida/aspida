@@ -33,5 +33,8 @@
     "aspida",
     "typescript",
     "node-fetch"
-  ]
+  ],
+  "peerDependencies": {
+    "node-fetch": "2.x"
+  }
 }
