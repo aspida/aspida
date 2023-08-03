@@ -9,13 +9,19 @@
     "paths": {
       "aspida": ["packages/aspida/src"]
     },
+    "moduleResolution": "node",
     "esModuleInterop": true,
     "lib": ["esnext", "dom", "dom.iterable"],
     "sourceMap": true,
     "strict": true,
     "strictPropertyInitialization": false,
     "exactOptionalPropertyTypes": true,
-    "target": "es5"
+    "target": "es2018"
   },
-  "exclude": ["node_modules", "packages/**/node_modules", "packages/**/dist"]
+  "exclude": [
+    "node_modules",
+    "packages/**/node_modules",
+    "packages/**/dist",
+    "packages/aspida-swrv"
+  ]
 }

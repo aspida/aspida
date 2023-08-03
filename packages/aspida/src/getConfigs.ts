@@ -1,23 +1,23 @@
-import fs from 'fs'
-import path from 'path'
+import fs from 'fs';
+import path from 'path';
 
 export type AspidaConfig = {
-  input: string
-  baseURL: string
-  trailingSlash: boolean
-  outputEachDir: boolean
-  outputMode: 'all' | 'normalOnly' | 'aliasOnly'
-}
+  input: string;
+  baseURL: string;
+  trailingSlash: boolean;
+  outputEachDir: boolean;
+  outputMode: 'all' | 'normalOnly' | 'aliasOnly';
+};
 
 const defaultConfig: AspidaConfig = {
   input: ['api', 'apis'].find(input => fs.existsSync(input)) ?? 'api',
   baseURL: '',
   trailingSlash: false,
   outputEachDir: false,
-  outputMode: 'all'
-}
+  outputMode: 'all',
+};
 
-type PartialConfig = Partial<AspidaConfig> | Partial<AspidaConfig>[]
+type PartialConfig = Partial<AspidaConfig> | Partial<AspidaConfig>[];
 
 export const getConfigs = (config: PartialConfig | string = 'aspida.config.js'): AspidaConfig[] => {
   const configs =
@@ -25,9 +25,9 @@ export const getConfigs = (config: PartialConfig | string = 'aspida.config.js'):
       ? config
       : fs.existsSync(config)
       ? (require(path.join(process.cwd(), config)) as PartialConfig)
-      : defaultConfig
+      : defaultConfig;
 
   return Array.isArray(configs)
     ? configs.map(c => ({ ...defaultConfig, ...c }))
-    : [{ ...defaultConfig, ...configs }]
-}
+    : [{ ...defaultConfig, ...configs }];
+};

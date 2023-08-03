@@ -12,9 +12,6 @@
   <a href="https://github.com/aspida/aspida/actions?query=workflow%3A%22Node.js+CI%22">
     <img src="https://github.com/aspida/aspida/workflows/Node.js%20CI/badge.svg?branch=master" alt="Node.js CI" />
   </a>
-  <a href="https://codecov.io/gh/aspida/aspida">
-    <img src="https://img.shields.io/codecov/c/github/aspida/aspida.svg" alt="Codecov" />
-  </a>
   <a href="https://lgtm.com/projects/g/aspida/aspida/context:javascript">
     <img src="https://img.shields.io/lgtm/grade/javascript/g/aspida/aspida.svg" alt="Language grade: JavaScript" />
   </a>
@@ -734,7 +731,7 @@ $ npm run api:build
  * @remarks
  * root remarks comment
  */
-const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
+const api = <T,>({ baseURL, fetch }: AspidaClient<T>) => {
   return {
     /**
      * post method comment

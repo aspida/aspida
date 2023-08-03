@@ -1,4 +1,5 @@
 # @aspida/axios
+
 <br />
 <img src="https://aspida.github.io/aspida/logos/png/logo.png" alt="aspida" title="aspida" />
 <div align="center">
@@ -7,15 +8,6 @@
   </a>
   <a href="https://www.npmjs.com/package/@aspida/axios">
     <img src="https://img.shields.io/npm/dm/@aspida/axios" alt="npm download" />
-  </a>
-  <a href="https://github.com/aspida/aspida/actions?query=workflow%3A%22Node.js+CI%22">
-    <img src="https://github.com/aspida/aspida/workflows/Node.js%20CI/badge.svg?branch=master" alt="Node.js CI" />
-  </a>
-  <a href="https://codecov.io/gh/aspida/aspida">
-    <img src="https://img.shields.io/codecov/c/github/aspida/aspida.svg" alt="Codecov" />
-  </a>
-  <a href="https://lgtm.com/projects/g/aspida/aspida/context:javascript">
-    <img src="https://img.shields.io/lgtm/grade/javascript/g/aspida/aspida.svg" alt="Language grade: JavaScript" />
   </a>
 </div>
 <br />
@@ -43,29 +35,29 @@
 
 `src/index.ts`
 
-```typescript
-import axios from "axios"
-import aspida from "@aspida/axios"
-import api from "../api/$api"
+```ts
+import axios from "axios";
+import aspida from "@aspida/axios";
+import api from "../api/$api";
 
-const axiosConfig = { timeout: 3000, baseURL: "https://example.com/api" }
-const client = api(aspida(axios, axiosConfig))
-;(async () => {
-  const userId = 0
-  const limit = 10
+const axiosConfig = { timeout: 3000, baseURL: "https://example.com/api" };
+const client = api(aspida(axios, axiosConfig));
+(async () => {
+  const userId = 0;
+  const limit = 10;
 
-  await client.v1.users.post({ name: "mario" })
+  await client.v1.users.post({ name: "mario" });
 
-  const res = await client.v1.users.get({ query: { limit } })
-  console.log(res)
+  const res = await client.v1.users.get({ query: { limit } });
+  console.log(res);
   // req -> GET: https://example.com/api/v1/users/?limit=10
   // res -> { status: 200, data: [{ id: 0, name: "mario" }], headers: {...} }
 
-  const user = await client.v1.users._userId(userId).$get()
-  console.log(user)
+  const user = await client.v1.users._userId(userId).$get();
+  console.log(user);
   // req -> GET: https://example.com/api/v1/users/0
   // res -> { id: 0, name: "mario" }
-})()
+})();
 ```
 
 ## License

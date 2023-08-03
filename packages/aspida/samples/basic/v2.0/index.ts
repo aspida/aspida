@@ -1,18 +1,18 @@
-import { DefineMethods } from '../../../src'
-import { mockMethods } from 'aspida-mock'
+import { mockMethods } from 'aspida-mock';
+import { DefineMethods } from '../../../src';
 
 export type Methods = DefineMethods<{
   get: {
-    query: { val: string }
-    reqHeaders: { 'content-type': string }
-    reqFormat: FormData
-    resHeaders: { token: string }
-    resBody: string
-    status: 200 | 204
-  }
-}>
+    query: { val: string };
+    reqHeaders: { 'content-type': string };
+    reqFormat: FormData;
+    resHeaders: { token: string };
+    resBody: string;
+    status: 200 | 204;
+  };
+}>;
 
 export default mockMethods<Methods>({
   get: ({ query }) =>
-    query.val ? { status: 200, resBody: query.val, resHeaders: { token: 'aaa' } } : { status: 403 }
-})
+    query.val ? { status: 200, resBody: query.val, resHeaders: { token: 'aaa' } } : { status: 403 },
+});

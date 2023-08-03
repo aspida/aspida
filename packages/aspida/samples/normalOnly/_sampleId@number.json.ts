@@ -1,5 +1,5 @@
 export interface Methods {
   get: {
-    resBody: { id: number }
-  }
+    resBody: { id: number };
+  };
 }

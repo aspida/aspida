@@ -1,4 +1,5 @@
 # aspida
+
 <br />
 <img src="https://aspida.github.io/aspida/logos/png/logo.png" alt="aspida" title="aspida" />
 <div align="center">
@@ -7,15 +8,6 @@
   </a>
   <a href="https://www.npmjs.com/package/aspida">
     <img src="https://img.shields.io/npm/dm/aspida" alt="npm download" />
-  </a>
-  <a href="https://github.com/aspida/aspida/actions?query=workflow%3A%22Node.js+CI%22">
-    <img src="https://github.com/aspida/aspida/workflows/Node.js%20CI/badge.svg?branch=master" alt="Node.js CI" />
-  </a>
-  <a href="https://codecov.io/gh/aspida/aspida">
-    <img src="https://img.shields.io/codecov/c/github/aspida/aspida.svg" alt="Codecov" />
-  </a>
-  <a href="https://lgtm.com/projects/g/aspida/aspida/context:javascript">
-    <img src="https://img.shields.io/lgtm/grade/javascript/g/aspida/aspida.svg" alt="Language grade: JavaScript" />
   </a>
 </div>
 <br />
@@ -73,27 +65,29 @@ $ mkdir api
 
   `api/v1/users/index.ts`
 
-  ```typescript
-  type User = {
-    id: number
-    name: string
-  }
+  ```ts
+  import type { DefineMethods } from "aspida";
 
-  export type Methods = {
+  type User = {
+    id: number;
+    name: string;
+  };
+
+  export type Methods = DefineMethods<{
     get: {
       query?: {
-        limit: number
-      }
+        limit: number;
+      };
 
-      resBody: User[]
-    }
+      resBody: User[];
+    };
 
     post: {
       reqBody: {
-        name: string
-      }
+        name: string;
+      };
 
-      resBody: User
+      resBody: User;
       /**
        * reqHeaders(?): ...
        * reqFormat: ...
@@ -101,8 +95,8 @@ $ mkdir api
        * resHeaders(?): ...
        * polymorph: [...]
        */
-    }
-  }
+    };
+  }>;
   ```
 
 - GET: /v1/users/\${userId}
@@ -113,25 +107,27 @@ $ mkdir api
   アンダースコアから始まるパス変数「userId」の型を「@number」で指定する  
   @での指定がない場合、パス変数の型のデフォルトは「number | string」
 
-  ```typescript
-  type User = {
-    id: number
-    name: string
-  }
+  ```ts
+  import type { DefineMethods } from "aspida";
 
-  export type Methods = {
+  type User = {
+    id: number;
+    name: string;
+  };
+
+  export type Methods = DefineMethods<{
     get: {
-      resBody: User
-    }
+      resBody: User;
+    };
 
     put: {
       reqBody: {
-        name: string
-      }
+        name: string;
+      };
 
-      resBody: User
-    }
-  }
+      resBody: User;
+    };
+  }>;
   ```
 
 ### 型定義ファイルをビルドする
@@ -156,26 +152,26 @@ $ npm run api:build
 
 `src/index.ts`
 
-```typescript
-import aspida from "@aspida/axios"
-import api from "../api/$api"
-;(async () => {
-  const userId = 0
-  const limit = 10
-  const client = api(aspida())
+```ts
+import aspida from "@aspida/axios";
+import api from "../api/$api";
+(async () => {
+  const userId = 0;
+  const limit = 10;
+  const client = api(aspida());
 
-  await client.v1.users.post({ body: { name: "taro" } })
+  await client.v1.users.post({ body: { name: "taro" } });
 
-  const res = await client.v1.users.get({ query: { limit } })
-  console.log(res)
+  const res = await client.v1.users.get({ query: { limit } });
+  console.log(res);
   // req -> GET: /v1/users/?limit=10
   // res -> { status: 200, body: [{ id: 0, name: "taro" }], headers: {...} }
 
-  const user = await client.v1.users._userId(userId).$get()
-  console.log(user)
+  const user = await client.v1.users._userId(userId).$get();
+  console.log(user);
   // req -> GET: /v1/users/0
   // res -> { id: 0, name: "taro" }
-})()
+})();
 ```
 
 ### aspida 公式 HTTP クライアント
@@ -222,45 +218,45 @@ import api from "../api/$api"
 
 ## aspida.config.js のオプション
 
-| Option        | Type    | Default       | Description                                        |
-| ------------- | ------- | ------------- | -------------------------------------------------- |
-| input         | string  | "api"         | エンドポイントの型定義ルートディレクトリを指定     |
-| baseURL       | string  | ""            | リクエスト時の baseURL を指定                      |
-| trailingSlash | boolean | false         | リクエスト URL の末尾に `/` を付与                 |
-| outputEachDir | boolean | false         | `$api.ts` を各エンドポイントのディレクトリにも生成 |
+| Option        | Type    | Default | Description                                        |
+| ------------- | ------- | ------- | -------------------------------------------------- |
+| input         | string  | "api"   | エンドポイントの型定義ルートディレクトリを指定     |
+| baseURL       | string  | ""      | リクエスト時の baseURL を指定                      |
+| trailingSlash | boolean | false   | リクエスト URL の末尾に `/` を付与                 |
+| outputEachDir | boolean | false   | `$api.ts` を各エンドポイントのディレクトリにも生成 |
 
 ## Node.js API
 
 ```ts
-import { version, build, watch } from "aspida/dist/commands"
+import { version, build, watch } from "aspida/dist/commands";
 
-console.log(version()) // 0.x.y
+console.log(version()); // 0.x.y
 
-build()
-build("./app/aspida.config.js")
-build({ input: "api1" })
+build();
+build("./app/aspida.config.js");
+build({ input: "api1" });
 build([
   { baseURL: "https://example.com/v1" },
   {
     input: "api2",
     baseURL: "https://example.com/v2",
     trailingSlash: true,
-    outputEachDir: true
-  }
-])
+    outputEachDir: true,
+  },
+]);
 
-watch()
-watch("./app/aspida.config.js")
-watch({ input: "api1" })
+watch();
+watch("./app/aspida.config.js");
+watch({ input: "api1" });
 watch([
   { baseURL: "https://example.com/v1" },
   {
     input: "api2",
     baseURL: "https://example.com/v2",
     trailingSlash: true,
-    outputEachDir: true
-  }
-])
+    outputEachDir: true,
+  },
+]);
 ```
 
 ## Ecosystem
@@ -271,7 +267,6 @@ watch([
 - [@aspida/swr](https://github.com/aspida/aspida/tree/master/packages/aspida-swr) - SWR (React Hooks)ラッパー
 - [@aspida/swrv](https://github.com/aspida/aspida/tree/master/packages/aspida-swrv) - SWRV (Vue Composition API)ラッパー
 - [eslint-plugin-aspida](https://github.com/ibuki2003/eslint-plugin-aspida) - aspida api 専用リンター
-
 
 ## Tips
 
@@ -295,22 +290,19 @@ watch([
 `aspida.config.js`
 
 ```javascript
-module.exports = { input: "src" }
+module.exports = { input: "src" };
 ```
 
 baseURL を設定ファイルで指定する
 
 ```javascript
-module.exports = { baseURL: "https://example.com/api" }
+module.exports = { baseURL: "https://example.com/api" };
 ```
 
 複数の API エンドポイントを型定義したい場合は配列で指定する
 
 ```javascript
-module.exports = [
-  { input: "api1" },
-  { input: "api2", baseURL: "https://example.com/api" }
-]
+module.exports = [{ input: "api1" }, { input: "api2", baseURL: "https://example.com/api" }];
 ```
 
 <a id="tips2"></a>
@@ -322,24 +314,24 @@ aspida は GET パラメータのシリアライズを HTTP クライアント�
 
 `src/index.ts`
 
-```typescript
-import axios from "axios"
-import qs from "qs"
-import aspida from "@aspida/axios"
-import api from "../api/$api"
-;(async () => {
+```ts
+import axios from "axios";
+import qs from "qs";
+import aspida from "@aspida/axios";
+import api from "../api/$api";
+(async () => {
   const client = api(
     aspida(axios, { paramsSerializer: params => qs.stringify(params, { indices: false }) })
-  )
+  );
 
   const users = await client.v1.users.$get({
     // config: { paramsSerializer: (params) => qs.stringify(params, { indices: false }) },
-    query: { ids: [1, 2, 3] }
-  })
-  console.log(users)
+    query: { ids: [1, 2, 3] },
+  });
+  console.log(users);
   // req -> GET: /v1/users/?ids=1&ids=2&ids=3
   // res -> [{ id: 1, name: "taro1" }, { id: 2, name: "taro2" }, { id: 3, name: "taro3" }]
-})()
+})();
 ```
 
 <a id="tips3"></a>
@@ -348,42 +340,44 @@ import api from "../api/$api"
 
 `api/v1/users/index.ts`
 
-```typescript
-export type Methods = {
+```ts
+import type { DefineMethods } from "aspida";
+
+export type Methods = DefineMethods<{
   post: {
-    reqFormat: FormData
+    reqFormat: FormData;
 
     reqBody: {
-      name: string
-      icon: Blob
-    }
+      name: string;
+      icon: Blob;
+    };
 
     resBody: {
-      id: number
-      name: string
-    }
-  }
-}
+      id: number;
+      name: string;
+    };
+  };
+}>;
 ```
 
 `src/index.ts`
 
-```typescript
-import aspida from "@aspida/axios"
-import api from "../api/$api"
-;(async () => {
-  const client = api(aspida())
+```ts
+import aspida from "@aspida/axios";
+import api from "../api/$api";
+(async () => {
+  const client = api(aspida());
 
   const user = await client.v1.users.$post({
     body: {
       name: "taro",
-      icon: imageBlob
-    }
-  })
-  console.log(user)
+      icon: imageBlob,
+    },
+  });
+  console.log(user);
   // req -> POST: /v1/users
   // res -> { id: 0, name: "taro" }
-})()
+})();
 ```
 
 <a id="tips4"></a>
@@ -392,36 +386,38 @@ import api from "../api/$api"
 
 `api/v1/users/index.ts`
 
-```typescript
-export type Methods = {
+```ts
+import type { DefineMethods } from "aspida";
+
+export type Methods = DefineMethods<{
   post: {
-    reqFormat: URLSearchParams
+    reqFormat: URLSearchParams;
 
     reqBody: {
-      name: string
-    }
+      name: string;
+    };
 
     resBody: {
-      id: number
-      name: string
-    }
-  }
-}
+      id: number;
+      name: string;
+    };
+  };
+}>;
 ```
 
 `src/index.ts`
 
-```typescript
-import aspida from "@aspida/axios"
-import api from "../api/$api"
-;(async () => {
-  const client = api(aspida())
+```ts
+import aspida from "@aspida/axios";
+import api from "../api/$api";
+(async () => {
+  const client = api(aspida());
 
-  const user = await client.v1.users.$post({ body: { name: "taro" } })
-  console.log(user)
+  const user = await client.v1.users.$post({ body: { name: "taro" } });
+  console.log(user);
   // req -> POST: /v1/users
   // res -> { id: 0, name: "taro" }
-})()
+})();
 ```
 
 <a id="tips5"></a>
@@ -430,31 +426,33 @@ import api from "../api/$api"
 
 `api/v1/users/index.ts`
 
-```typescript
-export type Methods = {
+```ts
+import type { DefineMethods } from "aspida";
+
+export type Methods = DefineMethods<{
   get: {
     query: {
-      name: string
-    }
+      name: string;
+    };
 
-    resBody: ArrayBuffer
-  }
-}
+    resBody: ArrayBuffer;
+  };
+}>;
 ```
 
 `src/index.ts`
 
-```typescript
-import aspida from "@aspida/axios"
-import api from "../api/$api"
-;(async () => {
-  const client = api(aspida())
+```ts
+import aspida from "@aspida/axios";
+import api from "../api/$api";
+(async () => {
+  const client = api(aspida());
 
-  const user = await client.v1.users.$get({ query: { name: "taro" } })
-  console.log(user)
+  const user = await client.v1.users.$get({ query: { name: "taro" } });
+  console.log(user);
   // req -> GET: /v1/users/?name=taro
   // res -> ArrayBuffer
-})()
+})();
 ```
 
 <a id="tips6"></a>
@@ -465,14 +463,14 @@ import api from "../api/$api"
 
 ```ts
 type User = {
-  id: number
-  name: string
-}
+  id: number;
+  name: string;
+};
 
 export interface Methods {
   post: {
     // common properties
-    reqFormat: FormData
+    reqFormat: FormData;
     /**
      * query(?): ...
      * reqHeaders(?): ...
@@ -484,8 +482,8 @@ export interface Methods {
     polymorph: [
       // polymorphic types
       {
-        reqBody: Omit<User, 'id'>
-        resBody: User
+        reqBody: Omit<User, "id">;
+        resBody: User;
         /**
          * query(?): ...
          * reqHeaders(?): ...
@@ -494,30 +492,30 @@ export interface Methods {
          */
       },
       {
-        reqBody: Omit<User, 'id'>[]
-        resBody: User[]
+        reqBody: Omit<User, "id">[];
+        resBody: User[];
       }
-    ]
-  }
+    ];
+  };
 }
 ```
 
 `src/index.ts`
 
 ```ts
-import aspida from "@aspida/axios"
-import api from "../api/$api"
-;(async () => {
-  const client = api(aspida())
+import aspida from "@aspida/axios";
+import api from "../api/$api";
+(async () => {
+  const client = api(aspida());
 
-  const user = await client.users.$post({ body: { name: "taro" } })
-  console.log(user) // { id: 0, name: "taro" }
+  const user = await client.users.$post({ body: { name: "taro" } });
+  console.log(user); // { id: 0, name: "taro" }
 
   const users = await client.users.$post({
-    body: [{ name: "hanako" }, { name: "mario" }]
-  })
-  console.log(users) // [{ id: 1, name: "hanako" }, { id: 2, name: "mario" }]
-})()
+    body: [{ name: "hanako" }, { name: "mario" }],
+  });
+  console.log(users); // [{ id: 1, name: "hanako" }, { id: 2, name: "mario" }]
+})();
 ```
 
 <a id="tips7"></a>
@@ -530,27 +528,29 @@ import api from "../api/$api"
 `api/foo%3Abar/index.ts`
 
 ```ts
-export type Methods = {
+import type { DefineMethods } from "aspida";
+
+export type Methods = DefineMethods<{
   get: {
-    resBody: string
-  }
-}
+    resBody: string;
+  };
+}>;
 ```
 
 クライアントでは `"%3A"` -> `"_3A"` となる
 
 `src/index.ts`
 
-```typescript
-import aspida from "@aspida/axios"
-import api from "../api/$api"
-;(async () => {
-  const client = api(aspida())
+```ts
+import aspida from "@aspida/axios";
+import api from "../api/$api";
+(async () => {
+  const client = api(aspida());
 
-  const message = await client.foo_3Abar.$get()
-  console.log(message)
+  const message = await client.foo_3Abar.$get();
+  console.log(message);
   // req -> GET: /foo%3Abar (= /foo:bar)
-})()
+})();
 ```
 
 <a id="tips8"></a>
@@ -564,27 +564,27 @@ import api from "../api/$api"
 `aspida.config.js`
 
 ```js
-module.exports = { outputEachDir: true }
+module.exports = { outputEachDir: true };
 ```
 
 使いたいエンドポイントの `$api.ts` のみを import してオブジェクトにまとめる
 
 `src/index.ts`
 
-```typescript
-import aspida from "@aspida/axios"
-import api0 from "../api/v1/foo/$api"
-import api1 from "../api/v2/bar/$api"
-;(async () => {
-  const aspidaClient = aspida()
+```ts
+import aspida from "@aspida/axios";
+import api0 from "../api/v1/foo/$api";
+import api1 from "../api/v2/bar/$api";
+(async () => {
+  const aspidaClient = aspida();
   const client = {
     foo: api0(aspidaClient),
-    bar: api1(aspidaClient)
-  }
+    bar: api1(aspidaClient),
+  };
 
-  const message = await client.bar._id(1).$get()
+  const message = await client.bar._id(1).$get();
   // req -> GET: /v2/bar/1
-})()
+})();
 ```
 
 <a id="tips9"></a>
@@ -594,23 +594,25 @@ import api1 from "../api/v2/bar/$api"
 `src/index.ts`
 
 ```ts
-import aspida from "@aspida/axios"
-import api from "../api/$api"
-;(async () => {
-  const client = api(aspida())
+import aspida from "@aspida/axios";
+import api from "../api/$api";
+(async () => {
+  const client = api(aspida());
 
-  console.log(client.v1.users.$path())
+  console.log(client.v1.users.$path());
   // /v1/users
 
-  console.log(client.vi.users.$path({ query: { limit: 10 } }))
+  console.log(client.vi.users.$path({ query: { limit: 10 } }));
   // /v1/users?limit=10
 
-  console.log(client.vi.users.$path({
-    method: 'post',
-    query: { id: 1 }
-  }))
+  console.log(
+    client.vi.users.$path({
+      method: "post",
+      query: { id: 1 },
+    })
+  );
   // /v1/users?id=1
-})()
+})();
 ```
 
 <a id="tips10"></a>
@@ -620,37 +622,39 @@ import api from "../api/$api"
 `api/index.ts`
 
 ```ts
+import type { DefineMethods } from "aspida";
+
 /**
  * root comment
- * 
+ *
  * @remarks
  * root remarks comment
  */
-export type Methods = {
+export type Methods = DefineMethods<{
   /**
    * post method comment
-   * 
+   *
    * @remarks
    * post method remarks comment
    */
   post: {
     /** post query comment */
-    query: { limit: number }
+    query: { limit: number };
 
     /** post reqHeaders comment */
-    reqHeaders: { token: string }
+    reqHeaders: { token: string };
 
-    reqFormat: FormData
+    reqFormat: FormData;
     /** post reqBody comment */
-    reqBody: UserCreation
+    reqBody: UserCreation;
 
     /**
      * post resBody comment1
      * post resBody comment2
      */
-    resBody: User
-  }
-}
+    resBody: User;
+  };
+}>;
 ```
 
 ```sh
@@ -662,7 +666,7 @@ $ npm run api:build
 ```ts
 /**
  * root comment
- * 
+ *
  * @remarks
  * root remarks comment
  */
@@ -670,27 +674,28 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   return {
     /**
      * post method comment
-     * 
+     *
      * @remarks
      * post method remarks comment
-     * 
+     *
      * @param option.query - post query comment
      * @param option.headers - post reqHeaders comment
      * @param option.body - post reqBody comment
      * @returns post resBody comment1
      * post resBody comment2
      */
-    $post: (option: { body: Methods0['post']['reqBody'], query: Methods0['post']['query'], headers: Methods0['post']['reqHeaders'], config?: T }) =>
-      fetch<Methods0['post']['resBody']>(prefix, PATH0, POST, option).json().then(r => r.body)
-  }
-}
+    $post: (option: {
+      body: Methods0["post"]["reqBody"];
+      query: Methods0["post"]["query"];
+      headers: Methods0["post"]["reqHeaders"];
+      config?: T;
+    }) =>
+      fetch<Methods0["post"]["resBody"]>(prefix, PATH0, POST, option)
+        .json()
+        .then(r => r.body),
+  };
+};
 ```
-
-## サポート
-
-<a href="https://twitter.com/m_mitsuhide">
-  <img src="https://aspida.github.io/aspida/assets/images/twitter.svg" width="50" alt="Twitter" />
-</a>
 
 ## ライセンス
 

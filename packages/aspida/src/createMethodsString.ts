@@ -1,6 +1,6 @@
-import { Method } from './parseInterface'
-import createDocComment from './createDocComment'
-import { AspidaConfig } from './commands'
+import { AspidaConfig } from './commands';
+import createDocComment from './createDocComment';
+import { Method } from './parseInterface';
 
 const genReqBody = ({ name, props }: Method, importName: string, index: number) =>
   props.polymorph?.[index].reqBody
@@ -13,7 +13,7 @@ const genReqBody = ({ name, props }: Method, importName: string, index: number) 
         ` body${opt ? '?' : ''}: ${importName}['${name}']['reqBody']${opt ? ' | undefined' : ''},`)(
         props.reqBody.hasQuestion
       )
-    : ''
+    : '';
 
 const genQuery = ({ name, props }: Method, importName: string, index: number) =>
   props.polymorph?.[index].query
@@ -26,7 +26,7 @@ const genQuery = ({ name, props }: Method, importName: string, index: number) =>
         ` query${opt ? '?' : ''}: ${importName}['${name}']['query']${opt ? ' | undefined' : ''},`)(
         props.query.hasQuestion
       )
-    : ''
+    : '';
 
 const genReqHeaders = ({ name, props }: Method, importName: string, index: number) =>
   props.polymorph?.[index].reqHeaders
@@ -39,10 +39,10 @@ const genReqHeaders = ({ name, props }: Method, importName: string, index: numbe
         ` headers${opt ? '?' : ''}: ${importName}['${name}']['reqHeaders']${
           opt ? ' | undefined' : ''
         },`)(props.reqHeaders.hasQuestion)
-    : ''
+    : '';
 
 const genOption = (method: Method, importName: string, index = 0) => {
-  const poly = method.props.polymorph?.[index]
+  const poly = method.props.polymorph?.[index];
   const isOptionRequired =
     method.props.query?.hasQuestion === false ||
     method.props.reqBody?.hasQuestion === false ||
@@ -50,7 +50,7 @@ const genOption = (method: Method, importName: string, index = 0) => {
     (poly &&
       (poly.query?.hasQuestion === false ||
         poly.reqBody?.hasQuestion === false ||
-        poly.reqHeaders?.hasQuestion === false))
+        poly.reqHeaders?.hasQuestion === false));
 
   return (opt =>
     `(option${opt ? '?' : ''}: {${genReqBody(method, importName, index)}${genQuery(
@@ -59,32 +59,32 @@ const genOption = (method: Method, importName: string, index = 0) => {
       index
     )}${genReqHeaders(method, importName, index)} config?: T | undefined }${
       opt ? ' | undefined' : ''
-    })`)(!isOptionRequired)
-}
+    })`)(!isOptionRequired);
+};
 
 const genResBody = ({ name, props }: Method, importName: string) =>
-  props.resBody ? `${importName}['${name}']['resBody']` : 'void'
+  props.resBody ? `${importName}['${name}']['resBody']` : 'void';
 
 const genPolyResBody = ({ name, props }: Method, importName: string, index: number) =>
   props.polymorph?.[index].resBody
     ? `${importName}['${name}']['polymorph'][${index}]['resBody']`
-    : genResBody({ name, props }, importName)
+    : genResBody({ name, props }, importName);
 
 const genResHeaders = ({ name, props }: Method, importName: string) =>
-  props.resHeaders ? `${importName}['${name}']['resHeaders']` : 'BasicHeaders'
+  props.resHeaders ? `${importName}['${name}']['resHeaders']` : 'BasicHeaders';
 
 const genPolyResHeaders = ({ name, props }: Method, importName: string, index: number) =>
   props.polymorph?.[index].resHeaders
     ? `${importName}['${name}']['polymorph'][${index}]['resHeaders']`
-    : genResHeaders({ name, props }, importName)
+    : genResHeaders({ name, props }, importName);
 
 const genStatus = ({ name, props }: Method, importName: string) =>
-  props.status ? `, ${importName}['${name}']['status']` : ''
+  props.status ? `, ${importName}['${name}']['status']` : '';
 
 const genPolyStatus = ({ name, props }: Method, importName: string, index: number) =>
   props.polymorph?.[index].status
     ? `, ${importName}['${name}']['polymorph'][${index}]['status']`
-    : genStatus({ name, props }, importName)
+    : genStatus({ name, props }, importName);
 
 const genRequest = (props: Omit<Method['props'], 'polymorph'>) =>
   `, option${
@@ -95,16 +95,16 @@ const genRequest = (props: Omit<Method['props'], 'polymorph'>) =>
       : props.reqBody && /^(ArrayBuffer|Blob|string)$/.test(props.reqBody.value)
       ? `, '${props.reqBody.value}'`
       : ''
-  }`
+  }`;
 
 const genResMethodName = (props: Omit<Method['props'], 'polymorph'>) =>
   !props.resBody
     ? 'send'
     : (
         { ArrayBuffer: 'arrayBuffer', Blob: 'blob', string: 'text', FormData: 'formData' } as {
-          [key: string]: string
+          [key: string]: string;
         }
-      )[props.resBody.value] || 'json'
+      )[props.resBody.value] || 'json';
 
 const genReturnVal = (method: Method, importName: string, path: string) =>
   `fetch<${genResBody(method, importName)}, ${genResHeaders(method, importName)}${genStatus(
@@ -112,21 +112,21 @@ const genReturnVal = (method: Method, importName: string, path: string) =>
     importName
   )}>(prefix, ${path}, ${method.name.toUpperCase()}${genRequest(method.props)}).${genResMethodName(
     method.props
-  )}()`
+  )}()`;
 
 const genPolyType = (method: Method, importName: string, index: number) =>
   `Promise<AspidaResponse<${genPolyResBody(method, importName, index)}, ${genPolyResHeaders(
     method,
     importName,
     index
-  )}${genPolyStatus(method, importName, index)}>>`
+  )}${genPolyStatus(method, importName, index)}>>`;
 
 const genPolymorphReturnVal = (method: Method, indent: string, path: string) =>
   `${
     method.name
   }Request(option: any) {\n${indent}      return fetch(prefix, ${path}, ${method.name.toUpperCase()}${genRequest(
     { ...method.props, ...method.props.polymorph?.find(p => p.reqBody) }
-  )}).${genResMethodName({ ...method.props, ...method.props.polymorph?.find(p => p.resBody) })}()`
+  )}).${genResMethodName({ ...method.props, ...method.props.polymorph?.find(p => p.resBody) })}()`;
 
 export default (
   methods: Method[],
@@ -137,7 +137,7 @@ export default (
 ) =>
   [
     ...methods.map(method => {
-      const { name, props, doc } = method
+      const { name, props, doc } = method;
 
       if (props.polymorph?.length) {
         const polys = props.polymorph.map((_, i) => [
@@ -150,8 +150,8 @@ export default (
             method,
             importName,
             i
-          )}: Promise<${genPolyResBody(method, importName, i)}>`
-        ])
+          )}: Promise<${genPolyResBody(method, importName, i)}>`,
+        ]);
 
         return `${indent}  ${name}: (() => {\n${polys
           .map(([a]) => a)
@@ -159,27 +159,27 @@ export default (
           method,
           indent,
           path
-        )}\n${indent}    }\n${indent}    return ${name}Request\n${indent}  })(),\n${indent}  $${name}: (() => {\n${polys
+        )};\n${indent}    }\n${indent}    return ${name}Request;\n${indent}  })(),\n${indent}  $${name}: (() => {\n${polys
           .map(([, b]) => b)
           .join('\n')}\n${indent}    function $${genPolymorphReturnVal(
           method,
           indent,
           path
-        )}.then(r => r.body)\n${indent}    }\n${indent}    return $${name}Request\n${indent}  })()`
+        )}.then(r => r.body);\n${indent}    }\n${indent}    return $${name}Request;\n${indent}  })()`;
       }
 
       const tmpChanks = [
         `${genOption(method, importName)} =>`,
-        genReturnVal(method, importName, path)
-      ]
-      const methodChanks: string[] = []
+        genReturnVal(method, importName, path),
+      ];
+      const methodChanks: string[] = [];
 
       if (outputMode !== 'aliasOnly') {
         methodChanks.push(
           `${createDocComment(`${indent}  `, doc, props)}${indent}  ${name}: ${
             tmpChanks[0]
           }\n${indent}    ${tmpChanks[1]}`
-        )
+        );
       }
 
       if (outputMode !== 'normalOnly') {
@@ -187,10 +187,10 @@ export default (
           `${createDocComment(`${indent}  `, doc, props)}${indent}  $${name}: ${
             tmpChanks[0]
           }\n${indent}    ${tmpChanks[1]}.then(r => r.body)`
-        )
+        );
       }
 
-      return methodChanks.join(',\n')
+      return methodChanks.join(',\n');
     }),
     (methods.filter(({ props }) => props.query).length
       ? `${indent}  $path: (option?: ${methods
@@ -204,15 +204,15 @@ export default (
           .join(' | ')} | undefined) =>
 ${indent}    \`\${prefix}\${${
           path.startsWith('`') ? path.slice(3, -2) : path
-        }}\${option && option.query ? \`?\${dataToURLString(option.query)}\` : ''}\``
+        }}\${option && option.query ? \`?\${dataToURLString(option.query)}\` : ''}\`,`
       : `${indent}  $path: () => \`\${prefix}\${${
           path.startsWith('`') ? path.slice(3, -2) : path
-        }}\``
+        }}\`,`
     )
       // eslint-disable-next-line no-template-curly-in-string
-      .replace("${''}", '')
+      .replace("${''}", ''),
   ]
     .join(',\n')
     .replace(/, BasicHeaders>/g, '>')
     .replace(/fetch<void>/g, 'fetch')
-    .replace(/AspidaResponse<void>/g, 'AspidaResponse')
+    .replace(/AspidaResponse<void>/g, 'AspidaResponse');

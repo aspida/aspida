@@ -4,9 +4,9 @@ import {
   dataToURLString,
   HttpMethod,
   optionToRequest,
-  RequestType
-} from 'aspida'
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
+  RequestType,
+} from 'aspida';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 export default (
   client: AxiosInstance = axios,
@@ -21,7 +21,7 @@ export default (
     type?: RequestType
   ) {
     const send = (responseType?: 'arraybuffer' | 'blob' | 'json' | 'text') => async () => {
-      const request = optionToRequest(params, type)
+      const request = optionToRequest(params, type);
       const res = await client.request({
         paramsSerializer: params => dataToURLString(params),
         ...config,
@@ -35,13 +35,13 @@ export default (
         headers: {
           ...config?.headers,
           ...request?.config?.headers,
-          ...request?.headers
-        }
-      })
-      const { status, headers, data } = res as any
+          ...request?.headers,
+        },
+      });
+      const { status, headers, data } = res as any;
 
-      return { status, headers, body: data, originalResponse: res }
-    }
+      return { status, headers, body: data, originalResponse: res };
+    };
 
     return {
       send: send(),
@@ -49,7 +49,7 @@ export default (
       text: send('text'),
       arrayBuffer: send('arraybuffer'),
       blob: send('blob'),
-      formData: send()
-    }
-  }
-})
+      formData: send(),
+    };
+  },
+});

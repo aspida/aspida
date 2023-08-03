@@ -1,6 +1,6 @@
 /* eslint-disable */
-import { mockMethods } from 'aspida-mock'
-import { DefineMethods } from '../../src'
+import { mockMethods } from 'aspida-mock';
+import { DefineMethods } from '../../src';
 
 // prettier-ignore
 export type Methods = DefineMethods<{
@@ -47,5 +47,5 @@ export default mockMethods<Methods>({
   get: ({ query }) => (query?.aa ? { status: 200, resBody: new FormData() } : { status: 403 }),
   post: ({ reqBody }) => (reqBody ? { status: 200, resBody: new ArrayBuffer(1) } : { status: 500 }),
   put: () => ({ status: 200, resHeaders: { token: 'aaa' } }),
-  delete: () => ({ status: 202, resBody: undefined })
-})
+  delete: () => ({ status: 202, resBody: undefined }),
+});

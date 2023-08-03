@@ -1,4 +1,4 @@
-import { DefineMethods } from '../../../../../../src'
+import { DefineMethods } from '../../../../../../src';
 
 // prettier-ignore
 export type Methods = DefineMethods<{

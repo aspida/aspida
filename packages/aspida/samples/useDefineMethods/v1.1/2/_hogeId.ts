@@ -1,7 +1,7 @@
-import { DefineMethods } from '../../../../src'
+import { DefineMethods } from '../../../../src';
 
 export type Methods = DefineMethods<{
   get: {
-    resBody: { id: number }
-  }
-}>
+    resBody: { id: number };
+  };
+}>;

@@ -1,3 +1,5 @@
+import { DefineMethods } from 'aspida';
+
 /* eslint-disable */
 // prettier-ignore
 /**
@@ -6,7 +8,7 @@
  * @remarks
  * root remarks comment
  */
-export type Methods = {
+export type Methods = DefineMethods<{
   /**
    * get method comment
    * 
@@ -58,4 +60,4 @@ export type Methods = {
     status: 202
     resHeaders?: { token: string }
   }
-}
+}>

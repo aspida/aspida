@@ -5,6 +5,7 @@ module.exports = [
     trailingSlash: false,
     outputMode: 'all'
   },
+  { input: 'samples/tab' },
   { input: 'samples/eachDir', trailingSlash: true, outputEachDir: true },
   { input: 'samples/normalOnly', outputMode: 'normalOnly' },
   { input: 'samples/aliasOnly', outputEachDir: true, outputMode: 'aliasOnly' },
