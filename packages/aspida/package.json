@@ -13,7 +13,8 @@
       "import": "./dist/esm/index.js",
       "types": "./dist/esm/index.d.ts"
     },
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./dist/*": "./dist/*.js"
   },
   "homepage": "https://github.com/aspida/aspida#readme",
   "repository": {
