@@ -9,12 +9,6 @@
   <a href="https://www.npmjs.com/package/aspida">
     <img src="https://img.shields.io/npm/dm/aspida" alt="npm download" />
   </a>
-  <a href="https://github.com/aspida/aspida/actions?query=workflow%3A%22Node.js+CI%22">
-    <img src="https://github.com/aspida/aspida/workflows/Node.js%20CI/badge.svg?branch=master" alt="Node.js CI" />
-  </a>
-  <a href="https://lgtm.com/projects/g/aspida/aspida/context:javascript">
-    <img src="https://img.shields.io/lgtm/grade/javascript/g/aspida/aspida.svg" alt="Language grade: JavaScript" />
-  </a>
 </div>
 <br />
 <p align="center">TypeScript friendly HTTP client wrapper for the browser and node.js.</p>
@@ -78,29 +72,29 @@ Be aware of the limitation that `DefineMethods<>` can't detect extra meaningless
 
   `api/v1/users/index.ts`
 
-  ```typescript
-  import { DefineMethods } from "aspida"
+  ```ts
+  import type { DefineMethods } from "aspida";
 
   type User = {
-    id: number
-    name: string
-  }
+    id: number;
+    name: string;
+  };
 
   export type Methods = DefineMethods<{
     get: {
       query?: {
-        limit: number
-      }
+        limit: number;
+      };
 
-      resBody: User[]
-    }
+      resBody: User[];
+    };
 
     post: {
       reqBody: {
-        name: string
-      }
+        name: string;
+      };
 
-      resBody: User
+      resBody: User;
       /**
        * reqHeaders(?): ...
        * reqFormat: ...
@@ -108,8 +102,8 @@ Be aware of the limitation that `DefineMethods<>` can't detect extra meaningless
        * resHeaders(?): ...
        * polymorph: [...]
        */
-    }
-  }>
+    };
+  }>;
   ```
 
 - GET: /v1/users/\${userId}
@@ -120,27 +114,27 @@ Be aware of the limitation that `DefineMethods<>` can't detect extra meaningless
   Specify the type of path variable “userId” starting with underscore with “@number”  
   If not specified with @, the default path variable type is "number | string"
 
-  ```typescript
-  import { DefineMethods } from "aspida"
+  ```ts
+  import type { DefineMethods } from "aspida";
 
   type User = {
-    id: number
-    name: string
-  }
+    id: number;
+    name: string;
+  };
 
   export type Methods = DefineMethods<{
     get: {
-      resBody: User
-    }
+      resBody: User;
+    };
 
     put: {
       reqBody: {
-        name: string
-      }
+        name: string;
+      };
 
-      resBody: User
-    }
-  }>
+      resBody: User;
+    };
+  }>;
   ```
 
 ### Build type definition file
@@ -165,26 +159,26 @@ $ npm run api:build
 
 `src/index.ts`
 
-```typescript
-import aspida from "@aspida/axios"
-import api from "../api/$api"
-;(async () => {
-  const userId = 0
-  const limit = 10
-  const client = api(aspida())
+```ts
+import aspida from "@aspida/axios";
+import api from "../api/$api";
+(async () => {
+  const userId = 0;
+  const limit = 10;
+  const client = api(aspida());
 
-  await client.v1.users.post({ body: { name: "taro" } })
+  await client.v1.users.post({ body: { name: "taro" } });
 
-  const res = await client.v1.users.get({ query: { limit } })
-  console.log(res)
+  const res = await client.v1.users.get({ query: { limit } });
+  console.log(res);
   // req -> GET: /v1/users/?limit=10
   // res -> { status: 200, body: [{ id: 0, name: "taro" }], headers: {...} }
 
-  const user = await client.v1.users._userId(userId).$get()
-  console.log(user)
+  const user = await client.v1.users._userId(userId).$get();
+  console.log(user);
   // req -> GET: /v1/users/0
   // res -> { id: 0, name: "taro" }
-})()
+})();
 ```
 
 ### aspida official HTTP clients
@@ -243,13 +237,13 @@ import api from "../api/$api"
 ## Node.js API
 
 ```ts
-import { version, build, watch } from "aspida/dist/commands"
+import { version, build, watch } from "aspida/dist/commands";
 
-console.log(version()) // 0.x.y
+console.log(version()); // 0.x.y
 
-build()
-build("./app/aspida.config.js")
-build({ input: "api1" })
+build();
+build("./app/aspida.config.js");
+build({ input: "api1" });
 build([
   { baseURL: "https://example.com/v1" },
   {
@@ -257,13 +251,13 @@ build([
     baseURL: "https://example.com/v2",
     trailingSlash: true,
     outputEachDir: true,
-    outputMode: "all"
-  }
-])
+    outputMode: "all",
+  },
+]);
 
-watch()
-watch("./app/aspida.config.js")
-watch({ input: "api1" })
+watch();
+watch("./app/aspida.config.js");
+watch({ input: "api1" });
 watch([
   { baseURL: "https://example.com/v1" },
   {
@@ -271,9 +265,9 @@ watch([
     baseURL: "https://example.com/v2",
     trailingSlash: true,
     outputEachDir: true,
-    outputMode: "all"
-  }
-])
+    outputMode: "all",
+  },
+]);
 ```
 
 ## Ecosystem
@@ -298,7 +292,6 @@ watch([
 1. [Import only some endpoints](#tips8)
 1. [Retrieve endpoint URL string](#tips9)
 1. [Reflect TSDoc comments](#tips10)
-1. [Type-safe type definition](#tips11)
 
 <a id="tips1"></a>
 
@@ -309,19 +302,19 @@ Create a configuration file at the root of the project
 `aspida.config.js`
 
 ```javascript
-module.exports = { input: "src" }
+module.exports = { input: "src" };
 ```
 
 Specify baseURL in configuration file
 
 ```javascript
-module.exports = { baseURL: "https://example.com/api" }
+module.exports = { baseURL: "https://example.com/api" };
 ```
 
 If you want to define multiple API endpoints, specify them in an array
 
 ```javascript
-module.exports = [{ input: "api1" }, { input: "api2", baseURL: "https://example.com/api" }]
+module.exports = [{ input: "api1" }, { input: "api2", baseURL: "https://example.com/api" }];
 ```
 
 <a id="tips2"></a>
@@ -333,24 +326,24 @@ If you want to serialize manually, you can use config object of HTTP client
 
 `src/index.ts`
 
-```typescript
-import axios from "axios"
-import qs from "qs"
-import aspida from "@aspida/axios"
-import api from "../api/$api"
-;(async () => {
+```ts
+import axios from "axios";
+import qs from "qs";
+import aspida from "@aspida/axios";
+import api from "../api/$api";
+(async () => {
   const client = api(
     aspida(axios, { paramsSerializer: params => qs.stringify(params, { indices: false }) })
-  )
+  );
 
   const users = await client.v1.users.$get({
     // config: { paramsSerializer: (params) => qs.stringify(params, { indices: false }) },
-    query: { ids: [1, 2, 3] }
-  })
-  console.log(users)
+    query: { ids: [1, 2, 3] },
+  });
+  console.log(users);
   // req -> GET: /v1/users/?ids=1&ids=2&ids=3
   // res -> [{ id: 1, name: "taro1" }, { id: 2, name: "taro2" }, { id: 3, name: "taro3" }]
-})()
+})();
 ```
 
 <a id="tips3"></a>
@@ -359,68 +352,68 @@ import api from "../api/$api"
 
 `api/v1/users/index.ts`
 
-```typescript
-import { DefineMethods } from "aspida"
-import type { ReadStream } from "fs"
+```ts
+import type { DefineMethods } from "aspida";
+import type { ReadStream } from "fs";
 
 export type Methods = DefineMethods<{
   post: {
-    reqFormat: FormData
+    reqFormat: FormData;
 
     reqBody: {
-      name: string
-      icon: File | ReadStream
-    }
+      name: string;
+      icon: File | ReadStream;
+    };
 
     resBody: {
-      id: number
-      name: string
-    }
-  }
-}>
+      id: number;
+      name: string;
+    };
+  };
+}>;
 ```
 
 `src/index.ts`
 
-```typescript
-import aspida from "@aspida/axios"
-import api from "../api/$api"
-;(async () => {
-  const client = api(aspida())
+```ts
+import aspida from "@aspida/axios";
+import api from "../api/$api";
+(async () => {
+  const client = api(aspida());
 
   const user = await client.v1.users.$post({
     body: {
       name: "taro",
-      icon: imageFile
-    }
-  })
-  console.log(user)
+      icon: imageFile,
+    },
+  });
+  console.log(user);
   // req -> POST: h/v1/users
   // res -> { id: 0, name: "taro" }
-})()
+})();
 ```
 
 Post in Node.js (>=1.6.0)
 
 `src/index.ts`
 
-```typescript
-import fs from "fs"
-import aspida from "@aspida/axios"
-import api from "../api/$api"
-;(async () => {
-  const client = api(aspida())
-  const fileName = "images/sample.jpg"
+```ts
+import fs from "fs";
+import aspida from "@aspida/axios";
+import api from "../api/$api";
+(async () => {
+  const client = api(aspida());
+  const fileName = "images/sample.jpg";
   const user = await client.v1.users.$post({
     body: {
       name: "taro",
-      icon: fs.createReadStream(fileName)
-    }
-  })
-  console.log(user)
+      icon: fs.createReadStream(fileName),
+    },
+  });
+  console.log(user);
   // req -> POST: h/v1/users
   // res -> { id: 0, name: "taro" }
-})()
+})();
 ```
 
 <a id="tips4"></a>
@@ -429,38 +422,38 @@ import api from "../api/$api"
 
 `api/v1/users/index.ts`
 
-```typescript
-import { DefineMethods } from "aspida"
+```ts
+import type { DefineMethods } from "aspida";
 
 export type Methods = DefineMethods<{
   post: {
-    reqFormat: URLSearchParams
+    reqFormat: URLSearchParams;
 
     reqBody: {
-      name: string
-    }
+      name: string;
+    };
 
     resBody: {
-      id: number
-      name: string
-    }
-  }
-}>
+      id: number;
+      name: string;
+    };
+  };
+}>;
 ```
 
 `src/index.ts`
 
-```typescript
-import aspida from "@aspida/axios"
-import api from "../api/$api"
-;(async () => {
-  const client = api(aspida())
+```ts
+import aspida from "@aspida/axios";
+import api from "../api/$api";
+(async () => {
+  const client = api(aspida());
 
-  const user = await client.v1.users.$post({ body: { name: "taro" } })
-  console.log(user)
+  const user = await client.v1.users.$post({ body: { name: "taro" } });
+  console.log(user);
   // req -> POST: /v1/users
   // res -> { id: 0, name: "taro" }
-})()
+})();
 ```
 
 <a id="tips5"></a>
@@ -469,33 +462,33 @@ import api from "../api/$api"
 
 `api/v1/users/index.ts`
 
-```typescript
-import { DefineMethods } from "aspida"
+```ts
+import type { DefineMethods } from "aspida";
 
 export type Methods = DefineMethods<{
   get: {
     query: {
-      name: string
-    }
+      name: string;
+    };
 
-    resBody: ArrayBuffer
-  }
-}>
+    resBody: ArrayBuffer;
+  };
+}>;
 ```
 
 `src/index.ts`
 
-```typescript
-import aspida from "@aspida/axios"
-import api from "../api/$api"
-;(async () => {
-  const client = api(aspida())
+```ts
+import aspida from "@aspida/axios";
+import api from "../api/$api";
+(async () => {
+  const client = api(aspida());
 
-  const user = await client.v1.users.$get({ query: { name: "taro" } })
-  console.log(user)
+  const user = await client.v1.users.$get({ query: { name: "taro" } });
+  console.log(user);
   // req -> GET: /v1/users/?name=taro
   // res -> ArrayBuffer
-})()
+})();
 ```
 
 <a id="tips6"></a>
@@ -505,7 +498,7 @@ import api from "../api/$api"
 `api/users/index.ts`
 
 ```ts
-import { DefineMethods } from 'aspida'
+import type { DefineMethods } from 'aspida'
 
 type User = {
   id: number
@@ -548,19 +541,19 @@ export Methods = DefineMethods<{
 `src/index.ts`
 
 ```ts
-import aspida from "@aspida/axios"
-import api from "../api/$api"
-;(async () => {
-  const client = api(aspida())
+import aspida from "@aspida/axios";
+import api from "../api/$api";
+(async () => {
+  const client = api(aspida());
 
-  const user = await client.users.$post({ body: { name: "taro" } })
-  console.log(user) // { id: 0, name: "taro" }
+  const user = await client.users.$post({ body: { name: "taro" } });
+  console.log(user); // { id: 0, name: "taro" }
 
   const users = await client.users.$post({
-    body: [{ name: "hanako" }, { name: "mario" }]
-  })
-  console.log(users) // [{ id: 1, name: "hanako" }, { id: 2, name: "mario" }]
-})()
+    body: [{ name: "hanako" }, { name: "mario" }],
+  });
+  console.log(users); // [{ id: 1, name: "hanako" }, { id: 2, name: "mario" }]
+})();
 ```
 
 <a id="tips7"></a>
@@ -573,45 +566,45 @@ Example `":"` -> `"%3A"`
 `api/foo%3Abar/index.ts`
 
 ```ts
-import { DefineMethods } from "aspida"
+import type { DefineMethods } from "aspida";
 
 export type Methods = DefineMethods<{
   get: {
-    resBody: string
-  }
-}>
+    resBody: string;
+  };
+}>;
 ```
 
 `api/users/_userId@number%3Aread/index.ts`
 
 ```ts
-import { DefineMethods } from "aspida"
+import type { DefineMethods } from "aspida";
 
 export type Methods = DefineMethods<{
   get: {
-    resBody: User
-  }
-}>
+    resBody: User;
+  };
+}>;
 ```
 
 With clients, `"%3A"` -> `":"`
 
 `src/index.ts`
 
-```typescript
-import aspida from "@aspida/axios"
-import api from "../api/$api"
-;(async () => {
-  const client = api(aspida())
+```ts
+import aspida from "@aspida/axios";
+import api from "../api/$api";
+(async () => {
+  const client = api(aspida());
 
-  const message = await client.foo_bar.$get()
-  console.log(message)
+  const message = await client.foo_bar.$get();
+  console.log(message);
   // req -> GET: /foo:bar
 
-  const user = await client.users._userId_read(1).$get()
-  console.log(user)
+  const user = await client.users._userId_read(1).$get();
+  console.log(user);
   // req -> GET: /users/1:read
-})()
+})();
 ```
 
 <a id="tips8"></a>
@@ -625,27 +618,27 @@ If you don't need to use all of `api/$api.ts` , you can split them up and import
 `aspida.config.js`
 
 ```js
-module.exports = { outputEachDir: true }
+module.exports = { outputEachDir: true };
 ```
 
 Import only `$api.ts` of the endpoint you want to use and put it into Object
 
 `src/index.ts`
 
-```typescript
-import aspida from "@aspida/axios"
-import api0 from "../api/v1/foo/$api"
-import api1 from "../api/v2/bar/$api"
-;(async () => {
-  const aspidaClient = aspida()
+```ts
+import aspida from "@aspida/axios";
+import api0 from "../api/v1/foo/$api";
+import api1 from "../api/v2/bar/$api";
+(async () => {
+  const aspidaClient = aspida();
   const client = {
     foo: api0(aspidaClient),
-    bar: api1(aspidaClient)
-  }
+    bar: api1(aspidaClient),
+  };
 
-  const message = await client.bar._id(1).$get()
+  const message = await client.bar._id(1).$get();
   // req -> GET: /v2/bar/1
-})()
+})();
 ```
 
 <a id="tips9"></a>
@@ -655,25 +648,25 @@ import api1 from "../api/v2/bar/$api"
 `src/index.ts`
 
 ```ts
-import aspida from "@aspida/axios"
-import api from "../api/$api"
-;(async () => {
-  const client = api(aspida())
+import aspida from "@aspida/axios";
+import api from "../api/$api";
+(async () => {
+  const client = api(aspida());
 
-  console.log(client.v1.users.$path())
+  console.log(client.v1.users.$path());
   // /v1/users
 
-  console.log(client.vi.users.$path({ query: { limit: 10 } }))
+  console.log(client.vi.users.$path({ query: { limit: 10 } }));
   // /v1/users?limit=10
 
   console.log(
     client.vi.users.$path({
       method: "post",
-      query: { id: 1 }
+      query: { id: 1 },
     })
-  )
+  );
   // /v1/users?id=1
-})()
+})();
 ```
 
 <a id="tips10"></a>
@@ -683,7 +676,7 @@ import api from "../api/$api"
 `api/index.ts`
 
 ```ts
-import { DefineMethods } from "aspida"
+import type { DefineMethods } from "aspida";
 
 /**
  * root comment
@@ -700,22 +693,22 @@ export type Methods = DefineMethods<{
    */
   post: {
     /** post query comment */
-    query: { limit: number }
+    query: { limit: number };
 
     /** post reqHeaders comment */
-    reqHeaders: { token: string }
+    reqHeaders: { token: string };
 
-    reqFormat: FormData
+    reqFormat: FormData;
     /** post reqBody comment */
-    reqBody: UserCreation
+    reqBody: UserCreation;
 
     /**
      * post resBody comment1
      * post resBody comment2
      */
-    resBody: User
-  }
-}>
+    resBody: User;
+  };
+}>;
 ```
 
 ```sh
@@ -731,7 +724,7 @@ $ npm run api:build
  * @remarks
  * root remarks comment
  */
-const api = <T,>({ baseURL, fetch }: AspidaClient<T>) => {
+const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   return {
     /**
      * post method comment
@@ -746,35 +739,17 @@ const api = <T,>({ baseURL, fetch }: AspidaClient<T>) => {
      * post resBody comment2
      */
     $post: (option: {
-      body: Methods0["post"]["reqBody"]
-      query: Methods0["post"]["query"]
-      headers: Methods0["post"]["reqHeaders"]
-      config?: T
+      body: Methods0["post"]["reqBody"];
+      query: Methods0["post"]["query"];
+      headers: Methods0["post"]["reqHeaders"];
+      config?: T;
     }) =>
       fetch<Methods0["post"]["resBody"]>(prefix, PATH0, POST, option)
         .json()
-        .then(r => r.body)
-  }
-}
+        .then(r => r.body),
+  };
+};
 ```
-
-<a id="tips11"></a>
-
-### Type-safe type definition
-
-```ts
-export type Methods = DefineMethods<{
-  get: {
-    resBody: { id: number }
-  }
-}>
-```
-
-## Support
-
-<a href="https://twitter.com/solufa2020">
-  <img src="https://aspida.github.io/aspida/assets/images/twitter.svg" width="50" alt="Twitter" />
-</a>
 
 ## License
 
