@@ -9,12 +9,6 @@
   <a href="https://www.npmjs.com/package/@aspida/swr">
     <img src="https://img.shields.io/npm/dm/@aspida/swr" alt="npm download" />
   </a>
-  <a href="https://github.com/aspida/aspida/actions?query=workflow%3A%22Node.js+CI%22">
-    <img src="https://github.com/aspida/aspida/workflows/Node.js%20CI/badge.svg?branch=master" alt="Node.js CI" />
-  </a>
-  <a href="https://lgtm.com/projects/g/aspida/aspida/context:javascript">
-    <img src="https://img.shields.io/lgtm/grade/javascript/g/aspida/aspida.svg" alt="Language grade: JavaScript" />
-  </a>
 </div>
 <br />
 <div align="center"><a href="https://swr.vercel.app/">SWR (React Hooks)</a> wrapper for <a href="https://github.com/aspida/aspida/">aspida</a>.</div>
@@ -46,18 +40,18 @@
 `src/index.ts`
 
 ```tsx
-import useAspidaSWR from "@aspida/swr"
-import aspida from "@aspida/axios" // "@aspida/fetch", "@aspida/node-fetch"
-import api from "../api/$api"
+import aspida from "@aspida/axios"; // "@aspida/fetch", "@aspida/node-fetch"
+import useAspidaSWR from "@aspida/swr";
+import api from "../api/$api";
 
-const client = api(aspida())
+const client = api(aspida());
 
 function Profile() {
-  const { data, error } = useAspidaSWR(client.user._userId(123), { query: { name: "mario" } })
+  const { data, error } = useAspidaSWR(client.user._userId(123), { query: { name: "mario" } });
 
-  if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
-  return <div>hello {data.name}!</div>
+  if (error) return <div>failed to load</div>;
+  if (!data) return <div>loading...</div>;
+  return <div>hello {data.name}!</div>;
 }
 ```
 
@@ -66,26 +60,26 @@ function Profile() {
 `src/index.ts`
 
 ```tsx
-import useAspidaSWR from "@aspida/swr"
-import aspida from "@aspida/axios" // "@aspida/fetch", "@aspida/node-fetch"
-import api from "../api/$api"
+import aspida from "@aspida/axios"; // "@aspida/fetch", "@aspida/node-fetch"
+import useAspidaSWR from "@aspida/swr";
+import api from "../api/$api";
 
-const client = api(aspida())
+const client = api(aspida());
 
 function Profile() {
   const { data, error } = useAspidaSWR(client.user._userId(123), "get", {
-    query: { name: "mario" }
-  })
+    query: { name: "mario" },
+  });
 
-  if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
+  if (error) return <div>failed to load</div>;
+  if (!data) return <div>loading...</div>;
   return (
     <>
       <div>Status: {data.status}</div>
       <div>Headers: {JSON.stringify(data.headers)}</div>
       <div>Name: {data.body.name}</div>
     </>
-  )
+  );
 }
 ```
 
@@ -96,21 +90,21 @@ function Profile() {
 `src/index.ts`
 
 ```tsx
-import useAspidaSWR from "@aspida/swr"
-import aspida from "@aspida/axios" // "@aspida/fetch", "@aspida/node-fetch"
-import api from "../api/$api"
+import aspida from "@aspida/axios"; // "@aspida/fetch", "@aspida/node-fetch"
+import useAspidaSWR from "@aspida/swr";
+import api from "../api/$api";
 
-const client = api(aspida())
+const client = api(aspida());
 
 function Profile() {
   const { data, error } = useAspidaSWR(client.user._userId(123), {
     query: { name: "mario" },
     revalidateOnMount: true,
-    initialData: { name: "anonymous" }
-  })
+    initialData: { name: "anonymous" },
+  });
 
-  if (error) return <div>failed to load</div>
-  return <div>hello {data.name}!</div>
+  if (error) return <div>failed to load</div>;
+  return <div>hello {data.name}!</div>;
 }
 ```
 
@@ -119,16 +113,16 @@ function Profile() {
 If you use the `enabled = false` option, AspidaSWR will not start the request.
 
 ```ts
-const { data: user } = useAspidaSWR(client.user)
+const { data: user } = useAspidaSWR(client.user);
 const { data } = useAspidaSWR(client.articles, {
   query: { userId: user?.id ?? 0 },
-  enabled: !!user
-})
+  enabled: !!user,
+});
 // is an alias of
 const { data } = useSWR(
   user ? [client.articles.$path({ query: { userId: user.id } }), "$get"] : null,
   () => client.articles.$get({ query: { userId: user.id } })
-)
+);
 ```
 
 ## License

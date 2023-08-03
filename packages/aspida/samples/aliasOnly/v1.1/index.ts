@@ -1,4 +1,6 @@
-export type Methods = {
+import { DefineMethods } from 'aspida';
+
+export type Methods = DefineMethods<{
   get: {
     // test
     query?: (
@@ -12,4 +14,4 @@ export type Methods = {
     status: 200;
     resBody: Array<{ aa: number } | { bb: Array<string> }>;
   };
-};
+}>;

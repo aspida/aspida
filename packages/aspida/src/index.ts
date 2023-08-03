@@ -1,5 +1,4 @@
 import NodeFormData from 'form-data';
-import type { ReadStream } from 'fs';
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD' | 'PATCH' | 'OPTIONS';
 export type LowerHttpMethod = 'get' | 'post' | 'put' | 'delete' | 'head' | 'patch' | 'options';
@@ -144,19 +143,17 @@ type AspidaMethodParamsReqOthers = {
 type AspidaMethodParamsReqFormData = {
   reqHeaders?: any;
   reqFormat?: FormData;
-  reqBody?: Record<string, string | number | File | ReadStream>;
+  reqBody?: Record<string, any>;
   polymorph?: Array<AspidaMethodParamsOthers & Omit<AspidaMethodParamsReqFormData, 'polymorph'>>;
 };
 
 type AspidaMethodParamsReq = AspidaMethodParamsReqOthers | AspidaMethodParamsReqFormData;
 
-type JSONValue = string | number | boolean | null | { [key: string]: JSONValue } | Array<JSONValue>;
-
 type AspidaMethodParamsOthers = {
   status?: number;
-  query?: Record<string, string | number | (string | number)[]>;
-  resHeaders?: { [key: string]: string | undefined };
-  resBody?: JSONValue | FormData | ArrayBuffer;
+  query?: Record<string, any>;
+  resHeaders?: Record<string, string | undefined>;
+  resBody?: any;
 };
 
 export type AspidaMethodParams = {

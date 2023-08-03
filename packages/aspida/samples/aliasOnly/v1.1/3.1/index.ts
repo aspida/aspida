@@ -1,7 +1,9 @@
+import { DefineMethods } from 'aspida';
+
 /**
  * 3.1 comment
  */
-export type Methods = {
+export type Methods = DefineMethods<{
   /**
    * 3.1 get method comment
    */
@@ -20,4 +22,4 @@ export type Methods = {
     reqBody?: { name: string };
     resBody: { id: number };
   };
-};
+}>;

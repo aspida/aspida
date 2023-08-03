@@ -1,8 +1,10 @@
+import type { DefineMethods } from 'aspida';
+
 // prettier-ignore
 /**
  * _fugaId comment
  */
-export type Methods = {
+export type Methods = DefineMethods<{
   get: {
     query?: { aa?: number }
     // eslint-disable-next-line
@@ -31,4 +33,4 @@ export type Methods = {
      */
     resBody: { id: number }
   }
-}
+}>
