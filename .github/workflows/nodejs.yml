@@ -29,6 +29,7 @@ jobs:
       - run: npm run lint
         if: matrix.os != 'windows-latest'
       - run: npm run typecheck
+      - run: npm run task:writeVersion -- dummyTag/v0.0.0
       - run: npm run build:aspida
       - run: npm run build:axios
       - run: npm run build:fetch
@@ -57,15 +58,7 @@ jobs:
       - run: npm install
         if: steps.npm-cache.outputs.cache-hit != 'true'
       - run: npm run build:aspida
-      - run: |
-          VERSION="$(node -e 'console.log(process.argv[1].match(/^refs\/tags\/v(\d+\.\d+\.\d+)$/)[1])' "${{ github.ref }}")"
-          for package in $(ls .); do
-            cd "$package"
-            node -e 'console.log(JSON.stringify({...require("./package.json"),version:process.argv[1]}, null, 2))' "$VERSION" | tee ./tmp-package.json
-            mv ./tmp-package.json ./package.json
-            cd ..
-          done
-        working-directory: packages
+      - run: npm run task:writeVersion -- ${{ github.ref }}
       - run: cd packages/aspida && npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

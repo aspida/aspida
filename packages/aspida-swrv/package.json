@@ -33,8 +33,5 @@
     "aspida",
     "typescript",
     "swrv"
-  ],
-  "dependencies": {
-    "aspida": "^1.12.0"
-  }
+  ]
 }

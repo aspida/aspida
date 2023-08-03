@@ -14,6 +14,7 @@
     "build:swrv": "rimraf packages/aspida-swrv/dist && tsc -p packages/aspida-swrv/tsconfig.esm.json || tsc -p packages/aspida-swrv/tsconfig.cjs.json || true",
     "lint": "eslint --ext .js,.ts . && prettier --check \"./**/*.ts\"",
     "lint:fix": "eslint --ext .js,.ts . --fix && prettier --write \"./**/*.ts\"",
+    "task:writeVersion": "ts-node tasks/writeVersion.ts",
     "test": "jest",
     "typecheck": "tsc --noEmit"
   },
