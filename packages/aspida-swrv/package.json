@@ -33,5 +33,8 @@
     "aspida",
     "typescript",
     "swrv"
-  ]
+  ],
+  "peerDependencies": {
+    "swrv": ""
+  }
 }
