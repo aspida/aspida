@@ -30,10 +30,10 @@ const createTemplate = (
   const headImports = [
     `import type { AspidaClient${api.includes('AspidaResponse') ? ', AspidaResponse' : ''}${
       api.includes('BasicHeaders') ? ', BasicHeaders' : ''
-    } } from 'aspida'`,
+    } } from 'aspida';`,
   ];
   if (api.includes('dataToURLString')) {
-    headImports.push("import { dataToURLString } from 'aspida'");
+    headImports.push("import { dataToURLString } from 'aspida';");
   }
   const text = `<% headImports %>
 <% imports %>
@@ -42,8 +42,8 @@ ${createDocComment(
   '',
   tree.children.find((c): c is FileData => !c.isDir && c.name === 'index.ts')?.doc
 )}const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
-  const prefix = (baseURL === undefined ? '<% baseURL %>' : baseURL).replace(/\\/$/, '')
-${pathes.map((p, i) => `  const PATH${i} = ${p}`).join('\n')}${pathes.length > 0 ? '\n' : ''}${[
+  const prefix = (baseURL === undefined ? '<% baseURL %>' : baseURL).replace(/\\/$/, '');
+${pathes.map((p, i) => `  const PATH${i} = ${p};`).join('\n')}${pathes.length > 0 ? '\n' : ''}${[
     'GET',
     'POST',
     'PUT',
@@ -53,14 +53,14 @@ ${pathes.map((p, i) => `  const PATH${i} = ${p}`).join('\n')}${pathes.length > 0
     'OPTIONS',
   ]
     .filter(m => api.includes(`, ${m}, option`))
-    .map(m => `  const ${m} = '${m}'`)
+    .map(m => `  const ${m} = '${m}';`)
     .join('\n')}
 
-  return <% api %>
-}
+  return <% api %>;
+};
 
-export type ApiInstance = ReturnType<typeof api>
-export default api
+export type ApiInstance = ReturnType<typeof api>;
+export default api;
 `
     .replace('<% headImports %>', headImports.join('\n'))
     .replace('<% imports %>', imports.join('\n'))

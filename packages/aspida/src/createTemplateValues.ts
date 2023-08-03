@@ -28,7 +28,7 @@ export default (
   ) => {
     const importName = `Methods${imports.length}`;
     imports.push(
-      `import type { Methods as ${importName} } from '${filepath.replace(/'/g, "\\'")}'`
+      `import type { Methods as ${importName} } from '${filepath.replace(/'/g, "\\'")}';`
     );
     let newPath = `'${decodeURIComponent(newUrl)}${trailingSlash ? '/' : ''}'`;
     if (newPath.length > 2) {
@@ -98,7 +98,7 @@ export default (
             duplicatedNames.length > 1 && valType ? `_${valType}` : ''
           }${toJSValidString(postfix)}: (val${dirDeps}: ${
             valType ?? 'number | string'
-          }) => {\n${indent}  const ${newPrefix} = ${prefixVal}\n\n${indent}  return {\n<% next %>\n${indent}  }\n${indent}}`;
+          }) => {\n${indent}  const ${newPrefix} = ${prefixVal};\n\n${indent}  return {\n<% next %>\n${indent}  };\n${indent}}`;
         }
 
         const fallbackSpecialCharsProp = (text: string) =>
@@ -163,7 +163,11 @@ export default (
     return text.replace(
       '<% props %>',
       `${props.join(',\n')}${
-        methodsOfIndexTsFile ? `${props.length ? ',\n' : ''}${methodsOfIndexTsFile}` : ''
+        methodsOfIndexTsFile
+          ? `${props.length ? ',\n' : ''}${methodsOfIndexTsFile}`
+          : props.length
+          ? ','
+          : ''
       }`
     );
   };

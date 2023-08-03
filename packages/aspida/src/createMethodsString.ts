@@ -159,13 +159,13 @@ export default (
           method,
           indent,
           path
-        )}\n${indent}    }\n${indent}    return ${name}Request\n${indent}  })(),\n${indent}  $${name}: (() => {\n${polys
+        )};\n${indent}    }\n${indent}    return ${name}Request;\n${indent}  })(),\n${indent}  $${name}: (() => {\n${polys
           .map(([, b]) => b)
           .join('\n')}\n${indent}    function $${genPolymorphReturnVal(
           method,
           indent,
           path
-        )}.then(r => r.body)\n${indent}    }\n${indent}    return $${name}Request\n${indent}  })()`;
+        )}.then(r => r.body);\n${indent}    }\n${indent}    return $${name}Request;\n${indent}  })()`;
       }
 
       const tmpChanks = [
@@ -204,10 +204,10 @@ export default (
           .join(' | ')} | undefined) =>
 ${indent}    \`\${prefix}\${${
           path.startsWith('`') ? path.slice(3, -2) : path
-        }}\${option && option.query ? \`?\${dataToURLString(option.query)}\` : ''}\``
+        }}\${option && option.query ? \`?\${dataToURLString(option.query)}\` : ''}\`,`
       : `${indent}  $path: () => \`\${prefix}\${${
           path.startsWith('`') ? path.slice(3, -2) : path
-        }}\``
+        }}\`,`
     )
       // eslint-disable-next-line no-template-curly-in-string
       .replace("${''}", ''),
