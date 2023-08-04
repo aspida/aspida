@@ -6,7 +6,6 @@
   "license": "MIT",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
-  "bin": "./bin/index.js",
   "exports": {
     ".": {
       "require": "./dist/cjs/index.js",
