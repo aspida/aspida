@@ -35,7 +35,8 @@ export type Methods = DefineMethods<{
       & {
           'x-auth-token': string
         }
-    query: { aa: number }
+    query: {/** comment (bug } ] checker */
+    aa: number }
     /** body comment */
     reqBody: { val: number }
     resBody: ArrayBuffer;

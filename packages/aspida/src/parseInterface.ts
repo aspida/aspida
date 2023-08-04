@@ -137,6 +137,11 @@ const parseObject = (text: string): { value: string; length: number } => {
   let indentLevel = 0;
 
   while (cursor < length) {
+    const doc = parseDoc(text.slice(cursor));
+    if (doc) {
+      cursor += doc.length;
+    }
+
     const char = text[cursor];
 
     if (quoteRegExp.test(char)) {
