@@ -34,6 +34,6 @@
     "node-fetch"
   ],
   "peerDependencies": {
-    "node-fetch": "2.x"
+    "node-fetch": ""
   }
 }

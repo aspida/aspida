@@ -7,10 +7,13 @@ console.log(process.argv, version);
 
 fs.readdirSync(path.join(__dirname, '../packages')).forEach(dir => {
   const jsonPath = path.join(__dirname, '../packages', dir, 'package.json');
+  const packageJson = require(jsonPath);
   const json = {
-    ...require(jsonPath),
+    ...packageJson,
     version,
-    ...(dir !== 'aspida' ? { dependencies: { aspida: `^${version}` } } : {}),
+    ...(dir !== 'aspida'
+      ? { peerDependencies: { aspida: `^${version}`, ...packageJson.peerDependencies } }
+      : {}),
   };
 
   fs.writeFileSync(jsonPath, JSON.stringify(json, null, 2), 'utf8');

@@ -1,7 +1,7 @@
 import type { AspidaClient } from 'aspida';
-import type { Methods as Methods0 } from '.';
-import type { Methods as Methods1 } from './_bar_id@string.json';
-import type { Methods as Methods2 } from './_fooId@number%40create';
+import type { Methods as Methods_by08hd } from '.';
+import type { Methods as Methods_17tnqe3 } from './_bar_id@string.json';
+import type { Methods as Methods_52rpc } from './_fooId@number%40create';
 
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const prefix = (baseURL === undefined ? '' : baseURL).replace(/\/$/, '');
@@ -15,9 +15,9 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
 
       return {
         get: (option?: { config?: T | undefined } | undefined) =>
-          fetch<Methods1['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).text(),
+          fetch<Methods_17tnqe3['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).text(),
         $get: (option?: { config?: T | undefined } | undefined) =>
-          fetch<Methods1['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).text().then(r => r.body),
+          fetch<Methods_17tnqe3['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).text().then(r => r.body),
         $path: () => `${prefix}${prefix0}${PATH1}`,
       };
     },
@@ -26,9 +26,9 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
 
       return {
         get: (option?: { config?: T | undefined } | undefined) =>
-          fetch<Methods2['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).text(),
+          fetch<Methods_52rpc['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).text(),
         $get: (option?: { config?: T | undefined } | undefined) =>
-          fetch<Methods2['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).text().then(r => r.body),
+          fetch<Methods_52rpc['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).text().then(r => r.body),
         $path: () => `${prefix}${prefix0}${PATH1}`,
       };
     },
@@ -41,16 +41,16 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
 
       return {
         get: (option?: { config?: T | undefined } | undefined) =>
-          fetch<Methods2['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).text(),
+          fetch<Methods_52rpc['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).text(),
         $get: (option?: { config?: T | undefined } | undefined) =>
-          fetch<Methods2['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).text().then(r => r.body),
+          fetch<Methods_52rpc['get']['resBody']>(prefix, `${prefix0}${PATH1}`, GET, option).text().then(r => r.body),
         $path: () => `${prefix}${prefix0}${PATH1}`,
       };
     },
     get: (option?: { config?: T | undefined } | undefined) =>
-      fetch<Methods0['get']['resBody']>(prefix, PATH0, GET, option).text(),
+      fetch<Methods_by08hd['get']['resBody']>(prefix, PATH0, GET, option).text(),
     $get: (option?: { config?: T | undefined } | undefined) =>
-      fetch<Methods0['get']['resBody']>(prefix, PATH0, GET, option).text().then(r => r.body),
+      fetch<Methods_by08hd['get']['resBody']>(prefix, PATH0, GET, option).text().then(r => r.body),
     $path: () => `${prefix}${PATH0}`,
   };
 };

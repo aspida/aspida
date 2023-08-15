@@ -22,14 +22,14 @@
 - Using [npm](https://www.npmjs.com/):
 
   ```sh
-  $ npm install node-fetch @aspida/node-fetch
+  $ npm install aspida node-fetch @aspida/node-fetch
   $ npm install @types/node-fetch --save-dev
   ```
 
 - Using [Yarn](https://yarnpkg.com/):
 
   ```sh
-  $ yarn add node-fetch @aspida/node-fetch
+  $ yarn add aspida node-fetch @aspida/node-fetch
   $ yarn add @types/node-fetch --dev
   ```
 

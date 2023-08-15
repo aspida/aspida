@@ -22,13 +22,13 @@
 - Using [npm](https://www.npmjs.com/):
 
   ```sh
-  $ npm install @aspida/fetch
+  $ npm install aspida @aspida/fetch
   ```
 
 - Using [Yarn](https://yarnpkg.com/):
 
   ```sh
-  $ yarn add @aspida/fetch
+  $ yarn add aspida @aspida/fetch
   ```
 
 ### Make HTTP request from application

@@ -1,5 +1,6 @@
 import { AspidaConfig } from './commands';
 import createDocComment from './createDocComment';
+import { createHash } from './createHash';
 import createMethods from './createMethodsString';
 import { DirentTree, FileData } from './getDirentTree';
 import { Method } from './parseInterface';
@@ -26,10 +27,10 @@ export default (
     newPrefix: string,
     newUrl: string
   ) => {
-    const importName = `Methods${imports.length}`;
-    imports.push(
-      `import type { Methods as ${importName} } from '${filepath.replace(/'/g, "\\'")}';`
-    );
+    const path = filepath.replace(/'/g, "\\'");
+    const importName = `Methods_${createHash(path)}`;
+
+    imports.push(`import type { Methods as ${importName} } from '${path}';`);
     let newPath = `'${decodeURIComponent(newUrl)}${trailingSlash ? '/' : ''}'`;
     if (newPath.length > 2) {
       if (!pathes.includes(newPath)) pathes.push(newPath);

@@ -26,9 +26,6 @@ jobs:
           key: ${{ runner.os }}-node-v${{ matrix.node-version }}-npm-${{ hashFiles('**/package-lock.json') }}
       - run: npm install
         if: steps.npm-cache.outputs.cache-hit != 'true'
-      - run: npm run lint
-        if: matrix.os != 'windows-latest'
-      - run: npm run typecheck
       - run: npm run task:writeVersion -- dummyTag/v0.0.0
       - run: npm run build:aspida
       - run: npm run build:axios
@@ -37,6 +34,9 @@ jobs:
       - run: npm run build:react-query
       - run: npm run build:swr
       - run: npm run build:swrv
+      - run: npm run lint
+        if: matrix.os != 'windows-latest'
+      - run: npm run typecheck
       - run: npm test
 
   release:
