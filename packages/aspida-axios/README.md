@@ -22,13 +22,13 @@
 - Using [npm](https://www.npmjs.com/):
 
   ```sh
-  $ npm install @aspida/axios axios
+  $ npm install aspida @aspida/axios axios
   ```
 
 - Using [Yarn](https://yarnpkg.com/):
 
   ```sh
-  $ yarn add @aspida/axios axios
+  $ yarn add aspida @aspida/axios axios
   ```
 
 ### Make HTTP request from application

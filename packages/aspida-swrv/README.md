@@ -22,17 +22,17 @@
 - Using [npm](https://www.npmjs.com/):
 
   ```sh
-  $ npm install @aspida/swrv @aspida/axios swrv axios
-  # $ npm install @aspida/swrv @aspida/fetch swrv
-  # $ npm install @aspida/swrv @aspida/node-fetch swrv node-fetch
+  $ npm install aspida @aspida/swrv @aspida/axios swrv axios
+  # $ npm install aspida @aspida/swrv @aspida/fetch swrv
+  # $ npm install aspida @aspida/swrv @aspida/node-fetch swrv node-fetch
   ```
 
 - Using [Yarn](https://yarnpkg.com/):
 
   ```sh
-  $ yarn add @aspida/swrv @aspida/axios swrv axios
-  # $ yarn add @aspida/swrv @aspida/fetch swrv
-  # $ yarn add @aspida/swrv @aspida/node-fetch swrv node-fetch
+  $ yarn add aspida @aspida/swrv @aspida/axios swrv axios
+  # $ yarn add aspida @aspida/swrv @aspida/fetch swrv
+  # $ yarn add aspida @aspida/swrv @aspida/node-fetch swrv node-fetch
   ```
 
 ### Make HTTP request from application

@@ -22,17 +22,17 @@
 - Using [npm](https://www.npmjs.com/):
 
   ```sh
-  $ npm install @aspida/react-query @aspida/axios react-query axios
-  # $ npm install @aspida/react-query @aspida/fetch react-query
-  # $ npm install @aspida/react-query @aspida/node-fetch react-query node-fetch
+  $ npm install aspida @aspida/react-query @aspida/axios react-query axios
+  # $ npm install aspida @aspida/react-query @aspida/fetch react-query
+  # $ npm install aspida @aspida/react-query @aspida/node-fetch react-query node-fetch
   ```
 
 - Using [Yarn](https://yarnpkg.com/):
 
   ```sh
-  $ yarn add @aspida/react-query @aspida/axios react-query axios
-  # $ yarn add @aspida/react-query @aspida/fetch react-query
-  # $ yarn add @aspida/react-query @aspida/node-fetch react-query node-fetch
+  $ yarn add aspida @aspida/react-query @aspida/axios react-query axios
+  # $ yarn add aspida @aspida/react-query @aspida/fetch react-query
+  # $ yarn add aspida @aspida/react-query @aspida/node-fetch react-query node-fetch
   ```
 
 ### Make HTTP request from application
