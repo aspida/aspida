@@ -55,7 +55,7 @@ const client = api(aspida(fetch, fetchConfig));
   const res = await client.v1.users.get({ query: { limit } });
   console.log(res);
   // req -> GET: https://example.com/api/v1/users/?limit=10
-  // res -> { status: 200, data: [{ id: 0, name: "mario" }], headers: {...} }
+  // res -> { status: 200, body: [{ id: 0, name: "mario" }], headers: {...} }
 
   try {
     const user = await client.v1.users._userId(userId).$get();
