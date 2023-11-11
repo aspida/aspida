@@ -74,7 +74,7 @@
     "@typescript-eslint/parser": "^5.62.0",
     "@vue/test-utils": "^2.4.1",
     "aspida-mock": "^0.10.0",
-    "axios": "^1.4.0",
+    "axios": "^1.6.0",
     "eslint": "^8.46.0",
     "eslint-config-prettier": "^8.9.0",
     "eslint-config-standard": "^17.1.0",
